@@ -10,9 +10,10 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/chromereload.js",
-      "scripts/background.js"
-    ]
+      "chromereload.js",
+      "bundle.js"
+    ],
+    "persistent": true
   },
   "permissions": [
     "clipboardWrite",

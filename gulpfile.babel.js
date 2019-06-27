@@ -2,8 +2,13 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
-import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
+import browserify from 'browserify';
+import glob from 'glob';
+import babelify from 'babelify';
+import source from 'vinyl-source-stream';
+import minifyCSS from 'gulp-minify-css';
+import concat from 'gulp-concat';
 
 const $ = gulpLoadPlugins();
 
@@ -33,6 +38,17 @@ gulp.task('lint', lint('app/scripts.babel/**/*.js', {
     es6: true
   }
 }));
+
+
+gulp.task('browserify', () => {
+  const files = glob.sync('./app/scripts.babel/**/*.js', { dot: true, ignore: ['./app/scripts.babel/chromereload.js']});
+  let bundler = browserify({entries: files, cache: {}, extensions: ['.js'], debug: true});
+   
+  return bundler.transform(babelify)
+          .bundle()
+          .pipe(source('bundle.js'))
+          .pipe(gulp.dest('dist'));
+});
 
 gulp.task('images', () => {
   return gulp.src('app/images/**/*')
@@ -66,14 +82,40 @@ gulp.task('html',  () => {
     .pipe(gulp.dest('dist'));
 });
 
+
+gulp.task('locales', () => {
+  return gulp.src('app/_locales/**/*')
+    .pipe(gulp.dest('dist/_locales'))
+});
+
+
+gulp.task('manifest:dev', () => {
+  return gulp.src('app/manifest.json')
+    .pipe(gulp.dest('dist'))
+});
+
+gulp.task('chromereload', () => {
+  return gulp.src('app/chromereload.js')
+    .pipe(gulp.dest('dist'))
+});
+
+gulp.task('styles', () => {
+  return gulp.src('app/styles/**/*.css')
+    .pipe(minifyCSS())
+    .pipe(concat('style.min.css'))
+    .pipe(gulp.dest('dist/styles'))
+});
+
+
+
 gulp.task('chromeManifest', () => {
   return gulp.src('app/manifest.json')
     .pipe($.chromeManifest({
       buildnumber: true,
       background: {
-        target: 'scripts/background.js',
+        target: 'dist/bundle.js',
         exclude: [
-          'scripts/chromereload.js'
+          'dist/chromereload.js'
         ]
       }
   }))
@@ -84,29 +126,24 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', () => {
-  return gulp.src('app/scripts.babel/**/*.js')
-      .pipe($.babel({
-        presets: ['es2015']
-      }))
-      .pipe(gulp.dest('app/scripts'));
+gulp.task('icons', function() {
+  return gulp.src('./node_modules/@fortawesome/fontawesome-free/webfonts/*')
+    .pipe(gulp.dest('dist/assets/webfonts/'));
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel'], () => {
+gulp.task('watch', () => {
   $.livereload.listen();
 
   gulp.watch([
     'app/*.html',
-    'app/scripts/**/*.js',
     'app/images/**/*',
     'app/styles/**/*',
-    'app/_locales/**/*.json'
-  ]).on('change', $.livereload.reload);
+    'app/_locales/**/*.json',
+    'app/scripts.babel/**/*.js',
+  ], ['images', 'html', 'locales', 'manifest:dev', 'lint', 'browserify', 'styles']).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
-  gulp.watch('bower.json', ['wiredep']);
 });
 
 gulp.task('size', () => {
@@ -128,13 +165,4 @@ gulp.task('package', function () {
       .pipe(gulp.dest('package'));
 });
 
-gulp.task('build', (cb) => {
-  runSequence(
-    'lint', 'babel', 'chromeManifest',
-    ['html', 'images', 'extras'],
-    'size', cb);
-});
-
-gulp.task('default', ['clean'], cb => {
-  runSequence('build', cb);
-});
+gulp.task('default',  ['lint', 'browserify', 'chromereload', 'manifest:dev', 'html', 'images', 'wiredep', 'locales', 'styles']);

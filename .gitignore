@@ -2,9 +2,10 @@ node_modules
 temp
 .tmp
 dist
+package-lock.json
 .sass-cache
 app/bower_components
 test/bower_components
 package
 app/scripts
-
+.idea
