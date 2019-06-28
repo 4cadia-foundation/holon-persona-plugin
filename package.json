@@ -35,7 +35,8 @@
     "main-bower-files": "^2.11.1",
     "run-sequence": "^1.1.5",
     "vinyl-source-stream": "^2.0.0",
-    "wiredep": "^4.0.0"
+    "wiredep": "^4.0.0",
+    "web3": "^0.20.7"
   },
   "engines": {
     "node": ">=0.8.0"
