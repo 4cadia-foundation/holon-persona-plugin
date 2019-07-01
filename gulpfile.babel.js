@@ -156,13 +156,6 @@ gulp.task('size', () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
-gulp.task('wiredep', () => {
-  gulp.src('app/*.html')
-    .pipe(wiredep({
-      ignorePath: /^(\.\.\/)*\.\./
-    }))
-    .pipe(gulp.dest('app'));
-});
 
 gulp.task('package', function () {
   var manifest = require('./dist/manifest.json');
@@ -171,4 +164,4 @@ gulp.task('package', function () {
       .pipe(gulp.dest('package'));
 });
 
-gulp.task('default',  ['lint', 'browserify', 'chromereload', 'manifest:dev', 'html', 'images', 'wiredep', 'locales', 'styles', 'config']);
+gulp.task('default',  ['lint', 'browserify', 'chromereload', 'manifest:dev', 'html', 'images', 'locales', 'styles', 'config']);
