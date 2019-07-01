@@ -1,10 +1,14 @@
-import InPage from './inpage';
-
-const inpage = new InPage();
+import SmartContract from './smartcontract';
 
 
-chrome.runtime.onInstalled.addListener(details => {
-  console.log('previousVersion', details.previousVersion);
-});
+(async () => {
 
-chrome.browserAction.setBadgeText({text: '\'Olá'});
+  //instanciando as informações que são utilizadas nas página
+
+  const smartContract = new SmartContract();
+  const contract = await smartContract.contract();
+
+
+
+})();
+

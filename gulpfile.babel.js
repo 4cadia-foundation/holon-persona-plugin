@@ -88,6 +88,11 @@ gulp.task('locales', () => {
     .pipe(gulp.dest('dist/_locales'))
 });
 
+gulp.task('config', () => {
+  return gulp.src('app/config/**/*')
+    .pipe(gulp.dest('dist/config'))
+});
+
 
 gulp.task('manifest:dev', () => {
   return gulp.src('app/manifest.json')
@@ -133,7 +138,7 @@ gulp.task('icons', function() {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', () => {
+gulp.task('watch', ['default'], () => {
   $.livereload.listen();
 
   gulp.watch([
@@ -141,6 +146,7 @@ gulp.task('watch', () => {
     'app/images/**/*',
     'app/styles/**/*',
     'app/_locales/**/*.json',
+    'app/config/**.json',
     'app/scripts.babel/**/*.js',
   ], ['images', 'html', 'locales', 'manifest:dev', 'lint', 'browserify', 'styles']).on('change', $.livereload.reload);
 
@@ -165,4 +171,4 @@ gulp.task('package', function () {
       .pipe(gulp.dest('package'));
 });
 
-gulp.task('default',  ['lint', 'browserify', 'chromereload', 'manifest:dev', 'html', 'images', 'wiredep', 'locales', 'styles']);
+gulp.task('default',  ['lint', 'browserify', 'chromereload', 'manifest:dev', 'html', 'images', 'wiredep', 'locales', 'styles', 'config']);
