@@ -55,20 +55,21 @@ class SmartContract {
   * function for instance ethereum contract
   * @return {Object} contract instance
   * */
-  get contract() {
+  async contract () {
     try {
-      return this._config((response) => {
-        new ethers.Contract(response.address, response.abi, this._instance);
-      });
+      let {address, abi} = await this._config();
+      return new ethers.Contract(address, abi, this._instance);
     } catch (exception) {
+
       console.error('[Inpage-constract] Error: ' + exception.message)
     }
   }
 
-  _config (callback) {
-    return axios.get('./config/abi.json')
+  async _config () {
+    return await axios.get('./config/abi.json')
       .then((response) => {
-        return callback(response.data);
+        return response.data;
+        // return callback(response.data);
       })
       .catch((exception) => {
         console.error('[SmartContract] Error: ' + exception);
