@@ -3,7 +3,7 @@
 
 Boilerplate is a base project for the implementation of a plugin that will use chrome and other browsers with javascript support and extensions.
 
-## Instalation
+## Installation
 
 To install in developer mode, use the following step-by-step:
 
