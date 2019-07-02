@@ -53,5 +53,3 @@ The Chrome application will create your plugin in developer mode and make the ic
 ```sh
   ~/boilerplate-extension/$ gulp watch
 ```
-
- 
