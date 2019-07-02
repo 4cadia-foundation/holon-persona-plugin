@@ -3,7 +3,7 @@
 @import url("./_utils.css");
 
 html, body {
-  background-color: var(--color-gray-darker);
+  background-color: var(--color-primary);
 }
 
 
