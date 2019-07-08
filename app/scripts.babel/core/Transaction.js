@@ -1,5 +1,5 @@
 import {ethers} from 'ethers';
-import SmartContract from './smartcontract';
+import SmartContract from './SmartContract';
 
 class Transaction extends SmartContract {
 
