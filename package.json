@@ -2,7 +2,6 @@
   "name": "boilerplate-extension",
   "private": true,
   "scripts": {
-    "preinstall": "sudo npm install -g gulp-cli@2.2.0",
     "start": "gulp default",
     "watch": "gulp watch"
   },
