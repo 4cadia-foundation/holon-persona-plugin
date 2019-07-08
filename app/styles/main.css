@@ -1,4 +1,11 @@
 @import url("../../node_modules/bootstrap/dist/css/bootstrap.min.css");
+@import url("./_variables.css");
+@import url("./_utils.css");
+
+html, body {
+  background-color: var(--color-primary);
+}
+
 
 body {
   padding: 20px;
