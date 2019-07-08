@@ -1,10 +1,11 @@
-import ecies from 'ecies-parity';
+import * as EthCrypto from 'eth-crypto';
+
 
 /**
- * @class CryptoEcies
+ * @class Cryptography
  * @description Class for manager cryptographyc with Elliptic curve using ecies library
  **/
-class CryptoEcies {
+class Cryptography {
 
   /**
    * @method encrypt
@@ -15,9 +16,9 @@ class CryptoEcies {
    * */
   static async encrypt(publicKey, message) {
     try {
-      return await ecies.encrypt(publicKey, Buffer.from(message));
+      return await EthCrypto.encryptWithPublicKey(publicKey,message);
     } catch (exception) {
-      console.error('[Crypto - decrypt]' + exception);
+      console.error('[Crypto - encrypt]' + exception);
     }
   }
 
@@ -30,7 +31,7 @@ class CryptoEcies {
    * */
   static async decrypt(privateKey, encrypted) {
     try {
-      return ecies.decrypt(privateKey, encrypted).then(plaintext => plaintext.toString());
+      return  EthCrypto.decryptWithPrivateKey(privateKey,encrypted);
     }catch(exception){
       console.error('[Crypto - decrypt]' + exception);
     }
@@ -38,4 +39,4 @@ class CryptoEcies {
 
 }
 
-module.exports = CryptoEcies;
+module.exports = Cryptography;
