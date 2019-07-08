@@ -10,8 +10,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "chromereload.js",
-      "bundle.js"
+      "chromereload.js"
     ],
     "persistent": true
   },
@@ -33,7 +32,7 @@
       "16": "images/logo.png"
     },
     "default_title": "boilerplate <<Persona || Validator>>",
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
   },
   "web_accessible_resources": [
     "images/logo.png"

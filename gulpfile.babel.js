@@ -9,6 +9,7 @@ import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import minifyCSS from 'gulp-minify-css';
 import concat from 'gulp-concat';
+import buffer from 'vinyl-buffer';
 
 const $ = gulpLoadPlugins();
 
@@ -164,4 +165,27 @@ gulp.task('package', function () {
       .pipe(gulp.dest('package'));
 });
 
-gulp.task('default',  ['lint', 'browserify', 'chromereload', 'manifest:dev', 'html', 'images', 'locales', 'styles', 'config']);
+
+gulp.task('react:compile', () => {
+  const bundler = browserify({
+    extensions: ['.js', '.jsx'],
+    entries: 'app/ui/index.js'
+  });
+
+  return bundler
+    .transform('babelify',
+      {
+        presets: ['@babel/preset-react']
+      })
+    .bundle()
+    .pipe(source('dist/app.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('react:html', function() {
+  return gulp.src('app/ui/**/*.html')
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('default',  ['lint', 'browserify', 'chromereload', 'manifest:dev', 'react:compile' ,'react:html', 'images', 'locales', 'styles', 'config']);
