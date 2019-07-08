@@ -1,7 +1,7 @@
-import Settings from '../config/settings';
-import NETWORK from '../enums/network';
+import Settings from '../../config/settings';
+import NETWORK from '../enums/Network';
 import {ethers} from 'ethers';
-import Config from './config';
+import Config from './Config';
 
 class SmartContract {
 
