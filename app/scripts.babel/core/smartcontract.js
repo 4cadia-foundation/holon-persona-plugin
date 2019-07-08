@@ -18,10 +18,17 @@ class SmartContract {
     this._options.port = Settings.port || '8545';
     this._options.provider = Settings.provider || 'https';
     this._options.network = Settings.network || NETWORK.RINKEBYTESTNETWORK;
-
+    this._address = null;
+    this._abi = null;
     Object.freeze(this._options);
     this.provider = this._options;
 
+  }
+
+  async smartContractInitialization () {
+    let {address, abi} = await Config.loadConfigJSON('./config/abi.json');
+    this._address = address;
+    this._abi = abi;
   }
 
 
@@ -48,8 +55,7 @@ class SmartContract {
 
   async contract () {
     try {
-      let {address, abi} = await Config.loadConfigJSON('./config/abi.json');
-      return new ethers.Contract(address, abi, this.provider);
+      return new ethers.Contract(this._address, this._abi, this.provider);
     } catch (exception) {
       console.error('[Inpage-constract] Error: ' + exception.message);
     }
