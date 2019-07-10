@@ -5,7 +5,7 @@ import * as EthCrypto from 'eth-crypto';
  * @class Cryptography
  * @description Class for manager cryptographyc with Elliptic curve using ecies library
  **/
-class Cryptography {
+export default class Cryptography {
 
   /**
    * @method encrypt
@@ -38,5 +38,3 @@ class Cryptography {
   }
 
 }
-
-module.exports = Cryptography;

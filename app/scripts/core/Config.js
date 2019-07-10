@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class Config {
+export default class Config {
 
   static async loadConfigJSON (file) {
     return await axios.get(file)
@@ -15,4 +15,3 @@ class Config {
 }
 
 
-module.exports = Config;

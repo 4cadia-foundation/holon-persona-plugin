@@ -4,7 +4,7 @@
 * @class ContentScript
 * @description Class for all hacks that all page
 * */
-class ContentScript {
+export default class ContentScript {
 
   constructor(){}
 
@@ -35,5 +35,3 @@ class ContentScript {
 
 
 }
-
-module.exports = ContentScript;

@@ -1,7 +1,7 @@
 import SmartContract from './SmartContract';
 import {Transaction} from 'ethereumjs-tx';
 
-class FilterEventsBlockchain extends SmartContract {
+export  default class FilterEventsBlockchain extends SmartContract {
 
 
   constructor(filter) {
@@ -91,5 +91,3 @@ class FilterEventsBlockchain extends SmartContract {
     }));
   }
 }
-
-module.exports = FilterEventsBlockchain;
