@@ -3,7 +3,7 @@ import NETWORK from '../enums/Network';
 import {ethers} from 'ethers';
 import Config from './Config';
 
-class SmartContract {
+export  default class SmartContract {
 
   /**
    * create instance for smart contrat
@@ -64,5 +64,5 @@ class SmartContract {
 
 }
 
-module.exports = SmartContract;
+
 

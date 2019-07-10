@@ -1,7 +1,7 @@
 import {ethers} from 'ethers';
 import SmartContract from './SmartContract';
 
-class Transaction extends SmartContract {
+export default class Transaction extends SmartContract {
 
   constructor(){
     super();
@@ -19,5 +19,3 @@ class Transaction extends SmartContract {
   }
 
 }
-
-module.exports = Transaction;
