@@ -5,6 +5,18 @@ import './TableValidations.css';
 
 class TableValidations extends Component {
 
+  state = { modules: [
+    {
+      id: 1,
+      type: 'RG',
+      status: 'Aproved'
+    },
+    {
+      id: 2,
+      type: 'CPF',
+      status: 'Waiting Aprovation'
+    }
+  ]}
 
   constructor(props) {
     super(props);
