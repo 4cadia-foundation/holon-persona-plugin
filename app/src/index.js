@@ -6,6 +6,8 @@ import Home from './modules/Home/Home';
 
 import store from './redux/store';
 
+import Importar from './modules/Importar/Importar';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
 
@@ -15,7 +17,7 @@ class App extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <Home />
+          <Importar />
         </Provider>
 
       </div>
