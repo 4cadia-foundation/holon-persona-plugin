@@ -5,6 +5,15 @@ module.exports = {
   mode: 'development',
   entry: './app/src/index.js',
   devtool: 'inline-source-map',
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty',
+    fs: 'empty',
+    path: 'empty',
+    net: 'empty',
+    child_process: 'empty'
+  },
   output: {
     filename: 'main.bundle.js',
     path: path.resolve(__dirname, 'dist')
@@ -12,7 +21,7 @@ module.exports = {
   plugins:[
     new CopyPlugin([
       {from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist')}
-    ])
+    ])  
   ],
   module: {
     rules: [
@@ -37,7 +46,7 @@ module.exports = {
           options: {
             babelrc: false,
             presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ['@babel/plugin-proposal-class-properties']
+            plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
           }
         }]
       }
