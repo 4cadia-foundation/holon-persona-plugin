@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Table, Button} from 'react-bootstrap';
-import * as PersonaActions from '../../redux/actions/persona';
+import * as ValidationActions from '../../redux/actions/validations';
 import './TableValidations.css';
+import validations from "../../redux/reducers/validations";
 
 class TableValidations extends Component {
 
@@ -74,9 +75,9 @@ class TableValidations extends Component {
 }
 
 const mapStateToProps = state => ({ 
-  persona: state.persona 
+  modules: state.validations
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ValidationActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableValidations);
