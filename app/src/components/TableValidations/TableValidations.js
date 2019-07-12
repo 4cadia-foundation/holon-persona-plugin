@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Table, Button} from 'react-bootstrap';
-import * as ValidationActions from '../../redux/actions/validations';
+import * as PersonaActions from '../../redux/actions/persona';
 import './TableValidations.css';
 
 class TableValidations extends Component {
@@ -31,7 +31,7 @@ class TableValidations extends Component {
     
     return (
       <section>
-        <Button bsStyle="success" onClick={this.handleClick}>PublicKey</Button>
+        <Button bsStyle="success" onClick={() => this.props.getPersonaData()}>Get Persona Data</Button>
         <header>
           <h4 className="example">Table Documents Status</h4>
         </header>
@@ -74,9 +74,9 @@ class TableValidations extends Component {
 }
 
 const mapStateToProps = state => ({ 
-  modules: state.validations.modules 
+  persona: state.persona 
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ValidationActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableValidations);
