@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js",
-    "watch:react": "webpack --config ./webpack.react.js",
-    "watch:core": "webpack --config ./webpack.extension.js "
+    "watch:react": "webpack --config ./webpack.react.js --watch=true",
+    "watch:core": "webpack --config ./webpack.extension.js --watch=true"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
