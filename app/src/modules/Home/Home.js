@@ -9,13 +9,11 @@ import './Home.css';
 
   constructor(props) {
     super(props);
-
   }
 
   render () {
 
     const { activeDocument, publicKey }  = this.props;
-    
     
     return (
       <Grid>
@@ -46,4 +44,4 @@ export default connect(state => (
       activeDocument: state.validations.activeDocument, 
       publicKey: state.validations.publicKey 
     }
-  ))(Home);
+))(Home);

@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React, {Component} from 'react';
 import { Provider } from 'react-redux'
-
+import WalletPassword from './components/WalletPassword/WalletPassword';
 import Home from './modules/Home/Home';
 
 import store from './redux/store';
@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <Home />
+          <WalletPassword />
         </Provider>
 
       </div>
