@@ -9,19 +9,20 @@ const files = glob.sync('./app/scripts/**/*.js', { dot: true, ignore: ['./app/sc
 module.exports = {
   mode: 'development',
   entry: files,
+  watch: true,
   devtool: 'inline-source-map',
   output: {
     filename: 'main.extension.bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
-  plugins:[
+  plugins: [
     new CopyPlugin([
       {from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist/index.html')},
       {from: path.resolve(__dirname, 'app/config'), to: path.resolve(__dirname, 'dist/config')},
       {from: path.resolve(__dirname, 'app/_locales'), to: path.resolve(__dirname, 'dist/_locales')},
       {from: path.resolve(__dirname, 'app/images'), to: path.resolve(__dirname, 'dist/images')},
       {from: path.resolve(__dirname, 'app/chromereload.js'), to: path.resolve(__dirname, 'dist')},
-      {from: path.resolve(__dirname, 'app/manifest.json'), to: path.resolve(__dirname, 'dist')},
+      {from: path.resolve(__dirname, 'app/manifest.json'), to: path.resolve(__dirname, 'dist')}
     ])
   ],
   module: {
