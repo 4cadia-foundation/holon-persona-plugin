@@ -1,5 +1,5 @@
 .logo {
-    height: 90px;
+    height: 85px;
     width: 90px;
 }
 
@@ -10,8 +10,9 @@
 
 #gridPrincipal {
     margin-top: 130px;
+    margin-bottom: 130px;
 }
 
 #rowButton {
-    margin-top: 20px;
+    margin-top: 25px;
 }
