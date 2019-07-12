@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { Provider } from 'react-redux'
 
 import Home from './modules/Home/Home';
+import ImportWallet from './modules/ImportWallet/ImportWallet';
 
 import store from './redux/store';
 
@@ -15,7 +16,8 @@ class App extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <Home />
+          {/* <Home /> */}
+          <ImportWallet />
         </Provider>
 
       </div>
