@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Grid, Row, Col, Button, Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import TableValidations from '../../components/TableValidations/TableValidations';
+import { Button, Form, FormControl } from 'react-bootstrap';
+//import { connect } from 'react-redux';
+//import TableValidations from '../../components/TableValidations/TableValidations';
 
 import styles from './WalletPassword.css';
 
@@ -10,32 +10,61 @@ import styles from './WalletPassword.css';
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        this.state = {
+          password: "",
+          password2: ""
+        };        
     }
 
     handleClick(){
-        debugger;
         console.log("Funcionou");
+    }
+    validateForm() {
+        return this.state.password.length > 0 && this.state.password2.length > 0;
+    }
+    handleChange = event => {
+        this.setState({
+          [event.target.id]: event.target.value
+        });
     }
 
   render () {
 
     return (
         <div>
-        <Form>
-            <Form.Group controlId="formWalletPassword">
-                <Form.Label>New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-                <Form.Text className="text-muted">
-                    We'll never share your password with anyone else.
-                </Form.Text>
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />          
-            </Form.Group>
-            <Button variant="primary" type="submit" onClick={this.handleClick}>
-            Submit
-            </Button>
-      </Form>
-      </div>
+            <div>
+                <img src="images/icon-128.png" className="rounded center-block" alt="Holon"/>
+            </div>
+            <hr/>
+            <Form>
+                <div>
+                    <h2 align="center" >Create Your Wallet</h2>
+                </div>
+                <hr></hr>
+                <p>New Password</p>
+                <FormControl 
+                    id="password" 
+                    type="password" 
+                    value={this.state.password}
+                    placeholder="Password" 
+                    onChange={this.handleChange}
+                />
+                <hr></hr>
+                <p>Confirm Password</p>
+                <FormControl 
+                    id="password2" 
+                    type="password" 
+                    value={this.state.password2}
+                    placeholder="Confirm Password" 
+                    onChange={this.handleChange}
+                />
+                <hr></hr>
+                <Button disabled={!this.validateForm()} className="btn btn-primary pull-right"  type="submit" onClick={this.handleClick}>
+                    Submit
+                </Button>                
+            </Form>
+
+        </div>
     );
   }
 
