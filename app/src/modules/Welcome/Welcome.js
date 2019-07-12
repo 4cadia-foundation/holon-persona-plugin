@@ -17,11 +17,11 @@ import './Welcome.css';
               <h3 className="Title">Welcome to Holon</h3>
             </Row>
           </header>
-          <main>
+          <section>
           <Row className="text-center">
             <p className= "Subtitle">Connecting you to the Decentralized Web. <br/> We're happy to see you.</p>
           </Row>
-          </main>
+          </section>
           <Row className="text-center" id="rowButton">
             <footer>
               <Button bsStyle="warning" className="text-center">Get started</Button>
