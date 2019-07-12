@@ -2,7 +2,9 @@
   "name": "boilerplate-extension",
   "private": true,
   "scripts": {
-    "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js"
+    "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js",
+    "watch:react": "webpack --config ./webpack.react.js",
+    "watch:core": "webpack --config ./webpack.extension.js "
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
@@ -41,6 +43,7 @@
     "url-loader": "^2.0.1",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5",
+    "webpack-livereload-plugin": "^2.2.0",
     "wiredep": "^4.0.0"
   },
   "engines": {
