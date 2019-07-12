@@ -14,5 +14,6 @@
 }
 
 #rowButton {
-    margin-top: 25px;
+    margin-top: 30px;
+    display: inline-block;
 }
