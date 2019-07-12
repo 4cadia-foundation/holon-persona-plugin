@@ -12,7 +12,7 @@ import './styles/main.css';
 class App extends Component {
 
   render() {
-    return (
+   return (
       <div className="App">
         <Provider store={store}>
           <Welcome />

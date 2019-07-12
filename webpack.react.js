@@ -1,10 +1,13 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
+
 
 module.exports = {
   mode: 'development',
   entry: './app/src/index.js',
   devtool: 'inline-source-map',
+  watch: true,
   node: {
     net: 'empty',
     tls: 'empty',
@@ -19,6 +22,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   plugins:[
+    new LiveReloadPlugin(),
     new CopyPlugin([
       {from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist')}
     ])  
