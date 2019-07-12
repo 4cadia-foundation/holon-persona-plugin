@@ -1,0 +1,17 @@
+.logo {
+    height: 90px;
+    width: 90px;
+}
+
+.subtitle {
+    font-size: 12pt;
+    font-weight: bolder;
+}
+
+#gridPrincipal {
+    margin-top: 130px;
+}
+
+#rowButton {
+    margin-top: 20px;
+}
