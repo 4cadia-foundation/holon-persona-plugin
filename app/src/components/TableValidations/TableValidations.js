@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import {Table, Button} from 'react-bootstrap';
 import * as ValidationActions from '../../redux/actions/validations';
 import './TableValidations.css';
+import validations from "../../redux/reducers/validations";
 
 class TableValidations extends Component {
 
@@ -31,7 +32,7 @@ class TableValidations extends Component {
     
     return (
       <section>
-        <Button bsStyle="success" onClick={this.handleClick}>PublicKey</Button>
+        <Button bsStyle="success" onClick={() => this.props.getPersonaData()}>Get Persona Data</Button>
         <header>
           <h4 className="example">Table Documents Status</h4>
         </header>
@@ -74,7 +75,7 @@ class TableValidations extends Component {
 }
 
 const mapStateToProps = state => ({ 
-  modules: state.validations.modules 
+  modules: state.validations
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(ValidationActions, dispatch);

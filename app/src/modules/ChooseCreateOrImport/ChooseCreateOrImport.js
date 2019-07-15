@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Row, Col, Grid, Panel, Button, Glyphicon} from 'react-bootstrap';
-import "./card.css";
+import "./ChooseCreateOrImport.css";
 
-class CardImport extends Component {
+class ChooseCreateOrImport extends Component {
     render() {
         return(
         <Grid>
@@ -41,4 +41,4 @@ class CardImport extends Component {
 }
 
 
-export default CardImport;
+export default ChooseCreateOrImport;
