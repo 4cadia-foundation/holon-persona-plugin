@@ -8,7 +8,7 @@ import './Welcome.css';
   render () {
 
     return (
-        <Grid id="gridPrincipal">
+        <Grid  id="gridPrincipal">
           <header>
             <Row className="text-center">
               <img className="logo" src={logo} alt="Logo" />
@@ -22,9 +22,9 @@ import './Welcome.css';
             <p className= "Subtitle">Connecting you to the Decentralized Web. <br/> We're happy to see you.</p>
           </Row>
           </section>
-          <Row className="text-center" id="rowButton">
+          <Row>
             <footer>
-              <Button bsStyle="warning" className="text-center">Get started</Button>
+              <Button bsStyle="warning" block className="text-center" id="rowButton">Get started</Button>
             </footer>
           </Row>
         </Grid>
