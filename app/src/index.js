@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import { Provider } from 'react-redux'
 
 import Home from './modules/Home/Home';
-
+import Card from './modules/importarecriar/card.js'
 import store from './redux/store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <Home />
+          <Card />
         </Provider>
 
       </div>
