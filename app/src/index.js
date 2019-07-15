@@ -4,15 +4,13 @@ import { Provider } from 'react-redux';
 import React, {Component} from 'react';
 import { Route, Link, BrowserRouter as Router, Switch } from "react-router-dom";
 
+import Navbar from './components/Navbar/Navbar';
 
-import Navbar from "./components/Navbar/Navbar";
-
-import ImportWallet from "./modules/ImportWallet/ImportWallet";
-import Welcome from "./modules/Welcome/Welcome";
+import Welcome from './modules/Welcome/Welcome';
+import ImportWallet from './modules/ImportWallet/ImportWallet';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
-
 
 
 class App extends Component {
@@ -28,7 +26,7 @@ class App extends Component {
           <Route path="/importwallet" component={ ImportWallet } />
        </Switch>
       </div>
-    );
+    )
   }
 }
 

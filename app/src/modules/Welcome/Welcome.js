@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 import logo from '../../../images/logo.png';
-import { Link } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
 import './Welcome.css';
 
-class Welcome extends Component {
-
-  constructor(props){
-    super(props);
-  }
-
+ class Welcome extends Component {
 
   render () {
 
@@ -29,8 +23,8 @@ class Welcome extends Component {
             <p className= "Subtitle">Connecting you to the Decentralized Web. <br/> We're happy to see you.</p>
           </Row>
           </section>
-          <Row className="text-center" id="rowButton">
-            <footer>
+          <Row className="text-center">
+            <footer className="text-center">
                 <Link to="/importwallet">Get started</Link>
             </footer>
           </Row>
@@ -39,6 +33,5 @@ class Welcome extends Component {
   }
 
 }
-
 
 export default Welcome;
