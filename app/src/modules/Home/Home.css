@@ -1,0 +1,33 @@
+.logoHome {
+    height: 45px;
+    width: 50px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.horizontalLine {
+    border: 0.5px solid black;
+    width: 100%;
+}
+
+.basicInfoHome {
+    font-size: 10pt;
+}
+
+#tableValidation {
+    /* width: 100%; */
+    margin-top: 20px;
+}
+
+#gridHome {
+    margin-top: 25px;
+}
+
+#sectionValidation {
+    margin-top: 40px;
+}
+
+#titleValidation {
+    font-weight: bold;
+    margin-bottom: -15px;
+}

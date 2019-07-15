@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Menu from './modules/Menu/Menu';
+import Home from './modules/Home/Home';
 import ImportWallet from './modules/ImportWallet/ImportWallet';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,8 +24,9 @@ class App extends Component {
         <Provider store={store}>
           <Router>
             <Switch>
-              <Route path='' component={ Menu }></Route>
+              <Route path='' component={ Home }></Route>
               <Route path='/importwallet' component={ ImportWallet }></Route>
+              <Route path='/home' component={ Home }></Route>
             </Switch>
           </Router>
         </Provider>
