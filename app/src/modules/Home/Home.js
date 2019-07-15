@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Row, Label, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import logo from '../../../images/logo.png';
-
+import Menu from '../../components/Menu/Menu';
 
 import './Home.css';
 
@@ -12,6 +12,7 @@ import './Home.css';
 
     return (
       <Grid id="gridHome">
+        <Menu/>
         <section id="sectionBasicInfo">
           <hr className="horizontalLine"></hr>
           <Row className="text-center">
