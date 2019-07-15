@@ -1,23 +1,34 @@
 import ReactDOM from 'react-dom';
-import React, {Component} from 'react';
-import { Provider } from 'react-redux'
-import WalletPassword from './components/WalletPassword/WalletPassword';
-import Home from './modules/Home/Home';
-
 import store from './redux/store';
+import { Provider } from 'react-redux';
+import React, {Component} from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import Welcome from './modules/Welcome/Welcome';
+import ImportWallet from './modules/ImportWallet/ImportWallet';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
 
+
 class App extends Component {
 
+  constructor(props){
+    super(props);
+  }
+
+
   render() {
-    return (
+   return (
       <div className="App">
         <Provider store={store}>
-          <WalletPassword />
+          <Router>
+            <Switch>
+              <Route path='' component={ Welcome }></Route>
+              <Route path='/importwallet' component={ ImportWallet }></Route>
+            </Switch>
+          </Router>
         </Provider>
-
       </div>
     )
   }
