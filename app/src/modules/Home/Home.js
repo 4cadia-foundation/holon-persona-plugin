@@ -8,7 +8,6 @@ import './Home.css';
 
   constructor(props) {
     super(props);
-
   }
 
   render () {
@@ -31,4 +30,4 @@ export default connect(state => (
       activeDocument: state.validations.activeDocument, 
       publicKey: state.validations.publicKey 
     }
-  ))(Home);
+))(Home);
