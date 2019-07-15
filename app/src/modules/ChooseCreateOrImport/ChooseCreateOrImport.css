@@ -1,0 +1,17 @@
+.panel{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.titulo {
+    margin-top: 40px;
+}
+
+.texto-interior {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
