@@ -40,8 +40,8 @@ import styles from './WalletPassword.css';
                 <div>
                     <h2 align="center" >Create Your Wallet</h2>
                 </div>
-                <hr></hr>
-                <p>New Password</p>
+                
+                <label>New Password</label>
                 <FormControl 
                     id="password" 
                     type="password" 
@@ -49,8 +49,8 @@ import styles from './WalletPassword.css';
                     placeholder="Password" 
                     onChange={this.handleChange}
                 />
-                <hr></hr>
-                <p>Confirm Password</p>
+                <br></br>
+                <label>Confirm Password</label>
                 <FormControl 
                     id="password2" 
                     type="password" 
@@ -58,8 +58,8 @@ import styles from './WalletPassword.css';
                     placeholder="Confirm Password" 
                     onChange={this.handleChange}
                 />
-                <hr></hr>
-                <Button disabled={!this.validateForm()} className="btn btn-primary pull-right"  type="submit" onClick={this.handleClick}>
+                
+                <Button disabled={!this.validateForm()} className="btn btn-primary btn-block"  type="submit" onClick={this.handleClick}>
                     Submit
                 </Button>                
             </Form>
