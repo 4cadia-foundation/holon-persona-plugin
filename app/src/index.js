@@ -3,7 +3,6 @@ import store from './redux/store';
 import { Provider } from 'react-redux';
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
 
 import Welcome from './modules/Welcome/Welcome';
 import ImportWallet from './modules/ImportWallet/ImportWallet';
@@ -25,7 +24,7 @@ class App extends Component {
         <Provider store={store}>
           <Router>
             <Switch>
-              <Route path='' component={ WelcomeBack }></Route>
+              <Route path='' component={ Welcome }></Route>
               <Route path='/importwallet' component={ ImportWallet }></Route>
             </Switch>
           </Router>
