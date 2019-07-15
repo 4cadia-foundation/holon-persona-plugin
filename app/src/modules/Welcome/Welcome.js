@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 import logo from '../../../images/logo.png';
+import { Link } from 'react-router-dom'
+
 import './Welcome.css';
 
- class Welcome extends Component {
+class Welcome extends Component {
+
+  constructor(props){
+    super(props);
+  }
+
 
   render () {
 
@@ -24,7 +31,7 @@ import './Welcome.css';
           </section>
           <Row className="text-center" id="rowButton">
             <footer>
-              <Button bsStyle="warning" className="text-center">Get started</Button>
+                <Link to="/importwallet">Get started</Link>
             </footer>
           </Row>
         </Grid>
@@ -32,5 +39,6 @@ import './Welcome.css';
   }
 
 }
+
 
 export default Welcome;

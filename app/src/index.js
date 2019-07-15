@@ -2,40 +2,42 @@ import ReactDOM from 'react-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Route, Link, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import Welcome from './modules/Welcome/Welcome';
-import ImportWallet from './modules/ImportWallet/ImportWallet';
+
+import Navbar from "./components/Navbar/Navbar";
+
+import ImportWallet from "./modules/ImportWallet/ImportWallet";
+import Welcome from "./modules/Welcome/Welcome";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
 
 
+
 class App extends Component {
 
-  constructor(props){
-    super(props);
-  }
+  render (){
+    return (
+      <div className="hollonApp">
 
+       <Navbar />
 
-  render() {
-   return (
-      <div className="App">
-        <Provider store={store}>
-          <Router>
-            <Switch>
-              <Route path='' component={ Welcome }></Route>
-              <Route path='/importwallet' component={ ImportWallet }></Route>
-            </Switch>
-          </Router>
-        </Provider>
+       <Switch>
+          <Route path="/" exact={true} component={ Welcome } />
+          <Route path="/importwallet" component={ ImportWallet } />
+       </Switch>
       </div>
-    )
+    );
   }
 }
 
 
 ReactDOM.render(
-    <App />,
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById('app')
 )

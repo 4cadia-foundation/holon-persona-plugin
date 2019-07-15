@@ -12,12 +12,13 @@ import './Home.css';
   }
 
   render () {
+    const { history } = this.props;
 
     return (
       <Grid>
         <Row>
           <Col xs={12} md={12}>
-            <Button size="lg" variant="primary" block bsStyle="warning" onClick={() =>{ this.props.history.push('/welcome') }}>Welcome</Button>
+            <Button size="lg" variant="primary" block bsStyle="warning" onClick={() =>{  history.push('/welcome') }}>Welcome</Button>
           </Col>
         </Row>
       </Grid>
