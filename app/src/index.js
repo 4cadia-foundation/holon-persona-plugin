@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './modules/Home/Home';
-import Welcome from './modules/Welcome/Welcome';
 import ImportWallet from './modules/ImportWallet/ImportWallet';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
