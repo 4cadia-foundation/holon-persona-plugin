@@ -59,7 +59,7 @@ import styles from './WalletPassword.css';
                     onChange={this.handleChange}
                 />
                 
-                <Button disabled={!this.validateForm()} className="btn btn-primary btn-block"  type="submit" onClick={this.handleClick}>
+                <Button block disabled={!this.validateForm()} bsStyle="primary" bsSize="large"  type="submit" onClick={this.handleClick}>
                     Submit
                 </Button>                
             </Form>
@@ -69,6 +69,7 @@ import styles from './WalletPassword.css';
   }
 
 }
+
 export default WalletPassword;
 
 // export default connect(state => (
