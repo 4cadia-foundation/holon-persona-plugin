@@ -1,10 +1,13 @@
 import SmartContract from '../../../scripts/core/SmartContract';
 
 const smartContract = new SmartContract();
+const transactor = new Transactor();
+//const smartContractWithSigner = transactor.contractWithSigner;
 init();
 
-async function init () {
-    await smartContract.smartContractInitialization();
+function init () {
+    smartContract.smartContractInitialization();
+
 }
 
 export function getPersonaData(address = '0x1d40DA744b7C14C24C97838B0Ed19CE383a784b9') {

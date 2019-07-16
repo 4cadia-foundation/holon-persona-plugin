@@ -25,8 +25,8 @@ export  default class SmartContract {
 
   }
 
-  async smartContractInitialization () {
-    let {address, abi} = await Config.loadConfigJSON('./config/abi.json');
+  smartContractInitialization () {
+    let {address, abi} = Config.loadConfigJSON('./config/abi.json');
     this._address = address;
     this._abi = abi;
   }
@@ -53,15 +53,9 @@ export  default class SmartContract {
 
 
 
-  async contract () {
-    try {
+   get contract () {    
       return new ethers.Contract(this._address, this._abi, this.provider);
-    } catch (exception) {
-      console.error('[Inpage-constract] Error: ' + exception.message);
-    }
-  }
-
-
+   }
 }
 
 
