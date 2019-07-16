@@ -2,7 +2,7 @@ import SmartContract from '../../../scripts/core/SmartContract';
 
 const smartContract = new SmartContract();
 const transactor = new Transactor();
-//const smartContractWithSigner = transactor.contractWithSigner;
+const smartContractWithSigner = transactor.contractWithSigner;
 init();
 
 function init () {
