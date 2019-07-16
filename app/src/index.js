@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import React, {Component} from 'react';
-import { Route, Link, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, Link, HashRouter , Switch } from "react-router-dom";
 
 import Navbar from './components/Navbar/Navbar';
 
@@ -33,9 +33,9 @@ class App extends Component {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <HashRouter>
       <App />
-    </Router>
+    </HashRouter>
   </Provider>,
   document.getElementById('app')
 )
