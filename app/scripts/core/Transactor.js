@@ -22,4 +22,7 @@ export default class Transactor extends SmartContract {
     return contract.connect(this._wallet);
   }
 
+  get wallet() {
+    return this._wallet;
+  }
 }
