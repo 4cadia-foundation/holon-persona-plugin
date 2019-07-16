@@ -2,33 +2,24 @@ import ReactDOM from 'react-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Route, HashRouter , Switch } from "react-router-dom";
 
-import Menu from './modules/Menu/Menu';
-import ImportWallet from './modules/ImportWallet/ImportWallet';
+
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
+import routers from "./router";
 
 
 class App extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
-
-  render() {
-   return (
-      <div className="App">
-        <Provider store={store}>
-          <Router>
-            <Switch>
-              <Route path='' component={ Menu }></Route>
-              <Route path='/importwallet' component={ ImportWallet }></Route>
-            </Switch>
-          </Router>
-        </Provider>
+  render (){
+    return (
+      <div className="hollonApp">
+       <Switch>
+         {routers.map((item, index)=> (<Route key={index} path={item.path} component={item.component} exact={item.exact} />))}
+       </Switch>
       </div>
     )
   }
@@ -36,6 +27,10 @@ class App extends Component {
 
 
 ReactDOM.render(
-    <App />,
+  <Provider store={store}>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </Provider>,
   document.getElementById('app')
 )

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 export default class Config {
 
-  static async loadConfigJSON (file) {
-    return await axios.get(file)
+  static loadConfigJSON (file) {
+    return axios.get(file)
       .then((response) => {
         return response.data;
       })
