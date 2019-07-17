@@ -74,8 +74,8 @@ class Home extends Component {
             </Row>
           <Table striped id='tableValidation'>
             <tbody>
-              {persona.personalInfo.map(item => 
-                    <tr>
+              {persona.personalInfo.map((item, index) => 
+                    <tr key={index}>
                       <td className="text-center">{item.field}</td>
                       <td className="text-center">{item.valor}</td>
                       <td className="text-center"><Label bsStyle="success">Approved</Label></td>
