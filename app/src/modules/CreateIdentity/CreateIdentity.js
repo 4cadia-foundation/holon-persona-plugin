@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import Loader from '../../components/Loader/Loader';
 
 class CreateIdentity extends Component {
     
     constructor(props) {
         super(props);
+        this.state = { Loader: false }
     }
 
     render () {
@@ -30,7 +32,8 @@ class CreateIdentity extends Component {
                     <ControlLabel>Email</ControlLabel>
                     <FormControl componentClass="input" type="email" placeholder="email@example.com" />
                 </FormGroup>
-                <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={ () => this.props.history.push('/home')}>Create ID</Button>
+                <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={() => this.props.history.push('/home') && this.setState({Loader: true})}>Create ID</Button>
+                {this.state.Loader ? (<Loader />) : (null)}
             </Grid>
         );
     }
