@@ -1,3 +1,45 @@
-.giphy-embed {
-    margin-top: 50px;
+ .links{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 20px;
+} 
+
+.links2 {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#saldo {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.botoes {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.icons {
+    margin-left: 20px;
+}
+
+.linha {
+    width: 100vw;
+    height:2px; 
+    border:none; 
+    color:#000; 
+    background-color:#000; 
+    margin-top: 30px; 
+    margin-bottom: 0px
 }
