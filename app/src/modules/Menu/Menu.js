@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Row, Col, Grid, Glyphicon, DropdownButton, ButtonToolbar, MenuItem, Button} from 'react-bootstrap';
+import { Row, Col, Grid, Glyphicon, DropdownButton, MenuItem, Button} from 'react-bootstrap';
 import './Menu.css';
 
 class Menu extends Component {
