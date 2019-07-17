@@ -30,7 +30,7 @@ class CreateIdentity extends Component {
                     <ControlLabel>Email</ControlLabel>
                     <FormControl componentClass="input" type="email" placeholder="email@example.com" />
                 </FormGroup>
-                <Button className="margin-top-50" bsSize="large" block bsStyle="warning">Create ID</Button>
+                <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={ () => this.props.history.push('/home')}>Create ID</Button>
             </Grid>
         );
     }

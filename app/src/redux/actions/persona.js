@@ -1,24 +1,23 @@
-import SmartContract from '../../../scripts/core/SmartContract';
+import Transactor from '../../../scripts/core/Transactor';
 
-const smartContract = new SmartContract();
 const transactor = new Transactor();
-const smartContractWithSigner = transactor.contractWithSigner;
-init();
 
-function init () {
-    smartContract.smartContractInitialization();
-
-}
-
-export function getPersonaData(address = '0x1d40DA744b7C14C24C97838B0Ed19CE383a784b9') {
-    return dispatch => {
-        smartContract.getPersonaData(address, 'email')
+export function getPersonaData() {
+    return (dispatch, getState) => {
+        transactor.getPersonaData(transactor.wallet.address, 'email')
         .then(email => {
             const item = {campo: 'email', valor: email};
-            dispatch({type: 'GET_PERSONA_DATA', personalInfo: item, address: address});
+            let newPersonalInfo = getState().personalInfo.push(item);
+            dispatch({type: 'GET_PERSONA_BASIC_DATA', personalInfo: newPersonalInfo, address: transactor.wallet.address});
         })
         .catch(exception => {
             dispatch({type: 'ERROR_PERSONA_DATA', error: exception.message});
         });
     }   
+}
+
+export function getPersonaAddress() {
+    return dispatch => {
+        dispatch({type: 'GET_PERSONA_ADDRESS', address: transactor.wallet.address});
+    }
 }
