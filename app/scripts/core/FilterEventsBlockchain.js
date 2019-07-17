@@ -70,6 +70,31 @@ export  default class FilterEventsBlockchain extends SmartContract {
     });
   }
 
+  /**
+   * @method getPureTransaction
+   * @desc filter transactions blockchain
+   * @param {string} transactionHash - transaction hash blockchain
+   * @return {Transaction}
+   * */
+  getPureTransaction(transactionHash) {
+    return this.provider.getTransaction(transactionHash).then(data => {
+      return data;
+    });
+  }
+
+    /**
+   * @method getTransactionReceipt
+   * @desc filter receipt transactions blockchain
+   * @param {string} transactionHash - transaction hash blockchain
+   * @return {TransactionReceipt}
+   * */
+  getTransactionReceipt(transactionHash) {
+    return this.provider.getTransactionReceipt(transactionHash).then(data => {
+      return data;
+    });
+  }
+
+
 
   /**
    * @method getLogsTransactionHash
@@ -80,5 +105,20 @@ export  default class FilterEventsBlockchain extends SmartContract {
     return this.provider.getLogs(this.filterData).then(data => data.map(item => {
       return item.transactionHash;
     }));
+  }
+
+    /**
+   * @method getLogs
+   * @desc filter logs blockchain
+   * @return {Logs}
+   * */
+  getLogs () {
+    return this.provider.getLogs(this.filterData).then(data => data.map(item => {
+      return item;
+    }));
+  }
+
+  getNewDataLogs() {
+    return this.contract.filters.NewData(null, null, null, null)
   }
 }

@@ -16,12 +16,12 @@ class Home extends Component {
     this.state = {
       persona: this.props.persona
     }
-    this.props.getPersonaAddress();    
+    this.props.getPersonaData();   
+    this.getCampoValor = this.getCampoValor.bind(this); 
+    this.getAddress = this.getAddress.bind(this);
   }
 
   componentWillReceiveProps(propsOld) {
-    console.log('propsOld', propsOld);
-  
     if (this.state.persona.address != propsOld.persona.address) {
       this.setState({
         persona: propsOld.persona
@@ -29,8 +29,23 @@ class Home extends Component {
     }
   }
 
-  render () {
+  getCampoValor(campo) {
+    const {persona} = this.state;
+    if (persona.personalInfo.length < 1) {
+      return '';
+    }
+    let filtro = persona.personalInfo.filter(item => {
+      return item.field == campo;
+    });
+    return filtro[0].valor;
+  }
 
+  getAddress() {
+    const {persona} = this.state;
+    return persona.address;
+  }
+
+  render () {
     const {persona} = this.state;
 
     return (
@@ -42,13 +57,13 @@ class Home extends Component {
             <img className="logoHome" src={logo} alt="Logo" />
           </Row>
           <Row className="text-center">
-            <p className="basicInfoHome">{persona.address}</p>
+            <p className="basicInfoHome">{ this.getAddress() }</p>
           </Row>
           <Row className="text-center">
-            <p className="basicInfoHome">Victória de Oliveira Durães</p>
+            <p className="basicInfoHome">{ this.getCampoValor('name') }</p>
           </Row>
           <Row className="text-center">
-            <p className="basicInfoHome">victoria@janusproj.com</p>
+            <p className="basicInfoHome">{ this.getCampoValor('email') }</p>
           </Row>
         </section>
 
@@ -59,22 +74,14 @@ class Home extends Component {
             </Row>
           <Table striped id='tableValidation'>
             <tbody>
-              <tr>
-                <td className="text-center">Name</td>
-                <td className="text-center"><Label bsStyle="success">Approved</Label></td>
-              </tr>
-              <tr>
-                <td className="text-center">CPF</td>
-                <td className="text-center"><Label bsStyle="warning">Pending</Label></td>
-              </tr>
-              <tr>
-                <td className="text-center">Phone</td>
-                <td className="text-center"><Label bsStyle="danger">Disapproved</Label></td>
-              </tr>
-              <tr>
-                <td className="text-center">Email</td>
-                <td className="text-center"><Label bsStyle="default">Not validated</Label></td>
-              </tr>
+              {persona.personalInfo.map(item => 
+                    <tr>
+                      <td className="text-center">{item.field}</td>
+                      <td className="text-center">{item.valor}</td>
+                      <td className="text-center"><Label bsStyle="success">Approved</Label></td>
+                    </tr>
+                )
+              }          
             </tbody>
           </Table>
         </section>
