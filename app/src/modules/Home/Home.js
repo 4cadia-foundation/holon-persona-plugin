@@ -31,8 +31,6 @@ class Home extends Component {
 
   render () {
 
-    console.log('Estado');
-    console.log(this.state.persona);
     const {persona} = this.state;
 
     return (
