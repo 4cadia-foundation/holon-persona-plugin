@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Grid, Row, Col } from 'react-bootstrap';
+import { Button, Grid, Row } from 'react-bootstrap';
 import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
 import './Welcome.css';
@@ -25,7 +25,7 @@ import './Welcome.css';
           </section>
           <Row className="text-center">
             <footer className="text-center">
-                <Link to="/importwallet">Get started</Link>
+                <Link to="/choosecreateorimport">Get started</Link>
             </footer>
           </Row>
         </Grid>
