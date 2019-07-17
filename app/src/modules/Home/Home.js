@@ -1,14 +1,37 @@
-import React, { Component } from 'react'
-import { Grid, Row, Label, Table } from 'react-bootstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Grid, Row, Label, Table } from 'react-bootstrap';
+import * as PersonaActions from '../../redux/actions/persona';
 import logo from '../../../images/logo.png';
 import Menu from '../../components/Menu/Menu';
 
 import './Home.css';
 
- class Home extends Component {
+class Home extends Component {
+
+  
+  constructor(props) {
+    super(props);      
+    this.state = {
+      persona: this.props.persona
+    }
+    this.props.getPersonaAddress();    
+  }
+
+  componentWillReceiveProps(propsOld) {
+    console.log('propsOld', propsOld);
+  
+    if (this.state.persona.address != propsOld.persona.address) {
+      this.setState({
+        persona: propsOld.persona
+      })
+    }
+  }
 
   render () {
+
+    const {persona} = this.state;
 
     return (
       <Grid id="gridHome">
@@ -19,7 +42,7 @@ import './Home.css';
             <img className="logoHome" src={logo} alt="Logo" />
           </Row>
           <Row className="text-center">
-            <p className="basicInfoHome">0x1d40DA744b7C14C24C97838B0Ed19CE383a784b9</p>
+            <p className="basicInfoHome">{persona.address}</p>
           </Row>
           <Row className="text-center">
             <p className="basicInfoHome">Victória de Oliveira Durães</p>
@@ -61,4 +84,10 @@ import './Home.css';
 
 }
 
-export default Home;
+const mapStateToProps = state => ({ 
+  persona: state.persona
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
