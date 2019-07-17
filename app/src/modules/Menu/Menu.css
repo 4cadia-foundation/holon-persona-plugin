@@ -1,4 +1,8 @@
- .links{
+* {
+    margin: 0;
+}
+
+.links{
     height: 100px;
     display: flex;
     flex-direction: column;
@@ -17,19 +21,28 @@
 }
 
 #saldo {
-    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .botoes {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
+#drop {
+    margin: 0 20px;
+}
+
+.sair {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
 .icons {
     margin-left: 20px;
 }

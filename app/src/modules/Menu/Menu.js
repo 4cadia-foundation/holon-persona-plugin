@@ -38,17 +38,18 @@ class Menu extends Component {
                             <Glyphicon glyph="lock"/>
                             <a href="" className="icons">Export Private Key</a>
                         </div>
-                        <div className="flex-column">
+                        <div  className="flex-column">
                             <Glyphicon glyph="cog"/>
-                            <ButtonToolbar >
+                            {/* <ButtonToolbar  className="flex-column"> */}
                                 <DropdownButton
                                     bsSize="xsmall"
-                                    title="Select network">
-                                    <MenuItem >Main ethereum network</MenuItem>
-                                    <MenuItem >Rinkeby test network</MenuItem>
-                                    <MenuItem >Localhost</MenuItem>
+                                    title="Select network"
+                                    id="drop">
+                                    <MenuItem eventKey="1">Main ethereum network</MenuItem>
+                                    <MenuItem eventKey="2">Rinkeby network</MenuItem>
+                                    <MenuItem eventKey="3">Localhost</MenuItem>
                                 </DropdownButton>
-                            </ButtonToolbar>
+                            {/* </ButtonToolbar> */}
                         </div>
                     </div>
                     <hr className="linha"></hr>
