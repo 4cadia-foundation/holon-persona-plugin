@@ -94,7 +94,7 @@ class ImportWallet extends Component {
    **/
   getValidationEqualPassword(){
     const {password, confirm} = this.state;
-    if (password !== confirm && password.length > 8){
+    if (password !== confirm && password.length > 0){
       return 'error';
     }
     return null;
