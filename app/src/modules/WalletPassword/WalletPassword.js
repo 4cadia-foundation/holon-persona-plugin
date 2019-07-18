@@ -59,7 +59,7 @@ import styles from './WalletPassword.css';
                     onChange={this.handleChange}
                 />
                 
-                <Button block disabled={!this.validateForm()} bsStyle="primary" bsSize="large"  type="submit" onClick={this.handleClick}>
+                <Button block bsStyle="warning" bsSize="large"  type="submit" onClick={ () => this.props.history.push('/createidentity')}>
                     Submit
                 </Button>                
             </Form>

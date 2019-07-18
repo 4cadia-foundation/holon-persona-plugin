@@ -151,12 +151,4 @@ class ImportWallet extends Component {
     }
 }
 
-
-
-const mapStateToProps = state => ({
-  accounts: state.wallet.accounts
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ImportWallet);
+export default ImportWallet;

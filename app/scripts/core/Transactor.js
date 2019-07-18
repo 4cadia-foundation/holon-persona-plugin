@@ -9,15 +9,6 @@ export default class Transactor extends SmartContract {
   }
 
 
-  async transactionContractWithSigner (contract, method, params){
-    try {      
-      let contractWithSigner = contract.connect(this._wallet);
-      return await contractWithSigner[method].apply(null, params);
-    } catch (exception) {
-      console.error('[SmartContract] Error:' + exception);
-    }
-  }
-
   get contractWithSigner () {    
     return contract.connect(this._wallet);
   }

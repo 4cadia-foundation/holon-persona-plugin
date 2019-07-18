@@ -3,6 +3,11 @@ import { Row, Col, Grid, Panel, Button, Glyphicon} from 'react-bootstrap';
 import "./ChooseCreateOrImport.css";
 
 class ChooseCreateOrImport extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return(
         <Grid>
@@ -18,7 +23,7 @@ class ChooseCreateOrImport extends Component {
                         <div className="texto-interior">
                             <Glyphicon glyph="download-alt" />
                             <Panel.Title componentClass="h3">No, I already have a wallet </Panel.Title>
-                            <Button bsStyle="warning">Importar</Button>
+                            <Button bsStyle="warning" onClick={ () => this.props.history.push('/importwallet')}>Import</Button>
                         </div>
                     </Panel>
                 </Col>
@@ -29,7 +34,7 @@ class ChooseCreateOrImport extends Component {
                         <div className="texto-interior">
                             <Glyphicon glyph="plus"/>
                             <Panel.Title componentClass="h3">Yes, let's create a wallet </Panel.Title>
-                            <Button bsStyle="warning">Create</Button>
+                            <Button bsStyle="warning" onClick={ () => this.props.history.push('/walletpassword')}>Create</Button>
                         </div>
                     </Panel>
                 </Col>

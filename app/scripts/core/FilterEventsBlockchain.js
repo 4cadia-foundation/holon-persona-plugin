@@ -38,15 +38,6 @@ export  default class FilterEventsBlockchain extends SmartContract {
     return this._filterData;
   }
 
-  /**
-   * @method filterInitialization
-   * @desc method for initialization class
-   * @return {Promise}
-   * */
-  async filterInitialization(){
-    await this.smartContractInitialization();
-  }
-
 
   /**
    * @method getSenderPublicKey
