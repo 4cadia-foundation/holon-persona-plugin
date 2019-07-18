@@ -18,7 +18,6 @@ let routers = [
     component: Notfound,
     exact: false
   }
-
 ];
 
 export default routers;
