@@ -31,7 +31,7 @@ class ImportWallet extends Component {
                   <FormControl componentClass="input" type="password" />
               </FormGroup>
 
-              <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={ () => this.props.history.push('/')}>Import</Button>
+              <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={ () => this.props.history.push('/createidentity')}>Import</Button>
 
           </Grid>
           );

@@ -1,4 +1,4 @@
-{
+module.exports = {
  "address": "0x9369f099f4e61ded7038ecafeb84da526adf9e50",
  "abi": [
   {
