@@ -23,6 +23,7 @@ class ImportWallet extends Component {
       this.handleChange = this.handleChange.bind(this);
       this.getValidationPassword = this.getValidationPassword.bind(this);
       this.getValidationEqualPassword = this.getValidationEqualPassword.bind(this);
+      this.getValidationPhrase = this.getValidationPhrase.bind(this);
   }
 
 
@@ -72,7 +73,7 @@ class ImportWallet extends Component {
   getValidationPassword(){
     const length = this.state.password.length;
     switch (true) {
-      case (length > 10):
+      case (length >= 8):
         return 'success';
       break;
       case (length > 5):
@@ -94,11 +95,34 @@ class ImportWallet extends Component {
    **/
   getValidationEqualPassword(){
     const {password, confirm} = this.state;
-    if (password !== confirm && password.length > 0){
-      return 'error';
+    switch (true) {
+      case (password !== confirm && password.length > 0):
+        return 'error';
+      break;
+      case (password === confirm && password.length > 0):
+        return 'success';
+      break;
+      default:
+        return null;
     }
-    return null;
+
   }
+
+  getValidationPhrase(){
+    const {phrase} = this.state;
+    let words = (phrase.length > 0) ? phrase.split(' ') : '';
+    switch (true) {
+      case ( (words.length > 0 && words.length < 12) || words.length > 12):
+        return 'error';
+        break;
+      case (words.length == 12):
+        return 'success';
+        break;
+      default:
+        return null;
+    }
+  }
+
 
 
   render () {
@@ -117,9 +141,11 @@ class ImportWallet extends Component {
 
                 <Form>
 
-                  <FormGroup className="margin-top-50" >
+                  <FormGroup className="margin-top-50" validationState={this.getValidationPhrase()}>
                       <ControlLabel>Wallet Seed</ControlLabel>
                       <FormControl rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
+                      <FormControl.Feedback />
+                      <HelpBlock>Seed phrases are 12 words long</HelpBlock>
                   </FormGroup>
 
                   <FormGroup className="margin-top-30" validationState={this.getValidationPassword()}>
@@ -151,4 +177,12 @@ class ImportWallet extends Component {
     }
 }
 
-export default ImportWallet;
+
+
+const mapStateToProps = state => ({
+  accounts: state.wallet.accounts
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImportWallet);
