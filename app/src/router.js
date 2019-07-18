@@ -6,6 +6,7 @@ import Notfound from './modules/Notfound/Notfound';
 import CreateIdentity from './modules/CreateIdentity/CreateIdentity';
 import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
+import Menu from './modules/Menu/Menu';
 
 let routers = [
   {
@@ -41,6 +42,11 @@ let routers = [
   {
     path: '/addinformation',
     component: AddInformation,
+    exact: false
+  },
+  {
+    path: '/menu',
+    component: Menu,
     exact: false
   },
   {
