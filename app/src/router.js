@@ -4,6 +4,7 @@ import ImportWallet from './modules/ImportWallet/ImportWallet';
 import WalletPassword from './modules/WalletPassword/WalletPassword';
 import Notfound from './modules/Notfound/Notfound';
 import CreateIdentity from './modules/CreateIdentity/CreateIdentity';
+import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
 
 let routers = [
@@ -35,6 +36,11 @@ let routers = [
   {
     path: '/createidentity',
     component: CreateIdentity,
+    exact: false
+  },
+  {
+    path: '/addinformation',
+    component: AddInformation,
     exact: false
   },
   {
