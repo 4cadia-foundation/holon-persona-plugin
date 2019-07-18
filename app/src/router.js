@@ -4,6 +4,7 @@ import ImportWallet from './modules/ImportWallet/ImportWallet';
 import WalletPassword from './modules/WalletPassword/WalletPassword';
 import Notfound from './modules/Notfound/Notfound';
 import CreateIdentity from './modules/CreateIdentity/CreateIdentity';
+import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
 
 let routers = [
@@ -38,10 +39,14 @@ let routers = [
     exact: false
   },
   {
+    path: '/addinformation',
+    component: AddInformation,
+    exact: false
+  },
+  {
     component: Notfound,
     exact: false
   }
-
 ];
 
 export default routers;
