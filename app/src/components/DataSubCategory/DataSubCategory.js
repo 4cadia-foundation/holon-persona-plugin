@@ -6,7 +6,6 @@ class DataSubCategory extends Component {
 
     constructor(props){
         super(props);
-
         this.state = {
         values: [
               {
@@ -47,7 +46,7 @@ class DataSubCategory extends Component {
 
   render () {
     let optionTemplate = this.state.values.map(v => (
-        <option key={v.key} value={v.value}>{v.text}</option>
+        <option key={v.key}>{v.text}</option>
       ));
     return (
         <section>

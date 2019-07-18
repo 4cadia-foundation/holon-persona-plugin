@@ -57,7 +57,7 @@ import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
                     id="info" 
                     type="text" 
                     value={this.state.info}
-                    placeholder="Information..." 
+                    placeholder="Information" 
                     onChange={this.handleChange}
                 />
                 <br/>
@@ -66,11 +66,11 @@ import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
                     id="cost" 
                     type="text" 
                     value={this.state.cost}
-                    placeholder="Value in wei..." 
+                    placeholder="Value in wei" 
                     onChange={this.handleChange}
                 />
                 <br/>
-                <Button disabled={!this.validateForm()} className="btn btn-block btn-primary"  type="submit" onClick={this.handleClick}>
+                <Button disabled={!this.validateForm()} className="btn btn-block btn-warning"  type="submit" onClick={this.handleClick}>
                     Save
                 </Button>    
                 
