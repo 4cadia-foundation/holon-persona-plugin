@@ -2,21 +2,21 @@
     margin: 0;
 }
 
-.titulo {
+.title {
     margin-top: 20px;
 }
 
-.caixa-mnemonico {
+.box-mnemonico {
     margin-top: 30px;
 }
 
-.botoes-saida {
+.button-exit {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.paragrafo-explicacao {
+.paragraph-explication {
     height: 150px;
     display: flex;
     flex-direction: row;
