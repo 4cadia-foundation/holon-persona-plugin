@@ -1,0 +1,2 @@
+export const SET_ACCOUNTS = 'SET_ACCOUNTS';
+export const SET_ACCOUNTS_ERROR = 'SET_ACCOUNTS_ERROR';
