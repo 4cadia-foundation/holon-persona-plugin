@@ -1,13 +1,11 @@
 import * as Type from '../constants/toastTypes';
-
-export const ToastTypes = Type;
-export const buildToast = (message, type = Type.DEFAULT, options) => ({
+export const ToastTypes = Type.TYPE;
+export const buildToast = (message, options) => ({
   message,
-  type,
   options,
 });
 
-export default (message, type = Type.DEFAULT, options) => ({
-  type: Type.SHOW_TOAST,
-  toast: buildToast(message, type, options),
+export default (message,options) => ({
+  type: 'SHOW_TOAST',
+  toast: buildToast(message, options),
 });

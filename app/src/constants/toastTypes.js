@@ -1,6 +1,4 @@
-export const DEFAULT = 'default';
-export const INFO = 'info';
-export const SUCCESS = 'success';
-export const WARNING = 'warning';
-export const ERROR = 'error';
+import {toast} from 'react-toastify';
+
+export const TYPE = toast.TYPE;
 export const SHOW_TOAST = 'SHOW_TOAST';
