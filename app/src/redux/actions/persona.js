@@ -19,31 +19,31 @@ export function getPersonaData() {
     return (dispatch) => {
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
-            filterContract.getLogstxHash()
+            filterContract.getLogsTransactionHash()
             .then((txHashes) => {
                 if (!txHashes || txHashes.length < 1) {
-                    //console.log('action/getPersonaData/getLogstxHash/Nao achou logs', txHashes);
+                    //console.log('action/getPersonaData/getLogsTransactionHash/Nao achou logs', txHashes);
                     getPersonaAddress();
                     return;
                 }         
                 //TODO: Criar um filter   
                 txHashes.map(async (hash) => {
                     //console.log('action/getPersonaData/hash', hash);
-                    let receipt = await filterContract.gettxReceipt(hash);
+                    let receipt = await filterContract.getTransactionReceipt(hash);
                     const decodedLogs = abiDecoder.decodeLogs(receipt.logs);
                     //console.log('action/getPersonaData/decodedLogs', decodedLogs);
                     if (decodedLogs[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
-                        let tx = await filterContract.getPuretx(hash);
+                        let tx = await filterContract.getPureTransaction(hash);
                         //console.log('tx', tx);
                         filterContract.setEventToFilter('0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547');
                         if (tx) {
                             const decodedTx = abiDecoder.decodeMethod(tx.data);
                             // console.log('actions/tx.decode', decodedTx);
                             //console.log(decodedTx.params[2].value, decodedTx.params[3].value);                        
-                            let validatedHash = await filterContract.getLogstxHash();
+                            let validatedHash = await filterContract.getLogsTransactionHash();
                             //console.log('action/getPersonaData/validatedHash', validatedHash[0]);
                             
-                            let validatedReceipt = await filterContract.gettxReceipt(validatedHash[0]);
+                            let validatedReceipt = await filterContract.getTransactionReceipt(validatedHash[0]);
                             //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
                             const validatedDecodedReceipt = abiDecoder.decodeLogs(validatedReceipt.logs);
                             // console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
