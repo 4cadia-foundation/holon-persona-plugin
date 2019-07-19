@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Grid, Row, Label, Table } from 'react-bootstrap';
 import * as PersonaActions from '../../redux/actions/persona';
 import logo from '../../../images/logo.png';
-import Menu from '../../components/Menu/Menu';
+import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
 
 import './Home.css';
 
@@ -19,6 +19,7 @@ class Home extends Component {
     this.props.getPersonaData();   
     this.getCampoValor = this.getCampoValor.bind(this); 
     this.getAddress = this.getAddress.bind(this);
+    this.fnAbrirMenu = this.fnAbrirMenu.bind(this);
   }
 
   componentWillReceiveProps(propsOld) {
@@ -37,6 +38,9 @@ class Home extends Component {
     let filtro = persona.personalInfo.filter(item => {
       return item.field == campo;
     });
+    if (filtro.length < 1 ) {
+      return '';
+    }
     return filtro[0].valor;
   }
 
@@ -45,12 +49,16 @@ class Home extends Component {
     return persona.address;
   }
 
+  fnAbrirMenu() {
+    this.props.history.push('/menu');
+  }
+
   render () {
     const {persona} = this.state;
 
     return (
       <Grid id="gridHome">
-        <Menu/>
+        <HamburguerMenu fnAbrirMenu={this.fnAbrirMenu} />
         <section id="sectionBasicInfo">
           <hr className="horizontalLine"></hr>
           <Row className="text-center">

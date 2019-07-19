@@ -16,3 +16,13 @@
     height: 85px;
     width: 90px;
 }
+
+.line {
+    width: 100vw;
+    height:2px; 
+    border:none; 
+    color:#000; 
+    background-color:#000; 
+    margin-top: 30px; 
+    margin-bottom: 0px
+}

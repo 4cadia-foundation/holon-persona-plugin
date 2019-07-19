@@ -6,6 +6,8 @@ import Notfound from './modules/Notfound/Notfound';
 import CreateIdentity from './modules/CreateIdentity/CreateIdentity';
 import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
+import Menu from  './modules/Menu/Menu';
+import ValidateInformation from './modules/ValidateInformation/ValidateInformation';
 
 let routers = [
   {
@@ -44,9 +46,19 @@ let routers = [
     exact: false
   },
   {
+    path: '/menu',
+    component: Menu,
+    exact: false
+  },
+  {
+    path: '/validateinformation',
+    component: ValidateInformation,
+    exact: false
+  },
+  {
     component: Notfound,
     exact: false
-  }
+  },
 ];
 
 export default routers;

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import './Menu.css';
+import './HamburguerMenu.css';
 
-class Menu extends Component {
+class HamburguerMenu extends Component {
+
+  constructor (props) {
+    super(props)
+  }
 
   render () {
 
     return (
-        <section>
-            <input id="menu-hamburguer" type="checkbox"/>
+        <section onClick={this.props.fnAbrirMenu()}>
+            <input id="menu-hamburguer" type="checkbox" />
             <label for="menu-hamburguer">
                 <div class="menu">
                     <span class="hamburguer"></span>
@@ -19,4 +23,4 @@ class Menu extends Component {
 
 }
 
-export default Menu;
+export default HamburguerMenu;
