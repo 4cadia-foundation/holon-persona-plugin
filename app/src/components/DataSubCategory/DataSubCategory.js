@@ -41,11 +41,12 @@ class DataSubCategory extends Component {
         }
       ]
     }
-    this.props.emitSubCategory(1);
+    this.props.emitSubCategory(this.state.values[0].text);
   }
 
   setSubCategory(event) {
-    this.props.emitSubCategory(event.target.value);
+    let index = event.target.selectedIndex;
+    this.props.emitSubCategory(event.target[index].text);
   }
 
   render() {
