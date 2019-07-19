@@ -32,8 +32,8 @@ class AddInformation extends Component {
         });
     }
     setCategory(cat) {
-        console.log("Recebi: " + cat);
-        // this.setState({ category: cat });
+        console.log("Recebi: " + JSON.stringify(cat));
+        this.setState({ category: cat });
     }
     setSubCategory(subCat) {
         this.setState({ subCategory: subCat });

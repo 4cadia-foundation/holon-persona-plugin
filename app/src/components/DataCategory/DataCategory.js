@@ -39,18 +39,19 @@ class DataCategory extends Component {
 
 
   }
-  setCategory(category) {
-    this.props.emitCategory(category);
+  setCategory(event) {
+    let index = event.target.selectedIndex;
+    this.props.emitCategory(event.target[index].text);
   }
   render() {
     let optionTemplate = this.state.values.map(v => (
-      <option key={v.key} onClick={this.setCategory(v.text)} value={v.value}>{v.text}</option>
+      <option key={v.key} value={v.value}>{v.text}</option>
     ));
     return (
       <section>
         <label>Category</label>
         <div className="dropdown">
-          <select value={this.state.value} id="categoryId">
+          <select value={this.state.value} onChange={this.setCategory} id="categoryId">
             {optionTemplate}
           </select>
         </div>
