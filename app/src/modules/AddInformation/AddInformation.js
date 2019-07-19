@@ -12,6 +12,7 @@ class AddInformation extends Component {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.setCategory = this.setCategory.bind(this);
+        this.setSubCategory = this.setSubCategory.bind(this);
         this.state = {
             category: "",
             subCategory: "",
@@ -32,10 +33,11 @@ class AddInformation extends Component {
         });
     }
     setCategory(cat) {
-        console.log("Recebi: " + JSON.stringify(cat));
+        console.log("Recebi: " + cat);
         this.setState({ category: cat });
     }
     setSubCategory(subCat) {
+        console.log("Recebi: " + subCat);
         this.setState({ subCategory: subCat });
     }
     render() {
@@ -56,7 +58,7 @@ class AddInformation extends Component {
                     </div>
                     <br />
                     <div>
-                        <DataSubCategory />
+                        <DataSubCategory emitSubCategory={this.setSubCategory} />
                     </div>
                     <br />
                     <label>Insert your info here</label>
