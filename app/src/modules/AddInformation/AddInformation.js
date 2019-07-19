@@ -39,15 +39,11 @@ class AddInformation extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-        console.log('targetId', event.target.id)
-        console.log('targetValue', event.target.value)
     }
     setCategory(cat) {
-        console.log("Recebi: " + cat);
         this.setState({ category: cat });
     }
     setSubCategory(subCat) {
-        console.log("Recebi: " + subCat);
         this.setState({ subCategory: subCat });
     }
     render() {
@@ -111,10 +107,3 @@ const mapStateToProps = state => ({
   const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
   
   export default connect(mapStateToProps, mapDispatchToProps)(AddInformation);
-
-// export default connect(state => (
-//     { 
-//       activeDocument: state.validations.activeDocument, 
-//       publicKey: state.validations.publicKey 
-//     }
-//   ))(Home);
