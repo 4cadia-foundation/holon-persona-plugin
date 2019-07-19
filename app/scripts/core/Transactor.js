@@ -10,7 +10,7 @@ export default class Transactor extends SmartContract {
 
 
   get contractWithSigner () {    
-    return contract.connect(this._wallet);
+    return this.contract.connect(this._wallet);
   }
 
   get wallet() {

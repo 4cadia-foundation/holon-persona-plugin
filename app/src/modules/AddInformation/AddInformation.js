@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import logo from '../../../images/icon-38.png';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import DataCategory from '../../components/DataCategory/DataCategory';
-import styles from './AddInformation.css';
 import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
+import * as PersonaActions from '../../redux/actions/persona';
 
+import {connect} from "react-redux";
+import { bindActionCreators } from 'redux';
 
 class AddInformation extends Component {
 
@@ -21,11 +23,14 @@ class AddInformation extends Component {
         };
     }
 
-    handleClick() {
-        console.log(this.state.category,
-        this.state.subCategory,
-        this.state.info,
-        this.state.cost)
+    handleClick(event) {
+        event.preventDefault();
+        const infoCode = this.state.category
+        const field = this.state.subCategory
+        const data = this.state.info
+        const price = this.state.cost
+        this.props.addData(infoCode, field, data, price)
+
     }
     validateForm() {
         return this.state.info.length > 1;
@@ -84,9 +89,9 @@ class AddInformation extends Component {
                         onChange={this.handleChange}
                     />
                     <br />
-                    <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" onClick={this.handleClick}>
+                    <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" type="submit" onClick={this.handleClick}>
                         Save
-                </Button>
+                    </Button>
 
                 </Form>
 
@@ -95,7 +100,17 @@ class AddInformation extends Component {
     }
 
 }
-export default AddInformation;
+
+const mapStateToProps = state => ({
+    infoCode: state.category,
+    field: state.subCategory,
+    data: state.info,
+    price: state.cost
+  });
+  
+  const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(AddInformation);
 
 // export default connect(state => (
 //     { 

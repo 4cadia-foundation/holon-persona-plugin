@@ -94,10 +94,11 @@ export function getPersonaAddress() {
     }  
 }
 
-export function addData(infoCode, dataCategory, field, data, price) {
+export function addData(infoCode, field, data, price) {
     return dispatch => {
-        const contract = transactor.contractWithSigner;
-        contract.addData(infoCode, dataCategory, field, data, price)
+        console.log("infoCode", infoCode)
+        const contract = transactor.contractWithSigner
+        contract.addData(infoCode, 0, field, data, price)
         .then((tx) => {
             console.log('addData transacao', tx);
             tx.wait()
