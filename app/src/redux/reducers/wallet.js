@@ -1,7 +1,9 @@
 import * as ActionTypes from '../../constants/actionsTypes';
 
 const INITIAL_STATE = {
-  accounts: []
+  accounts: [],
+  seed:'',
+  mnemonic: 'ivory alarm violin grid uphold street clock crime across kit shop leaf',
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
@@ -16,4 +18,3 @@ export default function wallet(state = INITIAL_STATE, action) {
       return state;
   }
 }
-
