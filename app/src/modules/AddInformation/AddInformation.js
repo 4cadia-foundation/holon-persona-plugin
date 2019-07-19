@@ -22,7 +22,10 @@ class AddInformation extends Component {
     }
 
     handleClick() {
-        console.log("Funcionou");
+        console.log(this.state.category,
+        this.state.subCategory,
+        this.state.info,
+        this.state.cost)
     }
     validateForm() {
         return this.state.info.length > 1;
@@ -31,6 +34,8 @@ class AddInformation extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
+        console.log('targetId', event.target.id)
+        console.log('targetValue', event.target.value)
     }
     setCategory(cat) {
         console.log("Recebi: " + cat);
@@ -79,7 +84,7 @@ class AddInformation extends Component {
                         onChange={this.handleChange}
                     />
                     <br />
-                    <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" type="submit" onClick={this.handleClick}>
+                    <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" onClick={this.handleClick}>
                         Save
                 </Button>
 

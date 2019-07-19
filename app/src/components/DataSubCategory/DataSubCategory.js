@@ -41,20 +41,22 @@ class DataSubCategory extends Component {
         }
       ]
     }
+    this.props.emitSubCategory(1);
   }
+
   setSubCategory(event) {
-    let index = event.target.selectedIndex;
-    this.props.emitSubCategory(event.target[index].text);
+    this.props.emitSubCategory(event.target.value);
   }
+
   render() {
     let optionTemplate = this.state.values.map(v => (
-      <option key={v.key}>{v.text}</option>
+      <option key={v.key} value={v.value}>{v.text}</option>
     ));
     return (
       <section>
         <label>Subcategory</label>
         <div className="dropdown">
-          <select value={this.state.value} onChange={this.setSubCategory} id="subCategoryId">
+          <select value={this.state.value} onClick={this.setSubCategory} id="subCategoryId">
             {optionTemplate}
           </select>
         </div>

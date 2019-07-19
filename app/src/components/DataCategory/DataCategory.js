@@ -36,13 +36,13 @@ class DataCategory extends Component {
         }
       ]
     }
-
-
+    this.props.emitCategory(1);
   }
+
   setCategory(event) {
-    let index = event.target.selectedIndex;
-    this.props.emitCategory(event.target[index].text);
+    this.props.emitCategory(event.target.value);
   }
+
   render() {
     let optionTemplate = this.state.values.map(v => (
       <option key={v.key} value={v.value}>{v.text}</option>
