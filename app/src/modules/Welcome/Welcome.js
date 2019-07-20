@@ -17,14 +17,12 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-
       /*
       * exemplo para abrir uma carteira que foi importada.
       * this.props.openWallet('senha');
       *
+      * this.props.openWallet('paulogabrielvieira1');
       * */
-
-      this.props.openWallet('paulogabrielvieira');
   }
 
   render () {

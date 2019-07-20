@@ -43,7 +43,7 @@ export default class Cryptography {
     return Passworder.encrypt(password, secrets).then((blob) => {
       return blob;
     }).catch( error => {
-      debugger
+      return error;
     });
   }
 

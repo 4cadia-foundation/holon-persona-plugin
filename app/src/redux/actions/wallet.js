@@ -8,7 +8,6 @@ export function restoreVault(password, seed) {
   return dispatch => {
     wallet.createNewVaultAndRestore(password, seed)
       .then(vault => {
-        debugger;
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
           accounts: vault.keyrings[0].accounts,
@@ -36,7 +35,7 @@ export function openWallet(password) {
       .catch(exception => {
         dispatch({
           type: ActionTypes.OPEN_WALLET_ERROR,
-          toast: buildToast(exception.message, {type: ToastTypes.ERROR})
+          toast: buildToast(exception, {type: ToastTypes.ERROR})
         });
       })
   }
