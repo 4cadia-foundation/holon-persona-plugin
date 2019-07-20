@@ -1,9 +1,31 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row, Col } from 'react-bootstrap';
-import logo from '../../../images/logo.png';
-import './Welcome.css';
 
- class Welcome extends Component {
+import {connect} from "react-redux";
+import { bindActionCreators } from 'redux';
+import * as WalletActions from "../../redux/actions/wallet";
+
+import './Welcome.css';
+import logo from '../../../images/logo.png';
+
+
+class Welcome extends Component {
+
+  constructor(props){
+    super(props);
+
+  }
+
+  componentDidMount() {
+
+      /*
+      * exemplo para abrir uma carteira que foi importada.
+      * this.props.openWallet('senha');
+      *
+      * */
+
+      this.props.openWallet('paulogabrielvieira');
+  }
 
   render () {
 
@@ -33,4 +55,11 @@ import './Welcome.css';
 
 }
 
-export default Welcome;
+const mapStateToProps = state => ({
+  wallet: state.wallet
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+

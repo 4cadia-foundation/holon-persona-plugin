@@ -1,4 +1,5 @@
 import * as EthCrypto from 'eth-crypto';
+import * as Passworder from 'browser-passworder';
 
 
 /**
@@ -35,6 +36,20 @@ export default class Cryptography {
     }catch(exception){
       console.error('[Crypto - decrypt]' + exception);
     }
+  }
+
+
+  static encryptWithPassworder(password, secrets){
+    return Passworder.encrypt(password, secrets).then((blob) => {
+      return blob;
+    }).catch( error => {
+      debugger
+    });
+  }
+
+
+  static decryptWithPassworder(password, blob){
+    return Passworder.decrypt(password, blob);
   }
 
 }
