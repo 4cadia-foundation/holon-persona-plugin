@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
-
+import store from '../../redux/store';
 class CreateIdentity extends Component {
     
     constructor(props) {
@@ -25,6 +25,7 @@ class CreateIdentity extends Component {
     }    
 
     render () {
+        console.log('createidentity/store/state', store.getState());
         return (
             <Grid>
                 <Row>

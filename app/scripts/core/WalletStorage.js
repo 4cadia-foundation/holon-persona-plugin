@@ -1,19 +1,6 @@
-import KeyringController from 'eth-keyring-controller';
-import SimpleKeyring from 'eth-simple-keyring';
-import Cryptography from './Cryptography';
 import { ethers } from 'ethers';
 
 class WalletStorage {
-
-  constructor() {
-    this.keyringController = new KeyringController({
-      keyringTypes: [SimpleKeyring],
-      initState: {}.KeyringController,
-        encryptor: undefined
-    });
-
-  }
-
 
   setChromeStorage(value) {
     return new Promise((resolve, reject) => {
@@ -51,30 +38,36 @@ class WalletStorage {
 
   async createNewVaultAndRestore(seed, password) {
     return new Promise(async (resolve, reject) =>{
-      try {
-        /*TAREFA TECNICA NA PROXIMA SPRINT*/
-        const vault = await this.keyringController.createNewVaultAndRestore(password, seed);
-        const primaryKeyring = this.keyringController.getKeyringsByType('HD Key Tree')[0];
-
-        /*PEGA CHAVE PUBLICA E PRIVADA*/
-        const privateKey = primaryKeyring.wallets[0]._privKey.toString('hex');
-        const publicKey = primaryKeyring.wallets[0]._pubKey.toString('hex');
-
-        const encrypted = await Cryptography.encryptWithPassworder(password, {privateKey: privateKey, publicKey: publicKey});
+      try {        
+       const wallet = new ethers.Wallet.fromMnemonic(seed);
+       console.log('createNewVaultAndRestore/seed', seed);
+       console.log('createNewVaultAndRestore/wallet', wallet);
+       const encrypted = await wallet.encrypt(password);
+       console.log('createNewVaultAndRestore/encrypted', encrypted);
 
         /*LIMPA O STORAGE*/
         const clear = await this.clearStorage();
         /*CRIA NOVO STORAGE*/
         const storage = await this.setChromeStorage(encrypted);
-        const wallet = new ethers.Wallet(privateKey);
+        console.log('createNewVaultAndRestore/armazenado', storage);
         resolve(wallet);
       }catch (exception) {
         console.log('createNewVaultAndRestore/exception', exception);
         reject(exception.message);
       }
     })
+  }
 
-
+  async createNewVault(password) {
+    try {
+      const wallet = ethers.Wallet.createRandom();
+      const randomMnemonic = wallet.mnemonic;
+      console.log('createNewVault/randomMnemonic', randomMnemonic);
+      return this.createNewVaultAndRestore(randomMnemonic, password);
+    } catch (exception) {
+      console.log('createNewVault/exception', exception);
+      return exception;
+    }
   }
 
 
@@ -82,8 +75,7 @@ class WalletStorage {
     return new Promise(async (resolve, reject) => {
       try {
         const encrypted = await this.getChromeStorage();
-        const decripted = await Cryptography.decryptWithPassworder(password, encrypted);
-        const wallet = ethers.Wallet(decripted.privateKey);
+        const wallet = ethers.Wallet.fromEncryptedJson(encrypted, password);
         resolve(wallet);
       }catch (exception) {
         reject(exception.message);

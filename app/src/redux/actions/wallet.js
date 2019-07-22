@@ -38,21 +38,20 @@ export function openWallet(password) {
 }
 
 export function createNewWallet(password){
-  debugger;
   return dispatch=> {
-    wallet.createNewWallet(password)
-    .then(vault => {
+    wallet.createNewVault(password)
+    .then((wallet) => {
       dispatch({
-        type: ActionTypes.SET_WALLET_CREATE,
-        accounts: vault.keyrings[0].accounts,
-        toast: buildToast('Wallet create with successful', {type: ToastTypes.SUCCESS})
+        type: ActionTypes.SET_ACCOUNTS,
+        address: wallet.address,
+        wallet: wallet       
       });
     })
-    .catch(exception => {
+    .catch((exception) => {
+      console.log('actions/wallet/createNewWallet', exception);
       dispatch({
         type: ActionTypes.SET_ACCOUNTS_ERROR,
-        toast: buildToast(exception.message, {type: ToastTypes.ERROR})
       });
-    })
+    });
   }
 }

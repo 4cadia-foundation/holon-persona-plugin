@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, FormControl,ControlLabel, HelpBlock } from 'react-bootstrap';
-
+import { Redirect } from 'react-router-dom';
 import * as WalletActions from "../../redux/actions/wallet";
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -79,9 +79,11 @@ import styles from './WalletPassword.css';
 
 
   render () {
-    if (this.props.accounts.length > 0){
-        this.props.history.push('/createidentity');
-        return;
+    if (this.props.wallet.address.length > 2) {
+      console.log('WalletPassword/render/address', this.props.wallet.address);
+      return (
+        <Redirect to="/createidentity" />
+      );
     }
 
     return (
@@ -118,22 +120,13 @@ import styles from './WalletPassword.css';
         </div>
     );
   }
-
 }
 
 const mapStateToProps = state => ({
-    accounts: state.wallet.accounts
+    wallet: state.wallet
   });
   
-  const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
   
-  export default connect(mapStateToProps, mapDispatchToProps)(WalletPassword);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletPassword);
 
-//export default WalletPassword;
-
-// export default connect(state => (
-//     { 
-//       activeDocument: state.validations.activeDocument, 
-//       publicKey: state.validations.publicKey 
-//     }
-//   ))(Home);
