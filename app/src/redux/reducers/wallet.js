@@ -9,6 +9,9 @@ export default function wallet(state = INITIAL_STATE, action) {
     case ActionTypes.SET_ACCOUNTS:
       return {...state, accounts: action.accounts};
     break;
+    case ActionTypes.SET_WALLET_CREATE:
+      return {...state, accounts: action.accounts};
+      break;
     case ActionTypes.SET_ACCOUNTS_ERROR:
       return {...state, error: action.error};
     break;

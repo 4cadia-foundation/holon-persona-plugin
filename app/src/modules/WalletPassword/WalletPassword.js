@@ -21,7 +21,6 @@ import styles from './WalletPassword.css';
     handleSubmit(event){
         event.preventDefault();
         this.props.createNewWallet(this.state.password);
-        this.props.history.push('/createidentity');
     }
 
     validateForm() {
@@ -66,10 +65,10 @@ import styles from './WalletPassword.css';
   getValidationEqualPassword(){
     const {password, confirm} = this.state;
     switch (true) {
-      case (password !== confirm && password.length > 0):
+      case (password !== confirm && password.length > 7):
         return 'error';
       break;
-      case (password === confirm && password.length > 0):
+      case (password === confirm && password.length > 7):
         return 'success';
       break;
       default:
@@ -80,6 +79,10 @@ import styles from './WalletPassword.css';
 
 
   render () {
+    if (this.props.accounts.length > 0){
+        this.props.history.push('/createidentity');
+        return;
+    }
 
     return (
         <div>

@@ -29,7 +29,7 @@ export function createNewWallet(password){
     .then(vault => {
       dispatch({
         type: ActionTypes.SET_WALLET_CREATE,
-      //  accounts: vault.keyrings[0].accounts,
+        accounts: vault.keyrings[0].accounts,
         toast: buildToast('Wallet create with successful', {type: ToastTypes.SUCCESS})
       });
     })
