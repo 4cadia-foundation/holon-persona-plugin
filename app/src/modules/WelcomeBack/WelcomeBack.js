@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Button, Form, FormControl } from 'react-bootstrap';
-//import { connect } from 'react-redux';
-//import TableValidations from '../../components/TableValidations/TableValidations';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import * as WalletActions from "../../redux/actions/wallet";
+import { bindActionCreators } from 'redux';
 
-import styles from './WelcomeBack.css';
-
- class WelcomeBack extends Component {
+class WelcomeBack extends Component {
 
     constructor(props) {
         super(props);
@@ -15,19 +15,29 @@ import styles from './WelcomeBack.css';
         };        
     }
 
-    handleClick(){
-        console.log("Funcionou");
+    handleClick(event){
+        event.preventDefault();
+        this.props.openWallet(this.state.password);
     }
+
     validateForm() {
         return this.state.password.length > 7;
     }
+
     handleChange = event => {
         this.setState({
           [event.target.id]: event.target.value
         });
     }
 
+
   render () {
+    if (this.props.wallet.address.length > 2) {
+        console.log('WelcomeBack/render/address', this.props.wallet.address);
+        return (
+          <Redirect to="/createidentity" />
+        );
+    }
 
     return (
         <div>
@@ -38,7 +48,7 @@ import styles from './WelcomeBack.css';
             <Form>
                 <div>
                     <h2 align="center" >Welcome Back</h2>
-                    <p align="center"> The decentralized web awaits </p>
+                    <p align="center"> The decentralized web waits for you </p>
                 </div>
                 <br/>
                 <label>Password</label>
@@ -60,11 +70,11 @@ import styles from './WelcomeBack.css';
   }
 
 }
-export default WelcomeBack;
 
-// export default connect(state => (
-//     { 
-//       activeDocument: state.validations.activeDocument, 
-//       publicKey: state.validations.publicKey 
-//     }
-//   ))(Home);
+const mapStateToProps = state => ({
+    wallet: state.wallet
+  });
+  
+const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeBack);

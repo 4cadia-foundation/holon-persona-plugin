@@ -74,8 +74,11 @@ class WalletStorage {
   async submitPassword(password) {
     return new Promise(async (resolve, reject) => {
       try {
+        console.log('submitPassword');
         const encrypted = await this.getChromeStorage();
+        console.log('submitPassword/encrypted', encrypted);
         const wallet = ethers.Wallet.fromEncryptedJson(encrypted, password);
+        console.log('submitPassword/wallet', wallet);
         resolve(wallet);
       }catch (exception) {
         reject(exception.message);
