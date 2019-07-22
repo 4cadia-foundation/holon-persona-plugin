@@ -7,4 +7,4 @@ import toastMiddleware from './middleware/toastMiddleware';
 const store = createStore(rootReducer,  applyMiddleware(thunk, toastMiddleware));
 
 
-export  default store;
+export default store;
