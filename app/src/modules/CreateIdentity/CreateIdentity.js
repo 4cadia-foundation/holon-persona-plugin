@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
-<<<<<<< HEAD
-import Loader from '../../components/Loader/Loader';
-
-=======
 import store from '../../redux/store';
->>>>>>> remotes/origin/develop
 class CreateIdentity extends Component {
     
     constructor(props) {
@@ -71,12 +66,7 @@ class CreateIdentity extends Component {
                         onChange={this.handleChange}
                     />                    
                 </FormGroup>
-<<<<<<< HEAD
-                <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={() => this.setState({loader: true})}>Create ID</Button>
-                {this.state.loader ? (<Loader />) : (null)}
-=======
                 <Button className="margin-top-50" disabled={!this.validateForm()} block bsStyle="warning" onClick={ () => this.props.history.push('/home')}>Create ID</Button>
->>>>>>> remotes/origin/develop
             </Grid>
         );
     }
