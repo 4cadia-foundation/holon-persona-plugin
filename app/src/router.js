@@ -56,6 +56,11 @@ let routers = [
     exact: false
   },
   {
+    path: '/menu',
+    component: Menu,
+    exact: false
+  },
+  {
     component: Notfound,
     exact: false
   }
