@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock } from 'react-bootstrap';
-
+import { Redirect } from 'react-router-dom';
 import * as WalletActions from "../../redux/actions/wallet";
 
 import {connect} from "react-redux";
@@ -126,61 +126,69 @@ class ImportWallet extends Component {
 
 
   render () {
+    
+    if (this.props.wallet.address.length > 2) {
+      console.log('ImportWallet/render/address', this.props.wallet.address);
       return (
-          <Grid>
-              <Row>
-                  <Col xs={12} md={12}>
-                      <div className="text-center">
-                          <h3>Import your Wallet</h3>
-                      </div>
-                  </Col>
-              </Row>
+        <Redirect to="/createidentity" />
+      );
+    }
 
+    return (
+        <Grid>
             <Row>
-              <Col xs={12} md={12}>
-
-                <Form>
-
-                  <FormGroup className="margin-top-50" validationState={this.getValidationPhrase()}>
-                      <ControlLabel>Wallet Seed</ControlLabel>
-                      <FormControl rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
-                      <FormControl.Feedback />
-                      <HelpBlock>Seed phrases are 12 words long</HelpBlock>
-                  </FormGroup>
-
-                  <FormGroup className="margin-top-30" validationState={this.getValidationPassword()}>
-                      <ControlLabel>New Password</ControlLabel>
-                      <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
-
-                      <FormControl.Feedback />
-                      <HelpBlock>Minimum validation of 8 characters</HelpBlock>
-
-                  </FormGroup>
-
-                  <FormGroup className="margin-top-30"  validationState={this.getValidationEqualPassword()}>
-                      <ControlLabel>Confirm Password</ControlLabel>
-                      <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
-
-                      <FormControl.Feedback />
-                      <HelpBlock>Password must be the same as field confirm</HelpBlock>
-
-                  </FormGroup>
-
-                  <Button className="margin-top-50" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
-                </Form>
-
-              </Col>
+                <Col xs={12} md={12}>
+                    <div className="text-center">
+                        <h3>Import your Wallet</h3>
+                    </div>
+                </Col>
             </Row>
 
-          </Grid>
-          );
+          <Row>
+            <Col xs={12} md={12}>
+
+              <Form>
+
+                <FormGroup className="margin-top-50" validationState={this.getValidationPhrase()}>
+                    <ControlLabel>Wallet Seed</ControlLabel>
+                    <FormControl rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
+                    <FormControl.Feedback />
+                    <HelpBlock>Seed phrases are 12 words long</HelpBlock>
+                </FormGroup>
+
+                <FormGroup className="margin-top-30" validationState={this.getValidationPassword()}>
+                    <ControlLabel>New Password</ControlLabel>
+                    <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
+
+                    <FormControl.Feedback />
+                    <HelpBlock>Minimum validation of 8 characters</HelpBlock>
+
+                </FormGroup>
+
+                <FormGroup className="margin-top-30"  validationState={this.getValidationEqualPassword()}>
+                    <ControlLabel>Confirm Password</ControlLabel>
+                    <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
+
+                    <FormControl.Feedback />
+                    <HelpBlock>Password must be the same as field confirm</HelpBlock>
+
+                </FormGroup>
+
+                <Button className="margin-top-50" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
+              </Form>
+
+            </Col>
+          </Row>
+
+        </Grid>
+      );
     }
 }
 
 
 
 const mapStateToProps = state => ({
-  accounts: state.wallet.accounts
+  wallet: state.wallet
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
