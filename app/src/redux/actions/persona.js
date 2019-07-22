@@ -1,6 +1,6 @@
 import Transactor from '../../../scripts/core/Transactor';
 import FilterEventsBlockchain from '../../../scripts/core/FilterEventsBlockchain';
-
+import store from '../store';
 import { address, abi } from '../../../config/abi';
 import abiDecoder from 'abi-decoder';
 
@@ -14,11 +14,34 @@ const filterNewData = {
 const filterContract = new FilterEventsBlockchain(filterNewData);
 abiDecoder.addABI(abi);
 
+function checkWallet() {
+    console.log('action/persona/checkWallet/globalState', store.getState());
+    console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
+    if (!transactor.wallet) {
+        if (store.getState().wallet.ethersWallet) {
+            transactor.wallet = store.getState().wallet.ethersWallet;
+            console.log('action/persona/checkWallet/transactor.wallet-set', transactor.wallet);
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
 
 export function getPersonaData() {
+
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set'});            
+        }
+    }
+
     return (dispatch) => {
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
+            console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
             filterContract.getLogsTransactionHash()
             .then((txHashes) => {
                 if (!txHashes || txHashes.length < 1) {
@@ -89,7 +112,35 @@ export function getPersonaData() {
 }
 
 export function getPersonaAddress() {
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set'});            
+        }
+    }
+
     return dispatch => {
         dispatch({type: 'GET_PERSONA_ADDRESS', address: transactor.wallet.address});
     }  
+}
+
+export function addData(infoCode, field, data, price) {
+    
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set'});            
+        }
+    }
+
+    return dispatch => {
+        const contract = transactor.contractWithSigner
+        contract.addData(infoCode, 0, field, data, price)
+        .then((tx) => {
+            tx.wait()
+            .then((newData) => {
+                getPersonaData()
+            })
+        })
+        .catch(err => console.error(err));
+        dispatch({type: 'ADD_DATA', error: 'Transaction failed'});                
+    }
 }
