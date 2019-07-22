@@ -14,8 +14,9 @@ class Menu extends Component {
                     <div className="links">
                         <div className="flex-column">
                             <Link to='/addinformation'>
-                            <Glyphicon glyph="plus"/> 
-                            <a className="icons">Add information</a></Link>
+                                <Glyphicon glyph="plus"/> 
+                                <a className="icons">Add information</a>
+                            </Link>
                         </div>
                         <div className="flex-column">
                             <Glyphicon glyph="ok"/>

@@ -6,7 +6,9 @@ class CreateIdentity extends Component {
     
     constructor(props) {
         super(props);
-        this.state = { Loader: false }
+        this.state = { 
+            loader: false 
+        }
     }
 
     render () {
@@ -24,6 +26,7 @@ class CreateIdentity extends Component {
                         <p className= "Subtitle, text-center">To have a <b>Holon Identity</b>, please provide us with the following information.</p>
                     </Row>
                 </div>
+                {this.state.loader ? (<Loader />) : (null)}
                 <FormGroup className="margin-top-50">
                     <ControlLabel>Name</ControlLabel>
                     <FormControl componentClass="input" type="text" />
@@ -32,8 +35,7 @@ class CreateIdentity extends Component {
                     <ControlLabel>Email</ControlLabel>
                     <FormControl componentClass="input" type="email" placeholder="email@example.com" />
                 </FormGroup>
-                <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={() => this.setState({Loader: true}) && this.props.history.push('/home')}>Create ID</Button>
-                {this.state.Loader ? (<Loader />) : (null)}
+                <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={() => this.setState({loader: true})}>Create ID</Button>
             </Grid>
         );
     }

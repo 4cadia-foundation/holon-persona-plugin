@@ -70,7 +70,7 @@ import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
                     onChange={this.handleChange}
                 />
                 <br/>
-                <Button disabled={!this.validateForm()} className="btn btn-block btn-primary"  type="submit" onClick={this.handleClick}>
+                <Button disabled={!this.validateForm()} className="btn btn-block btn-warning"  type="submit" onClick={this.handleClick}>
                     Save
                 </Button>    
                 
