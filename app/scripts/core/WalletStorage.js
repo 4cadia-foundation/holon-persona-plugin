@@ -1,6 +1,7 @@
 import KeyringController from 'eth-keyring-controller';
 import SimpleKeyring from 'eth-simple-keyring';
 import Cryptography from './Cryptography';
+import { ethers } from 'ethers';
 
 class WalletStorage {
 
@@ -67,9 +68,10 @@ class WalletStorage {
         const clear = await this.clearStorage();
         /*CRIA NOVO STORAGE*/
         const storage = await this.setChromeStorage(encrypted);
-
-        resolve(vault);
+        const wallet = new ethers.Wallet(privateKey);
+        resolve(wallet);
       }catch (exception) {
+        console.log('createNewVaultAndRestore/exception', exception);
         reject(exception.message);
       }
     })
@@ -83,7 +85,8 @@ class WalletStorage {
       try {
         const encrypted = await this.getChromeStorage();
         const decripted = await Cryptography.decryptWithPassworder(password, encrypted);
-        resolve(decripted);
+        const wallet = ethers.Wallet(decripted.privateKey);
+        resolve(wallet);
       }catch (exception) {
         reject(exception.message);
       }
