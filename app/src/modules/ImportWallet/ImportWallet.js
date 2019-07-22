@@ -34,9 +34,9 @@ class ImportWallet extends Component {
   static getDerivedStateFromProps(props, state){
     if (props.accounts !== state.accounts){
       return {
-        phrase: 'rival sword mercy opinion awake soul blush liberty coin leaf march young',
-        password: 'Teste1020',
-        confirm: 'Teste1020',
+        phrase: '',
+        password: '',
+        confirm: '',
         accounts: props.accounts
       };
     }
