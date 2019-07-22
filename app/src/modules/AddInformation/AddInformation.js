@@ -3,6 +3,7 @@ import logo from '../../../images/icon-38.png';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import DataCategory from '../../components/DataCategory/DataCategory';
 import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
+import Loader from '../../components/Loader/Loader';
 import * as PersonaActions from '../../redux/actions/persona';
 
 import {connect} from "react-redux";
@@ -19,7 +20,8 @@ class AddInformation extends Component {
             category: "",
             subCategory: "",
             info: "",
-            cost: ""
+            cost: "",
+            loader: false
         };
     }
 
@@ -30,6 +32,7 @@ class AddInformation extends Component {
         const data = this.state.info
         const price = this.state.cost
         this.props.addData(infoCode, field, data, price)
+        this.setState({ loader: true })
 
     }
     validateForm() {
@@ -74,7 +77,7 @@ class AddInformation extends Component {
                         value={this.state.info}
                         placeholder="Information"
                         onChange={this.handleChange}
-                    />
+                        />
                     <br />
                     <label>How much do you want to get for this information?</label>
                     <FormControl
@@ -83,12 +86,12 @@ class AddInformation extends Component {
                         value={this.state.cost}
                         placeholder="Value in wei"
                         onChange={this.handleChange}
-                    />
+                        />
                     <br />
                     <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" type="submit" onClick={this.handleClick}>
                         Save
                     </Button>
-
+                        {this.state.loader ? (<Loader />) : (null)}
                 </Form>
 
             </div>

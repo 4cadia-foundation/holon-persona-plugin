@@ -1,24 +1,26 @@
-.loader-body {
-  position: fixed;
+.loaderBody {
+  width: 80vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 85vw;
-  height: 50vh;
-  background-color: var(--color-white);
+ padding-top: 20px;
+}
+
+.loaderText {
+  padding-top: 10px;
+  display: flex;
+  align-self: center;
 }
 
 .loader {
-  border: 16px solid #f3f3f3;
-  border-top: 16px solid var(--color-orange);
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid var(--color-orange);
   border-radius: 50%;
-  width: 100px;
-  height: 100px;   
+  width: 65px;
+  height: 65px;   
   animation: spin 2s linear infinite;
   background-color: var(--color-white);
   margin: 0 auto;
-  opacity: 1;
-  z-index: 99;
 }
 
 @keyframes spin {
