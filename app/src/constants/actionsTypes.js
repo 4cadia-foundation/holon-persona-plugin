@@ -1,2 +1,4 @@
 export const SET_ACCOUNTS = 'SET_ACCOUNTS';
 export const SET_ACCOUNTS_ERROR = 'SET_ACCOUNTS_ERROR';
+export const OPEN_WALLET = 'OPEN_WALLET';
+export const OPEN_WALLET_ERROR = 'OPEN_WALLET_ERROR';
