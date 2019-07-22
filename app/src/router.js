@@ -8,6 +8,7 @@ import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
 import Menu from  './modules/Menu/Menu';
 import ValidateInformation from './modules/ValidateInformation/ValidateInformation';
+import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 
 let routers = [
   {
@@ -18,6 +19,16 @@ let routers = [
   {
     path: '/importwallet',
     component: ImportWallet,
+    exact: false
+  },
+  {
+    path: '/menu',
+    component: Menu,
+    exact: false
+  },
+  {
+    path: '/backupphrase',
+    component: BackupPhrase,
     exact: false
   },
   {

@@ -22,3 +22,21 @@ export function restoreVault(password, seed) {
       })
   }
 }
+
+export function openWallet(password) {
+  return dispatch => {
+    wallet.submitPassword(password).then(wallet => {
+      dispatch({
+        type: ActionTypes.OPEN_WALLET,
+        wallet: wallet,
+        toast: buildToast('Open wallet with successful', {type: ToastTypes.SUCCESS})
+      });
+    })
+      .catch(exception => {
+        dispatch({
+          type: ActionTypes.OPEN_WALLET_ERROR,
+          toast: buildToast(exception, {type: ToastTypes.ERROR})
+        });
+      })
+  }
+}

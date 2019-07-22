@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+.box-mnemonico {
+    margin-top: 30px;
+}
+
+.button-exit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.paragraph-explication {
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon-alert{
+    height: 27px;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
