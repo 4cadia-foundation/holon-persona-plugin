@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import styles from './CreateIdentity.css';
 
 class CreateIdentity extends Component {
     

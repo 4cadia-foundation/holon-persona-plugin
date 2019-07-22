@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row } from 'react-bootstrap';
-import logo from '../../../images/logo.png';
 
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
