@@ -93,3 +93,18 @@ export function getPersonaAddress() {
         dispatch({type: 'GET_PERSONA_ADDRESS', address: transactor.wallet.address});
     }  
 }
+
+export function addData(infoCode, field, data, price) {
+    return dispatch => {
+        const contract = transactor.contractWithSigner
+        contract.addData(infoCode, 0, field, data, price)
+        .then((tx) => {
+            tx.wait()
+            .then((newData) => {
+                getPersonaData()
+            })
+        })
+        .catch(err => console.error(err));
+        dispatch({type: 'ADD_DATA', error: 'Transaction failed'});                
+    }
+}

@@ -16,12 +16,12 @@
     "persistent": true
   },
   "permissions": [
+    "storage",
     "clipboardWrite",
     "unlimitedStorage",
     "notifications",
     "tabs",
     "activeTab",
-    "storage",
     "webRequest",
     "*://*.eth/",
     "*://*.google.com/",

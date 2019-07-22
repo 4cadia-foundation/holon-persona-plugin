@@ -24,6 +24,7 @@ export  default class SmartContract {
     this.provider = this._options;
     this._address = config.address;
     this._abi = config.abi;
+    this._contract = new ethers.Contract(this._address, this._abi, this.provider);
 
   }
 
@@ -50,7 +51,7 @@ export  default class SmartContract {
 
 
    get contract () {    
-      return new ethers.Contract(this._address, this._abi, this.provider);
+      return this._contract;
    }
 }
 
