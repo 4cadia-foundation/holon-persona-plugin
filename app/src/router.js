@@ -8,6 +8,7 @@ import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
 import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import Menu from './modules/Menu/Menu';
+import Notifications from './modules/Notifications/Notifications';
 
 let routers = [
   {
@@ -56,6 +57,11 @@ let routers = [
     exact: false
   },
   {
+    path: '/notifications',
+    component: Notifications,
+    exact: false
+  },
+  {
     path: '/menu',
     component: Menu,
     exact: false
@@ -63,7 +69,7 @@ let routers = [
   {
     component: Notfound,
     exact: false
-  }
+  },
 ];
 
 export default routers;
