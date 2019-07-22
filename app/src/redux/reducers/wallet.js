@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   accounts: [],
   seed:'',
   mnemonic: 'ivory alarm violin grid uphold street clock crime across kit shop leaf',
+  wallet: {}
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
@@ -14,7 +15,11 @@ export default function wallet(state = INITIAL_STATE, action) {
     case ActionTypes.SET_ACCOUNTS_ERROR:
       return {...state, error: action.error};
     break;
+    case ActionTypes.OPEN_WALLET:
+      return {...state, wallet: action.wallet};
+    break;
     default:
       return state;
   }
 }
+
