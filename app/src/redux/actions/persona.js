@@ -15,10 +15,12 @@ const filterContract = new FilterEventsBlockchain(filterNewData);
 abiDecoder.addABI(abi);
 
 function checkWallet() {
-    console.log('action/persona/checkWallet', store.getState());
+    console.log('action/persona/checkWallet/globalState', store.getState());
+    console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
     if (!transactor.wallet) {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
+            console.log('action/persona/checkWallet/transactor.wallet-set', transactor.wallet);
             return true;
         } else {
             return false;
@@ -29,7 +31,7 @@ function checkWallet() {
 }
 
 export function getPersonaData() {
-    
+
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set'});            
@@ -39,6 +41,7 @@ export function getPersonaData() {
     return (dispatch) => {
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
+            console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
             filterContract.getLogsTransactionHash()
             .then((txHashes) => {
                 if (!txHashes || txHashes.length < 1) {

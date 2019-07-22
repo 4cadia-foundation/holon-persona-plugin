@@ -45,9 +45,7 @@ class WalletStorage {
           if(error) reject(error);
           resolve('removed with successfull');
         })
-
     })
-
   }
 
 
