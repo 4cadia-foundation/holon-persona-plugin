@@ -1,6 +1,5 @@
 import Wallet  from '../../../scripts/core/WalletStorage';
 import * as ActionTypes from '../../constants/actionsTypes';
-
 const wallet = new Wallet();
 
 export function restoreVault(password, seed) {
@@ -35,5 +34,24 @@ export function openWallet(password) {
           type: ActionTypes.OPEN_WALLET_ERROR
         });
       })
+  }
+}
+
+export function createNewWallet(password){
+  return dispatch=> {
+    wallet.createNewVault(password)
+    .then((wallet) => {
+      dispatch({
+        type: ActionTypes.SET_ACCOUNTS,
+        address: wallet.address,
+        wallet: wallet       
+      });
+    })
+    .catch((exception) => {
+      console.log('actions/wallet/createNewWallet', exception);
+      dispatch({
+        type: ActionTypes.SET_ACCOUNTS_ERROR,
+      });
+    });
   }
 }
