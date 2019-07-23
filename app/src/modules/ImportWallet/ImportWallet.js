@@ -130,7 +130,7 @@ class ImportWallet extends Component {
     if (this.props.wallet.address.length > 2) {
       console.log('ImportWallet/render/address', this.props.wallet.address);
       return (
-        <Redirect to="/createidentity" />
+        <Redirect to="/choosecreateidentityorhome" />
       );
     }
 
