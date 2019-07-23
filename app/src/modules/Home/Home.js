@@ -7,21 +7,17 @@ import * as PersonaActions from '../../redux/actions/persona';
 import './Home.css';
 import logo from '../../../images/logo.png';
 import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
-import Menu from '../Menu/Menu';
-
 
 class Home extends Component {
 
   constructor(props) {
     super(props);      
     this.state = {
-      persona: this.props.persona,
-      showMenu: false
+      persona: this.props.persona
     }
     this.props.getPersonaData();   
     this.getCampoValor = this.getCampoValor.bind(this); 
     this.getAddress = this.getAddress.bind(this);
-    this.fnOpenMenu = this.fnOpenMenu.bind(this);
   }
 
   componentWillReceiveProps(propsOld) {
@@ -51,29 +47,22 @@ class Home extends Component {
     return persona.address;
   }
 
-  fnOpenMenu(event) {
-    console.log("fnAbrirMenu-Passeiporaqui", event)
-    this.setState({
-      showMenu: !this.state.showMenu
-    })
-  }
-
   render () {
     
-    if (this.state.showMenu) {
-      return (
-        <Grid id="gridHome">
-          <HamburguerMenu fnOpenMenu={ this.fnOpenMenu } />
-          <Menu /> 
-        </Grid>
-      )
-    }
-        
+    // if (this.state.showMenu) {
+    //   return (
+    //     <Grid id="gridHome">
+    //       <HamburguerMenu />
+    //       <Menu /> 
+    //     </Grid>
+    //   )
+    // }
+    // fnOpenMenu={this.fnOpenMenu}
     const {persona} = this.state;
     
     return (
       <Grid id="gridHome">
-        <HamburguerMenu abrirMenu={this.fnAbrirMenu} />
+        <HamburguerMenu />
         <section id="sectionBasicInfo">
           <hr className="horizontalLine"></hr>
           <Row className="text-center">

@@ -5,6 +5,7 @@
     width: 30px;
     height: 2px;
     transition: .3s ease-in-out;
+    cursor: pointer;
 }
 
 .hamburguer:before,
@@ -16,14 +17,17 @@
     height: 100%;
     position: absolute;
     transition: .3s ease-in-out;
+    cursor: pointer;
 }
 
 .hamburguer:before {
     top: -10px;
+    cursor: pointer;
 }
 
 .hamburguer:after {
     bottom: -10px;
+    cursor: pointer;
 }
 
 input {
