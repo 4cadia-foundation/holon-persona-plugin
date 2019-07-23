@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
-import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
-import * as PersonaActions from '../../redux/actions/persona';
 
 class CreateIdentity extends Component {
 
@@ -11,23 +8,30 @@ class CreateIdentity extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.state = {
             name: "",
-            email: "",
+            email: ""
         };
     }
 
+    validateForm() {
+        return this.state.name.length > 3 && this.state.email.length > 7;
+    }
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
     }
-
     handleClick(event) {
         event.preventDefault();
         this.props.addPersona(this.state.name, this.state.email);
-
     }
 
     render() {
+        if (this.props.wallet.address.length > 2) {
+            console.log('CreateIdentity/render/address', this.props.wallet.address);
+            return (
+                <Redirect to="/home" />
+            );
+        }
         return (
             <Grid>
                 <Row>
@@ -44,13 +48,31 @@ class CreateIdentity extends Component {
                 </div>
                 <FormGroup className="margin-top-50">
                     <ControlLabel>Name</ControlLabel>
-                    <FormControl id="name" componentClass="input" onChange={this.handleChange} type="text" />
+
+                    <FormControl
+                        componentClass="input"
+                        id="name"
+                        type="text"
+                        value={this.state.name}
+                        placeholder="Name"
+                        onChange={this.handleChange}
+                    />
+
+
                 </FormGroup>
                 <FormGroup>
                     <ControlLabel>Email</ControlLabel>
-                    <FormControl id="email" componentClass="input" onChange={this.handleChange} type="email" placeholder="email@example.com" />
+
+                    <FormControl
+                        componentClass="input"
+                        id="email"
+                        type="email"
+                        placeholder="email@example.com"
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                    />
                 </FormGroup>
-                <Button className="margin-top-50" bsSize="large" block bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
+                <Button className="margin-top-50" disabled={!this.validateForm()} block bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
             </Grid>
         );
     }

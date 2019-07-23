@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row, Col } from 'react-bootstrap';
-
-import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom';
+import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
@@ -18,15 +18,17 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-    /*
-    * exemplo para abrir uma carteira que foi importada.
-    * this.props.openWallet('senha');
-    *
-    * this.props.openWallet('paulogabrielvieira1');
-    * */
+    this.props.hasWallet();
   }
 
   render() {
+
+    if (this.props.wallet.hasWallet) {
+      console.log('WalletPassword/render/wallet', this.props.wallet);
+      return (
+        <Redirect to="/welcomeback" />
+      );
+    }
 
     return (
       <Grid className="gridPrincipal">

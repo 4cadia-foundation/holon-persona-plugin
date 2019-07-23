@@ -1,13 +1,16 @@
 import Welcome from './modules/Welcome/Welcome';
 import ChooseCreateOrImport from './modules/ChooseCreateOrImport/ChooseCreateOrImport';
+import ChooseCreateIdentityOrHome from './modules/ChooseCreateIdentityOrHome/ChooseCreateIdentityOrHome';
 import ImportWallet from './modules/ImportWallet/ImportWallet';
 import WalletPassword from './modules/WalletPassword/WalletPassword';
 import Notfound from './modules/Notfound/Notfound';
 import CreateIdentity from './modules/CreateIdentity/CreateIdentity';
 import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
+import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
 import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import Menu from './modules/Menu/Menu';
+import Notifications from './modules/Notifications/Notifications';
 
 let routers = [
   {
@@ -18,6 +21,16 @@ let routers = [
   {
     path: '/importwallet',
     component: ImportWallet,
+    exact: false
+  },
+  {
+    path: '/choosecreateidentityorhome',
+    component: ChooseCreateIdentityOrHome,
+    exact: false
+  },
+  {
+    path: '/welcomeback',
+    component: WelcomeBack,
     exact: false
   },
   {
@@ -56,6 +69,11 @@ let routers = [
     exact: false
   },
   {
+    path: '/notifications',
+    component: Notifications,
+    exact: false
+  },
+  {
     path: '/menu',
     component: Menu,
     exact: false
@@ -63,7 +81,7 @@ let routers = [
   {
     component: Notfound,
     exact: false
-  }
+  },
 ];
 
 export default routers;
