@@ -3,6 +3,7 @@ import FilterEventsBlockchain from '../../../scripts/core/FilterEventsBlockchain
 import store from '../store';
 import { address, abi } from '../../../config/abi';
 import abiDecoder from 'abi-decoder';
+import * as ActionTypes from '../../constants/actionsTypes';
 
 const transactor = new Transactor();
 const filterNewData = { 
@@ -15,8 +16,8 @@ const filterContract = new FilterEventsBlockchain(filterNewData);
 abiDecoder.addABI(abi);
 
 function checkWallet() {
-    console.log('action/persona/checkWallet/globalState', store.getState());
-    console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
+    //console.log('action/persona/checkWallet/globalState', store.getState());
+    //console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
     if (!transactor.wallet) {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
@@ -132,8 +133,12 @@ export function addData(infoCode, field, data, price) {
     }
 
     return dispatch => {
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
         const contract = transactor.contractWithSigner
-        contract.addData(infoCode, 0, field, data, price)
+        contract.addData(infoCode, 0, dateTime, data, price)
         .then((tx) => {
             console.log('Tx', tx)
             tx.wait()
@@ -143,6 +148,6 @@ export function addData(infoCode, field, data, price) {
             })
         })
         .catch(err => console.error(err));
-        dispatch({type: 'ADD_DATA', error: 'Transaction failed'});                
+        dispatch({type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed'});                
     }
 }

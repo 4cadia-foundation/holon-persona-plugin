@@ -15,8 +15,5 @@ export default function persona (state = INITIAL_STATE, action) {
     if (action.type == 'ERROR_PERSONA_DATA') {
         return{...state, error: action.error};
     }
-    if (action.type == 'ADD_DATA') {
-        return{...state, error: action.error};
-    }
     return state;
 }

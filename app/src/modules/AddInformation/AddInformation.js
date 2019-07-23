@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logo from '../../../images/icon-38.png';
+import { Redirect } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import DataCategory from '../../components/DataCategory/DataCategory';
 import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
@@ -21,8 +22,59 @@ class AddInformation extends Component {
             subCategory: "",
             info: "",
             cost: "",
-            loader: false
+            isLoading: true,
+            executed: false,
+            addedNewInfo: false,
+            numberOfPersonalInfoRecorded: 0 
         };
+    }
+
+    componentDidMount() {
+        console.log('componentDidMount setState', this.state.numberOfPersonalInfoRecorded, this.props.persona.personalInfo.length)
+        if (this.state.numberOfPersonalInfoRecorded === 0) {
+            this.props.getPersonaData();
+            return;
+        }
+        if (!this.props.persona) {
+            this.props.getPersonaData();
+            return;
+        }
+        this.setState ({
+            numberOfPersonalInfoRecorded: this.props.persona.personalInfo.length,
+            isLoading: false
+        })
+    }
+
+    componentWillReceiveProps(propsOld) {
+        if (propsOld.persona.personalInfo.length === 0) {
+            this.setState ({
+                isLoading: true,
+                executed: false
+            })
+            return;
+        } else {
+            this.setState ({
+                numberOfPersonalInfoRecorded: propsOld.persona.personalInfo.length
+            }) 
+            this.state.numberOfPersonalInfoRecorded = propsOld.persona.personalInfo.length
+            console.log('componentWillReceiveProps setState', this.state.numberOfPersonalInfoRecorded, propsOld.persona.personalInfo.length)    
+        }
+        console.log('componentWillReceiveProps propsOld', this.state.numberOfPersonalInfoRecorded, propsOld.persona.personalInfo.length)
+        if (propsOld.persona.personalInfo.length > this.state.numberOfPersonalInfoRecorded) {
+            if (this.state.addedNewInfo) {
+                this.setState({
+                    isLoading: false,
+                    executed: true,
+                    numberOfPersonalInfoRecorded: this.props.persona.personalInfo.length
+                })
+            } else {
+                this.setState ({
+                    isLoading: false,
+                    executed: false,
+                    numberOfPersonalInfoRecorded: this.props.persona.personalInfo.length
+                })
+            }
+        }
     }
 
     handleClick(event) {
@@ -31,26 +83,39 @@ class AddInformation extends Component {
         const field = this.state.subCategory
         const data = this.state.info
         const price = this.state.cost
+        this.setState({ 
+            isLoading: true,
+            executed: false
+        })
         this.props.addData(infoCode, field, data, price)
-        this.setState({ loader: true })
-
     }
+
     validateForm() {
         return this.state.info.length > 1;
     }
+
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
     }
+
     setCategory(cat) {
         this.setState({ category: cat });
     }
+
     setSubCategory(subCat) {
         this.setState({ subCategory: subCat });
     }
-    render() {
 
+    render() {
+        //console.log('render props', this.props)
+        console.log('render state', this.state)
+        if (this.state.executed) {
+            return (
+                <Redirect to='/home' /> 
+            )
+        }
         return (
             <div>
                 <div>
@@ -91,9 +156,8 @@ class AddInformation extends Component {
                     <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" type="submit" onClick={this.handleClick}>
                         Save
                     </Button>
-                        {this.state.loader ? (<Loader />) : (null)}
                 </Form>
-
+                <Loader visible={this.state.isLoading} />
             </div>
         );
     }
@@ -101,12 +165,9 @@ class AddInformation extends Component {
 }
 
 const mapStateToProps = state => ({
-    infoCode: state.category,
-    field: state.subCategory,
-    data: state.info,
-    price: state.cost
-  });
+    persona: state.persona
+});
   
-  const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(AddInformation);
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddInformation);
