@@ -7,6 +7,12 @@
     margin-top: 50px;
 }
 
+.space-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .large-textarea {
     height: 280px;
 }

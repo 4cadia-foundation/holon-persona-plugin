@@ -3,12 +3,13 @@ import { Grid, Row, Col, Form, Button } from 'react-bootstrap';
 
 
 import '../../styles/_utils.css';
+import styles from './ValidateInformation.css'
 import logo from '../../../images/icon-38.png';
 import SelectInfoToValidate from '../../components/SelectInfoToValidate/SelectInfoToValidate';
 import SelectValidador from '../../components/SelectValidador/SelectValidador';
-import * as PersonaActions from '../../redux/actions/persona';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as PersonaActions from '../../redux/actions/persona';
 
 class ValidateInformation extends Component {
     constructor(props) {
@@ -32,12 +33,14 @@ class ValidateInformation extends Component {
                   </Col>
                 </Row>
 
-                <Form>
-                    <div>
-                        <SelectInfoToValidate personalInfo={this.props.persona.personalInfo} />
-                    </div>
-                    <div>
-                        <SelectValidador />
+                <Form className="margin-top-50">
+                    <div className="space-between">
+                        <div>
+                            <SelectInfoToValidate personalInfo={this.props.persona.personalInfo} />
+                        </div>
+                        <div>
+                            <SelectValidador />
+                        </div>
                     </div>
                 </Form>
 

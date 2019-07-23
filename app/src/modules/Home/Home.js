@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Grid, Row, Label, Table } from 'react-bootstrap';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
+import './Home.css';
 import logo from '../../../images/logo.png';
 import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
+import Menu from '../Menu/Menu';
 
-import './Home.css';
 
 class Home extends Component {
 
-  
   constructor(props) {
     super(props);      
     this.state = {
-      persona: this.props.persona
+      persona: this.props.persona,
+      showMenu: false
     }
     this.props.getPersonaData();   
     this.getCampoValor = this.getCampoValor.bind(this); 
     this.getAddress = this.getAddress.bind(this);
-    this.fnAbrirMenu = this.fnAbrirMenu.bind(this);
+    this.fnOpenMenu = this.fnOpenMenu.bind(this);
   }
 
   componentWillReceiveProps(propsOld) {
@@ -49,16 +51,29 @@ class Home extends Component {
     return persona.address;
   }
 
-  fnAbrirMenu() {
-    this.props.history.push('/menu');
+  fnOpenMenu(event) {
+    console.log("fnAbrirMenu-Passeiporaqui", event)
+    this.setState({
+      showMenu: !this.state.showMenu
+    })
   }
 
   render () {
+    
+    if (this.state.showMenu) {
+      return (
+        <Grid id="gridHome">
+          <HamburguerMenu fnOpenMenu={ this.fnOpenMenu } />
+          <Menu /> 
+        </Grid>
+      )
+    }
+        
     const {persona} = this.state;
-
+    
     return (
       <Grid id="gridHome">
-        <HamburguerMenu fnAbrirMenu={this.fnAbrirMenu} />
+        <HamburguerMenu abrirMenu={this.fnAbrirMenu} />
         <section id="sectionBasicInfo">
           <hr className="horizontalLine"></hr>
           <Row className="text-center">
