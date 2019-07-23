@@ -18,8 +18,13 @@ class Home extends Component {
       isLoading: true
     }
     this.getCampoValor = this.getCampoValor.bind(this); 
-    this.getAddress = this.getAddress.bind(this);
-    this.props.getPersonaData();   
+    this.getAddress = this.getAddress.bind(this);    
+  }
+
+  componentDidMount() {
+    if (this.state.persona.personalInfo.length === 0) {
+      this.props.getPersonaData();   
+    }
   }
 
   componentWillReceiveProps(propsOld) {
@@ -39,6 +44,9 @@ class Home extends Component {
     let filtro = persona.personalInfo.filter(item => {
       return item.field == campo;
     });
+    if (!filtro[0]) {
+      return '';
+    }
     return filtro[0].valor;
   }
 
