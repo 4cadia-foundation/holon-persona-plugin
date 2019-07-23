@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PersonaActions from "../../redux/actions/persona";
 
 class CreateIdentity extends Component {
 
@@ -23,14 +27,14 @@ class CreateIdentity extends Component {
     handleClick(event) {
         event.preventDefault();
         this.props.addPersona(this.state.name, this.state.email);
+        this.setState({
+            redirect: true
+        });
     }
 
     render() {
-        if (this.props.wallet.address.length > 2) {
-            console.log('CreateIdentity/render/address', this.props.wallet.address);
-            return (
-                <Redirect to="/home" />
-            );
+        if (this.state.redirect) {
+            return <Redirect to='/home' />
         }
         return (
             <Grid>
