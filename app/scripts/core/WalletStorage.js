@@ -76,6 +76,10 @@ class WalletStorage {
       try {
         console.log('submitPassword');
         const encrypted = await this.getChromeStorage();
+        if (!encrypted) {
+          reject("wallet was not found in storage");
+          return
+        }
         console.log('submitPassword/encrypted', encrypted);
         const wallet = ethers.Wallet.fromEncryptedJson(encrypted, password);
         console.log('submitPassword/wallet', wallet);
