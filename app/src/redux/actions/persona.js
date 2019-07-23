@@ -97,7 +97,7 @@ export function getPersonaData() {
                                 statusValidationCode: statusValidacao,
                             };
                             novoPersonalInfo.push(item);
-                            console.log('action/getPersonaData/novoPersonalInfo', novoPersonalInfo);
+                            //console.log('action/getPersonaData/novoPersonalInfo', novoPersonalInfo);
                         }
                     } 
                     if (novoPersonalInfo.length > 2) {
@@ -119,21 +119,20 @@ export function getPersonaAddress() {
             dispatch({type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set'});            
         }
     }
-
     return dispatch => {
         dispatch({type: 'GET_PERSONA_ADDRESS', address: transactor.wallet.address});
     }  
 }
 
-export function addData(infoCode, field, data, price) {
-    
+
+export function addData(infoCode, field, data, price, dispatch) {
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set'});            
         }
     }
-
-    return dispatch => {
+    return (dispatch) => {
+        dispatch({type: 'RUNNING_METHOD'});            
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -145,10 +144,18 @@ export function addData(infoCode, field, data, price) {
             tx.wait()
             .then((newData) => {
                 console.log('newData', newData)
-                getPersonaData()
+                let item = { 
+                    field: field,
+                    valor: data,
+                    statusValidationDescription: 'NotValidated',
+                    statusValidationCode: 1
+                };
+                dispatch({type: ActionTypes.ADD_PERSONA_DATA, newField: item })
             })
         })
-        .catch(err => console.error(err));
-        dispatch({type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed'});                
+        .catch((err) => {
+            console.error('addData', err)
+            dispatch({type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err});                
+        });
     }
 }

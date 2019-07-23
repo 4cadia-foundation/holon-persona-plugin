@@ -20,60 +20,31 @@ class AddInformation extends Component {
         this.state = {
             category: "",
             subCategory: "",
-            info: "",
-            cost: "",
+            info: "28/03/1979",
+            cost: "1",
             isLoading: true,
             executed: false,
-            addedNewInfo: false,
-            numberOfPersonalInfoRecorded: 0 
+            saveButtonCalled: false           
         };
+        this.props.getPersonaData();
     }
 
-    componentDidMount() {
-        console.log('componentDidMount setState', this.state.numberOfPersonalInfoRecorded, this.props.persona.personalInfo.length)
-        if (this.state.numberOfPersonalInfoRecorded === 0) {
-            this.props.getPersonaData();
-            return;
-        }
-        if (!this.props.persona) {
-            this.props.getPersonaData();
-            return;
-        }
+    componentDidMount() {       
         this.setState ({
-            numberOfPersonalInfoRecorded: this.props.persona.personalInfo.length,
             isLoading: false
-        })
+        });
     }
 
-    componentWillReceiveProps(propsOld) {
-        if (propsOld.persona.personalInfo.length === 0) {
-            this.setState ({
-                isLoading: true,
-                executed: false
-            })
-            return;
-        } else {
-            this.setState ({
-                numberOfPersonalInfoRecorded: propsOld.persona.personalInfo.length
-            }) 
-            this.state.numberOfPersonalInfoRecorded = propsOld.persona.personalInfo.length
-            console.log('componentWillReceiveProps setState', this.state.numberOfPersonalInfoRecorded, propsOld.persona.personalInfo.length)    
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.persona.error.length>2) {
+            const msg = 'Erro: ' + nextProps.persona.error;
+            console.error('getDerivedStateFromProps: ', msg);
+            return { isLoading: false };
         }
-        console.log('componentWillReceiveProps propsOld', this.state.numberOfPersonalInfoRecorded, propsOld.persona.personalInfo.length)
-        if (propsOld.persona.personalInfo.length > this.state.numberOfPersonalInfoRecorded) {
-            if (this.state.addedNewInfo) {
-                this.setState({
-                    isLoading: false,
-                    executed: true,
-                    numberOfPersonalInfoRecorded: this.props.persona.personalInfo.length
-                })
-            } else {
-                this.setState ({
-                    isLoading: false,
-                    executed: false,
-                    numberOfPersonalInfoRecorded: this.props.persona.personalInfo.length
-                })
-            }
+        // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
+        // console.log('getDerivedStateFromProps prevState', prevState);
+        if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
+            return { isLoading : nextProps.persona.isRunning, executed: true };
         }
     }
 
@@ -85,7 +56,7 @@ class AddInformation extends Component {
         const price = this.state.cost
         this.setState({ 
             isLoading: true,
-            executed: false
+            saveButtonCalled: true,
         })
         this.props.addData(infoCode, field, data, price)
     }
