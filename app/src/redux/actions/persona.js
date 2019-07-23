@@ -31,7 +31,6 @@ function checkWallet() {
 }
 
 export function getPersonaData() {
-
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set'});            
@@ -39,6 +38,7 @@ export function getPersonaData() {
     }
 
     return (dispatch) => {
+        debugger;
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
             console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
@@ -96,9 +96,12 @@ export function getPersonaData() {
                                 statusValidationCode: statusValidacao,
                             };
                             novoPersonalInfo.push(item);
+                            debugger;
                             if (novoPersonalInfo.length == 2) {
                                 // console.log('actions/novoPersonalInfo', novoPersonalInfo);
                                 dispatch({type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address});
+                            } else{
+                                dispatch({type: 'GET_PERSONA_DATA', novoPersonalInfo: novoPersonalInfo});
                             }
                         }
                     } 

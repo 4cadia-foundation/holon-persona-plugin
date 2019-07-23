@@ -1,32 +1,70 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PersonaActions from '../../redux/actions/persona';
 import logo from '../../../images/icon-38.png';
 import {Grid, Row, Col, Form, FormControl } from 'react-bootstrap';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
-import styles from './Profile.css';
+import './Profile.css';
+import Loader from '../../components/Loader/Loader';
 
 class Profile extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            name: "Janus da Silva",
-            email: "janus@gmail.com",
-            othersValues: ['01/01/1969','Alameda Santos, 1827 - São Paulo - SP - Brasil','+55 11 99999-5555','333.564.798-00']
+            persona: this.props.persona,
+            isLoading: true
         };        
         this.handleBack = this.handleBack.bind(this);
-
+        this.getCampoValor = this.getCampoValor.bind(this); 
     }
 
     handleBack(){
-        debugger;
         alert('oi');
     }
 
+    componentDidMount(){
+        debugger;
+        if (this.props.persona.personalInfo.length > 0){
+            this.setState({
+                isLoading:false
+            })
+        } else {
+            this.props.getPersonaData();
+        }
+    }
+
+    componentWillReceiveProps(propsOld) {
+        if (this.state.persona.address != propsOld.persona.address) {
+          this.setState({
+            persona: propsOld.persona,
+            isLoading: false
+          })
+        }
+      }  
+
+      getCampoValor(campo) {
+        const {persona} = this.state;
+        if (persona.personalInfo.length < 1) {
+          return '';
+        }
+        let filtro = persona.personalInfo.filter(item => {
+          return item.field == campo;
+        });
+        if (!filtro[0]) {
+          return '';
+        }
+        return filtro[0].valor;
+      }
+    
+
     render() {
+        const {persona} = this.state;
         return (
+            <div>
             <Form>
-                
                 <Grid>
                     <Row>
                         <Col>
@@ -48,7 +86,7 @@ class Profile extends Component {
                             <FormControl
                                 id="name"
                                 type="text"
-                                value={this.state.name}
+                                value={ this.getCampoValor('name') }
                                 readOnly
                             />
                         </Col>
@@ -58,13 +96,13 @@ class Profile extends Component {
                             <FormControl
                                 id="email"
                                 type="text"
-                                value={this.state.email}
+                                value={ this.getCampoValor('email') }
                                 readOnly
                             />
                         </Col>
                     </Row>       
                         {
-                            this.state.othersValues.map((val, idx) =>
+                            persona.personalInfo.filter((f) => f.field != 'name' && f.field != 'email').map((val, idx) =>
                             {
                                 return(
                                     <Row key={'row_' + idx.toString()}>
@@ -73,12 +111,12 @@ class Profile extends Component {
                                                 id={idx.toString()}
                                                 key={idx.toString()}
                                                 type="text"
-                                                value={val}
+                                                value={val.valor}
                                                 readOnly
                                             />                      
                                         </Col>
                                     </Row>
-                                    )
+                                )
                             })
                         }                            
                     <Row className="text-center">
@@ -88,11 +126,17 @@ class Profile extends Component {
                     </Row>       
                 </Grid>
             </Form>
+            <Loader visible={this.state.isLoading} />
+            </div>
         );
     }
 
 }
 
-
+const mapStateToProps = state => ({ 
+    persona: state.persona
+});
   
-  export default Profile;
+  const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Profile);
