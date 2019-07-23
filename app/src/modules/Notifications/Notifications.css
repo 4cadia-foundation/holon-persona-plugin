@@ -1,17 +1,23 @@
-#panel-notification{
-    height: 250px;
+.hollonApp {
+    padding: 0;
+}
+
+#panel-notification {
+    height: 200px;
     width: 200px;
+    margin-top: 20px;
     margin-left: 10px;
 }
 
-.box-one{
-    padding: 0;
+.box-one {
+    width: 500px;
     margin-top: 30px;
     display: flex;
     flex-direction: row;
 }
 
 .box-two {
+    width: 500px;
     display: flex;
     flex-direction: row;
 }
@@ -23,7 +29,30 @@
 }
 
 .inner-content-button {
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.line {
+    width: 100vw;
+    height:1px; 
+    border:none; 
+    color:#000; 
+    background-color:#000; 
+    margin-top: 30px; 
+    margin-bottom: 0px
+}
+
+.icon-remove {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.title-paragraph {
+    width: 400px;
     display: flex;
     flex-direction: column;
-    align-content: flex-end;
+    align-items: center;
 }
