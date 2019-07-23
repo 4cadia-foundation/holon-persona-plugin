@@ -42,11 +42,11 @@ export function getPersonaData() {
     return (dispatch) => {
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
-            console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
+            //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
             filterContract.getLogsTransactionHash()
             .then((txHashes) => {
                 if (!txHashes || txHashes.length < 1) {
-                    //console.log('action/getPersonaData/getLogsTransactionHash/Nao achou logs', txHashes);
+                    console.log('action/getPersonaData/getLogsTransactionHash/Nao achou logs', txHashes);
                     getPersonaAddress();
                     return;
                 }         
@@ -70,8 +70,8 @@ export function getPersonaData() {
                             let validatedReceipt = await filterContract.getTransactionReceipt(validatedHash[0]);
                             //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
                             const validatedDecodedReceipt = abiDecoder.decodeLogs(validatedReceipt.logs);
-                            // console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
-                            //console.log('action/getPersonaData/statusValidacao', statusValidacao);
+                            //console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
+                            // console.log('action/getPersonaData/statusValidacao', statusValidacao);
                             let statusValidacao = '1';                           
                             let descValidacao = '';
                             if ( (decodedTx.params[2].value == validatedDecodedReceipt[0].events[2].value) && 
@@ -97,12 +97,13 @@ export function getPersonaData() {
                                 statusValidationCode: statusValidacao,
                             };
                             novoPersonalInfo.push(item);
-                            if (novoPersonalInfo.length == 2) {
-                                // console.log('actions/novoPersonalInfo', novoPersonalInfo);
-                                dispatch({type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address});
-                            }
+                            console.log('action/getPersonaData/novoPersonalInfo', novoPersonalInfo);
                         }
                     } 
+                    if (novoPersonalInfo.length > 2) {
+                        // console.log('actions/novoPersonalInfo', novoPersonalInfo);
+                        dispatch({type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address});
+                    }
                 });
             })
             .catch(err => console.error(err));
