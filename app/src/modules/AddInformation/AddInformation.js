@@ -81,7 +81,7 @@ class AddInformation extends Component {
 
     render() {
         //console.log('render props', this.props)
-        console.log('render state', this.state)
+        // console.log('render state', this.state)
         if (this.state.executed) {
             return (
                 <Redirect to='/home' /> 
