@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Button, Form, FormControl } from 'react-bootstrap';
-//import { connect } from 'react-redux';
-//import TableValidations from '../../components/TableValidations/TableValidations';
+import { Button, Form, FormGroup, FormControl,ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import * as WalletActions from "../../redux/actions/wallet";
+import {connect} from "react-redux";
+import { bindActionCreators } from 'redux';
 
 import styles from './WalletPassword.css';
 
@@ -9,72 +11,122 @@ import styles from './WalletPassword.css';
 
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
           password: "",
-          password2: ""
+          confirm: ""
         };        
     }
 
-    handleClick(){
-        console.log("Funcionou");
-    }
-    validateForm() {
-        return this.state.password.length > 0 && this.state.password2.length > 0;
-    }
-    handleChange = event => {
-        this.setState({
-          [event.target.id]: event.target.value
-        });
+    handleSubmit(event){
+        event.preventDefault();
+        this.props.createNewWallet(this.state.password);
     }
 
+    validateForm() {
+        return this.state.password.length > 7 && this.state.confirm.length > 7;
+    }
+
+    /**
+     * @method handleChange
+     * @description handle change in form input
+     * */
+    handleChange(event, field){
+        let obj = {};
+        obj[field] = event.target.value;
+        this.setState(obj);
+    }
+ /**
+   * @method getValidationPassword
+   * @description Validate the minimum password length
+   * @return [String] success, warning, error
+   **/
+  getValidationPassword(){
+    const length = this.state.password.length;
+    switch (true) {
+      case (length >= 8):
+        return 'success';
+      break;
+      case (length > 5):
+        return 'warning';
+      break;
+      case (length > 0):
+          return 'error';
+      break;
+      default:
+        return null;
+    }
+  }
+/**
+   * @method getValidationEqualPassword
+   * @description Validates if passwords are equal
+   * @return [String, Null] error
+   **/
+  getValidationEqualPassword(){
+    const {password, confirm} = this.state;
+    switch (true) {
+      case (password !== confirm && password.length > 7):
+        return 'error';
+      break;
+      case (password === confirm && password.length > 7):
+        return 'success';
+      break;
+      default:
+        return null;
+    }
+
+  }
+
+
   render () {
+    if (this.props.wallet.address.length > 2) {
+      console.log('WalletPassword/render/address', this.props.wallet.address);
+      return (
+        <Redirect to="/createidentity" />
+      );
+    }
 
     return (
         <div>
             <div>
                 <img src="images/icon-128.png" className="rounded center-block" alt="Holon"/>
             </div>
-            <hr/>
             <Form>
                 <div>
                     <h2 align="center" >Create Your Wallet</h2>
                 </div>
                 
-                <label>New Password</label>
-                <FormControl 
-                    id="password" 
-                    type="password" 
-                    value={this.state.password}
-                    placeholder="Password" 
-                    onChange={this.handleChange}
-                />
-                <br></br>
-                <label>Confirm Password</label>
-                <FormControl 
-                    id="password2" 
-                    type="password" 
-                    value={this.state.password2}
-                    placeholder="Confirm Password" 
-                    onChange={this.handleChange}
-                />
-                
-                <Button block disabled={!this.validateForm()} bsStyle="primary" bsSize="large"  type="submit" onClick={this.handleClick}>
-                    Submit
-                </Button>                
-            </Form>
+                  <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
+                      <ControlLabel>Password</ControlLabel>
+                      <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
+
+                      <FormControl.Feedback />
+                      <HelpBlock>Minimum validation of 8 characters</HelpBlock>
+
+                  </FormGroup>
+
+                  <FormGroup className="margin-top-10"  validationState={this.getValidationEqualPassword()}>
+                      <ControlLabel>Confirm Password</ControlLabel>
+                      <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
+
+                      <FormControl.Feedback />
+                      <HelpBlock>Password must be the same as field confirm</HelpBlock>
+
+                  </FormGroup>
+
+                  <Button className="margin-top-5" disabled={!this.validateForm()} onClick={this.handleSubmit} block bsStyle="warning">Submit</Button>
+                </Form>
 
         </div>
     );
   }
-
 }
 
-export default WalletPassword;
+const mapStateToProps = state => ({
+    wallet: state.wallet
+  });
+  
+const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(WalletPassword);
 
-// export default connect(state => (
-//     { 
-//       activeDocument: state.validations.activeDocument, 
-//       publicKey: state.validations.publicKey 
-//     }
-//   ))(Home);

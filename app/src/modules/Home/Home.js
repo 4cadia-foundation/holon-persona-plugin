@@ -1,14 +1,52 @@
-import React, { Component } from 'react'
-import { Grid, Row, Label, Table } from 'react-bootstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Grid, Row, Label, Table } from 'react-bootstrap';
+import * as PersonaActions from '../../redux/actions/persona';
 import logo from '../../../images/logo.png';
 import Menu from '../../components/Menu/Menu';
 
 import './Home.css';
 
- class Home extends Component {
+class Home extends Component {
+
+  
+  constructor(props) {
+    super(props);      
+    this.state = {
+      persona: this.props.persona
+    }
+    this.props.getPersonaData();   
+    this.getCampoValor = this.getCampoValor.bind(this); 
+    this.getAddress = this.getAddress.bind(this);
+  }
+
+  componentWillReceiveProps(propsOld) {
+    if (this.state.persona.address != propsOld.persona.address) {
+      this.setState({
+        persona: propsOld.persona
+      })
+    }
+  }
+
+  getCampoValor(campo) {
+    const {persona} = this.state;
+    if (persona.personalInfo.length < 1) {
+      return '';
+    }
+    let filtro = persona.personalInfo.filter(item => {
+      return item.field == campo;
+    });
+    return filtro[0].valor;
+  }
+
+  getAddress() {
+    const {persona} = this.state;
+    return persona.address;
+  }
 
   render () {
+    const {persona} = this.state;
 
     return (
       <Grid id="gridHome">
@@ -19,13 +57,13 @@ import './Home.css';
             <img className="logoHome" src={logo} alt="Logo" />
           </Row>
           <Row className="text-center">
-            <p className="basicInfoHome">0x1d40DA744b7C14C24C97838B0Ed19CE383a784b9</p>
+            <p className="basicInfoHome">{ this.getAddress() }</p>
           </Row>
           <Row className="text-center">
-            <p className="basicInfoHome">Victória de Oliveira Durães</p>
+            <p className="basicInfoHome">{ this.getCampoValor('name') }</p>
           </Row>
           <Row className="text-center">
-            <p className="basicInfoHome">victoria@janusproj.com</p>
+            <p className="basicInfoHome">{ this.getCampoValor('email') }</p>
           </Row>
         </section>
 
@@ -36,22 +74,18 @@ import './Home.css';
             </Row>
           <Table striped id='tableValidation'>
             <tbody>
-              <tr>
-                <td className="text-center">Name</td>
-                <td className="text-center"><Label bsStyle="success">Approved</Label></td>
-              </tr>
-              <tr>
-                <td className="text-center">CPF</td>
-                <td className="text-center"><Label bsStyle="warning">Pending</Label></td>
-              </tr>
-              <tr>
-                <td className="text-center">Phone</td>
-                <td className="text-center"><Label bsStyle="danger">Disapproved</Label></td>
-              </tr>
-              <tr>
-                <td className="text-center">Email</td>
-                <td className="text-center"><Label bsStyle="default">Not validated</Label></td>
-              </tr>
+              {persona.personalInfo.map((item, index) =>                 
+                    <tr key={index}>
+                      <td className="text-center">{item.field}</td>
+                      <td className="text-center">{item.valor}</td>
+                      <td className="text-center">
+                        <Label bsStyle={ item.statusValidationCode == "0" ? 'success' : 'danger'}>
+                          {item.statusValidationDescription}
+                        </Label>
+                      </td>
+                    </tr>
+                )
+              }          
             </tbody>
           </Table>
         </section>
@@ -61,4 +95,10 @@ import './Home.css';
 
 }
 
-export default Home;
+const mapStateToProps = state => ({ 
+  persona: state.persona
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

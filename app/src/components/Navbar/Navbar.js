@@ -12,9 +12,6 @@ class Navbar extends Component {
   }
 
 
-  componentDidMount() {
-    this.props.history.push('/');
-  }
 
   render () {
     let enableMenu = this.props.enableNavBar ? 'show': 'hide';

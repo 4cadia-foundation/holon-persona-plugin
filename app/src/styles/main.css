@@ -1,5 +1,6 @@
 @import url("_variables.css");
 @import url("_utils.css");
 
-
-
+.hollonApp {
+    padding: 20px;
+}

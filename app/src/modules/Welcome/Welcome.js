@@ -1,15 +1,34 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row, Col } from 'react-bootstrap';
-import logo from '../../../images/logo.png';
-import { Link } from 'react-router-dom';
-import './Welcome.css';
 
- class Welcome extends Component {
+import {connect} from "react-redux";
+import { bindActionCreators } from 'redux';
+import * as WalletActions from "../../redux/actions/wallet";
+
+import './Welcome.css';
+import logo from '../../../images/logo.png';
+
+
+class Welcome extends Component {
+
+  constructor(props){
+    super(props);
+
+  }
+
+  componentDidMount() {
+      /*
+      * exemplo para abrir uma carteira que foi importada.
+      * this.props.openWallet('senha');
+      *
+      * this.props.openWallet('paulogabrielvieira1');
+      * */
+  }
 
   render () {
 
     return (
-        <Grid id="gridPrincipal">
+        <Grid className="gridPrincipal">
           <header>
             <Row className="text-center">
               <img className="logo" src={logo} alt="Logo" />
@@ -20,18 +39,25 @@ import './Welcome.css';
           </header>
           <section>
           <Row className="text-center">
-            <p className= "Subtitle">Connecting you to the Decentralized Web. <br/> We're happy to see you.</p>
+            <p className= "subtitle">Connecting you to the Decentralized Web. <br/> We're happy to see you.</p>
           </Row>
           </section>
-          <Row className="text-center">
-            <footer className="text-center">
-                <Link to="/importwallet">Get started</Link>
-            </footer>
-          </Row>
+          <footer>
+            <Row className="text-center">
+              <Button bsStyle="warning" block className="welcomeButton" onClick={ () => this.props.history.push('/choosecreateorimport')}>Get started</Button>
+            </Row>
+          </footer>
         </Grid>
     );
   }
 
 }
 
-export default Welcome;
+const mapStateToProps = state => ({
+  wallet: state.wallet
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+

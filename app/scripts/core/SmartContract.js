@@ -1,7 +1,7 @@
 import Settings from '../../config/settings';
 import NETWORK from '../enums/Network';
 import {ethers} from 'ethers';
-import Config from './Config';
+import config from '../../config/abi';
 
 export  default class SmartContract {
 
@@ -22,13 +22,10 @@ export  default class SmartContract {
     this._abi = null;
     Object.freeze(this._options);
     this.provider = this._options;
+    this._address = config.address;
+    this._abi = config.abi;
+    this._contract = new ethers.Contract(this._address, this._abi, this.provider);
 
-  }
-
-  smartContractInitialization () {
-    let {address, abi} = Config.loadConfigJSON('./config/abi.json');
-    this._address = address;
-    this._abi = abi;
   }
 
 
@@ -54,7 +51,7 @@ export  default class SmartContract {
 
 
    get contract () {    
-      return new ethers.Contract(this._address, this._abi, this.provider);
+      return this._contract;
    }
 }
 
