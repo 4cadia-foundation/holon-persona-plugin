@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
-import store from '../../redux/store';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PersonaActions from "../../redux/actions/persona";
+
 class CreateIdentity extends Component {
     
     constructor(props) {
@@ -25,7 +29,12 @@ class CreateIdentity extends Component {
     }    
 
     render () {
-        console.log('createidentity/store/state', store.getState());
+        if (this.props.wallet.address.length > 2) {
+            console.log('CreateIdentity/render/address', this.props.wallet.address);
+            return (
+              <Redirect to="/home" />
+            );
+        }
         return (
             <Grid>
                 <Row>
@@ -72,4 +81,11 @@ class CreateIdentity extends Component {
     }
 }
 
-export default CreateIdentity;
+const mapStateToProps = state => ({
+    wallet: state.wallet,
+    persona: state.persona
+  });
+  
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(CreateIdentity);

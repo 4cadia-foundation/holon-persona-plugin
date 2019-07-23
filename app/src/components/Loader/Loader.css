@@ -1,26 +1,54 @@
-.loaderBody {
-  width: 80vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
- padding-top: 20px;
+.msg-loading {
+  color: darkgreen;
 }
 
-.loaderText {
-  padding-top: 10px;
-  display: flex;
-  align-self: center;
+.vertical-spacer-120 {
+  margin-top: 120px;
+}
+
+.vertical-spacer-60 {
+  margin-top: 60px;
+}
+
+.vertical-spacer-20 {
+  margin-top: 20px;
+  padding: 0%;
+}
+
+.vertical-spacer-5 {
+  margin-top: 1px;
+  padding: 0%;
+}
+
+.container-load {
+  width:400px; 
+  height:600px;
+  background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+}
+
+.cont-hidden {
+  width:0px; 
+  height:0px;
+  background-color: white;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -100;
+  visibility: hidden;
 }
 
 .loader {
-  border: 10px solid #f3f3f3;
-  border-top: 10px solid var(--color-orange);
+  margin: 0% auto;
+  border: 16px solid yellowgreen; 
+  border-top: 16px solid red; 
   border-radius: 50%;
-  width: 65px;
-  height: 65px;   
+  width: 120px;
+  height: 120px;
   animation: spin 2s linear infinite;
-  background-color: var(--color-white);
-  margin: 0 auto;
 }
 
 @keyframes spin {
