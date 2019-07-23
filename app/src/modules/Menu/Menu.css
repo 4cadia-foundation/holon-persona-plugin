@@ -43,6 +43,18 @@
     flex-direction: row;
     justify-content: flex-end;
 }
+
 .icons {
     margin-left: 20px;
+}
+
+.titleMenu {
+    display: inline-block;
+    margin-top: 0px;
+    font-size: 20pt;
+    width: 303px;
+}
+
+.close {
+    cursor: pointer;
 }

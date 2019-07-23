@@ -1,16 +1,41 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, Grid, Glyphicon, DropdownButton, MenuItem, Button} from 'react-bootstrap';
 import './Menu.css';
 import '../../styles/_utils.css';
 
 class Menu extends Component {
+  
+    constructor (props) {
+      super(props)
+      this.state = {
+        closeMenu: false
+      }
+      this.handleClick = this.handleClick.bind(this);
+    }
+    
+    handleClick() {
+      this.setState({
+        closeMenu: true
+      })
+    }
+
     render() {
+
+        if (this.state.closeMenu) {
+            return (
+              <Redirect to='/home' />
+            )
+        }
+
         return(
         <Grid>
             <Row>
                 <Col>
-                    <h2 className="margin-left">Identity</h2>
+                    <nav className="d-flex flex-row justify-content-between">
+                        <p className="titleMenu">Identity</p>
+                        <Glyphicon glyph="remove" onClick={ this.handleClick }/>
+                    </nav>
                     <hr className="line"/>
                     <div className="links">
                         <div className="flex-column">
