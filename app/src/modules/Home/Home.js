@@ -5,26 +5,33 @@ import { Grid, Row, Label, Table } from 'react-bootstrap';
 import * as PersonaActions from '../../redux/actions/persona';
 import logo from '../../../images/logo.png';
 import Menu from '../../components/Menu/Menu';
-
+import Loader from '../../components/Loader/Loader';
 import './Home.css';
 
-class Home extends Component {
 
+class Home extends Component {
   
   constructor(props) {
     super(props);      
     this.state = {
-      persona: this.props.persona
+      persona: this.props.persona,
+      isLoading: true
     }
-    this.props.getPersonaData();   
     this.getCampoValor = this.getCampoValor.bind(this); 
-    this.getAddress = this.getAddress.bind(this);
+    this.getAddress = this.getAddress.bind(this);    
+  }
+
+  componentDidMount() {
+    if (this.state.persona.personalInfo.length === 0) {
+      this.props.getPersonaData();   
+    }
   }
 
   componentWillReceiveProps(propsOld) {
     if (this.state.persona.address != propsOld.persona.address) {
       this.setState({
-        persona: propsOld.persona
+        persona: propsOld.persona,
+        isLoading: false
       })
     }
   }
@@ -37,6 +44,9 @@ class Home extends Component {
     let filtro = persona.personalInfo.filter(item => {
       return item.field == campo;
     });
+    if (!filtro[0]) {
+      return '';
+    }
     return filtro[0].valor;
   }
 
@@ -49,50 +59,52 @@ class Home extends Component {
     const {persona} = this.state;
 
     return (
-      <Grid id="gridHome">
-        <Menu/>
-        <section id="sectionBasicInfo">
-          <hr className="horizontalLine"></hr>
-          <Row className="text-center">
-            <img className="logoHome" src={logo} alt="Logo" />
-          </Row>
-          <Row className="text-center">
-            <p className="basicInfoHome">{ this.getAddress() }</p>
-          </Row>
-          <Row className="text-center">
-            <p className="basicInfoHome">{ this.getCampoValor('name') }</p>
-          </Row>
-          <Row className="text-center">
-            <p className="basicInfoHome">{ this.getCampoValor('email') }</p>
-          </Row>
-        </section>
-
-        <section id="sectionValidation">
-          <Row>
-              <h5 id="titleValidation">Validations</h5>
-              <hr className="horizontalLine"></hr>
+      <div>
+        <Grid id="gridHome">
+          <Menu/>
+          <section id="sectionBasicInfo">
+            <hr className="horizontalLine"></hr>
+            <Row className="text-center">
+              <img className="logoHome" src={logo} alt="Logo" />
             </Row>
-          <Table striped id='tableValidation'>
-            <tbody>
-              {persona.personalInfo.map((item, index) =>                 
-                    <tr key={index}>
-                      <td className="text-center">{item.field}</td>
-                      <td className="text-center">{item.valor}</td>
-                      <td className="text-center">
-                        <Label bsStyle={ item.statusValidationCode == "0" ? 'success' : 'danger'}>
-                          {item.statusValidationDescription}
-                        </Label>
-                      </td>
-                    </tr>
-                )
-              }          
-            </tbody>
-          </Table>
-        </section>
-      </Grid>
+            <Row className="text-center">
+              <p className="basicInfoHome">{ this.getAddress() }</p>
+            </Row>
+            <Row className="text-center">
+              <p className="basicInfoHome">{ this.getCampoValor('name') }</p>
+            </Row>
+            <Row className="text-center">
+              <p className="basicInfoHome">{ this.getCampoValor('email') }</p>
+            </Row>
+          </section>
+
+          <section id="sectionValidation">
+            <Row>
+                <h5 id="titleValidation">Validations</h5>
+                <hr className="horizontalLine"></hr>
+              </Row>
+            <Table striped id='tableValidation'>
+              <tbody>
+                {persona.personalInfo.map((item, index) =>                 
+                      <tr key={index}>
+                        <td className="text-center">{item.field}</td>
+                        <td className="text-center">{item.valor}</td>
+                        <td className="text-center">
+                          <Label bsStyle={ item.statusValidationCode == "0" ? 'success' : 'danger'}>
+                            {item.statusValidationDescription}
+                          </Label>
+                        </td>
+                      </tr>
+                  )
+                }          
+              </tbody>
+            </Table>
+          </section>
+        </Grid>
+        <Loader visible={this.state.isLoading} />
+      </div>
     );
   }
-
 }
 
 const mapStateToProps = state => ({ 
