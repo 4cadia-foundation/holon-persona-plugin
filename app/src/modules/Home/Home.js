@@ -48,16 +48,6 @@ class Home extends Component {
   }
 
   render () {
-    
-    // if (this.state.showMenu) {
-    //   return (
-    //     <Grid id="gridHome">
-    //       <HamburguerMenu />
-    //       <Menu /> 
-    //     </Grid>
-    //   )
-    // }
-    // fnOpenMenu={this.fnOpenMenu}
     const {persona} = this.state;
     
     return (

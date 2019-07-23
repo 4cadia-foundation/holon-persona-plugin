@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import Menu from '../../modules/Menu/Menu';
 import './HamburguerMenu.css';
 
 class HamburguerMenu extends Component {
@@ -13,9 +11,8 @@ class HamburguerMenu extends Component {
     }
     this.handleClick = this.handleClick.bind(this);
   }
-
-  handleClick(event) {
-    console.log("fnOpenMenu-Passeiporaqui", event)
+  
+  handleClick() {
     this.setState({
       showMenu: true
     })
@@ -25,22 +22,21 @@ class HamburguerMenu extends Component {
     
     if (this.state.showMenu) {
       return (
-       <Redirect to='/menu' />
+        <Redirect to='/menu' />
       )
     }
-
+      
     return (
-        <nav onClick={ this.handleClick }>
-          <input id="hamburguer" type="checkbox" />
-          <label htmlFor="hamburguer">
-            <div className="menu">
-              <span className="hamburguer"></span>
-            </div>
-          </label>
-        </nav>
+      <nav className="nav-toggle" onClick={ this.handleClick }>
+        <label htmlFor="navicon" className="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+      </nav>
       )
     }
   }
-  
-  export default HamburguerMenu;
-  
+    
+export default HamburguerMenu;
+    
