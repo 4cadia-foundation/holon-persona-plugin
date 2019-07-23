@@ -75,7 +75,7 @@ class Profile extends Component {
                                                 type="text"
                                                 value={val}
                                                 readOnly
-                                            />                       
+                                            />                      
                                         </Col>
                                     </Row>
                                     )
