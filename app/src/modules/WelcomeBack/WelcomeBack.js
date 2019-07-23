@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as WalletActions from "../../redux/actions/wallet";
 import { bindActionCreators } from 'redux';
+import Loader from '../../components/Loader/Loader';
 
 class WelcomeBack extends Component {
 
@@ -11,12 +12,27 @@ class WelcomeBack extends Component {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.state = {
-          password: ""
+          password: "",
+          openedWallet: false,
+          isProcessing: false
         };        
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.wallet.address.length > 2) {
+            console.log('WelcomeBack/componentDidMount/address', this.props.wallet.address);
+            this.setState({
+                isProcessing: false,
+                openedWallet: true
+            })
+        }
     }
 
     handleClick(event){
         event.preventDefault();
+        this.setState({
+            isProcessing: true
+        })
         this.props.openWallet(this.state.password);
     }
 
@@ -32,10 +48,9 @@ class WelcomeBack extends Component {
 
 
   render () {
-    if (this.props.wallet.address.length > 2) {
-        console.log('WelcomeBack/render/address', this.props.wallet.address);
+    if (this.state.openedWallet) {
         return (
-          <Redirect to="/createidentity" />
+          <Redirect to="/choosecreateidentityorhome" />
         );
     }
 
@@ -64,7 +79,7 @@ class WelcomeBack extends Component {
                 </Button>    
                 <p align="center">Forgot your password? <a href="#"><u>Import</u></a>  using your phrase</p>            
             </Form>
-
+            <Loader visible={this.state.isProcessing} />
         </div>
     );
   }
