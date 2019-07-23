@@ -8,6 +8,7 @@ import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
 import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import Menu from './modules/Menu/Menu';
+import Profile from './modules/Profile/Profile'
 
 let routers = [
   {
@@ -53,6 +54,11 @@ let routers = [
   {
     path: '/addinformation',
     component: AddInformation,
+    exact: false
+  },
+  {
+    path: '/profile',
+    component: Profile,
     exact: false
   },
   {
