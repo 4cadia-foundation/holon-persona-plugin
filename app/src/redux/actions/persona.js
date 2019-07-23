@@ -146,41 +146,39 @@ export function addData(infoCode, field, data, price) {
         dispatch({ type: 'ADD_DATA', error: 'Transaction failed' });
     }
 }
-
 export function addPersona(name, email) {
 
-    return dispatch => {
-        let atlasWallet = new ethers.Wallet("6B4901BEF5505F3899017D72EA981326E1E2B749AA222AA0F8DB16B7932836FD", transactor.provider);
-        let transaction = {
+    return async dispatch => {
+        debugger;
+        if (!checkWallet()) {
+            return (dispatch) => {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            }
+        }
+        let atlasWallet = new ethers.Wallet("619CC0075FAC10253850ECEF582B7431FCC55CBCCD0A07BAE132EB1535F09855", transactor.provider);
+        let giveEther = {
             gasLimit: 21000,
-            to: "0xb25bf58C1416936B9dea5Ec5e3Fc9ca839f839b6",//getPersonaAddress(),
-            value: ethers.utils.parseEther("0.0002"),
+            to: transactor.wallet.address,
+            value: ethers.utils.parseEther("0.01"),
             chainId: transactor.provider.chainId
         }
+        let contract = transactor.contractWithSigner;
+        debugger;
+        let contractOptions = {
+            gasLimit: 2000000
+        };
 
-        atlasWallet.sendTransaction(transaction).then((tx) => {
-            debugger;
-            checkWallet();
-            const contract = transactor.contractWithSigner
-            debugger;
-            contract.addPersona(0, 0, "name", name, 0)
-                .then((tx) => {
-                    tx.wait()
-                        .then(() => {
-                            //add email
-                            contract.addData(0, 0, "email", email, 0)
-                                .then((tx) => {
-                                    tx.wait()
-                                        .then(() => {
-                                            getPersonaData();
-                                        })
-                                })
-                                .catch(err => console.error(err));
-                        })
-                        .catch(err => console.error(err));
-                })
-                .catch(err => console.error(err));
-        });
+        //send ethers to the persona's address
+        let giveEtherTask = await atlasWallet.sendTransaction(giveEther);
+        await giveEtherTask.wait();
+
+        //add persona with field name by default
+        let addPersonaTask = await contract.addPersona(0, 0, "name", name, 0, contractOptions);
+        await addPersonaTask.wait();
+
+        //add persona's email field
+        let addDataTask = await contract.addData(0, 0, "email", email, 0, contractOptions);
+        await addDataTask.wait();
         dispatch({ type: 'ADD_PERSONA', error: 'Transaction failed' });
     }
 }
