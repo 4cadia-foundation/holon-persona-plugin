@@ -133,17 +133,18 @@ export function addData(infoCode, field, data, price, dispatch) {
     }
     return (dispatch) => {
         dispatch({type: 'RUNNING_METHOD'});            
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date+' '+time;
         const contract = transactor.contractWithSigner
-        contract.addData(infoCode, 0, dateTime, data, price)
+        // var today = new Date();
+        // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        // var dateTime = date+' '+time;
+        // contract.addData(infoCode, 0, dateTime, data, price)
+        contract.addData(infoCode, 0, field, data, price)
         .then((tx) => {
-            console.log('Tx', tx)
+            // console.log('Tx', tx)
             tx.wait()
             .then((newData) => {
-                console.log('newData', newData)
+                // console.log('newData', newData)
                 let item = { 
                     field: field,
                     valor: data,

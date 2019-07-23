@@ -16,12 +16,12 @@ export default function persona (state = INITIAL_STATE, action) {
     }
     
     if (action.type == 'RUNNING_METHOD') {
-        console.log('reducer/RUNNING_METHOD')
+        // console.log('reducer/RUNNING_METHOD')
         return {...state, isRunning: true}
     }
 
     if (action.type == 'ADD_PERSONA_DATA') {
-        console.log('reducer/ADD_PERSONA_DATA')
+        // console.log('reducer/ADD_PERSONA_DATA')
         return {...state, 
             personalInfo: [action.newField, ...state.personalInfo], 
             numberOfFields: state.personalInfo.length+1,
