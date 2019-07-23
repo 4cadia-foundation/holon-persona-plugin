@@ -1,5 +1,6 @@
 import Welcome from './modules/Welcome/Welcome';
 import ChooseCreateOrImport from './modules/ChooseCreateOrImport/ChooseCreateOrImport';
+import ChooseCreateIdentityOrHome from './modules/ChooseCreateIdentityOrHome/ChooseCreateIdentityOrHome';
 import ImportWallet from './modules/ImportWallet/ImportWallet';
 import WalletPassword from './modules/WalletPassword/WalletPassword';
 import Notfound from './modules/Notfound/Notfound';
@@ -20,6 +21,11 @@ let routers = [
   {
     path: '/importwallet',
     component: ImportWallet,
+    exact: false
+  },
+  {
+    path: '/choosecreateidentityorhome',
+    component: ChooseCreateIdentityOrHome,
     exact: false
   },
   {
