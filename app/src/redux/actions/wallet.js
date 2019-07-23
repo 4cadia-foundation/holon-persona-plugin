@@ -22,7 +22,14 @@ export function restoreVault(password, seed) {
 
 export function hasWallet() {
   return dispatch => {
-    wallet.getChromeStorage().then(content => {
+    wallet.getChromeStorage().then((content) => {
+      if (!content) {
+        dispatch({
+          type: ActionTypes.HAS_WALLET,
+          hasWallet: false
+        });  
+        return;
+      }
       dispatch({
         type: ActionTypes.HAS_WALLET,
         hasWallet: true
