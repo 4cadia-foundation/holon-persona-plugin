@@ -6,17 +6,15 @@
     margin-top: 20px;
 }
 
-.box-mnemonico {
-    margin-top: 30px;
-}
-
-.button-exit {
+.button-back-next {
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
 .paragraph-explication {
+    margin: 10px;
     height: 150px;
     display: flex;
     flex-direction: row;
@@ -29,4 +27,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.backup-phrase {
+    margin: 10px;
+    border-style: ridge;
+    height: 150px;
+}
+
+.mnemonic-returned {
+    height: 100px;
+    margin: 20px;
+    font-size: 20px;
 }
