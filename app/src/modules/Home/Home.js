@@ -25,14 +25,22 @@ class Home extends Component {
   componentDidMount() {
     if (this.state.persona.personalInfo.length === 0) {
       this.props.getPersonaData();   
+    } else {
+      this.setState({
+        isLoading: false,
+      });
     }
   }
 
+  //TODO: Migrar para getDerivedStateFromProps que será o padrao do React 17
+  //https://itnext.io/react17-or-how-to-get-rid-of-componentwillreceiveprops-c91f9a6f6f03
   componentWillReceiveProps(propsOld) {
-    if (this.state.persona.address != propsOld.persona.address) {
+    // console.log('home/componentWillReceiveProps/state', this.state.persona.personalInfo);
+    // console.log('home/componentWillReceiveProps/propsOld', propsOld.persona.personalInfo);
+    if (this.state.persona.personalInfo.length != propsOld.persona.personalInfo.length) {
       this.setState({
         persona: propsOld.persona,
-        isLoading: false
+        isLoading: false,
       })
     }
   }
