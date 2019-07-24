@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
 import './Welcome.css';
 import logo from '../../../images/logo.png';
-// import Wallet from '../../../scripts/core/WalletStorage';
-// const wallet = new Wallet();
+import Wallet from '../../../scripts/core/WalletStorage';
+const wallet = new Wallet();
 
 class Welcome extends Component {
 
   constructor(props) {
     super(props);
-    // wallet.clearStorage();
+    wallet.clearStorage();
   }
 
   componentDidMount() {

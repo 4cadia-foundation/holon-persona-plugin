@@ -1,19 +1,22 @@
-import {ethers} from 'ethers';
+import { ethers } from 'ethers';
 import SmartContract from './SmartContract';
 
 export default class Transactor extends SmartContract {
 
-  constructor(){
+  constructor() {
     super();
-    this._wallet = new ethers.Wallet('FA757D8303BD902FB2E04E96C349023131050E321C04B2C3635839379D5B966B', this.provider);
   }
 
+  setInternalProvider() {
+    this.provider = this._options;
+  }
 
-  get contractWithSigner () {   
+  get contractWithSigner() {
     if (!this._wallet) {
       return null;
     }
-    return this.contract.connect(this._wallet);
+    this._wallet = this._wallet.connect(this.provider);
+    this._contract = this.contract.connect(this._wallet);
   }
 
   get wallet() {

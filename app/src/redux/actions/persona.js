@@ -4,7 +4,9 @@ import FilterEventsBlockchain from '../../../scripts/core/FilterEventsBlockchain
 import store from '../store';
 import { address, abi } from '../../../config/abi';
 import abiDecoder from 'abi-decoder';
+import ActionTypes from "../../constants/actionsTypes";
 
+// const wallet = new WalletStorage();
 
 const transactor = new Transactor();
 const filterNewData = {
@@ -134,8 +136,8 @@ export function addData(infoCode, field, data, price) {
     }
 
     return dispatch => {
-        const contract = transactor.contractWithSigner
-        contract.addData(infoCode, 0, field, data, price)
+        transactor.contractWithSigner;
+        transactor._contract.addData(infoCode, 0, field, data, price)
             .then((tx) => {
                 tx.wait()
                     .then((newData) => {
@@ -147,9 +149,8 @@ export function addData(infoCode, field, data, price) {
     }
 }
 export function addPersona(name, email) {
-
     return async dispatch => {
-        debugger;
+        dispatch({ type: 'RUNNING_METHOD' });
         if (!checkWallet()) {
             return (dispatch) => {
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
@@ -162,8 +163,6 @@ export function addPersona(name, email) {
             value: ethers.utils.parseEther("0.01"),
             chainId: transactor.provider.chainId
         }
-        let contract = transactor.contractWithSigner;
-        debugger;
         let contractOptions = {
             gasLimit: 2000000
         };
@@ -172,13 +171,30 @@ export function addPersona(name, email) {
         let giveEtherTask = await atlasWallet.sendTransaction(giveEther);
         await giveEtherTask.wait();
 
+        transactor.contractWithSigner;
+
         //add persona with field name by default
-        let addPersonaTask = await contract.addPersona(0, 0, "name", name, 0, contractOptions);
+        let addPersonaTask = await transactor._contract.addPersona(0, 0, "name", name, 0, contractOptions);
         await addPersonaTask.wait();
 
+        let item = {
+            field: "name",
+            valor: name,
+            statusValidationDescription: 'NotValidated',
+            statusValidationCode: 1
+        };
+        dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
+
         //add persona's email field
-        let addDataTask = await contract.addData(0, 0, "email", email, 0, contractOptions);
+        let addDataTask = await transactor._contract.addData(0, 0, "email", email, 0, contractOptions);
         await addDataTask.wait();
-        dispatch({ type: 'ADD_PERSONA', error: 'Transaction failed' });
+
+        item = {
+            field: "email",
+            valor: email,
+            statusValidationDescription: 'NotValidated',
+            statusValidationCode: 1
+        };
+        dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
     }
 }
