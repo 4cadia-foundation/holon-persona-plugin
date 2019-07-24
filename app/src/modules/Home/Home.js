@@ -32,17 +32,19 @@ class Home extends Component {
     }
   }
 
-  //TODO: Migrar para getDerivedStateFromProps que será o padrao do React 17
-  //https://itnext.io/react17-or-how-to-get-rid-of-componentwillreceiveprops-c91f9a6f6f03
-  componentWillReceiveProps(propsOld) {
-    // console.log('home/componentWillReceiveProps/state', this.state.persona.personalInfo);
-    // console.log('home/componentWillReceiveProps/propsOld', propsOld.persona.personalInfo);
-    if (this.state.persona.personalInfo.length != propsOld.persona.personalInfo.length) {
-      this.setState({
-        persona: propsOld.persona,
-        isLoading: false,
-      })
+  static getDerivedStateFromProps(nextProps, prevState) {
+    //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
+    //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
+    if (nextProps.persona.error.length>2) {
+        const msg = 'Erro: ' + nextProps.persona.error;
+        console.error('Home/getDerivedStateFromProps: ', msg);
+        alert(msg);
+        return { isLoading: false };
     }
+    if (nextProps.persona.readAllPersonaLogs) {
+        return { isLoading : false, persona: nextProps.persona };
+    }
+    return null;
   }
 
   getCampoValor(campo) {
