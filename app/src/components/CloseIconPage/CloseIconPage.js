@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class CloseIconPage extends Component {
 
@@ -9,7 +10,7 @@ class CloseIconPage extends Component {
     render() {
         return (
             <button type="button" className="close" aria-label="Close" >
-                <span aria-hidden="true">&times;</span>
+                <Link to="/menu"><span aria-hidden="true">&times;</span></Link>
             </button>
         );
     }
