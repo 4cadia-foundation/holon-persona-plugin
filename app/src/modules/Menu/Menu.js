@@ -39,8 +39,10 @@ class Menu extends Component {
                     <hr className="line"/>
                     <div className="links">
                         <div className="flex-column">
-                            <Glyphicon glyph="plus"/> 
-                            <a href="" className="icons">Add information</a>
+                            <Link to="/addinformation">
+                                <Glyphicon glyph="plus"/> 
+                                <a href="" className="icons">Add information</a>
+                            </Link>
                         </div>
                         <div className="flex-column">
                             <Link to="/validateinformation">
@@ -49,8 +51,10 @@ class Menu extends Component {
                             </Link>
                         </div>
                         <div className="flex-column">
-                            <Glyphicon glyph="download-alt"/>
-                            <a href="" className="icons">Notifications</a>
+                            <Link to="/notifications">
+                                <Glyphicon glyph="download-alt"/>
+                                <a href="" className="icons">Notifications</a>
+                            </Link>
                         </div>
                     </div>
                     <hr className="line" />
@@ -64,8 +68,10 @@ class Menu extends Component {
                             <a href="" className="icons">Etherscan</a>
                         </div>
                         <div className="flex-column">
-                            <Glyphicon glyph="lock"/>
-                            <a href="" className="icons">Export Private Key</a>
+                            <Link to="/backupphrase">
+                                <Glyphicon glyph="lock"/>
+                                <a href="" className="icons">Export Private Key</a>
+                            </Link>
                         </div>
                         <div  className="flex-column">
                             <Glyphicon glyph="cog"/>
@@ -87,8 +93,9 @@ class Menu extends Component {
                       <Button bsStyle="warning">Deposit</Button>
                       <Button bsStyle="warning">Send</Button>
                     </div>
-                    <a href="" className="sair">Logout</a>
-
+                    <Link to="/welcomeback">
+                        <a href="" className="sair">Logout</a>
+                    </Link>
                 </Col>
             </Row>
         </Grid>
