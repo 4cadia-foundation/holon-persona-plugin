@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Grid, Panel, Button, Glyphicon } from 'react-bootstrap';
-import styles from './Notifications.css';
+import './Notifications.css';
 
 class Notifications extends Component {
     render() {
