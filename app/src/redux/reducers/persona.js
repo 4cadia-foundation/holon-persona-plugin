@@ -31,6 +31,9 @@ export default function persona (state = INITIAL_STATE, action) {
             isRunning: false
         }
     }
+    if (action.type == 'GET_PERSONA_DATA') {
+        return{...state, personalInfo: action.novoPersonalInfo}
+    }
     if (action.type == 'GET_PERSONA_ADDRESS') {
         return{...state, address: action.address}
     }
