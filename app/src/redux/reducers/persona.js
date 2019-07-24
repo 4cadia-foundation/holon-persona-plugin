@@ -24,6 +24,11 @@ export default function persona (state = INITIAL_STATE, action) {
         return {...state, readAllPersonaLogs: true}
     }
 
+    if (action.type == 'WILL_READ_ALL_PERSONA_LOGS') {
+        // console.log('reducer/WILL_READ_ALL_PERSONA_LOGS')
+        return {...state, readAllPersonaLogs: false}
+    }
+
     
     if (action.type == 'RUNNING_METHOD') {
         // console.log('reducer/RUNNING_METHOD')

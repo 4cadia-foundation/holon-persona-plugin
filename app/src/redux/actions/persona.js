@@ -44,6 +44,7 @@ export function getPersonaData() {
     }
 
     return (dispatch) => {
+        dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
             //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
@@ -120,8 +121,7 @@ export function getPersonaData() {
                         numberOfTxHashesProcessed++;
                         if (numberOfTxHashesProcessed == txHashes.length) {
                             if (novoPersonalInfo.length === 0) {
-                                console.log("nao tem registro no SC ainda");
-                                getPersonaAddress();
+                                console.log("nao tem registro no SC ainda");                                
                             }
                             dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
                         }
@@ -179,6 +179,8 @@ export function addData(infoCode, field, data, price, dispatch) {
 export function addPersona(name, email) {
     return async dispatch => {
         dispatch({ type: 'RUNNING_METHOD' });
+        dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
+        //console.log("actions/persona/addpersona/ adding data...");
         if (!checkWallet()) {
             return (dispatch) => {
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
@@ -224,5 +226,7 @@ export function addPersona(name, email) {
             statusValidationCode: 1
         };
         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
+        dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+        //console.log("actions/persona/addpersona/ data added...");
     }
 }
