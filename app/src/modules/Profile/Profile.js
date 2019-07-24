@@ -25,8 +25,7 @@ class Profile extends Component {
         alert('oi');
     }
 
-    componentDidMount(){
-        debugger;
+    componentDidMount(){        
         if (this.props.persona.personalInfo.length > 0){
             this.setState({
                 isLoading:false
