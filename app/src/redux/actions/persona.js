@@ -19,12 +19,13 @@ const filterContract = new FilterEventsBlockchain(filterNewData);
 abiDecoder.addABI(abi);
 
 function checkWallet() {
+    console.log('action/persona/checkingWallet');
     //console.log('action/persona/checkWallet/globalState', store.getState());
     //console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
     if (!transactor.wallet) {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
-            console.log('action/persona/checkWallet/transactor.wallet-set', transactor.wallet);
+            //console.log('action/persona/checkWallet/transactor.wallet-set', transactor.wallet);
             return true;
         } else {
             return false;
@@ -45,7 +46,7 @@ export function getPersonaData() {
     return (dispatch) => {
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
-            console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
+            //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
             filterContract.getLogsTransactionHash()
                 .then((txHashes) => {
                     if (!txHashes || txHashes.length < 1) {
@@ -56,7 +57,7 @@ export function getPersonaData() {
                     let numberOfTxHashesProcessed = 0;
                     //TODO: Criar um filter   
                     txHashes.map(async (hash) => {
-                        console.log('action/getPersonaData/hash', hash);
+                        //console.log('action/getPersonaData/hash', hash);
                         let receipt = await filterContract.getTransactionReceipt(hash);
                         const decodedLogs = abiDecoder.decodeLogs(receipt.logs);
                         //console.log('action/getPersonaData/decodedLogs', decodedLogs);
