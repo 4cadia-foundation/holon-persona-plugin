@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   seed:'',
   mnemonic: 'ivory alarm violin grid uphold street clock crime across kit shop leaf',
   hasWallet: false,
+  error: '',
   ethersWallet: {}
 };
 

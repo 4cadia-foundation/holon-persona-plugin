@@ -17,7 +17,6 @@ class Profile extends Component {
             persona: this.props.persona,
             isLoading: true
         };        
-        this.handleBack = this.handleBack.bind(this);
         this.getCampoValor = this.getCampoValor.bind(this); 
     }
 
@@ -62,7 +61,7 @@ class Profile extends Component {
                     <Row>
                         <Col>
                             <img className="logoHome" src={logo} alt="Logo" />
-                            <CloseIconPage/>
+                            <CloseIconPage destination="/menu"/>
                         </Col>
                     </Row>
                     <Row className="text-center">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import * as WalletActions from "../../redux/actions/wallet";
 import { bindActionCreators } from 'redux';
 import Loader from '../../components/Loader/Loader';
@@ -20,7 +20,7 @@ class WelcomeBack extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.wallet.address.length > 2) {
-            console.log('WelcomeBack/componentDidMount/address', this.props.wallet.address);
+            //console.log('WelcomeBack/componentWillReceiveProps/address', nextProps.wallet);
             this.setState({
                 isProcessing: false,
                 openedWallet: true
@@ -77,7 +77,7 @@ class WelcomeBack extends Component {
                 <Button disabled={!this.validateForm()} className="btn btn-block btn-primary pull-right"  type="submit" onClick={this.handleClick}>
                     LOG IN
                 </Button>    
-                <p align="center">Forgot your password? <a href="#"><u>Import</u></a>  using your phrase</p>            
+                <p align="center">Forgot your password? <Link to="/importwallet"><u>Import</u></Link>  using your phrase</p>            
             </Form>
             <Loader visible={this.state.isProcessing} />
         </div>

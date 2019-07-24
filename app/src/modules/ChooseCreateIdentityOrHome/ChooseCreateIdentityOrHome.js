@@ -16,19 +16,29 @@ class ChooseCreateIdentityOrHome extends Component {
   }
 
   componentDidMount() {
-    this.props.getPersonaData()
-    this.setState({
-      isLoading: false,
-      numberOfPersonalInfoRecorded: this.props.persona.personalInfo.length
-    })
-  }  
+    this.props.getPersonaData()    
+  }
+  
+  static getDerivedStateFromProps(nextProps, prevState) {
+    //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps nextProps', nextProps.persona);
+    //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps prevState', prevState);
+    if (nextProps.persona.error.length>2) {
+        const msg = 'Erro: ' + nextProps.persona.error;
+        console.error('ChooseCreateIdentityOrHome/getDerivedStateFromProps: ', msg);
+        return { isLoading: false };
+    }
+    if (nextProps.persona.readAllPersonaLogs) {
+      return { isLoading : false, numberOfPersonalInfoRecorded: nextProps.persona.numberOfFields };
+    }
+    return null;
+  }
 
   render() {
-    if (this.state.numberOfPersonalInfoRecorded > 0) {
+    if (this.state.numberOfPersonalInfoRecorded >= 2) {
       return (
         <Redirect to="/home" />
       )
-    } else if (this.state.numberOfPersonalInfoRecorded === 0) {
+    } else if (!this.state.isLoading && this.state.numberOfPersonalInfoRecorded === 0) {
       return (
         <Redirect to="/createidentity" />
       )
@@ -41,7 +51,7 @@ class ChooseCreateIdentityOrHome extends Component {
 }
 
 const mapStateToProps = state => ({ 
-  persona: state.persona
+  persona: state.persona, wallet: state.wallet
 });
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(ChooseCreateIdentityOrHome);
