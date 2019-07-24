@@ -10,7 +10,7 @@ import './Profile.css';
 import Loader from '../../components/Loader/Loader';
 
 class Profile extends Component {
-
+// ALterado
     constructor(props) {
         super(props);
         this.state = {
