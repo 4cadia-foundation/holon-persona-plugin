@@ -100,8 +100,8 @@ export function getPersonaData() {
                             //console.log('action/getPersonaData/novoPersonalInfo', novoPersonalInfo);
                         }
                     } 
-                    if (novoPersonalInfo.length > 2) {
-                        // console.log('actions/novoPersonalInfo', novoPersonalInfo);
+                    if (novoPersonalInfo.length >= 2) {
+                        //console.log('action/persona/txhashmap/novoPersonalInfo', novoPersonalInfo);
                         dispatch({type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address});
                     }
                 });
