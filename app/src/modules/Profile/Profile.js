@@ -21,10 +21,6 @@ class Profile extends Component {
         this.getCampoValor = this.getCampoValor.bind(this); 
     }
 
-    handleBack(){
-        alert('oi');
-    }
-
     componentDidMount(){        
         if (this.props.persona.personalInfo.length > 0){
             this.setState({
@@ -42,15 +38,6 @@ class Profile extends Component {
 
         return null;
     }
-
-    // componentWillReceiveProps(propsOld) {
-    //     if (this.state.persona.address != propsOld.persona.address) {
-    //       this.setState({
-    //         persona: propsOld.persona,
-    //         isLoading: false
-    //       })
-    //     }
-    // }  
 
     getCampoValor(campo) {
         const {persona} = this.state;
