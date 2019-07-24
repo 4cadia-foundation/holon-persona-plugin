@@ -34,6 +34,7 @@ function checkWallet() {
     }
 }
 
+//TODO: Refazer esta funcao
 export function getPersonaData() {
     if (!checkWallet()) {
         return (dispatch) => {
@@ -44,17 +45,18 @@ export function getPersonaData() {
     return (dispatch) => {
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
-            //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
+            console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
             filterContract.getLogsTransactionHash()
                 .then((txHashes) => {
                     if (!txHashes || txHashes.length < 1) {
-                        console.log('action/getPersonaData/getLogsTransactionHash/Nao achou logs', txHashes);
+                        // console.log('action/getPersonaData/getLogsTransactionHash/Nao achou logs', txHashes);
                         getPersonaAddress();
                         return;
                     }
+                    let numberOfTxHashesProcessed = 0;
                     //TODO: Criar um filter   
                     txHashes.map(async (hash) => {
-                        //console.log('action/getPersonaData/hash', hash);
+                        console.log('action/getPersonaData/hash', hash);
                         let receipt = await filterContract.getTransactionReceipt(hash);
                         const decodedLogs = abiDecoder.decodeLogs(receipt.logs);
                         //console.log('action/getPersonaData/decodedLogs', decodedLogs);
@@ -95,7 +97,7 @@ export function getPersonaData() {
                                         statusValidationCode: statusValidacao,
                                     };
                                     novoPersonalInfo.push(item);
-                                    if (novoPersonalInfo.length == 2) {
+                                    if (novoPersonalInfo.length >= 2) {
                                         // console.log('actions/novoPersonalInfo', novoPersonalInfo);
                                         dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
                                     }
@@ -113,6 +115,14 @@ export function getPersonaData() {
                         if (novoPersonalInfo.length >= 2) {
                             //console.log('action/persona/txhashmap/novoPersonalInfo', novoPersonalInfo);
                             dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
+                        }
+                        numberOfTxHashesProcessed++;
+                        if (numberOfTxHashesProcessed == txHashes.length) {
+                            if (novoPersonalInfo.length === 0) {
+                                console.log("nao tem registro no SC ainda");
+                                getPersonaAddress();
+                            }
+                            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
                         }
                     });
                 })

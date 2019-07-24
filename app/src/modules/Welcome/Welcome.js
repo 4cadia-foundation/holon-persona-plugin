@@ -8,13 +8,18 @@ import * as WalletActions from "../../redux/actions/wallet";
 import './Welcome.css';
 import logo from '../../../images/logo.png';
 import Wallet from '../../../scripts/core/WalletStorage';
+
+import Settings from '../../../config/settings';
+
 const wallet = new Wallet();
 
 class Welcome extends Component {
 
   constructor(props) {
     super(props);
-    wallet.clearStorage();
+    if (Settings.clearStorage) {
+      wallet.clearStorage();
+    }
   }
 
   componentDidMount() {
@@ -24,7 +29,7 @@ class Welcome extends Component {
   render() {
 
     if (this.props.wallet.hasWallet) {
-      console.log('WalletPassword/render/wallet', this.props.wallet);
+      //console.log('WalletPassword/render/wallet', this.props.wallet);
       return (
         <Redirect to="/welcomeback" />
       );

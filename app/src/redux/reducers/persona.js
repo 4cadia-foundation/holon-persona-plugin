@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     error: "",
     personalInfo: [],
     numberOfFields: 0,
+    readAllPersonaLogs: false,
     isRunning: false
 }
 
@@ -17,6 +18,12 @@ export default function persona (state = INITIAL_STATE, action) {
             address: action.address,
         }
     }
+
+    if (action.type == 'READ_ALL_PERSONA_LOGS') {
+        // console.log('reducer/READ_ALL_PERSONA_LOGS')
+        return {...state, readAllPersonaLogs: true}
+    }
+
     
     if (action.type == 'RUNNING_METHOD') {
         // console.log('reducer/RUNNING_METHOD')

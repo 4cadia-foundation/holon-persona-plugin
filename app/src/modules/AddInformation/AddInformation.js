@@ -93,7 +93,7 @@ class AddInformation extends Component {
             <div>
                 <div>
                     <img className="logoHome" src={logo} alt="Logo" />
-                    <CloseIconPage destination="/home"/>
+                    <CloseIconPage destination="/menu"/>
                 </div>
                 <hr />
                 <Form>
