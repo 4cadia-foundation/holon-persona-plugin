@@ -1,18 +1,33 @@
+.margin-top-30 {
+    margin-top: 30px;
+    display: inline-block;
+}
+
 .margin-top-50 {
     margin-top: 50px;
 }
 
-.margin-top-30 {
-    margin-top: 30px;
-    display: inline-block;
+.space-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .large-textarea {
     height: 280px;
 }
 
-
 .logo {
     height: 85px;
     width: 90px;
+}
+
+.line {
+    width: 100vw;
+    height:2px; 
+    border:none; 
+    color:#000; 
+    background-color:#000; 
+    margin-top: 30px; 
+    margin-bottom: 0px
 }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Grid, Row, Label, Table } from 'react-bootstrap';
-import * as PersonaActions from '../../redux/actions/persona';
-import logo from '../../../images/logo.png';
-import Menu from '../../components/Menu/Menu';
-import Loader from '../../components/Loader/Loader';
-import './Home.css';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as PersonaActions from '../../redux/actions/persona';
+
+import logo from '../../../images/logo.png';
+import Loader from '../../components/Loader/Loader';
+import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
+import './Home.css';
 
 class Home extends Component {
   
@@ -31,17 +32,19 @@ class Home extends Component {
     }
   }
 
-  //TODO: Migrar para getDerivedStateFromProps que será o padrao do React 17
-  //https://itnext.io/react17-or-how-to-get-rid-of-componentwillreceiveprops-c91f9a6f6f03
-  componentWillReceiveProps(propsOld) {
-    // console.log('home/componentWillReceiveProps/state', this.state.persona.personalInfo);
-    // console.log('home/componentWillReceiveProps/propsOld', propsOld.persona.personalInfo);
-    if (this.state.persona.personalInfo.length != propsOld.persona.personalInfo.length) {
-      this.setState({
-        persona: propsOld.persona,
-        isLoading: false,
-      })
+  static getDerivedStateFromProps(nextProps, prevState) {
+    //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
+    //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
+    if (nextProps.persona.error.length>2) {
+        const msg = 'Erro: ' + nextProps.persona.error;
+        console.error('Home/getDerivedStateFromProps: ', msg);
+        alert(msg);
+        return { isLoading: false };
     }
+    if (nextProps.persona.readAllPersonaLogs) {
+        return { isLoading : false, persona: nextProps.persona };
+    }
+    return null;
   }
 
   getCampoValor(campo) {
@@ -65,12 +68,12 @@ class Home extends Component {
 
   render () {
     const {persona} = this.state;
-
+    
     return (
       <div>
-        <Grid id="gridHome">
-          <Menu/>
-          <section id="sectionBasicInfo">
+        <Grid>
+          <HamburguerMenu />
+          <section className="sectionBasicInfo">
             <hr className="horizontalLine"></hr>
             <Row className="text-center">
               <img className="logoHome" src={logo} alt="Logo" />
@@ -86,12 +89,12 @@ class Home extends Component {
             </Row>
           </section>
 
-          <section id="sectionValidation">
+          <section className="sectionValidation">
             <Row>
-                <h5 id="titleValidation">Validations</h5>
+                <h5 className="titleValidation">Validations</h5>
                 <hr className="horizontalLine"></hr>
               </Row>
-            <Table striped id='tableValidation'>
+            <Table striped className='tableValidation'>
               <tbody>
                 {persona.personalInfo.map((item, index) =>                 
                       <tr key={index}>
