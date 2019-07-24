@@ -3,7 +3,7 @@ import * as ActionTypes from '../../constants/actionsTypes';
 const INITIAL_STATE = {
   address: '',
   seed:'',
-  mnemonic: '',
+  mnemonic: 'ivory alarm violin grid uphold street clock crime across kit shop leaf',
   hasWallet: false,
   ethersWallet: {}
 };
@@ -26,7 +26,7 @@ export default function wallet(state = INITIAL_STATE, action) {
       return {...state, hasWallet: action.hasWallet};
     break;
     default:
-      return state;
+      return state; 
   }
 }
 
