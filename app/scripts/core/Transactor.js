@@ -5,7 +5,7 @@ export default class Transactor extends SmartContract {
 
   constructor(){
     super();
-    this._wallet = new ethers.Wallet('C9FC81A1C5E60CD49DF15EB33667A69655468031873AF64930EF7A82A6A61076', this.provider);
+    this._wallet = new ethers.Wallet('4f711082ece7191a111ab86bc46ba93ba0b0c34c2b5f7d6d585a1e8f3832e576', this.provider);
   }
 
   get contractWithSigner () {    
