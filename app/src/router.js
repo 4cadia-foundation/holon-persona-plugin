@@ -11,7 +11,6 @@ import Menu from  './modules/Menu/Menu';
 import ValidateInformation from './modules/ValidateInformation/ValidateInformation';
 import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
-import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import Notifications from './modules/Notifications/Notifications';
 
 let routers = [
