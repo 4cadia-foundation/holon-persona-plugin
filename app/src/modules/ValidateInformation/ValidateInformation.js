@@ -3,13 +3,14 @@ import { Grid, Row, Col, Form, Button } from 'react-bootstrap';
 
 
 import '../../styles/_utils.css';
-import styles from './ValidateInformation.css'
+import './ValidateInformation.css'
 import logo from '../../../images/icon-38.png';
 import SelectInfoToValidate from '../../components/SelectInfoToValidate/SelectInfoToValidate';
 import SelectValidador from '../../components/SelectValidador/SelectValidador';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 
 class ValidateInformation extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class ValidateInformation extends Component {
             <Grid>
                 <div>
                  <img className="logoHome" src={logo} alt="Logo" />
+                 <CloseIconPage destination="/menu"/>    
                 </div>
 
                 <hr className="line"/>

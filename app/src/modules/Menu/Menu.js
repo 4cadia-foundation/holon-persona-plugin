@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, Grid, Glyphicon, DropdownButton, MenuItem, Button} from 'react-bootstrap';
+
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import './Menu.css';
 import '../../styles/_utils.css';
 
@@ -34,7 +36,7 @@ class Menu extends Component {
                 <Col>
                     <nav className="d-flex flex-row justify-content-between">
                         <p className="titleMenu">Identity</p>
-                        <Glyphicon glyph="remove" onClick={ this.handleClick }/>
+                        <CloseIconPage destination="/home"/>                    
                     </nav>
                     <hr className="line"/>
                     <div className="links">
@@ -60,8 +62,10 @@ class Menu extends Component {
                     <hr className="line" />
                     <div className="links2">
                         <div className="flex-column">
-                            <Glyphicon glyph="user"/> 
-                            <a href="" className="icons">Profile</a>
+                            <Link to="/profile">
+                                <Glyphicon glyph="user"/> 
+                                <a href="" className="icons">Profile</a>
+                            </Link>
                         </div>
                         <div className="flex-column">
                             <Glyphicon glyph="share"/>
