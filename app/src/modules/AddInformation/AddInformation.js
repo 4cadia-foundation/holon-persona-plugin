@@ -20,8 +20,8 @@ class AddInformation extends Component {
         this.state = {
             category: "",
             subCategory: "",
-            info: "28/03/1979",
-            cost: "1",
+            info: "",
+            cost: 0,
             isLoading: true,
             executed: false,
             saveButtonCalled: false           
