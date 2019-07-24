@@ -46,16 +46,16 @@ class WalletStorage {
         //console.log('createNewVaultAndRestore/seed', seed);
         //console.log('createNewVaultAndRestore/wallet', wallet);
         const encrypted = await wallet.encrypt(password);
-        console.log('createNewVaultAndRestore/encrypted', encrypted);
+        //console.log('createNewVaultAndRestore/encrypted', encrypted);
 
         /*LIMPA O STORAGE*/
         const clear = await this.clearStorage();
         /*CRIA NOVO STORAGE*/
         const storage = await this.setChromeStorage(encrypted);
-        console.log('createNewVaultAndRestore/armazenado', storage);
+        //console.log('createNewVaultAndRestore/armazenado', storage);
         resolve(wallet);
       } catch (exception) {
-        console.log('createNewVaultAndRestore/exception', exception);
+        //console.log('createNewVaultAndRestore/exception', exception);
         reject(exception.message);
       }
     })
