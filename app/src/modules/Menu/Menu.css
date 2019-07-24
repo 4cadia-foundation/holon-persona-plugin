@@ -43,16 +43,13 @@
     flex-direction: row;
     justify-content: flex-end;
 }
+
 .icons {
     margin-left: 20px;
 }
 
-.linha {
-    width: 100vw;
-    height:2px; 
-    border:none; 
-    color:#000; 
-    background-color:#000; 
-    margin-top: 30px; 
-    margin-bottom: 0px
+.titleMenu {
+    display: inline-block;
+    font-size: 20pt;
+    width: 303px;
 }

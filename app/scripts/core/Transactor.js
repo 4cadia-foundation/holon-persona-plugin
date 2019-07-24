@@ -22,8 +22,4 @@ export default class Transactor extends SmartContract {
   get wallet() {
     return this._wallet;
   }
-
-  set wallet(paramWallet) {
-    this._wallet = paramWallet;
-  }
 }

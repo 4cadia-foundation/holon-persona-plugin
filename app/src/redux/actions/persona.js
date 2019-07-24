@@ -19,8 +19,8 @@ const filterContract = new FilterEventsBlockchain(filterNewData);
 abiDecoder.addABI(abi);
 
 function checkWallet() {
-    console.log('action/persona/checkWallet/globalState', store.getState());
-    console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
+    //console.log('action/persona/checkWallet/globalState', store.getState());
+    //console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
     if (!transactor.wallet) {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
@@ -35,7 +35,6 @@ function checkWallet() {
 }
 
 export function getPersonaData() {
-
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
@@ -45,53 +44,49 @@ export function getPersonaData() {
     return (dispatch) => {
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
-            console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
+            //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
             filterContract.getLogsTransactionHash()
-                .then((txHashes) => {
-                    if (!txHashes || txHashes.length < 1) {
-                        //console.log('action/getPersonaData/getLogsTransactionHash/Nao achou logs', txHashes);
-                        getPersonaAddress();
-                        return;
-                    }
-                    //TODO: Criar um filter   
-                    txHashes.map(async (hash) => {
-                        //console.log('action/getPersonaData/hash', hash);
-                        let receipt = await filterContract.getTransactionReceipt(hash);
-                        const decodedLogs = abiDecoder.decodeLogs(receipt.logs);
-                        //console.log('action/getPersonaData/decodedLogs', decodedLogs);
-                        if (decodedLogs[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
-                            let tx = await filterContract.getPureTransaction(hash);
-                            //console.log('tx', tx);
-                            filterContract.setEventToFilter('0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547');
-                            if (tx) {
-                                const decodedTx = abiDecoder.decodeMethod(tx.data);
-                                // console.log('actions/tx.decode', decodedTx);
-                                //console.log(decodedTx.params[2].value, decodedTx.params[3].value);                        
-                                let validatedHash = await filterContract.getLogsTransactionHash();
-                                //console.log('action/getPersonaData/validatedHash', validatedHash[0]);
-
-                                let validatedReceipt = await filterContract.getTransactionReceipt(validatedHash[0]);
-                                //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
-                                const validatedDecodedReceipt = abiDecoder.decodeLogs(validatedReceipt.logs);
-                                // console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
-                                //console.log('action/getPersonaData/statusValidacao', statusValidacao);
-                                let statusValidacao = '1';
-                                let descValidacao = '';
-                                if ((decodedTx.params[2].value == validatedDecodedReceipt[0].events[2].value) &&
-                                    (validatedDecodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase())
-                                ) {
-                                    statusValidacao = validatedDecodedReceipt[0].events[3].value;
-                                    //Validated = 0, NotValidated = 1, CannotEvaluate = 2
-                                    if (statusValidacao == "0") {
-                                        descValidacao = "Validated";
-                                    } else if (statusValidacao == "1") {
-                                        descValidacao = "NotValidated";
-                                    } else if (statusValidacao == "2") {
-                                        descValidacao = "CannotEvaluate";
-                                    }
-                                } else {
-                                    descValidacao = 'NotValidated';
-                                    statusValidacao = '1';
+            .then((txHashes) => {
+                if (!txHashes || txHashes.length < 1) {
+                    console.log('action/getPersonaData/getLogsTransactionHash/Nao achou logs', txHashes);
+                    getPersonaAddress();
+                    return;
+                }         
+                //TODO: Criar um filter   
+                txHashes.map(async (hash) => {
+                    //console.log('action/getPersonaData/hash', hash);
+                    let receipt = await filterContract.getTransactionReceipt(hash);
+                    const decodedLogs = abiDecoder.decodeLogs(receipt.logs);
+                    //console.log('action/getPersonaData/decodedLogs', decodedLogs);
+                    if (decodedLogs[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                        let tx = await filterContract.getPureTransaction(hash);
+                        //console.log('tx', tx);
+                        filterContract.setEventToFilter('0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547');
+                        if (tx) {
+                            const decodedTx = abiDecoder.decodeMethod(tx.data);
+                            // console.log('actions/tx.decode', decodedTx);
+                            //console.log(decodedTx.params[2].value, decodedTx.params[3].value);                        
+                            let validatedHash = await filterContract.getLogsTransactionHash();
+                            //console.log('action/getPersonaData/validatedHash', validatedHash[0]);
+                            
+                            let validatedReceipt = await filterContract.getTransactionReceipt(validatedHash[0]);
+                            //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
+                            const validatedDecodedReceipt = abiDecoder.decodeLogs(validatedReceipt.logs);
+                            //console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
+                            // console.log('action/getPersonaData/statusValidacao', statusValidacao);
+                            let statusValidacao = '1';                           
+                            let descValidacao = '';
+                            if ( (decodedTx.params[2].value == validatedDecodedReceipt[0].events[2].value) && 
+                                 (validatedDecodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase())    
+                            ){
+                                statusValidacao = validatedDecodedReceipt[0].events[3].value;
+                                //Validated = 0, NotValidated = 1, CannotEvaluate = 2
+                                if (statusValidacao=="0") {
+                                    descValidacao = "Validated";
+                                } else if (statusValidacao=="1") {
+                                    descValidacao = "NotValidated";
+                                } else if (statusValidacao=="2") {
+                                    descValidacao = "CannotEvaluate";
                                 }
                                 let item = {
                                     field: decodedTx.params[2].value,
@@ -105,10 +100,23 @@ export function getPersonaData() {
                                     dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
                                 }
                             }
+                            let item = { 
+                                field: decodedTx.params[2].value,
+                                valor: decodedTx.params[3].value,
+                                statusValidationDescription: descValidacao,
+                                statusValidationCode: statusValidacao,
+                            };
+                            novoPersonalInfo.push(item);
+                            //console.log('action/getPersonaData/novoPersonalInfo', novoPersonalInfo);
                         }
-                    });
-                })
-                .catch(err => console.error(err));
+                    } 
+                    if (novoPersonalInfo.length >= 2) {
+                        //console.log('action/persona/txhashmap/novoPersonalInfo', novoPersonalInfo);
+                        dispatch({type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address});
+                    }
+                });
+            })
+            .catch(err => console.error(err));
         } else {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Data was not found in Blockchain' });
         }
@@ -121,31 +129,40 @@ export function getPersonaAddress() {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         }
     }
-
     return dispatch => {
         dispatch({ type: 'GET_PERSONA_ADDRESS', address: transactor.wallet.address });
     }
 }
 
-export function addData(infoCode, field, data, price) {
 
+export function addData(infoCode, field, data, price, dispatch) {
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         }
     }
-
-    return dispatch => {
+    return (dispatch) => {
+        dispatch({type: 'RUNNING_METHOD'});            
         transactor.contractWithSigner;
         transactor._contract.addData(infoCode, 0, field, data, price)
-            .then((tx) => {
-                tx.wait()
-                    .then((newData) => {
-                        getPersonaData()
-                    })
+        .then((tx) => {
+            // console.log('Tx', tx)
+            tx.wait()
+            .then((newData) => {
+                // console.log('newData', newData)
+                let item = { 
+                    field: field,
+                    valor: data,
+                    statusValidationDescription: 'NotValidated',
+                    statusValidationCode: 1
+                };
+                dispatch({type: ActionTypes.ADD_PERSONA_DATA, newField: item })
             })
-            .catch(err => console.error(err));
-        dispatch({ type: 'ADD_DATA', error: 'Transaction failed' });
+        })
+        .catch((err) => {
+            console.error('addData', err)
+            dispatch({type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err});                
+        });
     }
 }
 export function addPersona(name, email) {
