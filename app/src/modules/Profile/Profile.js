@@ -35,16 +35,24 @@ class Profile extends Component {
         }
     }
 
-    componentWillReceiveProps(propsOld) {
-        if (this.state.persona.address != propsOld.persona.address) {
-          this.setState({
-            persona: propsOld.persona,
-            isLoading: false
-          })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.persona.address != nextProps.persona.address) {
+            return { persona: nextProps.persona, isLoading: false };
         }
-      }  
 
-      getCampoValor(campo) {
+        return null;
+    }
+
+    // componentWillReceiveProps(propsOld) {
+    //     if (this.state.persona.address != propsOld.persona.address) {
+    //       this.setState({
+    //         persona: propsOld.persona,
+    //         isLoading: false
+    //       })
+    //     }
+    // }  
+
+    getCampoValor(campo) {
         const {persona} = this.state;
         if (persona.personalInfo.length < 1) {
           return '';
@@ -56,14 +64,13 @@ class Profile extends Component {
           return '';
         }
         return filtro[0].valor;
-      }
+    }
     
 
     render() {
         const {persona} = this.state;
         return (
             <div>
-            <Form>
                 <Grid>
                     <Row>
                         <Col>
@@ -76,35 +83,47 @@ class Profile extends Component {
                             <div className="glyphicon glyphicon-user imgPersona"></div>
                         </Col>
                     </Row>
-                    <Row className="text-center">
+                    <Row>
                         <Col>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
-                            <FormControl
-                                id="name"
-                                type="text"
-                                value={ this.getCampoValor('name') }
-                                readOnly
-                            />
+                        <Col bsClass="text-center">
+                            <div className="text-center">
+                                <FormControl
+                                    id="name"
+                                    type="text"
+                                    value={ this.getCampoValor('name') }
+                                    readOnly
+                                    className="text-center" 
+                                />
+                            </div>
                         </Col>
-                    </Row>       
+                    </Row>  
                     <Row>
+                        <Col>
+                        </Col>
+                    </Row>     
+                    <Row className="text-center">
                         <Col>
                             <FormControl
                                 id="email"
                                 type="text"
                                 value={ this.getCampoValor('email') }
                                 readOnly
+                                className="text-center" 
                             />
                         </Col>
-                    </Row>       
+                    </Row>    
+                    <Row>
+                        <Col>
+                        </Col>
+                    </Row>   
                         {
                             persona.personalInfo.filter((f) => f.field != 'name' && f.field != 'email').map((val, idx) =>
                             {
                                 return(
-                                    <Row key={'row_' + idx.toString()}>
+                                    <Row className="text-center" key={'row_' + idx.toString()}>
                                         <Col>
                                             <FormControl
                                                 id={idx.toString()}
@@ -112,6 +131,7 @@ class Profile extends Component {
                                                 type="text"
                                                 value={val.valor}
                                                 readOnly
+                                                className="text-center"
                                             />                      
                                         </Col>
                                     </Row>
@@ -124,8 +144,7 @@ class Profile extends Component {
                         </Col>
                     </Row>       
                 </Grid>
-            </Form>
-            <Loader visible={this.state.isLoading} />
+                <Loader visible={this.state.isLoading} />
             </div>
         );
     }
