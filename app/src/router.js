@@ -10,6 +10,7 @@ import Home from './modules/Home/Home';
 import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
 import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import Menu from './modules/Menu/Menu';
+import Profile from './modules/Profile/Profile'
 import Notifications from './modules/Notifications/Notifications';
 
 let routers = [
@@ -69,7 +70,11 @@ let routers = [
     exact: false
   },
   {
-    path: '/notifications',
+    path: '/profile',
+    component: Profile,
+    exact: false
+  },
+  { path: '/notifications',
     component: Notifications,
     exact: false
   },

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Col, Grid, Glyphicon, DropdownButton, MenuItem, Button} from 'react-bootstrap';
 import './Menu.css';
 
@@ -12,8 +13,10 @@ class Menu extends Component {
                     <hr className="linha"/>
                     <div className="links">
                         <div className="flex-column">
-                            <Glyphicon glyph="plus"/> 
-                            <a href="" className="icons">Add information</a>
+                            <Link to='/addinformation'>
+                                <Glyphicon glyph="plus"/> 
+                                <a className="icons">Add information</a>
+                            </Link>
                         </div>
                         <div className="flex-column">
                             <Glyphicon glyph="ok"/>
