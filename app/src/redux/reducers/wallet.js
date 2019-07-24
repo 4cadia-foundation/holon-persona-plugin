@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   seed:'',
   mnemonic: '',
   hasWallet: false,
+  error: '',
   ethersWallet: {}
 };
 
