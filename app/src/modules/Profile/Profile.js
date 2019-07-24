@@ -10,7 +10,7 @@ import './Profile.css';
 import Loader from '../../components/Loader/Loader';
 
 class Profile extends Component {
-// ALterado
+    // Alterado
     constructor(props) {
         super(props);
         this.state = {
@@ -137,6 +137,6 @@ const mapStateToProps = state => ({
     persona: state.persona
 });
   
-  const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
