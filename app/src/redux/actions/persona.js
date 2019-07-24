@@ -39,7 +39,6 @@ export function getPersonaData() {
     }
 
     return (dispatch) => {
-        debugger;
         let novoPersonalInfo = [];
         if (transactor.wallet.address) {
             //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
