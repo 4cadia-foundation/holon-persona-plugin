@@ -46,6 +46,7 @@ class AddInformation extends Component {
         if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
             return { isLoading : nextProps.persona.isRunning, executed: true };
         }
+        return null;
     }
 
     handleClick(event) {
