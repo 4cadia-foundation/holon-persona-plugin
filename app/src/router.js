@@ -7,9 +7,10 @@ import Notfound from './modules/Notfound/Notfound';
 import CreateIdentity from './modules/CreateIdentity/CreateIdentity';
 import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
-import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
+import Menu from  './modules/Menu/Menu';
+import ValidateInformation from './modules/ValidateInformation/ValidateInformation';
 import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
-import Menu from './modules/Menu/Menu';
+import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
 import Profile from './modules/Profile/Profile'
 import Notifications from './modules/Notifications/Notifications';
 
@@ -81,6 +82,11 @@ let routers = [
   {
     path: '/menu',
     component: Menu,
+    exact: false
+  },
+  {
+    path: '/validateinformation',
+    component: ValidateInformation,
     exact: false
   },
   {

@@ -6,6 +6,7 @@ import DataCategory from '../../components/DataCategory/DataCategory';
 import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
 import * as PersonaActions from '../../redux/actions/persona';
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -92,6 +93,7 @@ class AddInformation extends Component {
             <div>
                 <div>
                     <img className="logoHome" src={logo} alt="Logo" />
+                    <CloseIconPage destination="/home"/>
                 </div>
                 <hr />
                 <Form>

@@ -14,20 +14,19 @@
     font-size: 10pt;
 }
 
-#tableValidation {
-    /* width: 100%; */
+.tableValidation {
     margin-top: 20px;
 }
 
-#gridHome {
-    margin-top: 25px;
-}
-
-#sectionValidation {
+.sectionValidation {
     margin-top: 40px;
 }
 
-#titleValidation {
+.titleValidation {
     font-weight: bold;
     margin-bottom: -15px;
+}
+
+.sectionBasicInfo {
+    margin-top: 70px;
 }

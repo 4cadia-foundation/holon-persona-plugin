@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Grid, Row, Label, Table } from 'react-bootstrap';
-import * as PersonaActions from '../../redux/actions/persona';
-import logo from '../../../images/logo.png';
-import Menu from '../../components/Menu/Menu';
-import Loader from '../../components/Loader/Loader';
-import './Home.css';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as PersonaActions from '../../redux/actions/persona';
+
+import logo from '../../../images/logo.png';
+import Loader from '../../components/Loader/Loader';
+import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
+import './Home.css';
 
 class Home extends Component {
   
@@ -65,12 +66,12 @@ class Home extends Component {
 
   render () {
     const {persona} = this.state;
-
+    
     return (
       <div>
-        <Grid id="gridHome">
-          <Menu/>
-          <section id="sectionBasicInfo">
+        <Grid>
+          <HamburguerMenu />
+          <section className="sectionBasicInfo">
             <hr className="horizontalLine"></hr>
             <Row className="text-center">
               <img className="logoHome" src={logo} alt="Logo" />
@@ -86,12 +87,12 @@ class Home extends Component {
             </Row>
           </section>
 
-          <section id="sectionValidation">
+          <section className="sectionValidation">
             <Row>
-                <h5 id="titleValidation">Validations</h5>
+                <h5 className="titleValidation">Validations</h5>
                 <hr className="horizontalLine"></hr>
               </Row>
-            <Table striped id='tableValidation'>
+            <Table striped className='tableValidation'>
               <tbody>
                 {persona.personalInfo.map((item, index) =>                 
                       <tr key={index}>
