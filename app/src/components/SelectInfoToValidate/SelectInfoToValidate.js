@@ -14,7 +14,7 @@ class SelectInfoToValidate extends Component {
     this.setState({
       personalInfo: this.props.personalInfo
     })
-    console.log(this.state)
+    //console.log(this.state)
   }
 
   render () {

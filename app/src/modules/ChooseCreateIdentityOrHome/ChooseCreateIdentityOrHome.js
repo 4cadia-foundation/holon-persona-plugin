@@ -27,14 +27,16 @@ class ChooseCreateIdentityOrHome extends Component {
         console.error('ChooseCreateIdentityOrHome/getDerivedStateFromProps: ', msg);
         return { isLoading: false };
     }
-    if (nextProps.persona.readAllPersonaLogs) {
+    if (nextProps.persona.readAllPersonaLogs ) {
       return { isLoading : false, numberOfPersonalInfoRecorded: nextProps.persona.numberOfFields };
     }
     return null;
   }
 
   render() {
+    //console.log('ChooseCreateIdentityOrHome/render state', this.state);
     if (this.state.numberOfPersonalInfoRecorded >= 2) {
+      //console.log('ChooseCreateIdentityOrHome/rendering to home', this.state);
       return (
         <Redirect to="/home" />
       )

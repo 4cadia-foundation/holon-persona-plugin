@@ -107,7 +107,7 @@ class WalletPassword extends Component {
 
   render () {
     if (this.props.wallet.address.length > 2) {
-      console.log('WalletPassword/render/address', this.props.wallet.address);
+      //console.log('WalletPassword/render/address', this.props.wallet.address);
       return (
         <Redirect to="/choosecreateidentityorhome" />
       );
