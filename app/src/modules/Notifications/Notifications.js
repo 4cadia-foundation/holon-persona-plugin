@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Grid, Panel, Button, Glyphicon } from 'react-bootstrap';
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import './Notifications.css';
 
 class Notifications extends Component {
@@ -8,7 +9,7 @@ class Notifications extends Component {
             <Grid>
                 <Row>
                     <Col>
-                        <Glyphicon className="icon-remove"glyph="remove"/> 
+                        <CloseIconPage destination="/home"/> 
                           <hr className="line"></hr>
                           <div className="title-paragraph">
                             <h1 className="title">Notifications</h1>
