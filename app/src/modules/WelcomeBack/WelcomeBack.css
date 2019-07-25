@@ -1,6 +1,6 @@
-.grid-welcomeback {
-    margin-top: 30px;
-}
+/* .grid-welcomeback {
+    margin-top: 40px;
+} */
 
 .FormControl {
     margin-top: 40px;
@@ -13,4 +13,6 @@
 
 #password {
     margin-bottom: 50px;
+    font-size: 10pt;
+
 }

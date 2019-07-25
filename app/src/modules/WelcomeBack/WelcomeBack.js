@@ -59,7 +59,7 @@ class WelcomeBack extends Component {
     }
 
     return (
-        <Grid className="grid-welcomeback">
+        <Grid className="margin-top-50">
             <Row className="text-center">
                 <img className="logo" src={logo} alt="Logo" />
             </Row>
@@ -68,13 +68,13 @@ class WelcomeBack extends Component {
                     <h3 align="center" className="title" >Welcome Back</h3>
                     <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
-                <label>Password</label>
+                <label className="paragraph">Password</label>
                 <FormControl 
                     className="paragraph"
                     id="password" 
                     type="password" 
                     value={this.state.password}
-                    placeholder="Password" 
+                    placeholder="The password must have 8 characters" 
                     onChange={this.handleChange}
                 />
                 <Button disabled={!this.validateForm()} className="paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
