@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import {Button} from 'react-bootstrap';
-import * as WalletActions from "../../redux/actions/wallet";
-
+import * as PersonaActions from "../../redux/actions/persona";
+import './Balance.css';
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
 
@@ -9,39 +8,41 @@ class Balance extends Component {
 
     constructor(props) {
         super(props);
-        
-        this.state = {balance: 0};
+        this.state = {balance: 0};        
+    }
+
+    componentDidMount() {
+        this.props.getBalance();
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
+        //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
+        if (nextProps.persona.error.length>2) {
+            const msg = 'Erro: ' + nextProps.persona.error;
+            console.error('Balance/getDerivedStateFromProps: ', msg);
+            alert(msg);
+            return { balance: 0 };
+        }
+        return { balance : nextProps.persona.balance };        
     }
 
     render() {
         return(
-            <div>
-                <h3>
+            <div id="display-balance">
+                <h3 className="text-center">
                     {this.state.balance}
                 </h3>
             </div>
         )
     }
-    
-    getBalance() {
-        const balance = this.props.wallet.getBalance();
-        balance.then((chiboquinha) => {
-            this.setState({
-                balance: chiboquinha
-            })
-        });
-    }
-
-    componentDidMount() {
-        this.getBalance();
-    }
 }
 
 
 const mapStateToProps = state => ({
-    wallet: state.wallet.ethersWallet
+    persona: state.persona
   });
   
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
   
 export default connect(mapStateToProps, mapDispatchToProps)(Balance);
