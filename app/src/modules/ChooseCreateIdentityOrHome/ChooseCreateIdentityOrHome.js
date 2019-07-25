@@ -11,7 +11,8 @@ class ChooseCreateIdentityOrHome extends Component {
     super(props)
     this.state = {
       isLoading: true,
-      numberOfPersonalInfoRecorded: -1
+      numberOfPersonalInfoRecorded: -1,
+      msg: "Loading information from Blockchain",
     }
   }
 
@@ -46,7 +47,7 @@ class ChooseCreateIdentityOrHome extends Component {
       )
     } else {
       return (
-        <Loader visible={this.state.isLoading} />
+        <Loader visible={this.state.isLoading} message={this.state.msg} />
       )
     }
   }
