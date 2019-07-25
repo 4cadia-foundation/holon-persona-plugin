@@ -31,3 +31,12 @@
     margin-top: 30px; 
     margin-bottom: 0px
 }
+
+.title {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+
+.paragraph {
+    font-family: 'Raleway', sans-serif;
+}

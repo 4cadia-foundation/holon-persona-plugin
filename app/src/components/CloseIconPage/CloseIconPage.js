@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Glyphicon } from 'react-bootstrap';
+import { IoIosClose } from "react-icons/io";
+import './CloseIconPage.css';
+
 class CloseIconPage extends Component {
 
     constructor(props) {
@@ -9,8 +11,8 @@ class CloseIconPage extends Component {
 
     render() {
         return (
-            <button type="button" className="close" aria-label="Close" >
-                <Link to={ this.props.destination }><Glyphicon glyph="remove" /></Link>
+            <button type="button" className="closeButton" aria-label="Close" >
+                <Link to={ this.props.destination } className="closeIcon"><IoIosClose/></Link>
             </button>
         );
     }
