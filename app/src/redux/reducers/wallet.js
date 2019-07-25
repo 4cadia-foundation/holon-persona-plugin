@@ -25,9 +25,7 @@ export default function wallet(state = INITIAL_STATE, action) {
     break;
     case ActionTypes.HAS_WALLET:
       return {...state, hasWallet: action.hasWallet};
-    break;
-    case ActionTypes.GET_BALANCE:
-      return { ...state, balance: action.balance};
+    break;    
     default:
       return state; 
   }
