@@ -3,7 +3,7 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import DataCategory from '../../components/DataCategory/DataCategory';

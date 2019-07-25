@@ -75,7 +75,7 @@ class Menu extends Component {
                         <div className="flex-column">
                             <Link to="/backupphrase">
                                 <Glyphicon glyph="lock"/>
-                                <a href="" className="icons">Export Private Key</a>
+                                <a href="" className="icons">Secret Backup Phrase</a>
                             </Link>
                         </div>
                         <div  className="flex-column">
