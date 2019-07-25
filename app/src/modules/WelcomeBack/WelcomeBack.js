@@ -18,7 +18,8 @@ class WelcomeBack extends Component {
         this.state = {
           password: "",
           openedWallet: false,
-          isProcessing: false
+          isProcessing: false,
+          msg: "Loading",
         };        
     }
 
@@ -35,7 +36,8 @@ class WelcomeBack extends Component {
     handleClick(event){
         event.preventDefault();
         this.setState({
-            isProcessing: true
+            isProcessing: true,
+            msg: "Opening wallet",
         })
         this.props.openWallet(this.state.password);
     }
@@ -82,7 +84,7 @@ class WelcomeBack extends Component {
                 </Button>    
                 <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            
             </Form>
-            <Loader visible={this.state.isProcessing} />
+            <Loader visible={this.state.isProcessing} message={this.state.msg} />
         </Grid>
     );
   }
