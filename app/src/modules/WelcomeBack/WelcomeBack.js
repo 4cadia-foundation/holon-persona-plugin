@@ -78,9 +78,9 @@ class WelcomeBack extends Component {
                     onChange={this.handleChange}
                 />
                 <Button disabled={!this.validateForm()} className="paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
-                    LOG IN
+                    Log in
                 </Button>    
-                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet"><u>Import</u></Link>  using your phrase</p>            
+                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            
             </Form>
             <Loader visible={this.state.isProcessing} />
         </Grid>

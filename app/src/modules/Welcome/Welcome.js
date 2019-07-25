@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { Button, Grid, Row, Col } from 'react-bootstrap';
+import { Button, Grid, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
-import './Welcome.css';
 import logo from '../../../images/logo.png';
 import Wallet from '../../../scripts/core/WalletStorage';
-
 import Settings from '../../../config/settings';
+import './Welcome.css';
 
 const wallet = new Wallet();
 
@@ -42,17 +42,17 @@ class Welcome extends Component {
             <img className="logo" src={logo} alt="Logo" />
           </Row>
           <Row className="text-center">
-            <h3 className="Title">Welcome to Holon</h3>
+            <h3 className="title">Welcome to Holon</h3>
           </Row>
         </header>
         <section>
           <Row className="text-center">
-            <p className="subtitle">Connecting you to the Decentralized Web. <br /> We're happy to see you.</p>
+            <p className="paragraph">Connecting you to the Decentralized Web. <br /> We're happy to see you.</p>
           </Row>
         </section>
         <footer>
           <Row className="text-center">
-            <Button bsStyle="warning" block className="welcomeButton" onClick={() => this.props.history.push('/choosecreateorimport')}>Get started</Button>
+            <Button bsStyle="warning" bsSize="large" block className="welcomeButton paragraph" onClick={() => this.props.history.push('/choosecreateorimport')}>Get started</Button>
           </Row>
         </footer>
       </Grid>
