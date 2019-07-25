@@ -16,10 +16,10 @@ class Home extends Component {
     super(props);      
     this.state = {
       persona: this.props.persona,
-      isLoading: true
+      isLoading: true,
+      msg: "Loading profile from Blockchain",
     }
     this.getCampoValor = this.getCampoValor.bind(this); 
-    this.getAddress = this.getAddress.bind(this);    
   }
 
   componentDidMount() {
@@ -61,11 +61,6 @@ class Home extends Component {
     return filtro[0].valor;
   }
 
-  getAddress() {
-    const {persona} = this.state;
-    return persona.address;
-  }
-
   render () {
     const {persona} = this.state;
     
@@ -74,12 +69,12 @@ class Home extends Component {
         <Grid>
           <HamburguerMenu />
           <section className="sectionBasicInfo">
-            <hr className="horizontalLine"></hr>
+            <hr className="horizontalLine" />
             <Row className="text-center">
               <img className="logoHome" src={logo} alt="Logo" />
             </Row>
             <Row className="text-center">
-              <p className="basicInfoHome">{ this.getAddress() }</p>
+              <p className="basicInfoHome">{ this.props.persona.address }</p>
             </Row>
             <Row className="text-center">
               <p className="basicInfoHome">{ this.getCampoValor('name') }</p>
@@ -112,7 +107,7 @@ class Home extends Component {
             </Table>
           </section>
         </Grid>
-        <Loader visible={this.state.isLoading} />
+        <Loader visible={this.state.isLoading} message={this.state.msg} />
       </div>
     );
   }
