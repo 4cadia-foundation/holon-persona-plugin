@@ -63,6 +63,7 @@ export function openWallet(password) {
 
 export function createNewWallet(password){
   return dispatch=> {
+    console.log('actions/wallet/creating new wallet');
     wallet.createNewVault(password)
     .then((wallet) => {
       dispatch({

@@ -6,36 +6,62 @@ import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
 
 import styles from './WalletPassword.css';
+import Loader from '../../components/Loader/Loader';
 
- class WalletPassword extends Component {
+class WalletPassword extends Component {
 
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {
-          password: "",
-          confirm: ""
-        };        
+  constructor(props) {
+      super(props);
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.state = {
+        password: "",
+        confirm: "",
+        isLoading: true
+      };        
+  }
+
+  componentDidMount() {
+    this.setState({
+      isLoading: false
+    });
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
+    //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
+    if (nextProps.wallet.error.length>2) {
+        const msg = 'Erro: ' + nextProps.wallet.error;
+        console.error('WalletPassword/getDerivedStateFromProps: ', msg);
+        alert(msg);
+        return { isLoading: false };
     }
-
-    handleSubmit(event){
-        event.preventDefault();
-        this.props.createNewWallet(this.state.password);
+    if (nextProps.wallet.address.length > 2) {
+        return { isLoading : false };
     }
+    return null;
+  }
 
-    validateForm() {
-        return this.state.password.length > 7 && this.state.confirm.length > 7;
-    }
+  handleSubmit(event){
+    event.preventDefault();
+    this.setState({
+      isLoading: true
+    });
+    this.props.createNewWallet(this.state.password);
+  }
 
-    /**
-     * @method handleChange
-     * @description handle change in form input
-     * */
-    handleChange(event, field){
-        let obj = {};
-        obj[field] = event.target.value;
-        this.setState(obj);
-    }
+  validateForm() {
+    return this.state.password.length > 7 && this.state.confirm.length > 7;
+  }
+
+  /**
+   * @method handleChange
+   * @description handle change in form input
+   * */
+  handleChange(event, field){
+    let obj = {};
+    obj[field] = event.target.value;
+    this.setState(obj);
+  }
  /**
    * @method getValidationPassword
    * @description Validate the minimum password length
@@ -57,7 +83,8 @@ import styles from './WalletPassword.css';
         return null;
     }
   }
-/**
+
+  /**
    * @method getValidationEqualPassword
    * @description Validates if passwords are equal
    * @return [String, Null] error
@@ -80,7 +107,7 @@ import styles from './WalletPassword.css';
 
   render () {
     if (this.props.wallet.address.length > 2) {
-      console.log('WalletPassword/render/address', this.props.wallet.address);
+      //console.log('WalletPassword/render/address', this.props.wallet.address);
       return (
         <Redirect to="/choosecreateidentityorhome" />
       );
@@ -88,35 +115,30 @@ import styles from './WalletPassword.css';
 
     return (
         <div>
+          <div>
+            <img src="images/icon-128.png" className="rounded center-block" alt="Holon"/>
+          </div>
+          <Form>
             <div>
-                <img src="images/icon-128.png" className="rounded center-block" alt="Holon"/>
+                <h2 align="center" >Create Your Wallet</h2>
             </div>
-            <Form>
-                <div>
-                    <h2 align="center" >Create Your Wallet</h2>
-                </div>
-                
-                  <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
-                      <ControlLabel>Password</ControlLabel>
-                      <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
+            <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
+              <ControlLabel>Password</ControlLabel>
+              <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
 
-                      <FormControl.Feedback />
-                      <HelpBlock>Minimum validation of 8 characters</HelpBlock>
+              <FormControl.Feedback />
+              <HelpBlock>Minimum validation of 8 characters</HelpBlock>
+            </FormGroup>
+            <FormGroup className="margin-top-10"  validationState={this.getValidationEqualPassword()}>
+              <ControlLabel>Confirm Password</ControlLabel>
+              <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
 
-                  </FormGroup>
-
-                  <FormGroup className="margin-top-10"  validationState={this.getValidationEqualPassword()}>
-                      <ControlLabel>Confirm Password</ControlLabel>
-                      <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
-
-                      <FormControl.Feedback />
-                      <HelpBlock>Password must be the same as field confirm</HelpBlock>
-
-                  </FormGroup>
-
-                  <Button className="margin-top-5" disabled={!this.validateForm()} onClick={this.handleSubmit} block bsStyle="warning">Submit</Button>
-                </Form>
-
+              <FormControl.Feedback />
+              <HelpBlock>Password must be the same as field confirm</HelpBlock>
+            </FormGroup>
+            <Button className="margin-top-5" disabled={!this.validateForm()} onClick={this.handleSubmit} block bsStyle="warning">Submit</Button>
+          </Form>
+          <Loader visible={this.state.isLoading} />
         </div>
     );
   }

@@ -20,7 +20,7 @@ class WelcomeBack extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.wallet.address.length > 2) {
-            console.log('WelcomeBack/componentDidMount/address', this.props.wallet.address);
+            //console.log('WelcomeBack/componentWillReceiveProps/address', nextProps.wallet);
             this.setState({
                 isProcessing: false,
                 openedWallet: true
