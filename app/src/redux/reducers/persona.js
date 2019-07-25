@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     personalInfo: [],
     numberOfFields: 0,
     readAllPersonaLogs: false,
+    balance: 0,
     isRunning: false
 }
 
@@ -43,14 +44,22 @@ export default function persona (state = INITIAL_STATE, action) {
             isRunning: false
         }
     }
+
+    if (action.type == 'GET_BALANCE') {
+        return {...state, balance: action.balance}
+    }
+
     if (action.type == 'GET_PERSONA_DATA') {
         return{...state, personalInfo: action.novoPersonalInfo}
     }
+    
     if (action.type == 'GET_PERSONA_ADDRESS') {
         return { ...state, address: action.address }
     }
+    
     if (action.type == 'ERROR_PERSONA_DATA') {
         return { ...state, error: action.error };
     }
+    
     return state;
 }

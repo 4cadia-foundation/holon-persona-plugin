@@ -25,14 +25,30 @@ function checkWallet() {
     if (!transactor.wallet) {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
+            transactor.contractWithSigner;
             //console.log('action/persona/checkWallet/transactor.wallet-set', transactor.wallet);
             return true;
         } else {
             return false;
         }
     } else {
+        transactor.contractWithSigner;
         return true;
     }
+}
+
+export function getBalance() {
+    console.log('actions/getBalance');
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        }
+    }
+    return (async (dispatch) => {
+        const balance = await transactor.wallet.getBalance();
+        console.log('actions/getBalance', balance);
+        dispatch({ type: 'GET_BALANCE', balance: ethers.utils.formatEther(balance) });        
+    });
 }
 
 //TODO: Refazer esta funcao
@@ -42,7 +58,7 @@ export function getPersonaData() {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         }
     }
-
+    console.log('actions/getPersonaData');
     return (dispatch) => {
         dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
         let novoPersonalInfo = [];

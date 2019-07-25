@@ -10,9 +10,9 @@ export default class Loader extends Component {
           &nbsp;
         </div>
         <div>
-          <div className="vertical-spacer-5">&nbsp;</div>    
+          <div className="vertical-spacer-5">&nbsp;</div>
           <h4 className="msg-loading text-center">
-            Loading information from Blockchain...
+            {this.props.message ? this.props.message : 'Loading information from Blockchain...'}
           </h4>
         </div>
       </div>
