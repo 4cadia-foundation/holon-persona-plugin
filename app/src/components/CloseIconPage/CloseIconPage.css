@@ -5,7 +5,7 @@
 
 .closeIcon {
     color: black;
-    font-weight: bolder;
+    font-size: 26pt;
     display: flex;
     flex-direction: row-reverse;
 }
