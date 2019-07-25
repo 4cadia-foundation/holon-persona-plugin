@@ -42,12 +42,12 @@ class Welcome extends Component {
             <img className="logo" src={logo} alt="Logo" />
           </Row>
           <Row className="text-center">
-            <h3 className="Title">Welcome to Holon</h3>
+            <h3>Welcome to Holon</h3>
           </Row>
         </header>
         <section>
           <Row className="text-center">
-            <p className="subtitle">Connecting you to the Decentralized Web. <br /> We're happy to see you.</p>
+            <p>Connecting you to the Decentralized Web. <br /> We're happy to see you.</p>
           </Row>
         </section>
         <footer>

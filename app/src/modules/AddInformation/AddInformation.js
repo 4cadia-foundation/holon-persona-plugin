@@ -7,6 +7,7 @@ import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
 import * as PersonaActions from '../../redux/actions/persona';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import './AddInformation.css';
 
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -91,14 +92,12 @@ class AddInformation extends Component {
         }
         return (
             <div>
-                <div>
-                    <img className="logoHome" src={logo} alt="Logo" />
+                <div className="btn-add-close">
                     <CloseIconPage destination="/menu"/>
                 </div>
-                <hr />
                 <Form>
-                    <div>
-                        <h2 align="center" >Add Information</h2>
+                    <div className="margin-top-10">
+                        <h3 className="title-add" align="center">Add Information</h3>
                     </div>
                     <br />
                     <div>
@@ -127,7 +126,7 @@ class AddInformation extends Component {
                         onChange={this.handleChange}
                         />
                     <br />
-                    <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" type="submit" onClick={this.handleClick}>
+                    <Button disabled={!this.validateForm()} bsSize="large" id="btn-add-save" className="btn-block btn-warning" type="submit" onClick={this.handleClick}>
                         Save
                     </Button>
                 </Form>

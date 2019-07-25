@@ -1,0 +1,12 @@
+.title-add {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+#btn-add-save {
+    margin-top: 22px;
+}
+
+.btn-add-close {
+    display: flex;
+}
