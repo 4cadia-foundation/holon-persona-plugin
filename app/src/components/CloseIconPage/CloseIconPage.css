@@ -1,0 +1,10 @@
+.closeButton {
+    background-color: #ffffff;
+    border: none;
+}
+
+.closeIcon {
+    color: black;
+    font-weight: bolder;
+    display: flex;
+}
