@@ -37,7 +37,7 @@ class Menu extends Component {
                 <Col>
                     <nav className="d-flex flex-row justify-content-between">
                         <p className="titleMenu">Identity</p>
-                        <CloseIconPage destination="/home"/>                    
+                        <CloseIconPage className="destination-icon" destination="/home"/>                    
                     </nav>
                     <hr className="line"/>
                     <div className="links">

@@ -12,7 +12,7 @@
 } 
 
 .links2 {
-    height: 200px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -27,7 +27,7 @@
 }
 
 .botoes {
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -35,6 +35,10 @@
 
 #drop {
     margin: 0 20px;
+}
+
+.destination-icon {
+    margin: 10px
 }
 
 .sair {

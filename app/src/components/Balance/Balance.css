@@ -1,5 +1,8 @@
 #display-balance {
-    border-style: solid;
-    margin-bottom: 10px;
-    width: 90%;
+    height: 90px;
+    border-style: ridge;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
