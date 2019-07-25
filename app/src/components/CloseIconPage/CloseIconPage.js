@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Glyphicon } from 'react-bootstrap';
 import './CloseIconPage.css';
 
 class CloseIconPage extends Component {

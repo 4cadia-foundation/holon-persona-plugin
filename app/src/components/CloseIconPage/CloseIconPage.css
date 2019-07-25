@@ -7,4 +7,5 @@
     color: black;
     font-weight: bolder;
     display: flex;
+    flex-direction: row-reverse;
 }
