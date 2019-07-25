@@ -62,22 +62,23 @@ class WelcomeBack extends Component {
             <br/>
             <Form>
                 <div>
-                    <h2 align="center" >Welcome Back</h2>
-                    <p align="center"> The decentralized web waits for you </p>
+                    <h3 align="center" className="title" >Welcome Back</h3>
+                    <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
                 <br/>
                 <label>Password</label>
                 <FormControl 
+                    className="paragraph"
                     id="password" 
                     type="password" 
                     value={this.state.password}
                     placeholder="Password" 
                     onChange={this.handleChange}
                 />
-                <Button disabled={!this.validateForm()} className="btn btn-block btn-primary pull-right"  type="submit" onClick={this.handleClick}>
+                <Button disabled={!this.validateForm()} className="paragraph btn btn-block btn-primary pull-right"  type="submit" onClick={this.handleClick}>
                     LOG IN
                 </Button>    
-                <p align="center">Forgot your password? <Link to="/importwallet"><u>Import</u></Link>  using your phrase</p>            
+                <p className="paragraph" align="center">Forgot your password? <Link to="/importwallet"><u>Import</u></Link>  using your phrase</p>            
             </Form>
             <Loader visible={this.state.isProcessing} />
         </div>
