@@ -5,6 +5,7 @@ import { Row, Col, Grid, Glyphicon, DropdownButton, MenuItem, Button} from 'reac
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import './Menu.css';
 import '../../styles/_utils.css';
+import Balance from '../../components/Balance/Balance';
 
 class Menu extends Component {
   
@@ -91,7 +92,7 @@ class Menu extends Component {
                     </div>
                     <hr className="line"></hr>
                     <div>
-                      <h1 className="text-center">2 ETH</h1>
+                        <Balance />
                     </div>
                     <div className="botoes">
                       <Button bsStyle="warning">Deposit</Button>
@@ -102,7 +103,7 @@ class Menu extends Component {
                     </Link>
                 </Col>
             </Row>
-        </Grid>
+    </Grid>
 )}};
 
 export default Menu;
