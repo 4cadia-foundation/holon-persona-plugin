@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './SelectPersonaInfoFields.css';
+
+import './SelectInfoToValidate.css';
 
 class SelectPersonaInfoFields extends Component {
 
@@ -14,7 +15,6 @@ class SelectPersonaInfoFields extends Component {
     this.setState({
       personalInfo: this.props.personalInfo
     })
-    //console.log(this.state)
   }
 
   render () {
@@ -23,10 +23,10 @@ class SelectPersonaInfoFields extends Component {
       ));
     return (
         <section>
-            <label>Field: </label>
+            <label className="paragraph">Select Information to Validate</label>
             <div className="dropdown">
-               <select value={this.state.value} id="categoryId">
-                   {optionTemplate}
+               <select className="paragraph" value={this.state.value} id="categoryId">
+                 {optionTemplate}
                </select>
             </div>                
         </section>

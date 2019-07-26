@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import './SelectValidador.css';
 
 class SelectValidador extends Component {
@@ -23,12 +24,12 @@ class SelectValidador extends Component {
       ));
       return (
         <section>
-        <label>Select Validador</label>
-        <div className="dropdown">
-        <select value={this.state.value} id="categoryId">
-        {optionTemplate}
-        </select>
-        </div>                
+          <label className="paragraph">Select Validador</label>
+            <div className="dropdown">
+              <select className="paragraph" value={this.state.value} id="categoryId">
+               {optionTemplate}
+              </select>
+            </div>                
         </section>
         )
       }
