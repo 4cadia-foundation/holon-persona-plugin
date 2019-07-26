@@ -5,7 +5,7 @@ import { Grid, Row, Col, Form, Button } from 'react-bootstrap';
 import '../../styles/_utils.css';
 import './ValidateInformation.css'
 import logo from '../../../images/icon-38.png';
-import SelectInfoToValidate from '../../components/SelectInfoToValidate/SelectInfoToValidate';
+import SelectPersonaInfoFields from '../../components/SelectPersonaInfoFields/SelectPersonaInfoFields';
 import SelectValidador from '../../components/SelectValidador/SelectValidador';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -38,7 +38,7 @@ class ValidateInformation extends Component {
                 <Form className="margin-top-50">
                     <div className="space-between">
                         <div>
-                            <SelectInfoToValidate personalInfo={this.props.persona.personalInfo} />
+                            <SelectPersonaInfoFields personalInfo={this.props.persona.personalInfo} />
                         </div>
                         <div>
                             <SelectValidador />
