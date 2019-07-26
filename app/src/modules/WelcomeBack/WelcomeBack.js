@@ -37,7 +37,7 @@ class WelcomeBack extends Component {
         event.preventDefault();
         this.setState({
             isProcessing: true,
-            msg: "Opening wallet",
+            msg: "Openning wallet",
         })
         this.props.openWallet(this.state.password);
     }

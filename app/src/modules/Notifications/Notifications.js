@@ -11,7 +11,7 @@ class Notifications extends Component {
                 <Row>
                     <Col>
                         <div className="closeButtonNotifications">
-                          <CloseIconPage destination="/home" /> 
+                          <CloseIconPage destination="/menu" /> 
                         </div>
                           <div className="header-notification">
                             <h3 className="title">Notifications</h3>

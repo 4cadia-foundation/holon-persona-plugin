@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
-import * as WalletActions from "../../redux/actions/wallet";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
