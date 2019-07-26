@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import logo from '../../../images/icon-38.png';
-import { Redirect } from 'react-router-dom';
 import { Button, Form, FormControl } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+
+import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import * as PersonaActions from '../../redux/actions/persona';
+
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import DataCategory from '../../components/DataCategory/DataCategory';
 import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
-import * as PersonaActions from '../../redux/actions/persona';
-import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-
-import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
+import './AddInformation.css';
 
 class AddInformation extends Component {
 
@@ -91,14 +92,12 @@ class AddInformation extends Component {
         }
         return (
             <div>
-                <div>
-                    <img className="logoHome" src={logo} alt="Logo" />
-                    <CloseIconPage destination="/menu" />
+                <div className="btn-add-close">
+                    <CloseIconPage destination="/menu"/>
                 </div>
-                <hr />
                 <Form>
-                    <div>
-                        <h2 align="center" >Add Information</h2>
+                    <div className="margin-top-10">
+                        <h3 id="title-add" className="title" align="center">Add Information</h3>
                     </div>
                     <br />
                     <div>
@@ -109,7 +108,7 @@ class AddInformation extends Component {
                         <DataSubCategory emitSubCategory={this.setSubCategory} />
                     </div>
                     <br />
-                    <label>Insert your info here</label>
+                    <label className="paragraph label-add">Insert your info here</label>
                     <FormControl
                         id="info"
                         type="text"
@@ -118,16 +117,17 @@ class AddInformation extends Component {
                         onChange={this.handleChange}
                     />
                     <br />
-                    <label>How much do you want to get for this information?</label>
+                    <label className="paragraph label-add">How much do you want to get for this information?</label>
                     <FormControl
                         id="cost"
                         type="text"
                         value={this.state.cost}
                         placeholder="Value in wei"
                         onChange={this.handleChange}
-                    />
+                        className="paragraph"
+                        />
                     <br />
-                    <Button disabled={!this.validateForm()} className="btn btn-block btn-warning" type="submit" onClick={this.handleClick}>
+                    <Button disabled={!this.validateForm()} bsSize="large" id="btn-add-save" className="btn-block btn-warning paragraph" type="submit" onClick={this.handleClick}>
                         Save
                     </Button>
                 </Form>

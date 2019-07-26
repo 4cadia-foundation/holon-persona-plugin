@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Button, ControlLabel, FormGroup, FormControl, Grid, Row } from 'react-bootstrap';
+
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import * as PersonaActions from "../../redux/actions/persona";
+
 import Loader from '../../components/Loader/Loader';
+import './CreateIdentity.css';
 
 class CreateIdentity extends Component {
 
@@ -64,45 +67,42 @@ class CreateIdentity extends Component {
         return (
             <div>
                 <Grid>
-                    <Row>
-                        <Col xs={12} md={12}>
-                            <div className="text-center">
-                                <h3>Holon Identity</h3>
-                            </div>
-                        </Col>
+                    <Row className="margin-top-50">
+                        <div className="text-center">
+                            <h3 className="title">Holon Identity</h3>
+                        </div>
                     </Row>
-                    <div className="margin-top-50">
+                    <div className="margin-top-30">
                         <Row>
-                            <p className="Subtitle, text-center">To have a <b>Holon Identity</b>, please provide us with the following information.</p>
+                            <p className="text-center paragraph">To have a <b>Holon Identity</b>, please provide us with the following information.</p>
                         </Row>
                     </div>
-                    <FormGroup className="margin-top-50">
-                        <ControlLabel>Name</ControlLabel>
+                    <div>
 
-                        <FormControl
-                            componentClass="input"
-                            id="name"
-                            type="text"
-                            value={this.state.name}
-                            placeholder="Name"
-                            onChange={this.handleChange}
-                        />
-
-
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Email</ControlLabel>
-
-                        <FormControl
-                            componentClass="input"
-                            id="email"
-                            type="email"
-                            placeholder="email@example.com"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-                    <Button className="margin-top-50" disabled={!this.validateForm()} block bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
+                        <FormGroup>
+                            <ControlLabel className="paragraph">Name</ControlLabel>
+                            <FormControl
+                                componentClass="input"
+                                id="name"
+                                type="text"
+                                value={this.state.name}
+                                placeholder="Name"
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <ControlLabel className="paragraph">Email</ControlLabel>
+                            <FormControl
+                                componentClass="input"
+                                id="email"
+                                type="email"
+                                placeholder="email@example.com"
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
+                    </div>
+                    <Button id="btn-create-save" className="paragraph" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
                 </Grid>
                 <Loader message="Initializing your identity..." visible={this.state.isLoading} />
             </div>
@@ -115,5 +115,7 @@ const mapStateToProps = state => ({
     email: state.email,
     persona: state.persona,
 });
+
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
 export default connect(mapStateToProps, mapDispatchToProps)(CreateIdentity);

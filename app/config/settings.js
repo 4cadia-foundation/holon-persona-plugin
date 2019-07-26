@@ -3,5 +3,5 @@ module.exports = {
   host: 'rinkeby.caralabs.me',
   port: '18575',
   network: 4,
-  clearStorage: false
+  clearStorage: true
 };
