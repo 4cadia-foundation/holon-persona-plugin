@@ -27,13 +27,13 @@ class CreateIdentity extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         //console.log('CreateIdentity/getDerivedStateFromProps nextProps', nextProps.persona);
         //console.log('CreateIdentity/getDerivedStateFromProps prevState', prevState);
-        if (nextProps.persona.error.length>2) {
+        if (nextProps.persona.error.length > 2) {
             const msg = 'Erro: ' + nextProps.persona.error;
             console.error('CreateIdentity/getDerivedStateFromProps: ', msg);
             return { isLoading: false };
         }
-        if (nextProps.persona.readAllPersonaLogs && nextProps.persona.numberOfFields>=2) {
-          return { isLoading : false, redirect: true };
+        if (nextProps.persona.readAllPersonaLogs && nextProps.persona.numberOfFields >= 2) {
+            return { isLoading: false, redirect: true };
         }
         return null;
     }
@@ -104,7 +104,7 @@ class CreateIdentity extends Component {
                     </FormGroup>
                     <Button className="margin-top-50" disabled={!this.validateForm()} block bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
                 </Grid>
-                <Loader visible={this.state.isLoading} />
+                <Loader message="Initializing your identity..." visible={this.state.isLoading} />
             </div>
         );
     }
