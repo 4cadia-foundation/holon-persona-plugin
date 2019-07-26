@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, FormControl,ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import * as WalletActions from "../../redux/actions/wallet";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
 import styles from './WalletPassword.css';
@@ -11,13 +11,13 @@ import Loader from '../../components/Loader/Loader';
 class WalletPassword extends Component {
 
   constructor(props) {
-      super(props);
-      this.handleSubmit = this.handleSubmit.bind(this);
-      this.state = {
-        password: "",
-        confirm: "",
-        isLoading: true
-      };        
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      password: "",
+      confirm: "",
+      isLoading: true
+    };
   }
 
   componentDidMount() {
@@ -29,19 +29,19 @@ class WalletPassword extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
     //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
-    if (nextProps.wallet.error.length>2) {
-        const msg = 'Erro: ' + nextProps.wallet.error;
-        console.error('WalletPassword/getDerivedStateFromProps: ', msg);
-        alert(msg);
-        return { isLoading: false };
+    if (nextProps.wallet.error.length > 2) {
+      const msg = 'Erro: ' + nextProps.wallet.error;
+      console.error('WalletPassword/getDerivedStateFromProps: ', msg);
+      alert(msg);
+      return { isLoading: false };
     }
     if (nextProps.wallet.address.length > 2) {
-        return { isLoading : false };
+      return { isLoading: false };
     }
     return null;
   }
 
-  handleSubmit(event){
+  handleSubmit(event) {
     event.preventDefault();
     this.setState({
       isLoading: true
@@ -57,28 +57,28 @@ class WalletPassword extends Component {
    * @method handleChange
    * @description handle change in form input
    * */
-  handleChange(event, field){
+  handleChange(event, field) {
     let obj = {};
     obj[field] = event.target.value;
     this.setState(obj);
   }
- /**
-   * @method getValidationPassword
-   * @description Validate the minimum password length
-   * @return [String] success, warning, error
-   **/
-  getValidationPassword(){
+  /**
+    * @method getValidationPassword
+    * @description Validate the minimum password length
+    * @return [String] success, warning, error
+    **/
+  getValidationPassword() {
     const length = this.state.password.length;
     switch (true) {
       case (length >= 8):
         return 'success';
-      break;
+        break;
       case (length > 5):
         return 'warning';
-      break;
+        break;
       case (length > 0):
-          return 'error';
-      break;
+        return 'error';
+        break;
       default:
         return null;
     }
@@ -89,15 +89,15 @@ class WalletPassword extends Component {
    * @description Validates if passwords are equal
    * @return [String, Null] error
    **/
-  getValidationEqualPassword(){
-    const {password, confirm} = this.state;
+  getValidationEqualPassword() {
+    const { password, confirm } = this.state;
     switch (true) {
       case (password !== confirm && password.length > 7):
         return 'error';
-      break;
+        break;
       case (password === confirm && password.length > 7):
         return 'success';
-      break;
+        break;
       default:
         return null;
     }
@@ -105,7 +105,7 @@ class WalletPassword extends Component {
   }
 
 
-  render () {
+  render() {
     if (this.props.wallet.address.length > 2) {
       //console.log('WalletPassword/render/address', this.props.wallet.address);
       return (
@@ -114,41 +114,41 @@ class WalletPassword extends Component {
     }
 
     return (
+      <div>
         <div>
-          <div>
-            <img src="images/icon-128.png" className="rounded center-block" alt="Holon"/>
-          </div>
-          <Form>
-            <div>
-                <h2 align="center" >Create Your Wallet</h2>
-            </div>
-            <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
-              <ControlLabel>Password</ControlLabel>
-              <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
-
-              <FormControl.Feedback />
-              <HelpBlock>Minimum validation of 8 characters</HelpBlock>
-            </FormGroup>
-            <FormGroup className="margin-top-10"  validationState={this.getValidationEqualPassword()}>
-              <ControlLabel>Confirm Password</ControlLabel>
-              <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
-
-              <FormControl.Feedback />
-              <HelpBlock>Password must be the same as field confirm</HelpBlock>
-            </FormGroup>
-            <Button className="margin-top-5" disabled={!this.validateForm()} onClick={this.handleSubmit} block bsStyle="warning">Submit</Button>
-          </Form>
-          <Loader visible={this.state.isLoading} />
+          <img src="images/icon-128.png" className="rounded center-block" alt="Holon" />
         </div>
+        <Form>
+          <div>
+            <h2 align="center" >Create Your Wallet</h2>
+          </div>
+          <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
+            <ControlLabel>Password</ControlLabel>
+            <FormControl componentClass="input" type="password" value={this.state.password} onChange={event => this.handleChange(event, 'password')} />
+
+            <FormControl.Feedback />
+            <HelpBlock>Minimum validation of 8 characters</HelpBlock>
+          </FormGroup>
+          <FormGroup className="margin-top-10" validationState={this.getValidationEqualPassword()}>
+            <ControlLabel>Confirm Password</ControlLabel>
+            <FormControl componentClass="input" type="password" value={this.state.confirm} onChange={event => this.handleChange(event, 'confirm')} />
+
+            <FormControl.Feedback />
+            <HelpBlock>Password must be the same as field confirm</HelpBlock>
+          </FormGroup>
+          <Button className="margin-top-5" disabled={!this.validateForm()} onClick={this.handleSubmit} block bsStyle="warning">Submit</Button>
+        </Form>
+        <Loader message="Creating your wallet ;)" visible={this.state.isLoading} />
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-    wallet: state.wallet
-  });
-  
+  wallet: state.wallet
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(WalletPassword);
 
