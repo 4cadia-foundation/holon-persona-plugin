@@ -70,7 +70,7 @@ class WelcomeBack extends Component {
                     <h3 align="center" className="title" >Welcome Back</h3>
                     <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
-                <label className="paragraph">Password</label>
+                <label className="paragraph label-welcomeback">Password</label>
                 <FormControl 
                     className="paragraph"
                     id="password" 
