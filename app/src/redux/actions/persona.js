@@ -51,6 +51,21 @@ export function getBalance() {
     });
 }
 
+export function getScore() {
+    console.log('actions/getScore');
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        }
+    }
+    return (async (dispatch) => {
+        const score = await transactor.contract.score(transactor.wallet.address);
+        console.log('actions/getScore/score', score);
+        console.log('actions/getScore/score details/ validations', parseInt(score[1]), "numberOfFields", parseInt(score[0]));
+        dispatch({ type: 'GET_SCORE', validations: parseInt(score[1]), numberOfFields: parseInt(score[0]) });        
+    });
+}
+
 //TODO: Refazer esta funcao
 export function getPersonaData() {
     if (!checkWallet()) {
