@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     numberOfFields: 0,
     readAllPersonaLogs: false,
     balance: 0,
+    validations: 0,
     isRunning: false
 }
 
@@ -47,6 +48,10 @@ export default function persona (state = INITIAL_STATE, action) {
 
     if (action.type == 'GET_BALANCE') {
         return {...state, balance: action.balance}
+    }
+
+    if (action.type == 'GET_SCORE') {
+        return {...state, validations: action.validations, numberOfFields: action.numberOfFields}
     }
 
     if (action.type == 'GET_PERSONA_DATA') {

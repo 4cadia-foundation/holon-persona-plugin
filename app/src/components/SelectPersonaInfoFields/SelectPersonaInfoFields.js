@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './SelectInfoToValidate.css';
+import './SelectPersonaInfoFields.css';
 
-class SelectInfoToValidate extends Component {
+class SelectPersonaInfoFields extends Component {
 
   constructor(props){
     super(props);
@@ -23,7 +23,7 @@ class SelectInfoToValidate extends Component {
       ));
     return (
         <section>
-            <label>Select Information to Validate</label>
+            <label>Field: </label>
             <div className="dropdown">
                <select value={this.state.value} id="categoryId">
                    {optionTemplate}
@@ -35,4 +35,4 @@ class SelectInfoToValidate extends Component {
 
 }
 
-export default SelectInfoToValidate;
+export default SelectPersonaInfoFields;
