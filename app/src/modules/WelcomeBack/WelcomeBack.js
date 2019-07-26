@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import { Button, Form, FormControl } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { Button, Form, FormControl, Grid, Row} from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import * as WalletActions from "../../redux/actions/wallet";
+
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as WalletActions from "../../redux/actions/wallet";
+
 import Loader from '../../components/Loader/Loader';
+import logo from '../../../images/logo.png';
+import './WelcomeBack.css'
 
 class WelcomeBack extends Component {
 
@@ -33,13 +37,13 @@ class WelcomeBack extends Component {
         event.preventDefault();
         this.setState({
             isProcessing: true,
-            msg: "Opening wallet",
+            msg: "Openning wallet",
         })
         this.props.openWallet(this.state.password);
     }
 
     validateForm() {
-        return this.state.password.length > 7;
+        return this.state.password.length >= 8;
     }
 
     handleChange = event => {
@@ -57,33 +61,31 @@ class WelcomeBack extends Component {
     }
 
     return (
-        <div>
-            <div>
-                <img src="images/icon-128.png" className="center-block" alt="Holon"/>
-            </div>
-            <br/>
+        <Grid className="margin-top-50">
+            <Row className="text-center">
+                <img className="logo" src={logo} alt="Logo" />
+            </Row>
             <Form>
                 <div>
                     <h3 align="center" className="title" >Welcome Back</h3>
                     <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
-                <br/>
-                <label>Password</label>
+                <label className="paragraph">Password</label>
                 <FormControl 
                     className="paragraph"
                     id="password" 
                     type="password" 
                     value={this.state.password}
-                    placeholder="Password" 
+                    placeholder="The password must have 8 characters" 
                     onChange={this.handleChange}
                 />
-                <Button disabled={!this.validateForm()} className="paragraph btn btn-block btn-primary pull-right"  type="submit" onClick={this.handleClick}>
-                    LOG IN
+                <Button disabled={!this.validateForm()} className="paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
+                    Log in
                 </Button>    
-                <p className="paragraph" align="center">Forgot your password? <Link to="/importwallet"><u>Import</u></Link>  using your phrase</p>            
+                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            
             </Form>
             <Loader visible={this.state.isProcessing} message={this.state.msg} />
-        </div>
+        </Grid>
     );
   }
 
@@ -91,8 +93,8 @@ class WelcomeBack extends Component {
 
 const mapStateToProps = state => ({
     wallet: state.wallet
-  });
-  
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
   
 export default connect(mapStateToProps, mapDispatchToProps)(WelcomeBack);

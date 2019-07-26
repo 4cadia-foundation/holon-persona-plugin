@@ -26,19 +26,19 @@ class AddInformation extends Component {
             cost: 0,
             isLoading: true,
             executed: false,
-            saveButtonCalled: false,           
+            saveButtonCalled: false,
         };
         this.props.getPersonaData();
     }
 
-    componentDidMount() {       
-        this.setState ({
+    componentDidMount() {
+        this.setState({
             isLoading: false
         });
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.persona.error.length>2) {
+        if (nextProps.persona.error.length > 2) {
             const msg = 'Erro: ' + nextProps.persona.error;
             console.error('getDerivedStateFromProps: ', msg);
             return { isLoading: false };
@@ -46,7 +46,7 @@ class AddInformation extends Component {
         // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
         // console.log('getDerivedStateFromProps prevState', prevState);
         if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
-            return { isLoading : nextProps.persona.isRunning, executed: true };
+            return { isLoading: nextProps.persona.isRunning, executed: true };
         }
         return null;
     }
@@ -57,7 +57,7 @@ class AddInformation extends Component {
         const field = this.state.subCategory
         const data = this.state.info
         const price = this.state.cost
-        this.setState({ 
+        this.setState({
             isLoading: true,
             saveButtonCalled: true,
         })
@@ -87,7 +87,7 @@ class AddInformation extends Component {
         // console.log('render state', this.state)
         if (this.state.executed) {
             return (
-                <Redirect to='/home' /> 
+                <Redirect to='/home' />
             )
         }
         return (
@@ -115,7 +115,7 @@ class AddInformation extends Component {
                         value={this.state.info}
                         placeholder="Information"
                         onChange={this.handleChange}
-                        />
+                    />
                     <br />
                     <label className="paragraph label-add">How much do you want to get for this information?</label>
                     <FormControl
@@ -131,7 +131,7 @@ class AddInformation extends Component {
                         Save
                     </Button>
                 </Form>
-                <Loader visible={this.state.isLoading} />
+                <Loader message="Adding identity info" visible={this.state.isLoading} />
             </div>
         );
     }
@@ -141,7 +141,7 @@ class AddInformation extends Component {
 const mapStateToProps = state => ({
     persona: state.persona
 });
-  
+
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddInformation);
