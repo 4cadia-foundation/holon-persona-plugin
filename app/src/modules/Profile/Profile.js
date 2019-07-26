@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PersonaActions from '../../redux/actions/persona';
 import logo from '../../../images/icon-38.png';
-import {Grid, Row, Col, Form, FormControl } from 'react-bootstrap';
+import {Grid, Row, Col,FormControl } from 'react-bootstrap';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
 import './Profile.css';
@@ -15,9 +15,11 @@ class Profile extends Component {
         super(props);
         this.state = {
             persona: this.props.persona,
-            isLoading: true
-        };        
+            isLoading: true,
+        };    
+
         this.getCampoValor = this.getCampoValor.bind(this); 
+        
     }
 
     componentDidMount(){        
@@ -66,14 +68,14 @@ class Profile extends Component {
                     </Row>
                     <Row className="text-center">
                         <Col>
-                            <div className="glyphicon glyphicon-user imgPersona"></div>
+                        <div className="glyphicon glyphicon-user imgPersona"></div>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
+                    <Col>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row> 
                         <Col bsClass="text-center">
                             <div className="text-center">
                                 <FormControl
@@ -85,11 +87,7 @@ class Profile extends Component {
                                 />
                             </div>
                         </Col>
-                    </Row>  
-                    <Row>
-                        <Col>
-                        </Col>
-                    </Row>     
+                    </Row>      
                     <Row className="text-center">
                         <Col>
                             <FormControl
@@ -100,11 +98,7 @@ class Profile extends Component {
                                 className="text-center" 
                             />
                         </Col>
-                    </Row>    
-                    <Row>
-                        <Col>
-                        </Col>
-                    </Row>   
+                    </Row>       
                         {
                             persona.personalInfo.filter((f) => f.field != 'name' && f.field != 'email').map((val, idx) =>
                             {

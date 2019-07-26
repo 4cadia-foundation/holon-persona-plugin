@@ -3,6 +3,7 @@ import * as PersonaActions from "../../redux/actions/persona";
 import './ScoreGraph.css';
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
+import GaugeChart from 'react-gauge-chart'
 
 class ScoreGraph extends Component {
 
@@ -28,12 +29,14 @@ class ScoreGraph extends Component {
   }
 
   render() {
+        const percentage = ((this.state.validations + this.state.numberOfFields)/10);
+
       return(
         <div>
-          <div className="glyphicon glyphicon-dashboard imgGraph">
-            Validations: { this.state.validations }
-            <br />
-            Fields: { this.state.numberOfFields }
+          <div className="score-validations">
+            <GaugeChart id="gauge-chart1" percent={percentage} />
+            <br /> 
+            {(percentage*100)} %
           </div>
         </div>
       )
