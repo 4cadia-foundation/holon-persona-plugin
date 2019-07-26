@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-import SelectInfoToValidate from '../../components/SelectInfoToValidate/SelectInfoToValidate';
+import SelectPersonaInfoFields from '../../components/SelectPersonaInfoFields/SelectPersonaInfoFields';
 import SelectValidador from '../../components/SelectValidador/SelectValidador';
 import '../../styles/_utils.css';
 import './ValidateInformation.css'
@@ -32,7 +32,7 @@ class ValidateInformation extends Component {
                 <Form className="margin-top-50">
                     <div className="space-between">
                         <div>
-                            <SelectInfoToValidate personalInfo={this.props.persona.personalInfo} />
+                            <SelectPersonaInfoFields personalInfo={this.props.persona.personalInfo} />
                         </div>
                         <div>
                             <SelectValidador />

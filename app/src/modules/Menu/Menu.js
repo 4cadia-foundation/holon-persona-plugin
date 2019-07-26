@@ -2,10 +2,15 @@ import React, {Component} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, Grid, Glyphicon, DropdownButton, MenuItem, Button} from 'react-bootstrap';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as PersonaActions from '../../redux/actions/persona';
+
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import './Menu.css';
 import '../../styles/_utils.css';
 import Balance from '../../components/Balance/Balance';
+import Settings from '../../../config/settings';
 
 class Menu extends Component {
   
@@ -24,6 +29,11 @@ class Menu extends Component {
     }
 
     render() {
+
+        let network = '';
+        if (Settings.network === 4) {
+            network = "rinkeby.";
+        }
 
         if (this.state.closeMenu) {
             return (
@@ -69,8 +79,10 @@ class Menu extends Component {
                             </Link>
                         </div>
                         <div className="flex-column">
-                            <Glyphicon glyph="share"/>
-                            <a href="" className="icons">Etherscan</a>
+                            <a href={"https://" + network + "etherscan.io/address/" + this.props.persona.address} target="_blank">
+                                <Glyphicon glyph="share"/>
+                                <span className="icons">Etherscan</span>
+                            </a>
                         </div>
                         <div className="flex-column">
                             <Link to="/backupphrase">
@@ -106,4 +118,10 @@ class Menu extends Component {
     </Grid>
 )}};
 
-export default Menu;
+const mapStateToProps = state => ({ 
+    persona: state.persona
+  });
+  
+  const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Menu);

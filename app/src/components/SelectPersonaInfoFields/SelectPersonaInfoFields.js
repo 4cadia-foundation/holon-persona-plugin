@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import './SelectInfoToValidate.css';
+import './SelectPersonaInfoFields.css';
 
-class SelectInfoToValidate extends Component {
+class SelectPersonaInfoFields extends Component {
 
   constructor(props){
     super(props);
@@ -35,4 +35,4 @@ class SelectInfoToValidate extends Component {
 
 }
 
-export default SelectInfoToValidate;
+export default SelectPersonaInfoFields;
