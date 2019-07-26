@@ -4,12 +4,12 @@ import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
+import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import DataCategory from '../../components/DataCategory/DataCategory';
 import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
-import * as PersonaActions from '../../redux/actions/persona';
 import './AddInformation.css';
 
 class AddInformation extends Component {
