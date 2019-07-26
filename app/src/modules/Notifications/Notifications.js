@@ -9,7 +9,7 @@ class Notifications extends Component {
             <Grid>
                 <Row>
                     <Col>
-                        <CloseIconPage destination="/home"/> 
+                        <CloseIconPage destination="/menu"/> 
                           <hr className="line"></hr>
                           <div className="title-paragraph">
                             <h1 className="title">Notifications</h1>
