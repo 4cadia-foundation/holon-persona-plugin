@@ -74,27 +74,27 @@ class Home extends Component {
               <img className="logoHome" src={logo} alt="Logo" />
             </Row>
             <Row className="text-center">
-              <p className="basicInfoHome">{ this.props.persona.address }</p>
+              <p className="paragraph basicInfoHome">{ this.props.persona.address }</p>
             </Row>
             <Row className="text-center">
-              <p className="basicInfoHome">{ this.getCampoValor('name') }</p>
+              <p className="paragraph basicInfoHome">{ this.getCampoValor('name') }</p>
             </Row>
             <Row className="text-center">
-              <p className="basicInfoHome">{ this.getCampoValor('email') }</p>
+              <p className="paragraph basicInfoHome">{ this.getCampoValor('email') }</p>
             </Row>
           </section>
 
           <section className="sectionValidation">
             <Row>
-                <h5 className="titleValidation">Validations</h5>
+                <h5 className="paragraph titleValidation">Validations</h5>
                 <hr className="horizontalLine"></hr>
               </Row>
             <Table striped className='tableValidation'>
               <tbody>
                 {persona.personalInfo.map((item, index) =>                 
                       <tr key={index}>
-                        <td className="text-center">{item.field}</td>
-                        <td className="text-center">{item.valor}</td>
+                        <td className="paragraph text-center">{item.field}</td>
+                        <td className="paragraph text-center">{item.valor}</td>
                         <td className="text-center">
                           <Label bsStyle={ item.statusValidationCode == "0" ? 'success' : 'danger'}>
                             {item.statusValidationDescription}
