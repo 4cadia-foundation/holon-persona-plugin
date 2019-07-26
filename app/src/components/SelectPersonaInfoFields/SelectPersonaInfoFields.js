@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './SelectInfoToValidate.css';
+import './SelectPersonaInfoFields.css';
 
 class SelectPersonaInfoFields extends Component {
 
