@@ -22,13 +22,15 @@
     "ethjs-util": "^0.1.6",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
+    "react-circular-progressbar": "^2.0.1",
     "react-dom": "^16.8.6",
+    "react-gauge-chart": "^0.2.1",
+    "react-icons": "^3.7.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-toastify": "^5.3.2",
     "redux": "^4.0.3",
-    "redux-thunk": "^2.3.0",
-    "web3": "^1.0.0-beta.55"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

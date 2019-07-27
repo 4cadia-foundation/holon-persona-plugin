@@ -1,0 +1,8 @@
+.btn-validate-close {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#btn-validate-save {
+    margin-top: 90px;
+}

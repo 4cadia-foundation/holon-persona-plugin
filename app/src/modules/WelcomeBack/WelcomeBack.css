@@ -1,13 +1,18 @@
-p{
-    font-size: 12px;
-}
-img {
-    margin-top: 50px;
-}
-.FormControl{
+.FormControl {
     margin-top: 40px;
 }
-.btn{
-    margin-top: 40px !important;
-    margin-bottom: 10px !important;
+
+.p-welcomeback {
+    margin-top: 10px;
+    font-size: 9pt;
+}
+
+.label-welcomeback {
+    margin-top: 20px;
+}
+
+#password {
+    margin-bottom: 50px;
+    font-size: 10pt;
+
 }

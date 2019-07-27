@@ -2,18 +2,8 @@
     margin: 0;
 }
 
-.title {
+#title-backup {
     margin-top: 20px;
-}
-
-.box-mnemonico {
-    margin-top: 30px;
-}
-
-.button-exit {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
 }
 
 .paragraph-explication {
@@ -23,10 +13,16 @@
     align-items: center;
 }
 
-.icon-alert{
-    height: 27px;
-    margin-right: 15px;
+.backup-phrase {
+    border: ridge var(--color-orange);
+    height: 120px;
+}
+
+.mnemonic-returned {
     display: flex;
-    flex-direction: column;
+    height: 80px;
+    margin: 20px;
     align-items: center;
+    justify-content: center;
+    font-size: 18px;
 }

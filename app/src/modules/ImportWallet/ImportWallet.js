@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import * as WalletActions from "../../redux/actions/wallet";
 
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
+import * as WalletActions from "../../redux/actions/wallet";
+
+import './ImportWallet'
 
 class ImportWallet extends Component {
 
@@ -126,55 +128,48 @@ class ImportWallet extends Component {
 
 
   render () {
-    
     if (this.props.wallet.address.length > 2) {
-      console.log('ImportWallet/render/address', this.props.wallet.address);
+      //console.log('ImportWallet/render/address', this.props.wallet.address);
       return (
-        <Redirect to="/createidentity" />
+        <Redirect to="/choosecreateidentityorhome" />
       );
     }
 
     return (
         <Grid>
-            <Row>
-                <Col xs={12} md={12}>
-                    <div className="text-center">
-                        <h3>Import your Wallet</h3>
-                    </div>
-                </Col>
-            </Row>
+          <Row>
+            <div className="text-center">
+              <h3 className="title">Import your Wallet</h3>
+            </div>
+          </Row>
 
           <Row>
             <Col xs={12} md={12}>
-
               <Form>
-
-                <FormGroup className="margin-top-50" validationState={this.getValidationPhrase()}>
-                    <ControlLabel>Wallet Seed</ControlLabel>
-                    <FormControl rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
+                <FormGroup validationState={this.getValidationPhrase()}>
+                    <ControlLabel className="paragraph">Wallet Seed</ControlLabel>
+                    <FormControl className="paragraph" rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
                     <FormControl.Feedback />
-                    <HelpBlock>Seed phrases are 12 words long</HelpBlock>
+                    <HelpBlock className="paragraph">Seed phrases are 12 words long</HelpBlock>
                 </FormGroup>
 
-                <FormGroup className="margin-top-30" validationState={this.getValidationPassword()}>
-                    <ControlLabel>New Password</ControlLabel>
+                <FormGroup validationState={this.getValidationPassword()}>
+                    <ControlLabel className="paragraph">New Password</ControlLabel>
                     <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
 
                     <FormControl.Feedback />
-                    <HelpBlock>Minimum validation of 8 characters</HelpBlock>
-
+                    <HelpBlock className="paragraph">Minimum validation of 8 characters</HelpBlock>
                 </FormGroup>
 
-                <FormGroup className="margin-top-30"  validationState={this.getValidationEqualPassword()}>
-                    <ControlLabel>Confirm Password</ControlLabel>
+                <FormGroup validationState={this.getValidationEqualPassword()}>
+                    <ControlLabel className="paragraph">Confirm Password</ControlLabel>
                     <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
 
                     <FormControl.Feedback />
-                    <HelpBlock>Password must be the same as field confirm</HelpBlock>
-
+                    <HelpBlock className="paragraph">Password must be the same as field confirm</HelpBlock>
                 </FormGroup>
 
-                <Button className="margin-top-50" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
+                <Button className="paragraph" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
               </Form>
 
             </Col>

@@ -1,25 +1,21 @@
-.hollonApp {
-    padding: 0;
-}
-
 #panel-notification {
-    height: 200px;
-    width: 200px;
-    margin-top: 20px;
-    margin-left: 10px;
+    width: 95%;
+    margin: 20px auto 10px;
+    padding: 20px;
 }
 
 .box-one {
-    width: 500px;
     margin-top: 30px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin: auto;
 }
 
 .box-two {
-    width: 500px;
+    margin-top: 30px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin: auto;
 }
 
 .inner-content-text {
@@ -29,30 +25,23 @@
 }
 
 .inner-content-button {
+    margin-top: 15px;
     width: 200px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.line {
-    width: 100vw;
-    height:1px; 
-    border:none; 
-    color:#000; 
-    background-color:#000; 
-    margin-top: 30px; 
-    margin-bottom: 0px
-}
-
-.icon-remove {
-    margin-left: 10px;
-    margin-top: 10px;
-}
-
-.title-paragraph {
-    width: 400px;
+.header-notification {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.p-consumername {
+    font-weight: bold;
+}
+
+.closeButtonNotifications {
+    margin: 0 0 -15px 270px;
 }

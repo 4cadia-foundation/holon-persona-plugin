@@ -12,7 +12,7 @@
 } 
 
 .links2 {
-    height: 200px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -27,7 +27,7 @@
 }
 
 .botoes {
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -37,22 +37,27 @@
     margin: 0 20px;
 }
 
+.destination-icon {
+    margin: 10px
+}
+
 .sair {
     margin-top: 35px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
+
 .icons {
     margin-left: 20px;
 }
 
-.linha {
-    width: 100vw;
-    height:2px; 
-    border:none; 
-    color:#000; 
-    background-color:#000; 
-    margin-top: 30px; 
-    margin-bottom: 0px
+#menu-glyphicon-etherscan {
+    margin-left: 20px;
+}
+
+.titleMenu {
+    display: inline-block;
+    font-size: 20pt;
+    width: 296px;
 }

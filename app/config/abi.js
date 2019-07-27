@@ -1,5 +1,5 @@
 module.exports = {
- "address": "0x22fAaDE9eC4024247716b011B12495bfc75A00eF",
+ "address": "0x6B23d131650e8BF1760ca09b4d2404eB68B194BC",
  "abi": [
 	{
 		"constant": true,
@@ -133,6 +133,29 @@ module.exports = {
 		"constant": true,
 		"inputs": [
 			{
+				"name": "_personaAddress",
+				"type": "address"
+			}
+		],
+		"name": "score",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
 				"name": "_strategy",
 				"type": "uint8"
 			},
@@ -181,6 +204,25 @@ module.exports = {
 			{
 				"name": "exists",
 				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getPersonaNumberOfFields",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -313,6 +355,49 @@ module.exports = {
 		],
 		"payable": true,
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_fieldIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "getPersonaDataByFieldIndex",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint8"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -457,7 +542,7 @@ module.exports = {
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "persona",
 				"type": "address"
 			},
@@ -472,7 +557,7 @@ module.exports = {
 				"type": "uint256"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "field",
 				"type": "string"
 			}
@@ -484,12 +569,12 @@ module.exports = {
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "requester",
 				"type": "address"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "validator",
 				"type": "address"
 			},
@@ -499,7 +584,7 @@ module.exports = {
 				"type": "uint8"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "field",
 				"type": "string"
 			},
@@ -521,17 +606,17 @@ module.exports = {
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "persona",
 				"type": "address"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "validator",
 				"type": "address"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "field",
 				"type": "string"
 			},
@@ -548,12 +633,12 @@ module.exports = {
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "requester",
 				"type": "address"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "persona",
 				"type": "address"
 			},
@@ -575,12 +660,12 @@ module.exports = {
 				"type": "bool"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "persona",
 				"type": "address"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "consumer",
 				"type": "address"
 			},
@@ -590,7 +675,7 @@ module.exports = {
 				"type": "uint8"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"name": "field",
 				"type": "string"
 			},

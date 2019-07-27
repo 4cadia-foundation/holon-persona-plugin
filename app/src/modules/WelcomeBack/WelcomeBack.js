@@ -1,70 +1,100 @@
 import React, { Component } from 'react'
-import { Button, Form, FormControl } from 'react-bootstrap';
-//import { connect } from 'react-redux';
-//import TableValidations from '../../components/TableValidations/TableValidations';
+import { Button, Form, FormControl, Grid, Row} from 'react-bootstrap';
+import { Link, Redirect } from 'react-router-dom';
 
-import styles from './WelcomeBack.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as WalletActions from "../../redux/actions/wallet";
 
- class WelcomeBack extends Component {
+import Loader from '../../components/Loader/Loader';
+import logo from '../../../images/logo.png';
+import './WelcomeBack.css'
+
+class WelcomeBack extends Component {
 
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.state = {
-          password: ""
+          password: "",
+          openedWallet: false,
+          isProcessing: false,
+          msg: "Loading",
         };        
     }
 
-    handleClick(){
-        console.log("Funcionou");
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.wallet.address.length > 2) {
+            //console.log('WelcomeBack/componentWillReceiveProps/address', nextProps.wallet);
+            this.setState({
+                isProcessing: false,
+                openedWallet: true
+            })
+        }
     }
+
+    handleClick(event){
+        event.preventDefault();
+        this.setState({
+            isProcessing: true,
+            msg: "Openning wallet",
+        })
+        this.props.openWallet(this.state.password);
+    }
+
     validateForm() {
-        return this.state.password.length > 7;
+        return this.state.password.length >= 8;
     }
+
     handleChange = event => {
         this.setState({
           [event.target.id]: event.target.value
         });
     }
 
+
   render () {
+    if (this.state.openedWallet) {
+        return (
+          <Redirect to="/choosecreateidentityorhome" />
+        );
+    }
 
     return (
-        <div>
-            <div>
-                <img src="images/icon-128.png" className="center-block" alt="Holon"/>
-            </div>
-            <br/>
+        <Grid className="margin-top-50">
+            <Row className="text-center">
+                <img className="logo" src={logo} alt="Logo" />
+            </Row>
             <Form>
                 <div>
-                    <h2 align="center" >Welcome Back</h2>
-                    <p align="center"> The decentralized web awaits </p>
+                    <h3 align="center" className="title" >Welcome Back</h3>
+                    <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
-                <br/>
-                <label>Password</label>
+                <label className="paragraph label-welcomeback">Password</label>
                 <FormControl 
+                    className="paragraph"
                     id="password" 
                     type="password" 
                     value={this.state.password}
-                    placeholder="Password" 
+                    placeholder="The password must have 8 characters" 
                     onChange={this.handleChange}
                 />
-                <Button disabled={!this.validateForm()} className="btn btn-block btn-primary pull-right"  type="submit" onClick={this.handleClick}>
-                    LOG IN
+                <Button disabled={!this.validateForm()} className="paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
+                    Log in
                 </Button>    
-                <p align="center">Forgot your password? <a href="#"><u>Import</u></a>  using your phrase</p>            
+                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            
             </Form>
-
-        </div>
+            <Loader visible={this.state.isProcessing} message={this.state.msg} />
+        </Grid>
     );
   }
 
 }
-export default WelcomeBack;
 
-// export default connect(state => (
-//     { 
-//       activeDocument: state.validations.activeDocument, 
-//       publicKey: state.validations.publicKey 
-//     }
-//   ))(Home);
+const mapStateToProps = state => ({
+    wallet: state.wallet
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeBack);
