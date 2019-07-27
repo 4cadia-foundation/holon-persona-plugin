@@ -107,7 +107,7 @@ class Menu extends Component {
                         <Balance />
                     </div>
                     <div className="botoes">
-                      <Button bsStyle="warning">Deposit</Button>
+                      <Link to="/qrcodeaddress"><Button bsStyle="warning">Deposit</Button></Link>
                       <Button bsStyle="warning">Send</Button>
                     </div>
                     <Link to="/welcomeback">
