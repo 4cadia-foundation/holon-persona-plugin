@@ -24,7 +24,7 @@
 .container-load {
   width: 357px; 
   height: 600px;
-  background-color: #ffffffe6;
+  background-color: rgba(255, 255, 250, 0.9);
   position: absolute;
   padding-top: 100px;
   top: 0px;
