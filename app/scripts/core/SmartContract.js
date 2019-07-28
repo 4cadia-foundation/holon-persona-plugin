@@ -41,16 +41,18 @@ export  default class SmartContract {
   }
 
   /**
-   * function for get provider
+   * function to get provider
    * @return {Object} provider instance
    * */
   get provider() {
     return this._provider;
   }
 
-
-
-   get contract () {    
+  /**
+   * function to get Smart Contract instance
+   * @return {Object} contract instance
+   * */
+  get contract () {    
       return this._contract;
    }
 }
