@@ -117,7 +117,7 @@ export function getPersonaData() {
                 //console.log('tx', tx);
                 if (tx) {
                     const decodedTx = abiDecoder.decodeMethod(tx.data);
-                    console.log('actions/tx.decode', decodedTx);
+                    //console.log('actions/tx.decode', decodedTx);
                     //console.log(decodedTx.params[2].value, decodedTx.params[3].value);
                     for (let i=0; i<validatedHashes.length; i++) {
                         let validatedReceipt = await filterContract.getTransactionReceipt(validatedHashes[i]);
@@ -156,7 +156,7 @@ export function getPersonaData() {
                     }
                     dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
                     dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
-                    console.log('actions/getPersonaData/ending');
+                    return;
                 }
             }
         });                
@@ -174,6 +174,37 @@ export function getPersonaAddress() {
     }
 }
 
+export function askToValidate(validator, field, uriConfirmationData, dispatch) {
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        }
+    }
+    console.log('persona/askToValidate/starting')
+    return async (dispatch) => {
+        dispatch({ type: 'RUNNING_METHOD' })
+        try {
+            let fieldData = await transactor.contract.getPersonaData(transactor.wallet.address, field)
+            let tx = await transactor.contract.askToValidate(validator, fieldData[2], field, fieldData[1], uriConfirmationData) 
+            console.log('persona/askToValidate/tx', tx)
+            if (tx) {
+                let receipt = await tx.wait(1)
+                console.log('persona/askToValidate/receipt', receipt)
+                if (receipt.status === 1) {
+                    dispatch({ type: 'ASKED_TO_VALIDATE' })
+                } else {
+                    dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed'});
+                }
+            } else {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request'});
+            }
+        } catch (exception) {
+            return (dispatch) => {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details'});
+            }
+        }
+    }
+}
 
 export function addData(infoCode, field, data, price, dispatch) {
     if (!checkWallet()) {
@@ -205,6 +236,7 @@ export function addData(infoCode, field, data, price, dispatch) {
             });
     }
 }
+
 export function addPersona(name, email) {
     return async dispatch => {
         dispatch({ type: 'RUNNING_METHOD' });
