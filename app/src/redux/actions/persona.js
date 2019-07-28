@@ -100,7 +100,26 @@ export function getPersonaData() {
         //get logs of validations
         filterContract.setEventToFilter('0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547');
         let validatedHashes = await filterContract.getLogsTransactionHash();
-        
+
+        let validationRequests = []
+        filterContract.setEventToFilter('0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6');
+        let askValidationHashes = await filterContract.getLogsTransactionHash();
+        //console.log('actions/getPersonaData/filterContract.VALIDATEME_EVENT', filterContract.VALIDATEME_EVENT)
+        //console.log('actions/getPersonaData/askValidationHashes', askValidationHashes)
+        for (let i=0; i<askValidationHashes.length; i++) {
+            let receiptValidationHash = await filterContract.getTransactionReceipt(askValidationHashes[i]);
+            //console.log('actions/getPersonaData/receiptValidationHash', receiptValidationHash);
+            let receiptValidationHashDecoded = abiDecoder.decodeLogs(receiptValidationHash.logs)
+            receiptValidationHashDecoded = receiptValidationHashDecoded[0];
+            //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded)
+            if (receiptValidationHashDecoded.events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                validationRequests.push(receiptValidationHashDecoded.events)
+                //console.log('actions/getPersonaData/validationRequests/events',receiptValidationHashDecoded.events);
+                //console.log('actions/getPersonaData/validationRequests/parse', receiptValidationHashDecoded.events[3].value, ethers.utils.id("email"), ethers.utils.id("Birth data"), ethers.utils.id("name"));
+            }
+        }
+        console.log('actions/getPersonaData/validationRequests', validationRequests);
+
         let numberOfTxHashesProcessed = 0;
         
         txHashes.map(async (hash) => {
@@ -129,15 +148,26 @@ export function getPersonaData() {
                             (validatedDecodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase())
                         ) {
                             statusValidacao = validatedDecodedReceipt[0].events[3].value;
-                        } 
+                        //Check for pending validations
+                        } else {
+                            for (let i=0; i<validationRequests.length; i++) {
+                                //console.log('actions/getPersonaData/validationRequests/check', decodedTx.params[2].value, validationRequests[i][3].value, ethers.utils.id(decodedTx.params[2].value));
+                                if (ethers.utils.id(decodedTx.params[2].value) == validationRequests[i][3].value) {
+                                    statusValidacao = "3";
+                                    break;
+                                }
+                            }
+                        }
                     }                        
-                    //Validated = 0, NotValidated = 1, CannotEvaluate = 2
+                    //Validated = 0, NotValidated = 1, CannotEvaluate = 2, pending = 3
                     if (statusValidacao == "0") {
                         descValidacao = "Validated";
                     } else if (statusValidacao == "1") {
                         descValidacao = "NotValidated";
                     } else if (statusValidacao == "2") {
                         descValidacao = "CannotEvaluate";
+                    } else if (statusValidacao == "3") {
+                        descValidacao = "Pending";
                     }
                     item = {
                         field: decodedTx.params[2].value,
@@ -185,6 +215,7 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
         dispatch({ type: 'RUNNING_METHOD' })
         try {
             let fieldData = await transactor.contract.getPersonaData(transactor.wallet.address, field)
+            console.log('persona/askToValidate/askToValidate/parameters', validator, fieldData[2], field, fieldData[1], uriConfirmationData)
             let tx = await transactor.contract.askToValidate(validator, fieldData[2], field, fieldData[1], uriConfirmationData) 
             console.log('persona/askToValidate/tx', tx)
             if (tx) {
