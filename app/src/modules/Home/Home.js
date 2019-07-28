@@ -61,6 +61,17 @@ class Home extends Component {
     return filtro[0].valor;
   }
 
+  getValidationDescClass(statusValidation) {
+    console.log('getValidationDescClass', statusValidation)
+    if (statusValidation == "0") {
+      return "success"
+    } else if (statusValidation == "3") {
+      return "warning"
+    } else {
+      return "danger"
+    }
+  }
+
   render () {
     const {persona} = this.state;
     
@@ -88,23 +99,25 @@ class Home extends Component {
             <Row>
                 <h5 className="paragraph titleValidation">Validations</h5>
                 <hr className="horizontalLine"></hr>
-              </Row>
-            <Table striped className='tableValidation'>
-              <tbody>
-                {persona.personalInfo.map((item, index) =>                 
-                      <tr key={index}>
-                        <td className="paragraph text-center">{item.field}</td>
-                        <td className="paragraph text-center">{item.valor}</td>
-                        <td className="text-center">
-                          <Label bsStyle={ item.statusValidationCode == "0" ? 'success' : 'danger'}>
-                            {item.statusValidationDescription}
-                          </Label>
-                        </td>
-                      </tr>
-                  )
-                }          
-              </tbody>
-            </Table>
+            </Row>
+            <Row>
+              <Table striped className='tableValidation'>
+                <tbody>
+                  {persona.personalInfo.map((item, index) =>                 
+                        <tr key={index}>
+                          <td className="paragraph text-center">{item.field}</td>
+                          <td className="paragraph text-center">{item.valor}</td>
+                          <td className="text-center">
+                            <Label bsStyle={ this.getValidationDescClass(item.statusValidationCode) }>
+                              {item.statusValidationDescription}
+                            </Label>
+                          </td>
+                        </tr>
+                    )
+                  }          
+                </tbody>
+              </Table>
+            </Row>
           </section>
         </Grid>
         <Loader visible={this.state.isLoading} message={this.state.msg} />
