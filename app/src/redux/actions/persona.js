@@ -100,21 +100,59 @@ export function getScore() {
     });
 }
 
-export function getPersonaInfo() {
+export function getPersonaData() {
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         }
     }
-    console.log('actions/getPersonaInfo');
     return (async (dispatch) => {
+        console.log('actions/getPersonaInfo');
         dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
         let novoPersonalInfo = [];
+        
+        let tmpNumberOfFields = await transactor._contract.getPersonaNumberOfFields(transactor.wallet.address);
+        let numberOfFields = parseInt(tmpNumberOfFields);
+        console.log('actions/getPersonaData/numberOfFields', numberOfFields);
+        if (numberOfFields == 0) {
+            dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+            return
+        }
+        
+        for (let j=0; j<numberOfFields; j++) {
+            let field = await transactor._contract.getPersonaDataByFieldIndex(transactor.wallet.address, j);            
+            let statusValidacao = "1";
+            let descValidacao = "";
+            if (field[3]>0) {
+                statusValidacao = "0";
+            }
+            //Validated = 0, NotValidated = 1, CannotEvaluate = 2, pending = 3
+            if (statusValidacao == "0") {
+                descValidacao = "Validated";
+            } else if (statusValidacao == "1") {
+                descValidacao = "NotValidated";
+            } else if (statusValidacao == "2") {
+                descValidacao = "CannotEvaluate";
+            } else if (statusValidacao == "3") {
+                descValidacao = "Pending";
+            }
+            let item = {
+                field: field[0],
+                valor: field[1],
+                statusValidationDescription: descValidacao,
+                statusValidationCode: statusValidacao,
+            };
+            novoPersonalInfo.push(item);
+        }
+        dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+        dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+        return;
     });
 }
 
 //TODO: Refazer esta funcao
-export function getPersonaData() {
+export function getPersonaData2() {
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
