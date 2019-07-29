@@ -47,7 +47,7 @@ export function getBalance() {
     return (async (dispatch) => {
         const balance = await transactor.wallet.getBalance();
         console.log('actions/getBalance', balance);
-        dispatch({ type: 'GET_BALANCE', balance: ethers.utils.formatEther(balance) });        
+        dispatch({ type: 'GET_BALANCE', balance: ethers.utils.formatEther(balance) });
     });
 }
 
@@ -137,7 +137,7 @@ export function getPersonaData() {
                         numberOfTxHashesProcessed++;
                         if (numberOfTxHashesProcessed == txHashes.length) {
                             if (novoPersonalInfo.length === 0) {
-                                console.log("nao tem registro no SC ainda");                                
+                                console.log("nao tem registro no SC ainda");
                             }
                             dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
                         }
@@ -245,4 +245,19 @@ export function addPersona(name, email) {
         dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
         //console.log("actions/persona/addpersona/ data added...");
     }
+}
+
+export async function GetPersonaNotifications() {
+    debugger;
+    let filterNewData = {
+        address: address,
+        fromBlock: 4754554,
+        toBlock: 'latest',
+        topics: ['0xe0ed6b8656a7970b4fd31dfdfe4776138c549385ec553edc68a19c88cd07530']
+    };
+    let filterContract = new FilterEventsBlockchain(filterNewData);
+    let hashes = await filterContract.getLogsTransactionHash();
+
+
+    console.log("hashes: ", hashes);
 }
