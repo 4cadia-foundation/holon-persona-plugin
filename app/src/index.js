@@ -1,24 +1,29 @@
 import ReactDOM from 'react-dom';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 import React, {Component} from 'react';
-// import { Provider } from 'ethers/providers';
+import { Route, HashRouter , Switch } from "react-router-dom";
 
-import Home from './modules/Home/Home';
 
-// import store from './redux/store';
 
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/main.css';
 
+
+import routers from "./router";
+
+import {ToastContainer} from "react-toastify";
+
+
 class App extends Component {
 
-  render() {
+  render () {
     return (
-      <div className="App">
-        {/*<Provider store={store}>*/}
-          <Home />
-
-        {/*</Provider>*/}
-
+      <div className="hollonApp">
+       <Switch>
+         {routers.map((item, index)=> (<Route key={index} path={item.path} component={item.component} exact={item.exact} />))}
+       </Switch>
       </div>
     )
   }
@@ -26,6 +31,14 @@ class App extends Component {
 
 
 ReactDOM.render(
-    <App />,
+  <Provider store={store}>
+
+    <ToastContainer position={'top-center'} />
+
+    <HashRouter>
+      <App />
+    </HashRouter>
+
+  </Provider>,
   document.getElementById('app')
 )

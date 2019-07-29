@@ -1,7 +1,7 @@
 import Settings from '../../config/settings';
 import NETWORK from '../enums/Network';
 import {ethers} from 'ethers';
-import Config from './Config';
+import config from '../../config/abi';
 
 export  default class SmartContract {
 
@@ -22,13 +22,10 @@ export  default class SmartContract {
     this._abi = null;
     Object.freeze(this._options);
     this.provider = this._options;
+    this._address = config.address;
+    this._abi = config.abi;
+    this._contract = new ethers.Contract(this._address, this._abi, this.provider);
 
-  }
-
-  async smartContractInitialization () {
-    let {address, abi} = await Config.loadConfigJSON('./config/abi.json');
-    this._address = address;
-    this._abi = abi;
   }
 
 
@@ -44,24 +41,20 @@ export  default class SmartContract {
   }
 
   /**
-   * function for get provider
+   * function to get provider
    * @return {Object} provider instance
    * */
   get provider() {
     return this._provider;
   }
 
-
-
-  async contract () {
-    try {
-      return new ethers.Contract(this._address, this._abi, this.provider);
-    } catch (exception) {
-      console.error('[Inpage-constract] Error: ' + exception.message);
-    }
-  }
-
-
+  /**
+   * function to get Smart Contract instance
+   * @return {Object} contract instance
+   * */
+  get contract () {    
+      return this._contract;
+   }
 }
 
 

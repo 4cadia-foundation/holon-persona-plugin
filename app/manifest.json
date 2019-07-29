@@ -16,16 +16,17 @@
     "persistent": true
   },
   "permissions": [
+    "storage",
     "clipboardWrite",
     "unlimitedStorage",
     "notifications",
     "tabs",
     "activeTab",
-    "storage",
     "webRequest",
     "*://*.eth/",
     "*://*.google.com/",
     "http://localhost:8545/",
+    "http://*.caralabs.me/",
     "https://*.infura.io/"
   ],
   "browser_action": {
@@ -33,10 +34,10 @@
       "19": "images/icon-19.png",
       "38": "images/icon-38.png"
     },
-    "default_title": "boilerplate <<Persona2 || Validator>>",
+    "default_title": "Holon to Persona",
     "default_popup": "index.html"
   },
   "web_accessible_resources": [
-    "images/icon-48.png"
+    "images/icon-128.png"
   ]
 }

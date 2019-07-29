@@ -1,0 +1,29 @@
+.titulo {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* COMENTADO PQ ESTÁ INTERFERINDO NO PADDING DO PROFILE */
+/* .row {
+    padding-bottom: 10px;
+} */
+
+.btn {
+    margin-top: 0px;
+}
+
+.logoHome {
+    height: 45px;
+    width: 50px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.panel {
+    height: 150px;;
+}
+
+.imgPersona, .imgGraph{
+    font-size: 40px;
+
+}

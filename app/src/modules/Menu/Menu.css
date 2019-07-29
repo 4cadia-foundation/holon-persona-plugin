@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+}
+
+.links{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 20px;
+} 
+
+.links2 {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#saldo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.botoes {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#drop {
+    margin: 0 20px;
+}
+
+.destination-icon {
+    margin: 10px
+}
+
+.sair {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.icons {
+    margin-left: 20px;
+}
+
+#menu-glyphicon-etherscan {
+    margin-left: 20px;
+}
+
+.titleMenu {
+    display: inline-block;
+    font-size: 20pt;
+    width: 296px;
+}

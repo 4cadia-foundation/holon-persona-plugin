@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+}
+
+#title-backup {
+    margin-top: 20px;
+}
+
+.paragraph-explication {
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.backup-phrase {
+    border: ridge var(--color-orange);
+    height: 120px;
+}
+
+.mnemonic-returned {
+    display: flex;
+    height: 80px;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}

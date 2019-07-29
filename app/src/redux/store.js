@@ -1,25 +1,10 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer from './reducers';
+
+import thunk from 'redux-thunk';
+import toastMiddleware from './middleware/toastMiddleware';
+
+const store = createStore(rootReducer,  applyMiddleware(thunk, toastMiddleware));
 
 
-function reducer() {
-
-  return  [
-    {
-      id: 1,
-      type: 'RG',
-      status: 'Aproved'
-    },
-    {
-      id: 2,
-      type: 'CPF',
-      status: 'Waiting Aprovation'
-    }
-  ];
-
-}
-
-
-const store = createStore(reducer);
-
-
-export  default store;
+export default store;
