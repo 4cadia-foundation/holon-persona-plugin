@@ -18,6 +18,7 @@ export default function persona (state = INITIAL_STATE, action) {
         return {...state, personalInfo: action.novoPersonalInfo, 
             numberOfFields: action.numberOfFields, 
             address: action.address,
+            isRunning: false,
         }
     }
 
