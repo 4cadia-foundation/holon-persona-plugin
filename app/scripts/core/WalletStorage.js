@@ -83,9 +83,12 @@ class WalletStorage {
           reject("wallet was not found in storage");
           return
         }
-        //console.log('submitPassword/encrypted', encrypted);
+        //console.log('submitPassword/got wallet encrypted from store', encrypted);
+        console.log('submitPassword/got wallet encrypted from store');
         const wallet = ethers.Wallet.fromEncryptedJson(encrypted, password);
-        // console.log('submitPassword/wallet', wallet);
+        console.log('submitPassword/wallet decrypted');
+        //const wallet = new ethers.Wallet('0x7c8e467bca952a0ff148a782c0146adec24c027a3724377e7d3255035b66f56b')
+        //console.log('submitPassword/wallet', wallet);
         resolve(wallet);
       } catch (exception) {
         reject(exception.message);

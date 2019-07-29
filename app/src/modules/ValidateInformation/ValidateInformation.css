@@ -1,11 +1,8 @@
-h3 {
-    margin-top: 30px;
+.btn-validate-close {
+    display: flex;
+    flex-direction: row-reverse;
 }
 
-.line {
-    margin-top: 0px;
-}
-
-label {
-    margin-top: 20px;
+#btn-validate-save {
+    margin-top: 90px;
 }

@@ -1,0 +1,17 @@
+#title-add {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+#btn-add-save {
+    margin-top: 16px;
+}
+
+.btn-add-close {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.label-add {
+    margin-top: 13px;
+}

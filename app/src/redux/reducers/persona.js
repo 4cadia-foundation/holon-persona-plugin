@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     numberOfFields: 0,
     readAllPersonaLogs: false,
     balance: 0,
+    validations: 0,
     isRunning: false
 }
 
@@ -36,6 +37,11 @@ export default function persona (state = INITIAL_STATE, action) {
         return {...state, isRunning: true}
     }
 
+    if (action.type == 'ASKED_TO_VALIDATE') {
+        // console.log('reducer/ADD_PERSONA_DATA')
+        return {...state, isRunning: false}
+    }
+
     if (action.type == 'ADD_PERSONA_DATA') {
         // console.log('reducer/ADD_PERSONA_DATA')
         return {...state, 
@@ -47,6 +53,10 @@ export default function persona (state = INITIAL_STATE, action) {
 
     if (action.type == 'GET_BALANCE') {
         return {...state, balance: action.balance}
+    }
+
+    if (action.type == 'GET_SCORE') {
+        return {...state, validations: action.validations, numberOfFields: action.numberOfFields}
     }
 
     if (action.type == 'GET_PERSONA_DATA') {

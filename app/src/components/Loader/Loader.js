@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+
 import './Loader.css'
 
 export default class Loader extends Component {
@@ -11,8 +12,8 @@ export default class Loader extends Component {
         </div>
         <div>
           <div className="vertical-spacer-5">&nbsp;</div>
-          <h4 className="msg-loading text-center">
-            {this.props.message ? this.props.message : 'Loading information from Blockchain...'}
+          <h4 className="msg-loading text-center paragraph">
+            {this.props.message ? this.props.message : 'Loading information from Blockchain'}
           </h4>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from "../../redux/actions/persona";
+
 import Loader from '../../components/Loader/Loader';
 
 class ChooseCreateIdentityOrHome extends Component {
