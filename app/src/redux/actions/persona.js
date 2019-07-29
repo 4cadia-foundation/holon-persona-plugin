@@ -155,15 +155,7 @@ export function getPersonaData() {
         console.log('actions/getPersonaData/validationRequests', validationRequests);
 
         let numberOfTxHashesProcessed = 0;
-        if (numberOfTxHashesProcessed == txHashes.length) {
-            if (novoPersonalInfo.length === 0) {
-                console.log("nao tem registro no SC ainda");                                
-            }
-            dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
-            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
-            return;
-        }
-        
+                
         txHashes.map(async (hash) => {
             //console.log('action/getPersonaData/hash', hash);
             let receipt = await filterContract.getTransactionReceipt(hash);
@@ -219,17 +211,17 @@ export function getPersonaData() {
                     };
                     novoPersonalInfo.push(item);
                 } 
-                // console.log('actions/novoPersonalInfo', novoPersonalInfo);
-                // console.log('actions/numberOfTxHashesProcessed',numberOfTxHashesProcessed)
-                // console.log('actions/txHashes.length',txHashes.length)
-                if (numberOfTxHashesProcessed == txHashes.length) {
-                    if (novoPersonalInfo.length === 0) {
-                        console.log("nao tem registro no SC ainda");                                
-                    }
-                    dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
-                    dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
-                    return;
+            }
+            console.log('actions/novoPersonalInfo', novoPersonalInfo);
+            console.log('actions/numberOfTxHashesProcessed',numberOfTxHashesProcessed)
+            console.log('actions/txHashes.length',txHashes.length)
+            if (numberOfTxHashesProcessed == txHashes.length) {
+                if (novoPersonalInfo.length === 0) {
+                    console.log("nao tem registro no SC ainda");                                
                 }
+                dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+                dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+                return;
             }
         });                
     });
