@@ -1,0 +1,21 @@
+.rowSend {
+    display: flex;
+    flex-direction: row;
+    align-content: space-around;
+    margin: 15px 0 15px 0;
+}
+
+.boxWallet {
+    height: 90px;
+    width: 150px;
+    border: solid 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.send-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
