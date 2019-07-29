@@ -37,6 +37,40 @@ function checkWallet() {
     }
 }
 
+export function changeNetwork(networkID) {
+    console.log('actions/changeNetwork');
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        }
+    }
+    return (async (dispatch) => {
+        dispatch({ type: 'RUNNING_METHOD'});        
+        let options = new Object();
+        options.network = networkID;
+        if (networkID === 1) {
+            options.host = 'cloudflare-eth.com';
+            options.port = '8545';
+            options.provider = 'https';
+
+        } else if (networkID === 4) {
+            options.host = 'rinkeby.caralabs.me' ;
+            options.port = '18545';
+            options.provider = 'http';
+        } else if (networkID === 99) {
+            options.host = 'localhost' ;
+            options.port = '8545';
+            options.provider = 'http';
+        }
+        transactor.provider = options;
+        console.log('actions/changeNetwork/newProvider', transactor);
+        getBalance();
+        getScore();
+        getPersonaData();
+        dispatch({ type: 'METHOD_EXECUTED'});
+    });
+}
+
 export function getBalance() {
     console.log('actions/getBalance');
     if (!checkWallet()) {
@@ -87,9 +121,19 @@ export function getPersonaData() {
         }
     }
     console.log('actions/getPersonaData/starting');
+    
     return (async (dispatch) => {
         dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
         let novoPersonalInfo = [];
+        let tmpNumberOfFields = await transactor._contract.getPersonaNumberOfFields(transactor.wallet.address);
+        let numberOfFields = parseInt(tmpNumberOfFields);
+        console.log('actions/getPersonaData/numberOfFields', numberOfFields);
+        if (numberOfFields == 0) {
+            dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+            return
+        }
+
         //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
         let txHashes = await filterContract.getLogsTransactionHash()
         if (!txHashes || txHashes.length < 1) {
@@ -97,10 +141,22 @@ export function getPersonaData() {
             getPersonaAddress();
             return;
         }
-        //get logs of validations
-        filterContract.setEventToFilter('0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547');
-        let validatedHashes = await filterContract.getLogsTransactionHash();
 
+        //Filter NewData logs only from this Persona
+        let newDataHashes = [];
+        for (let i=0; i<txHashes.length; i++) {
+            let receipt = await filterContract.getTransactionReceipt(txHashes[i]);
+            //console.log('action/getPersonaData/receipt', receipt);
+            const decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
+            //console.log('action/getPersonaData/decodedReceipt', decodedReceipt[0]);
+            if (decodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                let trxPure = await filterContract.getPureTransaction(txHashes[i]);
+                console.log('action/getPersonaData/newDataLog');
+                newDataHashes.push({hash: txHashes[i], receipt: decodedReceipt[0], tx: trxPure});
+            } 
+        }        
+
+        //get logs of validation requests
         let validationRequests = []
         filterContract.setEventToFilter('0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6');
         let askValidationHashes = await filterContract.getLogsTransactionHash();
@@ -119,77 +175,78 @@ export function getPersonaData() {
             }
         }
         console.log('actions/getPersonaData/validationRequests', validationRequests);
+        
+        //get logs of validations
+        filterContract.setEventToFilter('0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547');
+        let vHashes = await filterContract.getLogsTransactionHash();
+        let validatedHashes = [];
+        for (let x=0; x<vHashes.length; x++) {
+            let vReceipt = await filterContract.getTransactionReceipt(vHashes[x]);
+            //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
+            const vDecodedReceipt = abiDecoder.decodeLogs(vReceipt.logs);
+            if (vDecodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                validatedHashes.push({field: vDecodedReceipt[0].events[2].value, status: validatedDecodedReceipt[0].events[3].value});
+            }
+        }
+        console.log('actions/getPersonaData/validationPerformed', validatedHashes);
 
         let numberOfTxHashesProcessed = 0;
-        
-        txHashes.map(async (hash) => {
-            //console.log('action/getPersonaData/hash', hash);
-            let receipt = await filterContract.getTransactionReceipt(hash);
-            const decodedLogs = abiDecoder.decodeLogs(receipt.logs);
-            //console.log('action/getPersonaData/decodedLogs', decodedLogs);
+                
+        for (let z=0; z<newDataHashes.length; z++) {
+            let hashObj = newDataHashes[z];
+            console.log('action/getPersonaData/hashObj', hashObj);
             numberOfTxHashesProcessed++;
-            if (decodedLogs[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
-                let statusValidacao = '1';
-                let descValidacao = '';
-                let tx = await filterContract.getPureTransaction(hash);
-                let item = {}
-                //console.log('tx', tx);
-                if (tx) {
-                    const decodedTx = abiDecoder.decodeMethod(tx.data);
-                    //console.log('actions/tx.decode', decodedTx);
-                    //console.log(decodedTx.params[2].value, decodedTx.params[3].value);
-                    for (let i=0; i<validatedHashes.length; i++) {
-                        let validatedReceipt = await filterContract.getTransactionReceipt(validatedHashes[i]);
-                        //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
-                        const validatedDecodedReceipt = abiDecoder.decodeLogs(validatedReceipt.logs);
-                        //console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
-                        // console.log('action/getPersonaData/statusValidacao', statusValidacao);
-                        if ((decodedTx.params[2].value == validatedDecodedReceipt[0].events[2].value) &&
-                            (validatedDecodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase())
-                        ) {
-                            statusValidacao = validatedDecodedReceipt[0].events[3].value;
-                        //Check for pending validations
-                        } else {
-                            for (let i=0; i<validationRequests.length; i++) {
-                                //console.log('actions/getPersonaData/validationRequests/check', decodedTx.params[2].value, validationRequests[i][3].value, ethers.utils.id(decodedTx.params[2].value));
-                                if (ethers.utils.id(decodedTx.params[2].value) == validationRequests[i][3].value) {
-                                    statusValidacao = "3";
-                                    break;
-                                }
-                            }
+            let statusValidacao = '1';
+            let descValidacao = '';
+            let item = {}
+            //console.log('tx', tx);
+            const decodedTx = abiDecoder.decodeMethod(hashObj.tx.data);
+            //console.log('actions/tx.decode', decodedTx);
+            //console.log(decodedTx.params[2].value, decodedTx.params[3].value);
+            for (let j=0; j<validatedHashes.length; j++) {
+                console.log('action/getPersonaData/statusValidacao/field', validatedHashes[j].field);
+                if (decodedTx.params[2].value == validatedHashes[j].field) {
+                    statusValidacao = validatedHashes[j].status;
+                //Check for pending validations
+                } else {
+                    for (let k=0; k<validationRequests.length; k++) {
+                        //console.log('actions/getPersonaData/validationRequests/check', decodedTx.params[2].value, validationRequests[i][3].value, ethers.utils.id(decodedTx.params[2].value));
+                        if (ethers.utils.id(decodedTx.params[2].value) == validationRequests[k][3].value) {
+                            statusValidacao = "3";
+                            break;
                         }
-                    }                        
-                    //Validated = 0, NotValidated = 1, CannotEvaluate = 2, pending = 3
-                    if (statusValidacao == "0") {
-                        descValidacao = "Validated";
-                    } else if (statusValidacao == "1") {
-                        descValidacao = "NotValidated";
-                    } else if (statusValidacao == "2") {
-                        descValidacao = "CannotEvaluate";
-                    } else if (statusValidacao == "3") {
-                        descValidacao = "Pending";
                     }
-                    item = {
-                        field: decodedTx.params[2].value,
-                        valor: decodedTx.params[3].value,
-                        statusValidationDescription: descValidacao,
-                        statusValidationCode: statusValidacao,
-                    };
-                    novoPersonalInfo.push(item);
-                } 
-                // console.log('actions/novoPersonalInfo', novoPersonalInfo);
-                // console.log('actions/numberOfTxHashesProcessed',numberOfTxHashesProcessed)
-                // console.log('actions/txHashes.length',txHashes.length)
-                if (numberOfTxHashesProcessed == txHashes.length) {
-                    if (novoPersonalInfo.length === 0) {
-                        console.log("nao tem registro no SC ainda");                                
-                    }
-                    dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
-                    dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
-                    return;
                 }
+            }                        
+            //Validated = 0, NotValidated = 1, CannotEvaluate = 2, pending = 3
+            if (statusValidacao == "0") {
+                descValidacao = "Validated";
+            } else if (statusValidacao == "1") {
+                descValidacao = "NotValidated";
+            } else if (statusValidacao == "2") {
+                descValidacao = "CannotEvaluate";
+            } else if (statusValidacao == "3") {
+                descValidacao = "Pending";
             }
-        });                
+            item = {
+                field: decodedTx.params[2].value,
+                valor: decodedTx.params[3].value,
+                statusValidationDescription: descValidacao,
+                statusValidationCode: statusValidacao,
+            };
+            novoPersonalInfo.push(item);
+        };                
+        // console.log('actions/novoPersonalInfo', novoPersonalInfo);
+        // console.log('actions/numberOfTxHashesProcessed',numberOfTxHashesProcessed)
+        // console.log('actions/txHashes.length',txHashes.length)
+        if (numberOfTxHashesProcessed == newDataHashes.length) {
+            if (novoPersonalInfo.length === 0) {
+                console.log("nao tem registro no SC ainda");                                
+            }
+            dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+            return;
+        }
     });
 }
 
@@ -258,6 +315,7 @@ export function addData(infoCode, field, data, price, dispatch) {
                             statusValidationDescription: 'NotValidated',
                             statusValidationCode: 1
                         };
+                        //getPersonaData()
                         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
                     })
             })

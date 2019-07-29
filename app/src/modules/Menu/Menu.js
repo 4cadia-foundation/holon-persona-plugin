@@ -11,21 +11,29 @@ import './Menu.css';
 import '../../styles/_utils.css';
 import Balance from '../../components/Balance/Balance';
 import Settings from '../../../config/settings';
+import Loader from '../../components/Loader/Loader';
 
 class Menu extends Component {
   
     constructor (props) {
       super(props)
       this.state = {
-        closeMenu: false
+        closeMenu: false,
+        
       }
       this.handleClick = this.handleClick.bind(this);
+      this.handleNetworkChange = this.handleNetworkChange.bind(this);
     }
     
     handleClick() {
       this.setState({
         closeMenu: true
       })
+    }
+
+    handleNetworkChange(event) {
+        console.log('menu/handleNetworkChange/event.target.value', event.target.value);
+        this.props.changeNetwork(event.target.value);
     }
 
     render() {
@@ -93,12 +101,13 @@ class Menu extends Component {
                         <div  className="flex-column">
                             <Glyphicon glyph="cog"/>
                                 <DropdownButton
+                                    onChange={this.handleNetworkChange}
                                     bsSize="xsmall"
                                     title="Select network"
                                     id="drop">
                                     <MenuItem eventKey="1">Main ethereum network</MenuItem>
-                                    <MenuItem eventKey="2">Rinkeby network</MenuItem>
-                                    <MenuItem eventKey="3">Localhost</MenuItem>
+                                    <MenuItem eventKey="4">Rinkeby network</MenuItem>
+                                    <MenuItem eventKey="99">Localhost</MenuItem>
                                 </DropdownButton>
                         </div>
                     </div>
@@ -113,6 +122,7 @@ class Menu extends Component {
                     <Link to="/welcomeback">
                         <a href="" className="sair">Logout</a>
                     </Link>
+                    <Loader message="Changing Blockchain network" visible={this.props.persona.isRunning} />
                 </Col>
             </Row>
     </Grid>

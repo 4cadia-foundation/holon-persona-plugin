@@ -16,8 +16,9 @@ export default function persona (state = INITIAL_STATE, action) {
     if (action.type == 'GET_PERSONA_BASIC_DATA') {    
         //console.log('reducer GET_PERSONA_BASIC_DATA state', state)
         return {...state, personalInfo: action.novoPersonalInfo, 
-            numberOfFields: action.novoPersonalInfo.length+1, 
+            numberOfFields: action.numberOfFields, 
             address: action.address,
+            isRunning: false,
         }
     }
 
@@ -35,6 +36,11 @@ export default function persona (state = INITIAL_STATE, action) {
     if (action.type == 'RUNNING_METHOD') {
         // console.log('reducer/RUNNING_METHOD')
         return {...state, isRunning: true}
+    }
+
+    if (action.type == 'METHOD_EXECUTED') {
+        // console.log('reducer/METHOD_EXECUTED')
+        return {...state, isRunning: false}
     }
 
     if (action.type == 'ASKED_TO_VALIDATE') {
