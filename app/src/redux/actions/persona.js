@@ -143,14 +143,15 @@ export function getPersonaData() {
         }
 
         //Filter NewData logs only from this Persona
+        let newDataHashes = [];
         for (let i=0; i<txHashes.length; i++) {
             let receipt = await filterContract.getTransactionReceipt(txHashes[i]);
             //console.log('action/getPersonaData/receipt', receipt);
             const decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
-            console.log('action/getPersonaData/decodedReceipt', decodedReceipt[0]);
+            //console.log('action/getPersonaData/decodedReceipt', decodedReceipt[0]);
             if (decodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
                 console.log('action/getPersonaData/newDataLog');
-            //Check for pending validations
+                newDataHashes.push({hash: txHashes[i], receipt: decodedReceipt[0]});
             } 
         }        
 
@@ -179,66 +180,61 @@ export function getPersonaData() {
 
         let numberOfTxHashesProcessed = 0;
                 
-        txHashes.map(async (hash) => {
-            //console.log('action/getPersonaData/hash', hash);
-            let receipt = await filterContract.getTransactionReceipt(hash);
-            const decodedLogs = abiDecoder.decodeLogs(receipt.logs);
-            //console.log('action/getPersonaData/decodedLogs', decodedLogs);
+        newDataHashes.map(async (hashObj) => {
+            console.log('action/getPersonaData/hashObj', hashObj);
             numberOfTxHashesProcessed++;
-            if (decodedLogs[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
-                let statusValidacao = '1';
-                let descValidacao = '';
-                let tx = await filterContract.getPureTransaction(hash);
-                let item = {}
-                //console.log('tx', tx);
-                if (tx) {
-                    const decodedTx = abiDecoder.decodeMethod(tx.data);
-                    //console.log('actions/tx.decode', decodedTx);
-                    //console.log(decodedTx.params[2].value, decodedTx.params[3].value);
-                    for (let i=0; i<validatedHashes.length; i++) {
-                        let validatedReceipt = await filterContract.getTransactionReceipt(validatedHashes[i]);
-                        //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
-                        const validatedDecodedReceipt = abiDecoder.decodeLogs(validatedReceipt.logs);
-                        //console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
-                        // console.log('action/getPersonaData/statusValidacao', statusValidacao);
-                        if ((decodedTx.params[2].value == validatedDecodedReceipt[0].events[2].value) &&
-                            (validatedDecodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase())
-                        ) {
-                            statusValidacao = validatedDecodedReceipt[0].events[3].value;
-                        //Check for pending validations
-                        } else {
-                            for (let i=0; i<validationRequests.length; i++) {
-                                //console.log('actions/getPersonaData/validationRequests/check', decodedTx.params[2].value, validationRequests[i][3].value, ethers.utils.id(decodedTx.params[2].value));
-                                if (ethers.utils.id(decodedTx.params[2].value) == validationRequests[i][3].value) {
-                                    statusValidacao = "3";
-                                    break;
-                                }
+            let statusValidacao = '1';
+            let descValidacao = '';
+            let tx = await filterContract.getPureTransaction(hashObj.hash);
+            let item = {}
+            //console.log('tx', tx);
+            if (tx) {
+                const decodedTx = abiDecoder.decodeMethod(tx.data);
+                //console.log('actions/tx.decode', decodedTx);
+                //console.log(decodedTx.params[2].value, decodedTx.params[3].value);
+                for (let i=0; i<validatedHashes.length; i++) {
+                    let validatedReceipt = await filterContract.getTransactionReceipt(validatedHashes[i]);
+                    //console.log('action/getPersonaData/validatedReceipt', validatedReceipt);
+                    const validatedDecodedReceipt = abiDecoder.decodeLogs(validatedReceipt.logs);
+                    //console.log('action/getPersonaData/validatedDecodedReceipt', validatedDecodedReceipt[0]);
+                    // console.log('action/getPersonaData/statusValidacao', statusValidacao);
+                    if ((decodedTx.params[2].value == validatedDecodedReceipt[0].events[2].value) &&
+                        (validatedDecodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase())
+                    ) {
+                        statusValidacao = validatedDecodedReceipt[0].events[3].value;
+                    //Check for pending validations
+                    } else {
+                        for (let i=0; i<validationRequests.length; i++) {
+                            //console.log('actions/getPersonaData/validationRequests/check', decodedTx.params[2].value, validationRequests[i][3].value, ethers.utils.id(decodedTx.params[2].value));
+                            if (ethers.utils.id(decodedTx.params[2].value) == validationRequests[i][3].value) {
+                                statusValidacao = "3";
+                                break;
                             }
                         }
-                    }                        
-                    //Validated = 0, NotValidated = 1, CannotEvaluate = 2, pending = 3
-                    if (statusValidacao == "0") {
-                        descValidacao = "Validated";
-                    } else if (statusValidacao == "1") {
-                        descValidacao = "NotValidated";
-                    } else if (statusValidacao == "2") {
-                        descValidacao = "CannotEvaluate";
-                    } else if (statusValidacao == "3") {
-                        descValidacao = "Pending";
                     }
-                    item = {
-                        field: decodedTx.params[2].value,
-                        valor: decodedTx.params[3].value,
-                        statusValidationDescription: descValidacao,
-                        statusValidationCode: statusValidacao,
-                    };
-                    novoPersonalInfo.push(item);
-                } 
+                }                        
+                //Validated = 0, NotValidated = 1, CannotEvaluate = 2, pending = 3
+                if (statusValidacao == "0") {
+                    descValidacao = "Validated";
+                } else if (statusValidacao == "1") {
+                    descValidacao = "NotValidated";
+                } else if (statusValidacao == "2") {
+                    descValidacao = "CannotEvaluate";
+                } else if (statusValidacao == "3") {
+                    descValidacao = "Pending";
+                }
+                item = {
+                    field: decodedTx.params[2].value,
+                    valor: decodedTx.params[3].value,
+                    statusValidationDescription: descValidacao,
+                    statusValidationCode: statusValidacao,
+                };
+                novoPersonalInfo.push(item);
             }
-            console.log('actions/novoPersonalInfo', novoPersonalInfo);
-            console.log('actions/numberOfTxHashesProcessed',numberOfTxHashesProcessed)
-            console.log('actions/txHashes.length',txHashes.length)
-            if (numberOfTxHashesProcessed == txHashes.length) {
+            // console.log('actions/novoPersonalInfo', novoPersonalInfo);
+            // console.log('actions/numberOfTxHashesProcessed',numberOfTxHashesProcessed)
+            // console.log('actions/txHashes.length',txHashes.length)
+            if (numberOfTxHashesProcessed == newDataHashes.length) {
                 if (novoPersonalInfo.length === 0) {
                     console.log("nao tem registro no SC ainda");                                
                 }
@@ -315,6 +311,7 @@ export function addData(infoCode, field, data, price, dispatch) {
                             statusValidationDescription: 'NotValidated',
                             statusValidationCode: 1
                         };
+                        getPersonaData()
                         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
                     })
             })
