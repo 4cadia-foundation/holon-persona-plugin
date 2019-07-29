@@ -63,11 +63,11 @@ export function changeNetwork(networkID) {
             options.provider = 'http';
         }
         transactor.provider = options;
+        console.log('actions/changeNetwork/newProvider', transactor);
         getBalance();
         getScore();
         getPersonaData();
         dispatch({ type: 'METHOD_EXECUTED'});
-        console.log('actions/changeNetwork/newProvider', transactor);
     });
 }
 
@@ -121,9 +121,19 @@ export function getPersonaData() {
         }
     }
     console.log('actions/getPersonaData/starting');
+    
     return (async (dispatch) => {
         dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
         let novoPersonalInfo = [];
+        let tmpNumberOfFields = await transactor._contract.getPersonaNumberOfFields(transactor.wallet.address);
+        let numberOfFields = parseInt(tmpNumberOfFields);
+        console.log('actions/getPersonaData/numberOfFields', numberOfFields);
+        if (numberOfFields == 0) {
+            dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+            return
+        }
+
         //console.log('action/persona/getPersonaData/transactor.wallet-set', transactor.wallet);
         let txHashes = await filterContract.getLogsTransactionHash()
         if (!txHashes || txHashes.length < 1) {
@@ -131,6 +141,19 @@ export function getPersonaData() {
             getPersonaAddress();
             return;
         }
+
+        //Filter NewData logs only from this Persona
+        for (let i=0; i<txHashes.length; i++) {
+            let receipt = await filterContract.getTransactionReceipt(txHashes[i]);
+            //console.log('action/getPersonaData/receipt', receipt);
+            const decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
+            console.log('action/getPersonaData/decodedReceipt', decodedReceipt[0]);
+            if (decodedReceipt[0].events[0].value.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                console.log('action/getPersonaData/newDataLog');
+            //Check for pending validations
+            } 
+        }        
+
         //get logs of validations
         filterContract.setEventToFilter('0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547');
         let validatedHashes = await filterContract.getLogsTransactionHash();

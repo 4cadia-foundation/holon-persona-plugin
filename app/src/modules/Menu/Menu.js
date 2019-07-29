@@ -18,7 +18,8 @@ class Menu extends Component {
     constructor (props) {
       super(props)
       this.state = {
-        closeMenu: false
+        closeMenu: false,
+        
       }
       this.handleClick = this.handleClick.bind(this);
       this.handleNetworkChange = this.handleNetworkChange.bind(this);
@@ -31,6 +32,7 @@ class Menu extends Component {
     }
 
     handleNetworkChange(event) {
+        console.log('menu/handleNetworkChange/event.target.value', event.target.value);
         this.props.changeNetwork(event.target.value);
     }
 
