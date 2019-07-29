@@ -37,6 +37,40 @@ function checkWallet() {
     }
 }
 
+export function changeNetwork(networkID) {
+    console.log('actions/changeNetwork');
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        }
+    }
+    return (async (dispatch) => {
+        dispatch({ type: 'RUNNING_METHOD'});        
+        let options = new Object();
+        options.network = networkID;
+        if (networkID === 1) {
+            options.host = 'cloudflare-eth.com';
+            options.port = '8545';
+            options.provider = 'https';
+
+        } else if (networkID === 4) {
+            options.host = 'rinkeby.caralabs.me' ;
+            options.port = '18545';
+            options.provider = 'http';
+        } else if (networkID === 99) {
+            options.host = 'localhost' ;
+            options.port = '8545';
+            options.provider = 'http';
+        }
+        transactor.provider = options;
+        getBalance();
+        getScore();
+        getPersonaData();
+        dispatch({ type: 'METHOD_EXECUTED'});
+        console.log('actions/changeNetwork/newProvider', transactor);
+    });
+}
+
 export function getBalance() {
     console.log('actions/getBalance');
     if (!checkWallet()) {
@@ -121,6 +155,14 @@ export function getPersonaData() {
         console.log('actions/getPersonaData/validationRequests', validationRequests);
 
         let numberOfTxHashesProcessed = 0;
+        if (numberOfTxHashesProcessed == txHashes.length) {
+            if (novoPersonalInfo.length === 0) {
+                console.log("nao tem registro no SC ainda");                                
+            }
+            dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address });
+            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+            return;
+        }
         
         txHashes.map(async (hash) => {
             //console.log('action/getPersonaData/hash', hash);
