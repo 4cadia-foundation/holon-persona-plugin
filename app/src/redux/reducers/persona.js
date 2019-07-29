@@ -44,8 +44,8 @@ export default function persona (state = INITIAL_STATE, action) {
     }
 
     if (action.type == 'ASKED_TO_VALIDATE') {
-        // console.log('reducer/ADD_PERSONA_DATA')
-        return {...state, isRunning: false}
+        console.log('reducer/ASKED_TO_VALIDATE', action)
+        return {...state, isRunning: false, personalInfo: action.personalInfo}
     }
 
     if (action.type == 'ADD_PERSONA_DATA') {

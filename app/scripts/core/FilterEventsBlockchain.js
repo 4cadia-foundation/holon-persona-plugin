@@ -1,5 +1,6 @@
 import SmartContract from './SmartContract';
 import {Transaction} from 'ethereumjs-tx';
+import abiDecoder from 'abi-decoder';
 
 export  default class FilterEventsBlockchain extends SmartContract {
 
@@ -110,6 +111,29 @@ export  default class FilterEventsBlockchain extends SmartContract {
     });
   }
 
+
+  async getValidationRequestLogs(personaAddress) {
+    //get logs of validation requests
+    let validationRequests = []
+    this.setEventToFilter('0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6');
+    let askValidationHashes = await this.getLogsTransactionHash();
+    //console.log('actions/getPersonaData/filterContract.VALIDATEME_EVENT', filterContract.VALIDATEME_EVENT)
+    //console.log('actions/getPersonaData/askValidationHashes', askValidationHashes)
+    for (let i=0; i<askValidationHashes.length; i++) {
+        let receiptValidationHash = await this.getTransactionReceipt(askValidationHashes[i]);
+        //console.log('actions/getPersonaData/receiptValidationHash', receiptValidationHash);
+        let receiptValidationHashDecoded = abiDecoder.decodeLogs(receiptValidationHash.logs)
+        receiptValidationHashDecoded = receiptValidationHashDecoded[0];
+        //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded)
+        if (receiptValidationHashDecoded.events[0].value.toUpperCase() == personaAddress.toUpperCase()) {
+            validationRequests.push(receiptValidationHashDecoded.events)
+            //console.log('actions/getPersonaData/validationRequests/events',receiptValidationHashDecoded.events);
+            //console.log('actions/getPersonaData/validationRequests/parse', receiptValidationHashDecoded.events[3].value, ethers.utils.id("email"), ethers.utils.id("Birth data"), ethers.utils.id("name"));
+        }
+    }
+    console.log('FilterEventsBlockchain/validationRequests', validationRequests);
+    return validationRequests;
+  }
 
 
   /**
