@@ -106,17 +106,10 @@ class Menu extends Component {
                                     onChange={this.handleNetworkChange}
                                     bsSize="xsmall"
                                     title="Select network"
-<<<<<<< HEAD
-                                    id="dropdown">
-                                    <MenuItem className="paragraph" eventKey="1">Main ethereum network</MenuItem>
-                                    <MenuItem className="paragraph" eventKey="2">Rinkeby network</MenuItem>
-                                    <MenuItem className="paragraph" eventKey="3">Localhost</MenuItem>
-=======
                                     id="drop">
                                     <MenuItem eventKey="1">Main ethereum network</MenuItem>
                                     <MenuItem eventKey="4">Rinkeby network</MenuItem>
                                     <MenuItem eventKey="99">Localhost</MenuItem>
->>>>>>> 94c26973ad8a6da068388084164ee1e444516772
                                 </DropdownButton>
                         </div>
                     </div>
