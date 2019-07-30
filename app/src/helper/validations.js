@@ -1,10 +1,13 @@
 import { ethers } from 'ethers';
 
 export function fieldHasSentToValidation(validationRequests, field) {
-    console.log('helper/validations/field', ethers.utils.id(field));
+    if (!validationRequests) {
+        return "1";
+    }
+    //console.log('helper/validations/field', ethers.utils.id(field));
     for (let k=0; k<validationRequests.length; k++) {
-        console.log('helper/validations/fieldHasSentToValidation', validationRequests[k]);
-        console.log('helper/validations/field/compare', ethers.utils.id(field) == validationRequests[k][3].value);
+        //console.log('helper/validations/fieldHasSentToValidation', validationRequests[k]);
+        //console.log('helper/validations/field/compare', ethers.utils.id(field) == validationRequests[k][3].value);
         if (ethers.utils.id(field) == validationRequests[k][3].value) {
             return "3";
         }

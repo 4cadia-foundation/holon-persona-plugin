@@ -28,7 +28,6 @@ class AddInformation extends Component {
             executed: false,
             saveButtonCalled: false,
         };
-        this.props.getPersonaData();
     }
 
     componentDidMount() {

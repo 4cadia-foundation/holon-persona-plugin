@@ -32,6 +32,7 @@ async function loadValidationRequest() {
     validationRequests = await filterContract.getValidationRequestLogs(transactor.wallet.address)
     validationRequestCheck = true;   
     console.log('actions/loadValidationRequest/validationRequests', validationRequests);
+    return validationRequests
 }
 
 function checkWallet() {
@@ -80,9 +81,9 @@ export function changeNetwork(networkID) {
         }
         transactor.provider = options;
         console.log('actions/changeNetwork/newProvider', transactor);
-        getBalance();
-        getScore();
-        getPersonaData();
+        // getBalance();
+        // getScore();
+        // getPersonaData();
         dispatch({ type: 'METHOD_EXECUTED'});
     });
 }
@@ -116,7 +117,7 @@ export function getScore() {
     });
 }
 
-export function getPersonaData() {
+export function getPersonaData2() {
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
@@ -177,6 +178,32 @@ export function getPersonaData() {
     });
 }
 
+export function getPersonaData() {
+    if (!checkWallet()) {
+        return (dispatch) => {
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        }
+    }
+    return (async (dispatch) => {
+        console.log('actions/getPersonaData');
+        dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
+        console.log('actions/getPersonaData/validationRequestCheck', validationRequestCheck);
+        let validatRequests = [];
+        if (!validationRequestCheck) {
+            console.log('actions/getPersonaData/validationRequest/loading');
+            validatRequests = await loadValidationRequest();
+            console.log('actions/getPersonaData/validationRequest/loaded');
+        } else {
+            validatRequests = validationRequests;
+        }
+        console.log('actions/getPersonaData/novoPersonalInfo/loading');
+        let novoPersonalInfo = await transactor.getPersonalInfo(validatRequests);
+        console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
+        dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+        return;
+    });
+}
+
 
 export function getPersonaAddress() {
     if (!checkWallet()) {
@@ -198,6 +225,7 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
     console.log('persona/askToValidate/starting')
     return async (dispatch) => {
         dispatch({ type: 'RUNNING_METHOD' })
+        dispatch({ type: 'CLEAN_ERROR' });
         try {
             let fieldData = await transactor.contract.getPersonaData(transactor.wallet.address, field)
             console.log('persona/askToValidate/askToValidate/parameters', validator, fieldData[2], field, fieldData[1], uriConfirmationData)
@@ -207,9 +235,12 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
                 let receipt = await tx.wait(1)
                 console.log('persona/askToValidate/receipt', receipt)
                 if (receipt.status === 1) {
+                    console.log('actions/askToValidate/validationRequest/loading');
                     validationRequests = await loadValidationRequest();                    
-                    newPersonalInfo = ValidationHelper.updateStatusValidationField(store.getState().persona.personalInfo, validationRequests, field);
-                    dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: newPersonalInfo})
+                    console.log('actions/askToValidate/novoPersonalInfo/loading');
+                    let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
+                    console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
+                    dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo})
                 } else {
                     dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed'});
                 }
@@ -232,13 +263,14 @@ export function addData(infoCode, field, data, price, dispatch) {
     }
     return (dispatch) => {
         dispatch({ type: 'RUNNING_METHOD' });
-        transactor.contractWithSigner;
+        dispatch({ type: 'CLEAN_ERROR' });
+        console.log('actions/persona/addData/ adding data', infoCode, 0, field, data, price)
         transactor._contract.addData(infoCode, 0, field, data, price)
             .then((tx) => {
                 // console.log('Tx', tx)
                 tx.wait()
                     .then((newData) => {
-                        // console.log('newData', newData)
+                        console.log('actions/persona/addData/ data added', newData)
                         let item = {
                             field: field,
                             valor: data,
@@ -250,7 +282,7 @@ export function addData(infoCode, field, data, price, dispatch) {
                     })
             })
             .catch((err) => {
-                console.error('addData', err)
+                console.error('Error actions/persona/addData/', err)
                 dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err });
             });
     }
@@ -260,7 +292,7 @@ export function addPersona(name, email) {
     return async dispatch => {
         dispatch({ type: 'RUNNING_METHOD' });
         dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
-        //console.log("actions/persona/addpersona/ adding data...");
+        console.log("actions/persona/addpersona/ adding fundings...");
         if (!checkWallet()) {
             return (dispatch) => {
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
@@ -282,7 +314,7 @@ export function addPersona(name, email) {
         await giveEtherTask.wait();
 
         transactor.contractWithSigner;
-
+        console.log('actions/persona/addpersona/adding persona')
         //add persona with field name by default
         let addPersonaTask = await transactor._contract.addPersona(0, 0, "name", name, 0, contractOptions);
         await addPersonaTask.wait();
@@ -296,6 +328,7 @@ export function addPersona(name, email) {
         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
 
         //add persona's email field
+        console.log('actions/persona/addpersona/adding data')
         let addDataTask = await transactor._contract.addData(0, 0, "email", email, 0, contractOptions);
         await addDataTask.wait();
 
@@ -307,6 +340,6 @@ export function addPersona(name, email) {
         };
         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
         dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
-        //console.log("actions/persona/addpersona/ data added...");
+        console.log("actions/persona/addpersona/ data added...");
     }
 }

@@ -23,7 +23,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (this.state.persona.personalInfo.length === 0) {
+    if (this.props.persona.numberOfFields < 1) {
       this.props.getPersonaData(); 
     } else {
       this.setState({
