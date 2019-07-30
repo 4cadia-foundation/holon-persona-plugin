@@ -2,6 +2,27 @@
     margin: 0;
 }
 
+.btn-menu-close {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.btn-deposit-send {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+}
+
+#title-menu {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.line-menu {
+    border: 0.5px solid black;
+    width: 100%;
+}
+
 .links{
     height: 100px;
     display: flex;
@@ -9,10 +30,11 @@
     justify-content: space-between;
     margin-top: 20px;
     margin-left: 20px;
+    color:#000; 
 } 
 
 .links2 {
-    height: 120px;
+    height: 130px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -20,32 +42,21 @@
     margin-left: 20px;
 }
 
-#saldo {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.space-icon-p {
+    margin-left: 20px;
+    color: #000;
 }
 
-.botoes {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+#glyph-color {
+    color: #000;
 }
 
-#drop {
+#dropdown {
     margin: 0 20px;
 }
 
 .destination-icon {
     margin: 10px
-}
-
-.sair {
-    margin-top: 35px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
 }
 
 .icons {

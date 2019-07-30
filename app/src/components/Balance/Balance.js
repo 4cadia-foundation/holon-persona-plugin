@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import * as PersonaActions from "../../redux/actions/persona";
-import './Balance.css';
-import {connect} from "react-redux";
+
 import { bindActionCreators } from 'redux';
+import {connect} from "react-redux";
+import * as PersonaActions from "../../redux/actions/persona";
+
+import './Balance.css';
 
 class Balance extends Component {
 
@@ -29,10 +31,10 @@ class Balance extends Component {
 
     render() {
         return(
-            <div id="display-balance">
-                <h3 className="text-center">
-                    {this.state.balance}
-                </h3>
+            <div id="container-balance">
+                <p id="p-balance" className="text-center paragraph">
+                    {this.state.balance} ETH
+                </p>
             </div>
         )
     }
