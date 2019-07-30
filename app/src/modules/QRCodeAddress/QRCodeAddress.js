@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import * as WalletActions from "../../redux/actions/wallet";
-import EthereumQRPlugin from 'ethereum-qr-code';
-import {connect} from "react-redux";
+
 import { bindActionCreators } from 'redux';
-import './QRCodeAddress.css'
-import Loader from '../../components/Loader/Loader';
+import {connect} from "react-redux";
+import * as WalletActions from "../../redux/actions/wallet";
+
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import EthereumQRPlugin from 'ethereum-qr-code';
+import Loader from '../../components/Loader/Loader';
+import './QRCodeAddress.css'
 
 class QRCodeAddress extends Component {
 
