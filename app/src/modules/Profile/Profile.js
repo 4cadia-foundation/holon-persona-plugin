@@ -23,7 +23,7 @@ class Profile extends Component {
     }
 
     componentDidMount(){        
-        if (this.props.persona.personalInfo.length > 0){
+        if (this.props.persona.numberOfFields > 0){
             this.setState({
                 isLoading:false
             })
