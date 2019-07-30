@@ -8,6 +8,7 @@ import * as PersonaActions from '../../redux/actions/persona';
 
 import Balance from '../../components/Balance/Balance';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import Loader from '../../components/Loader/Loader';
 import Settings from '../../../config/settings';
 import '../../styles/_utils.css';
 import '../Menu/Menu.css';
@@ -17,15 +18,22 @@ class Menu extends Component {
     constructor (props) {
       super(props)
       this.state = {
-        closeMenu: false
+        closeMenu: false,
+        
       }
       this.handleClick = this.handleClick.bind(this);
+      this.handleNetworkChange = this.handleNetworkChange.bind(this);
     }
     
     handleClick() {
       this.setState({
         closeMenu: true
       })
+    }
+
+    handleNetworkChange(event) {
+        console.log('menu/handleNetworkChange/event.target.value', event.target.value);
+        this.props.changeNetwork(event.target.value);
     }
 
     render() {
@@ -95,12 +103,20 @@ class Menu extends Component {
                         <div  className="flex-column">
                             <Glyphicon id="glyph-color" glyph="cog"/>
                                 <DropdownButton
+                                    onChange={this.handleNetworkChange}
                                     bsSize="xsmall"
                                     title="Select network"
+<<<<<<< HEAD
                                     id="dropdown">
                                     <MenuItem className="paragraph" eventKey="1">Main ethereum network</MenuItem>
                                     <MenuItem className="paragraph" eventKey="2">Rinkeby network</MenuItem>
                                     <MenuItem className="paragraph" eventKey="3">Localhost</MenuItem>
+=======
+                                    id="drop">
+                                    <MenuItem eventKey="1">Main ethereum network</MenuItem>
+                                    <MenuItem eventKey="4">Rinkeby network</MenuItem>
+                                    <MenuItem eventKey="99">Localhost</MenuItem>
+>>>>>>> 94c26973ad8a6da068388084164ee1e444516772
                                 </DropdownButton>
                         </div>
                     </div>
@@ -115,6 +131,7 @@ class Menu extends Component {
                     <Link to="/welcomeback">
                         <a href="" className="leave">Logout</a>
                     </Link>
+                    <Loader message="Changing Blockchain network" visible={this.props.persona.isRunning} />
                 </Col>
             </Row>
     </Grid>
