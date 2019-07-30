@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Grid } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { Redirect, Link } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as PersonaActions from "../../redux/actions/persona";
 
-// import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import './SendEth.css';
 
 class SendEth extends Component {
@@ -14,13 +14,14 @@ class SendEth extends Component {
   constructor(props) {
     super(props);
     this.hideAddress = this.hideAddress.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       balance: 0,
       address: null,
       sendValue: "",
       sendFrom: "",
       isRunning: true,
+      executed: false
     }
     this.props.getBalance();      
   }
@@ -42,7 +43,7 @@ class SendEth extends Component {
         alert(msg);
         return { balance: 0, address: null};
     }
-    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };        
+    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning, executed: true };        
   }
   
   hideAddress (adrs) {
@@ -60,7 +61,23 @@ class SendEth extends Component {
     });
   }
 
+  handleClick(event) {
+    event.preventDefault();
+    // const balance = this.state.balance;
+    // const sendValue = this.state.sendValue;
+    // const sendFrom = this.state.sendFrom;
+    this.setState({
+      isRunning: true,
+    })
+    this.props.sendEthers()
+  }
+
   render() {
+    if (!this.state.executed) {
+      return (
+          <Redirect to='/home' />
+      )
+    }
     return (
       <section className="section-send">
           <h3 className="text-center title margin-bottom-50">Send ETH</h3>
@@ -92,9 +109,10 @@ class SendEth extends Component {
             </div>
           </div>
           <div className="margin-top-50 send-btn">
-                <Link to="/sendeth"><Button className="paragraph" bsStyle="warning">Cancel</Button></Link>
-                <Button className="paragraph" bsStyle="warning">Confirm</Button>
-            </div>
+                <Link to="/menu"><Button className="paragraph" bsStyle="warning">Cancel</Button></Link>
+                <Button className="paragraph" bsStyle="warning" onClick={this.handleClick}>Confirm</Button>
+          </div>
+          <Loader message="Sending your ethers 💸" visible={this.state.isRunning} />
       </section>
     );
   }

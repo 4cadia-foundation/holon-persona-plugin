@@ -343,3 +343,25 @@ export function addPersona(name, email) {
         console.log("actions/persona/addpersona/ data added...");
     }
 }
+
+export function sendEthers(){
+    return async dispatch => {
+        console.log('sendETH')
+        dispatch({ type: 'RUNNING_METHOD' });
+        if (!checkWallet()) {
+            return (dispatch) => {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            }
+        }
+        let senderAddress = new ethers.Wallet("5662d8170fb5c43204a302251aade2d92de6a704d7d5f9cd9b8eb584a51c4284", transactor.provider);
+        let tx = {
+            gasLimit: 21000,
+            to: "0x20E48C74d16C8D09dBb3b22d05Eb87b6551322Cd",
+            value: ethers.utils.parseEther("1.0"),
+            chainId: transactor.provider.chainId
+        }
+        let transferEthers = await senderAddress.sendTransaction(tx);
+        await transferEthers.wait();
+        console.log(tx);
+    }
+  }
