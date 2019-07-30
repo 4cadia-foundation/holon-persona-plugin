@@ -90,8 +90,8 @@ class Menu extends Component {
                         </div>
                         <div className="flex-column">
                             <a href={"https://" + network + "etherscan.io/address/" + this.props.persona.address} target="_blank">
-                                <Glyphicon glyph="share"/>
-                                <span className="icons">Etherscan</span>
+                                <Glyphicon id="glyph-color" glyph="share"/>
+                                <span className="space-icon-p paragraph">Etherscan</span>
                             </a>
                         </div>
                         <div className="flex-column">
@@ -105,8 +105,9 @@ class Menu extends Component {
                                 <DropdownButton
                                     onChange={this.handleNetworkChange}
                                     bsSize="xsmall"
-                                    title="Select network"
-                                    id="drop">
+                                    title="Select Network"
+                                    id="dropdown"
+                                    className="space-icon-p paragraph">
                                     <MenuItem eventKey="1">Main ethereum network</MenuItem>
                                     <MenuItem eventKey="4">Rinkeby network</MenuItem>
                                     <MenuItem eventKey="99">Localhost</MenuItem>
@@ -117,14 +118,12 @@ class Menu extends Component {
                     <div>
                         <Balance />
                     </div>
-                    <div>
-                      <Link to="/qrcodeaddress"><Button bsStyle="warning">Deposit</Button></Link>
-                      <Button bsStyle="warning">Send</Button>
+                    <div className="btn-deposit-send">
+                        <Button className="paragraph" bsSize="small" bsStyle="warning" onClick={() => this.props.history.push('/qrcodeaddress')}>Deposit</Button>
+                        <Button className="paragraph" bsSize="small" bsStyle="warning">Send</Button>
                     </div>
-                    <Link to="/welcomeback">
-                        <a href="" className="leave">Logout</a>
-                    </Link>
-                    <Loader message="Changing Blockchain network" visible={this.props.persona.isRunning} />
+                    <Button className="paragraph" bsSize="small" onClick={() => this.props.history.push('/welcomeback')}>Logout</Button>
+                    <Loader message="Changing Blockchain Network" visible={this.props.persona.isRunning} />
                 </Col>
             </Row>
     </Grid>

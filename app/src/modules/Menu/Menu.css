@@ -7,6 +7,12 @@
     flex-direction: row-reverse;
 }
 
+.btn-deposit-send {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+}
+
 #title-menu {
     margin-top: 5px;
     margin-bottom: 0px;
@@ -51,13 +57,6 @@
 
 .destination-icon {
     margin: 10px
-}
-
-.leave {
-    margin-top: 35px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
 }
 
 .icons {
