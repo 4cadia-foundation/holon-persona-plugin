@@ -111,7 +111,7 @@ class ValidateInformation extends Component {
                         <div>
                             <SelectPersonaInfoFields emitField={this.setField} personalInfo={this.props.persona.personalInfo} />
                         </div>
-                        <div>
+                        <div className="margin-top-10">
                             <SelectValidador emitValidator={this.setValidator} />
                         </div>
                         <div>
