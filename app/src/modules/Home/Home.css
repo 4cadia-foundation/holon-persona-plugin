@@ -7,7 +7,7 @@
 
 .horizontalLine {
     border: 0.5px solid black;
-    width: 100%;
+    width: 295px;
 }
 
 .basicInfoHome {
@@ -15,7 +15,8 @@
 }
 
 .tableValidation {
-    margin-top: 20px;
+    margin-top: 2px;
+    margin-left: 0px;
 }
 
 .sectionValidation {

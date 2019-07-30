@@ -13,6 +13,7 @@ import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
 import Profile from './modules/Profile/Profile'
 import Notifications from './modules/Notifications/Notifications';
+import QRCodeAddress from './modules/QRCodeAddress/QRCodeAddress';
 
 let routers = [
   {
@@ -87,6 +88,11 @@ let routers = [
   {
     path: '/validateinformation',
     component: ValidateInformation,
+    exact: false
+  },
+  {
+    path: '/qrcodeaddress',
+    component: QRCodeAddress,
     exact: false
   },
   {

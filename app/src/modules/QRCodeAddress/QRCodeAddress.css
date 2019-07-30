@@ -21,12 +21,12 @@
   padding: 0%;
 }
 
-.container-load {
+.container-load-qrcode {
   width: 357px; 
   height: 600px;
-  background-color: rgba(255, 255, 250, 0.9);
+  background-color: #ffffffe6;
   position: absolute;
-  padding-top: 100px;
+  padding-top: 5px;
   top: 0px;
   left: 0px;
   z-index: 100;

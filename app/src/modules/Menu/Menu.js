@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Col, DropdownButton, Glyphicon, Grid, MenuItem, Row } from 'react-bootstrap';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as PersonaActions from '../../redux/actions/persona';
+
 import Balance from '../../components/Balance/Balance';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import Settings from '../../../config/settings';
 import '../../styles/_utils.css';
-import './Menu.css';
+import '../Menu/Menu.css';
 
 class Menu extends Component {
   
@@ -24,6 +29,11 @@ class Menu extends Component {
     }
 
     render() {
+
+        let network = '';
+        if (Settings.network === 4) {
+            network = "rinkeby.";
+        }
 
         if (this.state.closeMenu) {
             return (
@@ -71,8 +81,10 @@ class Menu extends Component {
                             </Link>
                         </div>
                         <div className="flex-column">
-                            <Glyphicon id="glyph-color" glyph="share"/>
-                            <a href="" className="space-icon-p paragraph">Etherscan</a>
+                            <a href={"https://" + network + "etherscan.io/address/" + this.props.persona.address} target="_blank">
+                                <Glyphicon glyph="share"/>
+                                <span className="icons">Etherscan</span>
+                            </a>
                         </div>
                         <div className="flex-column">
                             <Link to="/backupphrase">
@@ -96,10 +108,22 @@ class Menu extends Component {
                     <div>
                         <Balance />
                     </div>
-                    <Button className="paragraph" bsSize="small" onClick={() => this.props.history.push('/welcomeback')}>Logout</Button>
+                    <div>
+                      <Link to="/qrcodeaddress"><Button bsStyle="warning">Deposit</Button></Link>
+                      <Button bsStyle="warning">Send</Button>
+                    </div>
+                    <Link to="/welcomeback">
+                        <a href="" className="leave">Logout</a>
+                    </Link>
                 </Col>
             </Row>
     </Grid>
 )}};
 
-export default Menu;
+const mapStateToProps = state => ({ 
+    persona: state.persona
+});
+  
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

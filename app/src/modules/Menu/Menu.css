@@ -52,3 +52,24 @@
 .destination-icon {
     margin: 10px
 }
+
+.leave {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.icons {
+    margin-left: 20px;
+}
+
+#menu-glyphicon-etherscan {
+    margin-left: 20px;
+}
+
+.titleMenu {
+    display: inline-block;
+    font-size: 20pt;
+    width: 296px;
+}
