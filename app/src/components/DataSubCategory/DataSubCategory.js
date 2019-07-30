@@ -57,7 +57,7 @@ class DataSubCategory extends Component {
       <section>
         <label>Subcategory</label>
         <div className="dropdown">
-          <select value={this.state.value} onClick={this.setSubCategory} id="subCategoryId">
+          <select value={this.state.value} onChange={this.setSubCategory} onClick={this.setSubCategory} id="subCategoryId">
             {optionTemplate}
           </select>
         </div>
