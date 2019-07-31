@@ -30,7 +30,7 @@ async function loadValidationRequest() {
         }
     }
     validationRequests = await filterContract.getValidationRequestLogs(transactor.wallet.address)
-    validationRequestCheck = true;   
+    validationRequestCheck = true;
     console.log('actions/loadValidationRequest/validationRequests', validationRequests);
     return validationRequests
 }
@@ -84,7 +84,7 @@ export function changeNetwork(networkID) {
         // getBalance();
         // getScore();
         // getPersonaData();
-        dispatch({ type: 'METHOD_EXECUTED'});
+        dispatch({ type: 'METHOD_EXECUTED' });
     });
 }
 
@@ -132,7 +132,7 @@ export function getPersonaData2() {
             await loadValidationRequest();
             console.log('actions/getPersonaData/validationRequestCheck', validationRequestCheck);
         }
-        
+
         let tmpNumberOfFields = await transactor._contract.getPersonaNumberOfFields(transactor.wallet.address);
         let numberOfFields = parseInt(tmpNumberOfFields);
         console.log('actions/getPersonaData/numberOfFields', numberOfFields);
@@ -141,23 +141,23 @@ export function getPersonaData2() {
             dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
             return
         }
-        
-        for (let j=0; j<numberOfFields; j++) {
-            let field = await transactor._contract.getPersonaDataByFieldIndex(transactor.wallet.address, j);     
+
+        for (let j = 0; j < numberOfFields; j++) {
+            let field = await transactor._contract.getPersonaDataByFieldIndex(transactor.wallet.address, j);
             let statusValidacao = "1";
             let fieldName = field[0];
             let reputation = parseInt(field[3]);
             let numberOfValidations = parseInt(field[4]);
-            console.log('getPersonaData/field', field, fieldName, reputation, numberOfValidations);       
-            if (reputation>0) {
+            console.log('getPersonaData/field', field, fieldName, reputation, numberOfValidations);
+            if (reputation > 0) {
                 statusValidacao = "0";
-            } else if ( (reputation==0) && (numberOfValidations>0) ) {
-                for (y=0; y<numberOfValidations; y++) {
-                    let validation = await transactor._contract.getPersonaDataValidatorDetails(transactor.wallet.address, fieldName, y);     
-                    console.log('getPersonaData/validation', validation); 
+            } else if ((reputation == 0) && (numberOfValidations > 0)) {
+                for (y = 0; y < numberOfValidations; y++) {
+                    let validation = await transactor._contract.getPersonaDataValidatorDetails(transactor.wallet.address, fieldName, y);
+                    console.log('getPersonaData/validation', validation);
                     validations.push(validation);
                     if (statusValidacao != 0) {
-                        statusValidacao = parseInt(validation[7]);                    
+                        statusValidacao = parseInt(validation[7]);
                     }
                 }
             } else {
@@ -236,11 +236,11 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
                 console.log('persona/askToValidate/receipt', receipt)
                 if (receipt.status === 1) {
                     console.log('actions/askToValidate/validationRequest/loading');
-                    validationRequests = await loadValidationRequest();                    
+                    validationRequests = await loadValidationRequest();
                     console.log('actions/askToValidate/novoPersonalInfo/loading');
                     let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
                     console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
-                    dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo})
+                    dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo })
                 } else {
                     dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
                 }
@@ -344,7 +344,7 @@ export function addPersona(name, email) {
     }
 }
 
-export function sendEthers(sendTo, sendValue){
+export function sendEthers(sendTo, sendValue) {
     return async dispatch => {
         console.log('sendETH')
         dispatch({ type: 'RUNNING_METHOD' });
@@ -365,39 +365,38 @@ export function sendEthers(sendTo, sendValue){
         console.log(tx);
         dispatch({ type: 'METHOD_EXECUTED' });
     }
-  }
+}
 
-export async function GetPersonaNotifications() {
-    let filterNewData = {
-        address: address,
-        fromBlock: 4754554,
-        toBlock: 'latest',
-        topics: ['0xe0ed6b8656a7970b4fd31dfdfe4776138c549385ec553edc68a19c88cd075300']
-    };
-    let filterContract = new FilterEventsBlockchain(filterNewData);
-    let hashes = await filterContract.getLogsTransactionHash();
+export function GetPersonaNotifications() {
+    return (async (dispatch) => {
+        let filterNewData = {
+            address: address,
+            fromBlock: 4754554, //todo: filter from last filtered block(store)
+            toBlock: 'latest',
+            topics: ['0xe0ed6b8656a7970b4fd31dfdfe4776138c549385ec553edc68a19c88cd075300']
+        };
+        let filterContract = new FilterEventsBlockchain(filterNewData);
+        let hashes = await filterContract.getLogsTransactionHash();
 
-    if (!hashes || hashes.length < 1)
-        console.log('sem eventos');
+        if (!hashes || hashes.length < 1)
+            return dispatch({ type: 'GET_NOTIFICATIONS', notifications: [] });
 
-    let address = transactor.wallet.address.toUpperCase();
+        let address = transactor.wallet.address; //remover
+        let personaNotifications = [];
+        await Promise.all(hashes.map(async hash => {
+            let receipt = await filterContract.getTransactionReceipt(hash);
+            let decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
+            let letMeSeeYourDataEvent = decodedReceipt[0].events;
+            let personaAddress = letMeSeeYourDataEvent[1].value;
 
-    let personaHashes = [];
-    hashes.map(async hash => {
-        let receipt = await filterContract.getTransactionReceipt(hash);
-        let decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
-        let eventAddress = decodedReceipt[0].events[0].value.toUpperCase();
-        debugger;
-        // if (eventAddress == transactor.wallet.address.toUpperCase()) // descomentar
-        personaHashes.push({
-            hash: hash,
-            decodedReceipt: decodedReceipt
-        });
-
-
+            if (personaAddress.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                personaNotifications.push({
+                    hash: hash,
+                    requester: letMeSeeYourDataEvent[0].value,
+                    field: letMeSeeYourDataEvent[2].value
+                });
+            }
+        }));
+        dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
     });
-
-    debugger;
-    console.log(personaHashes);
-    console.log("hashes: ", hashes);
 }
