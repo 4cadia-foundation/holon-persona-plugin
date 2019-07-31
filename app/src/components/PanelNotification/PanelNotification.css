@@ -19,7 +19,7 @@
 
 .inner-content-button {
     margin-top: 15px;
-    width: 200px;
+    min-width: 150px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -27,4 +27,8 @@
 
 .p-consumername {
     font-weight: bold;
+}
+
+.p-panel {
+    font-size: 10pt;
 }

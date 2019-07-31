@@ -9,17 +9,51 @@ import * as PersonaActions from "../../redux/actions/persona";
 import './PanelNotification.css';
 
 class PanelNotification extends Component {
-    render() {
 
+    constructor(props) {
+        super(props);
+        // this.handleClick = this.handleClick.bind(this);
+        this.state = {
+          addressReceiver: this.props.addressReceiver,
+          dataCategory: this.props.dataCategory,
+          fieldName: this.props.fieldName,
+          data: this.props.data,
+          isRunning: true,
+          sentToAction: false
+        }
+    }
+
+    componentDidMount() {        
+        // if (this.props.persona.numberOfFields > 0){
+        //     this.setState({
+        //         isLoading:false
+        //     })
+        // } else {
+        //     this.props.getPersonaData();
+        // }
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.persona.error.length>2) {
+            const msg = 'Erro: ' + nextProps.persona.error;
+            console.error('PanelNotification/getDerivedStateFromProps: ', msg);
+            alert(msg);
+            return { balance: 0, address: null};
+        }    
+        return { isRunning: nextProps.persona.isRunning };        
+    }
+
+    render() {
         return(
             <Grid>
                 <Row>
                     <Panel id="panel-notification">
                         <div className="box">
                             <div className="inner-content-text">
-                                <Panel.Title className="paragraph p-consumername">Atlas Quantum</Panel.Title>
-                                <Panel.Title className="paragraph">Email</Panel.Title>
-                                <Panel.Title className="paragraph">RG</Panel.Title>
+                                <Panel.Title className="paragraph p-consumername">{this.props.addressReceiver}</Panel.Title>
+                                <Panel.Title className="paragraph p-panel">{this.props.dataCategory}</Panel.Title>
+                                <Panel.Title className="paragraph p-panel">{this.props.fieldName}</Panel.Title> 
+                                <Panel.Title className="paragraph p-panel">{this.props.data}</Panel.Title> 
                             </div>
                                     
                             <div className="inner-content-button">

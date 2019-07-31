@@ -6,7 +6,38 @@ import PanelNotification from '../../components/PanelNotification/PanelNotificat
 import './Notifications.css';
 
 class Notifications extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      consumerNotifications: [
+        {
+          addressReceiver: "Atlas Quantum",
+          dataCategory: "Professional Data",
+          fieldName: "Email",
+          data: "victoria@januspoj.com"
+        },
+        {
+          addressReceiver: "Mercado Bitcoin",
+          dataCategory: "Personal Data",
+          fieldName: "RG",
+          data: "14.048.958-3"
+        }
+      ]
+    };
+  }
+
   render() {
+
+    let notifications = this.state.consumerNotifications.map(item => (
+      <PanelNotification
+      addressReceiver={item.addressReceiver}
+      dataCategory={item.dataCategory}
+      fieldName={item.fieldName}
+      data={item.data}
+      />
+    ));
+
     return(
       <Grid>
         <Row>
@@ -18,7 +49,7 @@ class Notifications extends Component {
               <h3 className="title">Notifications</h3>
               <p className="paragraph">See which companies are willing to consume your data.</p>           
             </div>
-            <PanelNotification />
+            {notifications}
           </Col>
         </Row>
       </Grid>
