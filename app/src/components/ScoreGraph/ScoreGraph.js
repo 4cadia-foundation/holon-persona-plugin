@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import {connect} from "react-redux";
+import GaugeChart from 'react-gauge-chart'
+
+import { bindActionCreators } from 'redux';
 import * as PersonaActions from "../../redux/actions/persona";
 import './ScoreGraph.css';
-import {connect} from "react-redux";
-import { bindActionCreators } from 'redux';
-import GaugeChart from 'react-gauge-chart'
 
 class ScoreGraph extends Component {
 

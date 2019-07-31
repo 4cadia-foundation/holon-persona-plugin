@@ -1,25 +1,25 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
+import { Col, Grid,FormControl, Row } from 'react-bootstrap';
+
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
-import logo from '../../../images/icon-38.png';
-import {Grid, Row, Col,FormControl } from 'react-bootstrap';
+
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
-import './Profile.css';
 import Loader from '../../components/Loader/Loader';
+import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
+import user from '../../../images/user.png';
+import '../../styles/_utils.css';
+import './Profile.css';
 
 class Profile extends Component {
-    // Alterado
     constructor(props) {
         super(props);
         this.state = {
             persona: this.props.persona,
             isLoading: true,
         };    
-
-        this.getCampoValor = this.getCampoValor.bind(this); 
-        
+        this.getCampoValor = this.getCampoValor.bind(this);
     }
 
     componentDidMount(){        
@@ -60,21 +60,12 @@ class Profile extends Component {
         return (
             <div>
                 <Grid>
-                    <Row>
-                        <Col>
-                            <img className="logoHome" src={logo} alt="Logo" />
-                            <CloseIconPage destination="/menu"/>
-                        </Col>
-                    </Row>
-                    <Row className="text-center">
-                        <Col>
-                        <div className="glyphicon glyphicon-user imgPersona"></div>
-                        </Col>
-                    </Row>
-                    <Row>
-                    <Col>
-                        </Col>
-                    </Row>
+                    <div className="btn-profile-close">
+                        <CloseIconPage destination="/menu"/>
+                    </div>
+                    <div className="text-center margin-top-15 margin-bottom-30">
+                        <img src={user} alt="user" alt="user" />
+                    </div>
                     <Row> 
                         <Col bsClass="text-center">
                             <div className="text-center">
@@ -83,19 +74,19 @@ class Profile extends Component {
                                     type="text"
                                     value={ this.getCampoValor('name') }
                                     readOnly
-                                    className="text-center" 
+                                    className="text-center paragraph" 
                                 />
                             </div>
                         </Col>
                     </Row>      
-                    <Row className="text-center">
+                    <Row className="text-center margin-top-10">
                         <Col>
                             <FormControl
                                 id="email"
                                 type="text"
                                 value={ this.getCampoValor('email') }
                                 readOnly
-                                className="text-center" 
+                                className="text-center paragraph" 
                             />
                         </Col>
                     </Row>       
@@ -103,7 +94,7 @@ class Profile extends Component {
                             persona.personalInfo.filter((f) => f.field != 'name' && f.field != 'email').map((val, idx) =>
                             {
                                 return(
-                                    <Row className="text-center" key={'row_' + idx.toString()}>
+                                    <Row className="text-center margin-top-10" key={'row_' + idx.toString()}>
                                         <Col>
                                             <FormControl
                                                 id={idx.toString()}
@@ -111,14 +102,14 @@ class Profile extends Component {
                                                 type="text"
                                                 value={val.valor}
                                                 readOnly
-                                                className="text-center"
+                                                className="text-center paragraph"
                                             />                      
                                         </Col>
                                     </Row>
                                 )
                             })
                         }                            
-                    <Row className="text-center">
+                    <Row className="margin-top-50 text-center paragraph">
                         <Col>
                             <ScoreGraph/>
                         </Col>
@@ -128,7 +119,6 @@ class Profile extends Component {
             </div>
         );
     }
-
 }
 
 const mapStateToProps = state => ({ 

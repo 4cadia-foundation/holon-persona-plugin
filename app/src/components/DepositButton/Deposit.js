@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import EthereumQRPlugin from 'ethereum-qr-code';
 
-import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
+import {connect} from "react-redux";
 import * as WalletActions from "../../redux/actions/wallet";
 
-import Loader from '../Loader/Loader';
-import CloseIconPage from '../CloseIconPage/CloseIconPage';
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import EthereumQRPlugin from 'ethereum-qr-code';
+import Loader from '../../components/Loader/Loader';
 import './Deposit.css'
 
 class Deposit extends Component {
