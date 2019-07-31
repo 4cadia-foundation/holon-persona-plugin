@@ -19,6 +19,10 @@
     margin-bottom: 30px
 }
 
+.margin-bottom-50 {
+    margin-bottom: 50px
+}
+
 .space-between {
     display: flex;
     flex-direction: column;
