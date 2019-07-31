@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 import * as PersonaActions from "../../redux/actions/persona";
 
 import Loader from '../../components/Loader/Loader';
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+
 import './SendEth.css';
 
 class SendEth extends Component {
@@ -19,9 +21,9 @@ class SendEth extends Component {
       balance: 0,
       address: null,
       sendValue: "",
-      sendFrom: "",
+      sendTo: "",
       isRunning: true,
-      executed: false
+      sentToAction: false
     }
     this.props.getBalance();      
   }
@@ -42,13 +44,13 @@ class SendEth extends Component {
         console.error('Balance/getDerivedStateFromProps: ', msg);
         alert(msg);
         return { balance: 0, address: null};
-    }
-    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning, executed: true };        
+    }    
+    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };        
   }
   
   hideAddress (adrs) {
-    if (adrs.length > 10) {
-        return (adrs.substring(0, 10) + "...")
+    if (adrs.length > 30) {
+        return (adrs.substring(0, 30) + "...")
     }
     else {
         return adrs;
@@ -63,65 +65,64 @@ class SendEth extends Component {
 
   handleClick(event) {
     event.preventDefault();
-    // const balance = this.state.balance;
-    // const sendValue = this.state.sendValue;
-    // const sendFrom = this.state.sendFrom;
     this.setState({
       isRunning: true,
+      sentToAction: true
     })
-    this.props.sendEthers()
+    this.props.sendEthers(this.state.sendTo, this.state.sendValue)
   }
 
   render() {
-    if (!this.state.executed) {
+    if (this.state.sentToAction && !this.state.isRunning) {
       return (
-          <Redirect to='/home' />
+          <Redirect to='/menu' />
       )
     }
     return (
-      <section className="section-send">
-          <h3 className="text-center title margin-bottom-50">Send ETH</h3>
-          <div className="rowSend">
-            <p className="p-send paragraph">To</p>
-            <div className="boxWallet">
-              <p className="margin-top-10 paragraph">My Wallet</p>
-              <p className="paragraph">{this.hideAddress(this.state.address)}</p>
-              <p className="paragraph">{this.state.balance} ETH</p>
-            </div>
+      <section>
+        <div className="btn-add-close">
+            <CloseIconPage destination="/menu"/>
+        </div>
+        <h3 className="text-center title margin-bottom-30">Send ETH</h3>
+        <div className="rowSend">
+          <p className="p-send paragraph">From</p>
+          <div className="boxWallet">
+            <p className="margin-top-10 paragraph">My Wallet</p>
+            <p className="paragraph">{this.hideAddress(this.state.address)}</p>
+            <p className="paragraph">{this.state.balance} ETH</p>
           </div>
-          <div className="rowSend">
-            <p className="p-send paragraph">From</p>
-            <input className="inputSend paragraph text-center" id="sendFrom" type="text" onChange={this.handleChange} placeholder="Insert wallet"/>
+        </div>
+        <div className="rowSend">
+          <p className="p-send paragraph">To</p>
+          <input className="inputSend paragraph text-center" id="sendTo" type="text" onChange={this.handleChange} placeholder="Insert wallet"/>
+        </div>
+        <div className="rowSend">
+          <p className="p-send paragraph">Value</p>
+          <input className="inputSend paragraph text-center" id="sendValue" type="text" onChange={this.handleChange} placeholder="Value in ETH"/>
+        </div>
+        {/* <div className="rowSend">
+          <p className="p-send paragraph">Transaction <br/>Fee</p>
+          <input className="inputSend paragraph" type="text" placeholder="Value in ETH"/>
+        </div> */}
+        <div className="rowSend">
+          <p className="p-send paragraph">Total</p>
+          <div className="boxWallet">
+            <p className="margin-top-10 paragraph">Value + Gas fee</p>
+            <p className="paragraph">{this.state.sendValue} ETH</p>
           </div>
-          <div className="rowSend">
-            <p className="p-send paragraph">Value</p>
-            <input className="inputSend paragraph text-center" id="sendValue" type="text" onChange={this.handleChange} placeholder="Value in ETH"/>
-          </div>
-          {/* <div className="rowSend">
-            <p className="p-send paragraph">Transaction <br/>Fee</p>
-            <input className="inputSend paragraph" type="text" placeholder="Value in ETH"/>
-          </div> */}
-          <div className="rowSend">
-            <p className="p-send paragraph">Total</p>
-            <div className="boxWallet">
-              <p className="margin-top-10 paragraph">Value + Gas fee</p>
-              <p className="paragraph">0,05021 ETH</p>
-            </div>
-          </div>
-          <div className="margin-top-50 send-btn">
-                <Link to="/menu"><Button className="paragraph" bsStyle="warning">Cancel</Button></Link>
-                <Button className="paragraph" bsStyle="warning" onClick={this.handleClick}>Confirm</Button>
-          </div>
-          <Loader message="Sending your ethers 💸" visible={this.state.isRunning} />
+        </div>
+        <div className="margin-top-50 send-btn">
+              <Link to="/menu"><Button className="paragraph" bsStyle="warning">Cancel</Button></Link>
+              <Button className="paragraph" bsStyle="warning" onClick={this.handleClick}>Confirm</Button>
+        </div>
+        <Loader message="Sending your ethers 💸" visible={this.state.isRunning} />
       </section>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  persona: state.persona,
-  sendFrom: state.sendFrom,
-  sendValue: state.sendValue,
+const mapStateToProps = reduxState => ({
+  persona: reduxState.persona
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions,dispatch);

@@ -344,7 +344,7 @@ export function addPersona(name, email) {
     }
 }
 
-export function sendEthers(){
+export function sendEthers(sendTo, sendValue){
     return async dispatch => {
         console.log('sendETH')
         dispatch({ type: 'RUNNING_METHOD' });
@@ -353,15 +353,16 @@ export function sendEthers(){
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
             }
         }
-        let senderAddress = new ethers.Wallet("5662d8170fb5c43204a302251aade2d92de6a704d7d5f9cd9b8eb584a51c4284", transactor.provider);
+        //TODO: verificar como captar o gasPrice da rede para mandar o dobro
         let tx = {
             gasLimit: 21000,
-            to: "0x20E48C74d16C8D09dBb3b22d05Eb87b6551322Cd",
-            value: ethers.utils.parseEther("1.0"),
+            to: sendTo,
+            value: ethers.utils.parseEther(sendValue),
             chainId: transactor.provider.chainId
         }
-        let transferEthers = await senderAddress.sendTransaction(tx);
+        let transferEthers = await transactor.wallet.sendTransaction(tx);
         await transferEthers.wait();
         console.log(tx);
+        dispatch({ type: 'METHOD_EXECUTED' });
     }
   }
