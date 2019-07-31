@@ -119,8 +119,8 @@ class Menu extends Component {
                         <Balance />
                     </div>
                     <div className="btn-deposit-send">
-                        <Button className="paragraph" bsSize="small" bsStyle="warning" onClick={() => this.props.history.push('/qrcodeaddress')}>Deposit</Button>
-                        <Button className="paragraph" bsSize="small" bsStyle="warning">Send</Button>
+                        <Button className="paragraph" bsSize="small" bsStyle="warning" onClick={() => this.props.history.push('/depositbutton')}>Deposit</Button>
+                        <Button className="paragraph" bsSize="small" bsStyle="warning" onClick={() => this.props.history.push('/sendeth')}>Send</Button>
                     </div>
                     <Button className="paragraph" bsSize="small" onClick={() => this.props.history.push('/welcomeback')}>Logout</Button>
                     <Loader message="Changing Blockchain Network" visible={this.props.persona.isRunning} />

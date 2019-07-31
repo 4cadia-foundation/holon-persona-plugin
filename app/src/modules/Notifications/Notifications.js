@@ -7,7 +7,7 @@ import './Notifications.css';
 class Notifications extends Component {
     render() {
         return(
-            <Grid className="grid-notifications">
+            <Grid>
                 <Row>
                     <Col>
                         <div className="closeButtonNotifications">

@@ -7,9 +7,9 @@ import * as WalletActions from "../../redux/actions/wallet";
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import EthereumQRPlugin from 'ethereum-qr-code';
 import Loader from '../../components/Loader/Loader';
-import './QRCodeAddress.css'
+import './Deposit.css'
 
-class QRCodeAddress extends Component {
+class Deposit extends Component {
 
   constructor(props) {
     super(props);
@@ -61,4 +61,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(QRCodeAddress);
+export default connect(mapStateToProps, mapDispatchToProps)(Deposit);

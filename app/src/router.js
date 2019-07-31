@@ -13,7 +13,8 @@ import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
 import Profile from './modules/Profile/Profile'
 import Notifications from './modules/Notifications/Notifications';
-import QRCodeAddress from './modules/QRCodeAddress/QRCodeAddress';
+import DepositButton from './components/DepositButton/Deposit';
+import SendEth from './modules/SendEth/SendEth';
 
 let routers = [
   {
@@ -91,8 +92,13 @@ let routers = [
     exact: false
   },
   {
-    path: '/qrcodeaddress',
-    component: QRCodeAddress,
+    path: '/depositbutton',
+    component: DepositButton,
+    exact: false
+  },
+  {
+    path: '/sendeth',
+    component: SendEth,
     exact: false
   },
   {
