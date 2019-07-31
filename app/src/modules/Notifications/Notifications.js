@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Grid, Panel, Button } from 'react-bootstrap';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import PanelNotification from '../../components/PanelNotification/PanelNotification';
 import './Notifications.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
