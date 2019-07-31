@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Row, Col, Grid, Glyphicon, DropdownButton, MenuItem, Button} from 'react-bootstrap';
+import { Button, Col, DropdownButton, Glyphicon, Grid, MenuItem, Row } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
-import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-import './Menu.css';
-import '../../styles/_utils.css';
 import Balance from '../../components/Balance/Balance';
-import Settings from '../../../config/settings';
+import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import Loader from '../../components/Loader/Loader';
+import Settings from '../../../config/settings';
+import '../../styles/_utils.css';
+import '../Menu/Menu.css';
 
 class Menu extends Component {
   
@@ -53,76 +53,77 @@ class Menu extends Component {
         <Grid>
             <Row>
                 <Col>
-                    <nav className="d-flex flex-row justify-content-between">
-                        <p className="titleMenu">Identity</p>
-                        <CloseIconPage className="destination-icon" destination="/home"/>                    
-                    </nav>
-                    <hr className="line"/>
+                    <div className="btn-menu-close">
+                        <CloseIconPage destination="/home"/>
+                    </div>
+                    <div className="d-flex flex-row justify-content-between margin-top-10">
+                        <h3 id="title-menu" className="title">Identity</h3>
+                    </div>
+                    <hr className="line-menu"/>
                     <div className="links">
                         <div className="flex-column">
                             <Link to='/addinformation'>
-                                <Glyphicon glyph="plus"/> 
-                                <a className="icons">Add information</a>
+                                <Glyphicon id="glyph-color" glyph="plus"/> 
+                                <a className="space-icon-p paragraph">Add information</a>
                             </Link>
                         </div>
                         <div className="flex-column">
                             <Link to="/validateinformation">
-                                <Glyphicon glyph="ok"/>
-                                <a href="" className="icons">Validate information</a>
+                                <Glyphicon id="glyph-color" glyph="ok"/>
+                                <a href="" className="space-icon-p paragraph">Validate information</a>
                             </Link>
                         </div>
                         <div className="flex-column">
                             <Link to="/notifications">
-                                <Glyphicon glyph="download-alt"/>
-                                <a href="" className="icons">Notifications</a>
+                                <Glyphicon id="glyph-color" glyph="download-alt"/>
+                                <a href="" className="space-icon-p paragraph">Notifications</a>
                             </Link>
                         </div>
                     </div>
-                    <hr className="line" />
+                    <hr className="line-menu" />
                     <div className="links2">
                         <div className="flex-column">
                             <Link to="/profile">
-                                <Glyphicon glyph="user"/> 
-                                <a href="" className="icons">Profile</a>
+                                <Glyphicon id="glyph-color" glyph="user"/> 
+                                <a href="" className="space-icon-p paragraph">Profile</a>
                             </Link>
                         </div>
                         <div className="flex-column">
                             <a href={"https://" + network + "etherscan.io/address/" + this.props.persona.address} target="_blank">
-                                <Glyphicon glyph="share"/>
-                                <span className="icons">Etherscan</span>
+                                <Glyphicon id="glyph-color" glyph="share"/>
+                                <span className="space-icon-p paragraph">Etherscan</span>
                             </a>
                         </div>
                         <div className="flex-column">
                             <Link to="/backupphrase">
-                                <Glyphicon glyph="lock"/>
-                                <a href="" className="icons">Secret Backup Phrase</a>
+                                <Glyphicon id="glyph-color" glyph="lock"/>
+                                <a href="" className="space-icon-p paragraph">Secret Backup Phrase</a>
                             </Link>
                         </div>
                         <div  className="flex-column">
-                            <Glyphicon glyph="cog"/>
+                            <Glyphicon id="glyph-color" glyph="cog"/>
                                 <DropdownButton
                                     onChange={this.handleNetworkChange}
                                     bsSize="xsmall"
-                                    title="Select network"
-                                    id="drop">
+                                    title="Select Network"
+                                    id="dropdown"
+                                    className="space-icon-p paragraph">
                                     <MenuItem eventKey="1">Main ethereum network</MenuItem>
                                     <MenuItem eventKey="4">Rinkeby network</MenuItem>
                                     <MenuItem eventKey="99">Localhost</MenuItem>
                                 </DropdownButton>
                         </div>
                     </div>
-                    <hr className="line"></hr>
+                    <hr className="line-menu"></hr>
                     <div>
                         <Balance />
                     </div>
-                    <div className="botoes">
-                      <Link to="/qrcodeaddress"><Button bsStyle="warning">Deposit</Button></Link>
-                      <Button bsStyle="warning">Send</Button>
+                    <div className="btn-deposit-send">
+                        <Button className="paragraph" bsSize="small" bsStyle="warning" onClick={() => this.props.history.push('/qrcodeaddress')}>Deposit</Button>
+                        <Button className="paragraph" bsSize="small" bsStyle="warning">Send</Button>
                     </div>
-                    <Link to="/welcomeback">
-                        <a href="" className="sair">Logout</a>
-                    </Link>
-                    <Loader message="Changing Blockchain network" visible={this.props.persona.isRunning} />
+                    <Button className="paragraph" bsSize="small" onClick={() => this.props.history.push('/welcomeback')}>Logout</Button>
+                    <Loader message="Changing Blockchain Network" visible={this.props.persona.isRunning} />
                 </Col>
             </Row>
     </Grid>
@@ -130,8 +131,8 @@ class Menu extends Component {
 
 const mapStateToProps = state => ({ 
     persona: state.persona
-  });
+});
   
-  const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

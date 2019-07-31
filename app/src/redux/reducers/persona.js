@@ -19,6 +19,7 @@ export default function persona (state = INITIAL_STATE, action) {
             numberOfFields: action.numberOfFields, 
             address: action.address,
             isRunning: false,
+            readAllPersonaLogs: true,
         }
     }
 
@@ -44,8 +45,8 @@ export default function persona (state = INITIAL_STATE, action) {
     }
 
     if (action.type == 'ASKED_TO_VALIDATE') {
-        // console.log('reducer/ADD_PERSONA_DATA')
-        return {...state, isRunning: false}
+        console.log('reducer/ASKED_TO_VALIDATE', action)
+        return {...state, isRunning: false, personalInfo: action.personalInfo}
     }
 
     if (action.type == 'ADD_PERSONA_DATA') {
@@ -74,7 +75,12 @@ export default function persona (state = INITIAL_STATE, action) {
     }
     
     if (action.type == 'ERROR_PERSONA_DATA') {
-        return { ...state, error: action.error };
+        return { ...state, error: action.error, isRunning: false };
+    }
+
+    if (action.type == 'CLEAN_ERROR') {
+        // console.log('reducer/WILL_READ_ALL_PERSONA_LOGS')
+        return {...state, error: ""}
     }
     
     return state;

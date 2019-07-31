@@ -43,8 +43,8 @@ class ValidateInformation extends Component {
             console.error('validateInformation/getDerivedStateFromProps: ', msg);
             return { isLoading: false };
         }
-        // console.log('validateInformation/getDerivedStateFromProps nextProps', nextProps.persona);
-        // console.log('validateInformation/getDerivedStateFromProps prevState', prevState);
+        console.log('validateInformation/getDerivedStateFromProps nextProps', nextProps.persona);
+        console.log('validateInformation/getDerivedStateFromProps prevState', prevState);
         if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
             return { isLoading: nextProps.persona.isRunning, executed: true };
         }
@@ -111,7 +111,7 @@ class ValidateInformation extends Component {
                         <div>
                             <SelectPersonaInfoFields emitField={this.setField} personalInfo={this.props.persona.personalInfo} />
                         </div>
-                        <div>
+                        <div className="margin-top-10">
                             <SelectValidador emitValidator={this.setValidator} />
                         </div>
                         <div>
