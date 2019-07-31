@@ -9,6 +9,7 @@ export function restoreVault(password, seed) {
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
           address: wallet.address,
+          mnemonic: wallet.mnemonic,
           wallet: wallet       
         });
       })
@@ -50,7 +51,8 @@ export function openWallet(password) {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
         address: wallet.address,
-        wallet: wallet
+        wallet: wallet,
+        mnemonic: wallet.mnemonic,
       });
     })
     .catch(exception => {
@@ -69,7 +71,8 @@ export function createNewWallet(password){
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
         address: wallet.address,
-        wallet: wallet       
+        wallet: wallet,
+        mnemonic: wallet.mnemonic,       
       });
     })
     .catch((exception) => {
