@@ -389,17 +389,32 @@ export function GetPersonaNotifications() {
             let personaAddress = letMeSeeYourDataEvent[1].value;
 
             if (personaAddress.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                let requesterAddress = letMeSeeYourDataEvent[0].value;
+                let personaField = letMeSeeYourDataEvent[2].value;
+                let requesterData = await transactor.contract.getPersonaData(requesterAddress, "name");
                 personaNotifications.push({
                     hash: hash,
-                    requester: letMeSeeYourDataEvent[0].value,
-                    field: letMeSeeYourDataEvent[2].value
+                    requesterName: requesterData[1],
+                    requesterAddress: requesterAddress,
+                    field: personaField,
                 });
             }
         }));
         dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
     });
 }
-
+// export function GetDataCategory(categoryNumber) {
+//     switch (categoryNumber) {
+//         case 0:
+//             return "PlainText";
+//         case 1:
+//             return "IPFSHash";
+//         case 2:
+//             return "URI";
+//         default:
+//             return "Unknow category";
+//     }
+// }
 export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
     return async dispatch => {
         console.log('deliverDecryptedData/starting')
@@ -426,16 +441,16 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
                     // dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo})
                     dispatch({ type: 'METHOD_EXECUTED' });
                 } else {
-                    dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed'});
+                    dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
                 }
             } else {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request'});
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request' });
             }
         } catch (exception) {
             console.error('deliverDecryptedData', exception);
             return (dispatch) => {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details'});
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
             }
-        }        
+        }
     }
 }

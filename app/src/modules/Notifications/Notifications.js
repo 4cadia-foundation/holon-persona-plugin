@@ -34,7 +34,8 @@ class Notifications extends Component {
 
     for (let index = 0; index < this.state.notifications.length; index++) {
       notificationGrid.push(<NotificationPanel
-        addressReceiver={this.state.notifications[index].requester}
+        addressReceiver={this.state.notifications[index].requesterAddress}
+        nameReceiver={this.state.notifications[index].requesterName}
         fieldName={this.state.notifications[index].field} />);
     }
     return notificationGrid ? notificationGrid : 'No notifications available';

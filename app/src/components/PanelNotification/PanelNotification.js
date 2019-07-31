@@ -14,6 +14,7 @@ class PanelNotification extends Component {
         super(props);
         // this.handleClick = this.handleClick.bind(this);
         this.state = {
+            nameReceiver: this.props.nameReceiver,
             addressReceiver: this.props.addressReceiver,
             fieldName: this.props.fieldName,
             isRunning: true,
@@ -48,6 +49,7 @@ class PanelNotification extends Component {
                     <Panel id="panel-notification">
                         <div className="box">
                             <div className="inner-content-text">
+                                <Panel.Title className="paragraph p-consumername">{this.props.nameReceiver}</Panel.Title>
                                 <Panel.Title className="paragraph p-consumername">{this.props.addressReceiver}</Panel.Title>
                                 <Panel.Title className="paragraph p-panel">{this.props.fieldName}</Panel.Title>
                             </div>
