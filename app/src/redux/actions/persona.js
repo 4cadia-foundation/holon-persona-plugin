@@ -399,7 +399,6 @@ export function GetPersonaNotifications() {
         dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
     });
 }
-}
 
 export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
     return async dispatch => {
