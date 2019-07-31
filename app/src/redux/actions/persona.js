@@ -365,4 +365,44 @@ export function sendEthers(sendTo, sendValue){
         console.log(tx);
         dispatch({ type: 'METHOD_EXECUTED' });
     }
-  }
+}
+
+export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
+    return async dispatch => {
+        console.log('deliverDecryptedData/starting')
+        if (!checkWallet()) {
+            return (dispatch) => {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            }
+        }
+        dispatch({ type: 'CLEAN_ERROR' });
+        dispatch({ type: 'RUNNING_METHOD' });
+        try {
+            console.log('persona/deliverDecryptedData/parameters', decision, receiver, dataCategory, fieldName, data);
+            let tx = await transactor.contract.deliverDecryptedData(decision, receiver, dataCategory, fieldName, data);
+            console.log('persona/deliverDecryptedData/tx', tx)
+            if (tx) {
+                let receipt = await tx.wait(1)
+                console.log('persona/deliverDecryptedData/receipt', receipt)
+                if (receipt.status === 1) {
+                    // console.log('actions/deliverDecryptedData/loading');
+                    // validationRequests = await loadValidationRequest();                    
+                    // console.log('actions/deliverDecryptedData/loading');
+                    // let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
+                    // console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
+                    // dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo})
+                    dispatch({ type: 'METHOD_EXECUTED' });
+                } else {
+                    dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed'});
+                }
+            } else {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request'});
+            }
+        } catch (exception) {
+            console.error('deliverDecryptedData', exception);
+            return (dispatch) => {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details'});
+            }
+        }        
+    }
+}
