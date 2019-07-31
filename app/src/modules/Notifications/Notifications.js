@@ -17,11 +17,8 @@ class Notifications extends Component {
     await this.props.GetPersonaNotifications();
   }
   static getDerivedStateFromProps(nextProps, prevState) {
-    debugger;
-    console.log('notifications received', nextProps.persona.notifications);
     return { notifications: nextProps.persona.notifications };
   }
-
   GetNotificationGrid() {
     let notificationGrid = [];
 

@@ -381,7 +381,6 @@ export function GetPersonaNotifications() {
         if (!hashes || hashes.length < 1)
             return dispatch({ type: 'GET_NOTIFICATIONS', notifications: [] });
 
-        let address = transactor.wallet.address; //remover
         let personaNotifications = [];
         await Promise.all(hashes.map(async hash => {
             let receipt = await filterContract.getTransactionReceipt(hash);
