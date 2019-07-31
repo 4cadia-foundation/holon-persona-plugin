@@ -14,16 +14,14 @@ class PanelNotification extends Component {
         super(props);
         // this.handleClick = this.handleClick.bind(this);
         this.state = {
-          addressReceiver: this.props.addressReceiver,
-          dataCategory: this.props.dataCategory,
-          fieldName: this.props.fieldName,
-          data: this.props.data,
-          isRunning: true,
-          sentToAction: false
+            addressReceiver: this.props.addressReceiver,
+            fieldName: this.props.fieldName,
+            isRunning: true,
+            sentToAction: false
         }
     }
 
-    componentDidMount() {        
+    componentDidMount() {
         // if (this.props.persona.numberOfFields > 0){
         //     this.setState({
         //         isLoading:false
@@ -34,33 +32,31 @@ class PanelNotification extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.persona.error.length>2) {
+        if (nextProps.persona.error.length > 2) {
             const msg = 'Erro: ' + nextProps.persona.error;
             console.error('PanelNotification/getDerivedStateFromProps: ', msg);
             alert(msg);
-            return { balance: 0, address: null};
-        }    
-        return { isRunning: nextProps.persona.isRunning };        
+            return { balance: 0, address: null };
+        }
+        return { isRunning: nextProps.persona.isRunning };
     }
 
     render() {
-        return(
+        return (
             <Grid>
                 <Row>
                     <Panel id="panel-notification">
                         <div className="box">
                             <div className="inner-content-text">
                                 <Panel.Title className="paragraph p-consumername">{this.props.addressReceiver}</Panel.Title>
-                                <Panel.Title className="paragraph p-panel">{this.props.dataCategory}</Panel.Title>
-                                <Panel.Title className="paragraph p-panel">{this.props.fieldName}</Panel.Title> 
-                                <Panel.Title className="paragraph p-panel">{this.props.data}</Panel.Title> 
+                                <Panel.Title className="paragraph p-panel">{this.props.fieldName}</Panel.Title>
                             </div>
-                                    
+
                             <div className="inner-content-button">
                                 <Button className="paragraph" bsStyle="warning" bsSize="small">Allow</Button>
                                 <Button className="paragraph" bsStyle="warning" bsSize="small">Decline</Button>
                             </div>
-                        </div>                             
+                        </div>
                     </Panel>
                 </Row>
             </Grid>
@@ -70,8 +66,8 @@ class PanelNotification extends Component {
 
 const mapStateToProps = reduxState => ({
     persona: reduxState.persona
-  });
-  
-  const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions,dispatch);
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(PanelNotification);
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PanelNotification);

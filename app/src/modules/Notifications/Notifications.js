@@ -6,16 +6,22 @@ import './Notifications.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as PersonaActions from "../../redux/actions/persona";
+import NotificationPanel from "../../components/PanelNotification/PanelNotification";
+import Loader from '../../components/Loader/Loader';
 
 class Notifications extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      notifications: []
+      notifications: [],
+      isLoading: true
     };
   }
   async componentDidMount() {
     await this.props.GetPersonaNotifications();
+    this.setState({
+      isLoading: false
+    });
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     return { notifications: nextProps.persona.notifications };
@@ -27,19 +33,9 @@ class Notifications extends Component {
       return notificationGrid;
 
     for (let index = 0; index < this.state.notifications.length; index++) {
-      notificationGrid.push(
-        <Panel id="panel-notification">
-          <div>
-            <div className="inner-content-text">
-              <Panel.Title className="paragraph p-consumername">{this.state.notifications[index].requester}</Panel.Title>
-              <Panel.Title className="paragraph">{this.state.notifications[index].field}</Panel.Title>
-            </div>
-            <div className="inner-content-button">
-              <Button className="paragraph" bsStyle="warning" bsSize="small">Allow</Button>
-              <Button className="paragraph" bsStyle="warning" bsSize="small">Decline</Button>
-            </div>
-          </div>
-        </Panel>);
+      notificationGrid.push(<NotificationPanel
+        addressReceiver={this.state.notifications[index].requester}
+        fieldName={this.state.notifications[index].field} />);
     }
     return notificationGrid ? notificationGrid : 'No notifications available';
   }
@@ -55,6 +51,7 @@ class Notifications extends Component {
               <h3 className="title">Notifications</h3>
               <p className="paragraph">See which companies are willing to consume your data.</p>
             </div>
+            <Loader message="Loading notifications..." visible={this.state.isLoading} />
             {this.GetNotificationGrid()}
           </Col>
         </Row>
