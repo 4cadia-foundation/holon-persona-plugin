@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Grid, Panel, Button } from 'react-bootstrap';
+import { Row, Grid, Panel, Button, Modal } from 'react-bootstrap';
 import { Redirect, Link } from 'react-router-dom';
 
 import { connect } from "react-redux";
@@ -12,15 +12,17 @@ class PanelNotification extends Component {
 
     constructor(props) {
         super(props);
-        // this.handleClick = this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.openModal = this.openModal.bind(this);
         this.state = {
           addressReceiver: this.props.addressReceiver,
           dataCategory: this.props.dataCategory,
           fieldName: this.props.fieldName,
           data: this.props.data,
           isRunning: true,
-          sentToAction: false
-        }
+          sentToAction: false,
+          modal: false
+        };
     }
 
     componentDidMount() {        
@@ -43,6 +45,17 @@ class PanelNotification extends Component {
         return { isRunning: nextProps.persona.isRunning };        
     }
 
+    openModal() {
+        this.setState({
+            // modal: true
+        })
+    }
+
+    handleClick(event) {
+        event.preventDefault();
+        // this.openModal();
+    }
+
     render() {
         return(
             <Grid>
@@ -57,8 +70,8 @@ class PanelNotification extends Component {
                             </div>
                                     
                             <div className="inner-content-button">
-                                <Button className="paragraph" bsStyle="warning" bsSize="small">Allow</Button>
-                                <Button className="paragraph" bsStyle="warning" bsSize="small">Decline</Button>
+                                <Button className="paragraph" bsStyle="warning" bsSize="small" onClick={this.handleClick}>Allow</Button>
+                                <Button className="paragraph" bsStyle="warning" bsSize="small" onClick={this.handleClick}>Decline</Button>
                             </div>
                         </div>                             
                     </Panel>
