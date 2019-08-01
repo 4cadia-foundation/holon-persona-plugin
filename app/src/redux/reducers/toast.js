@@ -2,15 +2,15 @@ export default function toast (state = [], action) {
     switch(action.type) {
         case 'TOASTY_SUCCESS':
             return {
-                ...state, 
+                ...state, type: ToastTypes.SUCCESS
             }
             break;
         case 'TOASTY_ERROR':
+            return {
+                ...state, type: ToastTypes.ERROR
+            }
             break;
 
     }
+    return state;
 }
-
-toast: buildToast('Wallet import with successful', {type: ToastTypes.SUCCESS})
-import { buildToast, ToastTypes} from '../../helper/toast';
-toast: buildToast(exception.message, {type: ToastTypes.ERROR})

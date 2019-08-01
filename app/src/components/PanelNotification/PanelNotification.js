@@ -63,6 +63,11 @@ class PanelNotification extends Component {
 
     declineClick(event) {
         event.preventDefault();
+        this.setState({
+            isRunning: true,
+            sentToAction: true
+        })
+        this.props.deliverDecryptedData(false, this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
     }
 
     render() {
@@ -72,8 +77,7 @@ class PanelNotification extends Component {
                     <Panel id="panel-notification">
                         <div className="box">
                             <div className="inner-content-text">
-                                <Panel.Title className="paragraph p-consumername">{this.props.nameReceiver}</Panel.Title>
-                                <Panel.Title className="paragraph p-panel">{this.props.addressReceiver}</Panel.Title>
+                                <Panel.Title className="paragraph p-consumername text-center">{this.props.nameReceiver}</Panel.Title>
                                 <Panel.Title className="paragraph p-panel">{this.props.fieldName}</Panel.Title>
                             </div>
 
