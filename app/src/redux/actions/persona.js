@@ -421,42 +421,6 @@ export function GetPersonaNotifications() {
 //     }
 // }
 
-export function allowNotification(receiver, dataCategory, fieldName, data) {
-    return dispatch => {
-        return deliverDecryptedData(true, receiver, dataCategory, fieldName, data).then(
-            (success) => {
-                dispatch({
-                type: 'TOASTY_SUCCESS', 
-                toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
-            })
-            } 
-        )
-        .catch(
-            (exception) => {
-                dispatch({
-                type: 'TOASTY_ERROR', 
-                toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
-                })
-            }
-        )
-    }
-}
-
-export function declineNotification(receiver, dataCategory, fieldName, data) {
-    return dispatch => {
-        return deliverDecryptedData(false, receiver, dataCategory, fieldName, data).then(
-            (success) => {
-                dispatch({type: 'TOASTY_SUCCESS', message: 'Done! We will let the consumer know about your decision'})
-            } 
-        )
-        .catch(
-            (exception) => {
-                dispatch({type: 'TOASTY_ERROR', message: 'Operation not executed. Try again later.'})
-            }
-        )
-    }
-}
-
 export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
     return async dispatch => {
         console.log('deliverDecryptedData/starting')
@@ -494,5 +458,49 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
             }
         }
+    }
+}
+
+export function allowNotification(receiver, dataCategory, fieldName, data) {
+    return dispatch => {
+        return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
+        .then(
+            (success) => {
+                dispatch({
+                    type: 'TOASTY_SUCCESS', 
+                    toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
+                })
+            } 
+        )
+        .catch(
+            (exception) => {
+                dispatch({
+                    type: 'TOASTY_ERROR', 
+                    toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
+                })
+            }
+        )
+    }
+}
+
+export function declineNotification(receiver, dataCategory, fieldName, data) {
+    return dispatch => {
+        return this.deliverDecryptedData(false, receiver, dataCategory, fieldName, data)
+        .then(
+            (success) => {
+                dispatch({
+                type: 'TOASTY_SUCCESS',
+                toast: buildToast('Done! We will let the consumer know about your decision', {type: ToastTypes.SUCCESS})
+                })
+            } 
+        )
+        .catch(
+            (exception) => {
+                dispatch({
+                type: 'TOASTY_ERROR', 
+                toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
+                })
+            }
+        )
     }
 }

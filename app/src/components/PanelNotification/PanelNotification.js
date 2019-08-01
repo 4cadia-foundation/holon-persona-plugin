@@ -14,7 +14,6 @@ class PanelNotification extends Component {
         super(props);
         this.allowClick = this.allowClick.bind(this);
         this.declineClick = this.declineClick.bind(this);
-        this.openModal = this.openModal.bind(this);
         this.state = {
             nameReceiver: this.props.nameReceiver,
             addressReceiver: this.props.addressReceiver,
