@@ -1,5 +1,5 @@
 module.exports = {
- "address": "0x03D88e1246992AA40d45677F9942bc67251BDe64",
+ "address": "0xc75A42795AF9E3D3516E95e50B21024b4c50B37C",
  "abi": [
 	{
 		"constant": true,
@@ -488,6 +488,25 @@ module.exports = {
 		],
 		"payable": true,
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "holonValidatorsList",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
