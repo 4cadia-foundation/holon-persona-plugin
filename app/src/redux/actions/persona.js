@@ -6,6 +6,7 @@ import { address, abi } from '../../../config/abi';
 import * as ValidationHelper from '../../helper/validations';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
+import { buildToast, ToastTypes} from '../../helper/toast';
 
 // const wallet = new WalletStorage();
 
@@ -30,7 +31,7 @@ async function loadValidationRequest() {
         }
     }
     validationRequests = await filterContract.getValidationRequestLogs(transactor.wallet.address)
-    validationRequestCheck = true;   
+    validationRequestCheck = true;
     console.log('actions/loadValidationRequest/validationRequests', validationRequests);
     return validationRequests
 }
@@ -62,7 +63,7 @@ export function changeNetwork(networkID) {
         }
     }
     return (async (dispatch) => {
-        dispatch({ type: 'RUNNING_METHOD'});        
+        dispatch({ type: 'RUNNING_METHOD' });
         let options = new Object();
         options.network = networkID;
         if (networkID === 1) {
@@ -71,11 +72,11 @@ export function changeNetwork(networkID) {
             options.provider = 'https';
 
         } else if (networkID === 4) {
-            options.host = 'rinkeby.caralabs.me' ;
+            options.host = 'rinkeby.caralabs.me';
             options.port = '18545';
             options.provider = 'http';
         } else if (networkID === 99) {
-            options.host = 'localhost' ;
+            options.host = 'localhost';
             options.port = '8545';
             options.provider = 'http';
         }
@@ -84,7 +85,7 @@ export function changeNetwork(networkID) {
         // getBalance();
         // getScore();
         // getPersonaData();
-        dispatch({ type: 'METHOD_EXECUTED'});
+        dispatch({ type: 'METHOD_EXECUTED' });
     });
 }
 
@@ -98,7 +99,7 @@ export function getBalance() {
     return (async (dispatch) => {
         const balance = await transactor.wallet.getBalance();
         console.log('actions/getBalance', balance);
-        dispatch({ type: 'GET_BALANCE', balance: ethers.utils.formatEther(balance) });        
+        dispatch({ type: 'GET_BALANCE', balance: ethers.utils.formatEther(balance) });
     });
 }
 
@@ -113,7 +114,7 @@ export function getScore() {
         const score = await transactor.contract.score(transactor.wallet.address);
         console.log('actions/getScore/score', score);
         console.log('actions/getScore/score details/ validations', parseInt(score[1]), "numberOfFields", parseInt(score[0]));
-        dispatch({ type: 'GET_SCORE', validations: parseInt(score[1]), numberOfFields: parseInt(score[0]) });        
+        dispatch({ type: 'GET_SCORE', validations: parseInt(score[1]), numberOfFields: parseInt(score[0]) });
     });
 }
 
@@ -132,7 +133,7 @@ export function getPersonaData2() {
             await loadValidationRequest();
             console.log('actions/getPersonaData/validationRequestCheck', validationRequestCheck);
         }
-        
+
         let tmpNumberOfFields = await transactor._contract.getPersonaNumberOfFields(transactor.wallet.address);
         let numberOfFields = parseInt(tmpNumberOfFields);
         console.log('actions/getPersonaData/numberOfFields', numberOfFields);
@@ -141,23 +142,23 @@ export function getPersonaData2() {
             dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
             return
         }
-        
-        for (let j=0; j<numberOfFields; j++) {
-            let field = await transactor._contract.getPersonaDataByFieldIndex(transactor.wallet.address, j);     
+
+        for (let j = 0; j < numberOfFields; j++) {
+            let field = await transactor._contract.getPersonaDataByFieldIndex(transactor.wallet.address, j);
             let statusValidacao = "1";
             let fieldName = field[0];
             let reputation = parseInt(field[3]);
             let numberOfValidations = parseInt(field[4]);
-            console.log('getPersonaData/field', field, fieldName, reputation, numberOfValidations);       
-            if (reputation>0) {
+            console.log('getPersonaData/field', field, fieldName, reputation, numberOfValidations);
+            if (reputation > 0) {
                 statusValidacao = "0";
-            } else if ( (reputation==0) && (numberOfValidations>0) ) {
-                for (y=0; y<numberOfValidations; y++) {
-                    let validation = await transactor._contract.getPersonaDataValidatorDetails(transactor.wallet.address, fieldName, y);     
-                    console.log('getPersonaData/validation', validation); 
+            } else if ((reputation == 0) && (numberOfValidations > 0)) {
+                for (y = 0; y < numberOfValidations; y++) {
+                    let validation = await transactor._contract.getPersonaDataValidatorDetails(transactor.wallet.address, fieldName, y);
+                    console.log('getPersonaData/validation', validation);
                     validations.push(validation);
                     if (statusValidacao != 0) {
-                        statusValidacao = parseInt(validation[7]);                    
+                        statusValidacao = parseInt(validation[7]);
                     }
                 }
             } else {
@@ -229,27 +230,27 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
         try {
             let fieldData = await transactor.contract.getPersonaData(transactor.wallet.address, field)
             console.log('persona/askToValidate/askToValidate/parameters', validator, fieldData[2], field, fieldData[1], uriConfirmationData)
-            let tx = await transactor.contract.askToValidate(validator, fieldData[2], field, fieldData[1], uriConfirmationData) 
+            let tx = await transactor.contract.askToValidate(validator, fieldData[2], field, fieldData[1], uriConfirmationData)
             console.log('persona/askToValidate/tx', tx)
             if (tx) {
                 let receipt = await tx.wait(1)
                 console.log('persona/askToValidate/receipt', receipt)
                 if (receipt.status === 1) {
                     console.log('actions/askToValidate/validationRequest/loading');
-                    validationRequests = await loadValidationRequest();                    
+                    validationRequests = await loadValidationRequest();
                     console.log('actions/askToValidate/novoPersonalInfo/loading');
                     let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
                     console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
-                    dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo})
+                    dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo })
                 } else {
-                    dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed'});
+                    dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
                 }
             } else {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request'});
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request' });
             }
         } catch (exception) {
             return (dispatch) => {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details'});
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
             }
         }
     }
@@ -344,7 +345,7 @@ export function addPersona(name, email) {
     }
 }
 
-export function sendEthers(sendTo, sendValue){
+export function sendEthers(sendTo, sendValue) {
     return async dispatch => {
         console.log('sendETH')
         dispatch({ type: 'RUNNING_METHOD' });
@@ -365,4 +366,141 @@ export function sendEthers(sendTo, sendValue){
         console.log(tx);
         dispatch({ type: 'METHOD_EXECUTED' });
     }
-  }
+}
+
+export function GetPersonaNotifications() {
+    return (async (dispatch) => {
+        let filterNewData = {
+            address: address,
+            fromBlock: 4754554, //todo: filter from last filtered block(store)
+            toBlock: 'latest',
+            topics: ['0xe0ed6b8656a7970b4fd31dfdfe4776138c549385ec553edc68a19c88cd075300']
+        };
+        let filterContract = new FilterEventsBlockchain(filterNewData);
+        let hashes = await filterContract.getLogsTransactionHash();
+
+        if (!hashes || hashes.length < 1)
+            return dispatch({ type: 'GET_NOTIFICATIONS', notifications: [] });
+
+        let personaNotifications = [];
+        await Promise.all(hashes.map(async hash => {
+            let receipt = await filterContract.getTransactionReceipt(hash);
+            let decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
+            let letMeSeeYourDataEvent = decodedReceipt[0].events;
+            let personaAddress = letMeSeeYourDataEvent[1].value;
+
+            if (personaAddress.toUpperCase() == transactor.wallet.address.toUpperCase()) {
+                let requesterAddress = letMeSeeYourDataEvent[0].value;
+                let personaField = letMeSeeYourDataEvent[2].value;
+                let requesterDataName = await transactor.contract.getPersonaData(requesterAddress, "name");
+                let requesterDataField = await transactor.contract.getPersonaData(requesterAddress, personaField);
+                console.log('actions/persona/GetPersonaNotifications/requesterDataField', requesterDataField);
+                personaNotifications.push({
+                    hash: hash,
+                    requesterName: requesterDataName[1],
+                    requesterAddress: requesterAddress,
+                    field: personaField,
+                    data: requesterDataField[1],
+                    dataCategory: requesterDataField[2],
+                });
+            }
+        }));
+        dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
+    });
+}
+// export function GetDataCategory(categoryNumber) {
+//     switch (categoryNumber) {
+//         case 0:
+//             return "PlainText";
+//         case 1:
+//             return "IPFSHash";
+//         case 2:
+//             return "URI";
+//         default:
+//             return "Unknow category";
+//     }
+// }
+
+export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
+    return async dispatch => {
+        console.log('deliverDecryptedData/starting')
+        if (!checkWallet()) {
+            return (dispatch) => {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            }
+        }
+        dispatch({ type: 'CLEAN_ERROR' });
+        dispatch({ type: 'RUNNING_METHOD' });
+        try {
+            console.log('persona/deliverDecryptedData/parameters', decision, receiver, dataCategory, fieldName, data);
+            let tx = await transactor.contract.deliverDecryptedData(decision, receiver, dataCategory, fieldName, data);
+            console.log('persona/deliverDecryptedData/tx', tx)
+            if (tx) {
+                let receipt = await tx.wait(1)
+                console.log('persona/deliverDecryptedData/receipt', receipt)
+                if (receipt.status === 1) {
+                    // console.log('actions/deliverDecryptedData/loading');
+                    // validationRequests = await loadValidationRequest();                    
+                    // console.log('actions/deliverDecryptedData/loading');
+                    // let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
+                    // console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
+                    // dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo})
+                    dispatch({ type: 'METHOD_EXECUTED' });
+                } else {
+                    dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
+                }
+            } else {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request' });
+            }
+        } catch (exception) {
+            console.error('deliverDecryptedData', exception);
+            return (dispatch) => {
+                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
+            }
+        }
+    }
+}
+
+export function allowNotification(receiver, dataCategory, fieldName, data) {
+    return dispatch => {
+        return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
+        .then(
+            (success) => {
+                dispatch({
+                    type: 'TOASTY_SUCCESS', 
+                    toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
+                })
+            } 
+        )
+        .catch(
+            (exception) => {
+                dispatch({
+                    type: 'TOASTY_ERROR', 
+                    toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
+                })
+            }
+        )
+    }
+}
+
+export function declineNotification(receiver, dataCategory, fieldName, data) {
+    return dispatch => {
+        return this.deliverDecryptedData(false, receiver, dataCategory, fieldName, data)
+        .then(
+            (success) => {
+                dispatch({
+                type: 'TOASTY_SUCCESS',
+                toast: buildToast('Done! We will let the consumer know about your decision', {type: ToastTypes.SUCCESS})
+                })
+            } 
+        )
+        .catch(
+            (exception) => {
+                dispatch({
+                type: 'TOASTY_ERROR', 
+                toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
+                })
+            }
+        )
+    }
+}

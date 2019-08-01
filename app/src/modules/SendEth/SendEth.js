@@ -37,11 +37,9 @@ class SendEth extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
-    //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
     if (nextProps.persona.error.length>2) {
         const msg = 'Erro: ' + nextProps.persona.error;
-        console.error('Balance/getDerivedStateFromProps: ', msg);
+        console.error('SendEth/getDerivedStateFromProps: ', msg);
         alert(msg);
         return { balance: 0, address: null};
     }    

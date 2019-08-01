@@ -1,74 +1,70 @@
 import React, { Component } from 'react';
 import { Row, Col, Grid, Panel, Button } from 'react-bootstrap';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as PersonaActions from "../../redux/actions/persona";
+
+import NotificationPanel from "../../components/PanelNotification/PanelNotification";
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import Loader from '../../components/Loader/Loader';
 import './Notifications.css';
 
 class Notifications extends Component {
-    render() {
-        return(
-            <Grid>
-                <Row>
-                    <Col>
-                        <div className="closeButtonNotifications">
-                          <CloseIconPage destination="/menu" /> 
-                        </div>
-                          <div className="header-notification">
-                            <h3 className="title">Notifications</h3>
-                            <p className="paragraph">See which companies are willing to consume your data.</p>           
-                          </div>
-                        <div className="box-one">
-                          <Panel id="panel-notification">
-                             <div>
-                                <div className="inner-content-text">
-                                  <Panel.Title className="paragraph p-consumername">Atlas Quantum</Panel.Title>
-                                  <Panel.Title className="paragraph">Email</Panel.Title>
-                                  <Panel.Title className="paragraph">RG</Panel.Title>
-                                </div>
-                                     
-                              <div className="inner-content-button">
-                                <Button className="paragraph" bsStyle="warning" bsSize="small">Allow</Button>
-                                <Button className="paragraph" bsStyle="warning" bsSize="small">Decline</Button>
-                              </div>
-                              </div>                              
-                            </Panel>
-                              <Panel id="panel-notification">
-                                <div>
-                                  <div className="inner-content-text">
-                                    <Panel.Title className="paragraph p-consumername">Mercado Bitcoin</Panel.Title>
-                                    <Panel.Title className="paragraph">Email</Panel.Title>
-                                    <Panel.Title className="paragraph">CPF</Panel.Title>
-                                  </div>
+  constructor(props) {
+    super(props);
+    this.state = {
+      notifications: [],
+      isLoading: true
+    };
+  }
+  async componentDidMount() {
+    await this.props.GetPersonaNotifications();
+    this.setState({
+      isLoading: false
+    });
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return { notifications: nextProps.persona.notifications };
+  }
+  GetNotificationGrid() {
+    let notificationGrid = [];
 
-                                  <div className="inner-content-button">
-                                    <Button className="paragraph" bsStyle="warning" bsSize="small">Allow</Button>
-                                    <Button className="paragraph" bsStyle="warning" bsSize="small">Decline</Button>
-                                  </div>
-                                </div>                              
-                              </Panel>
-                        </div>
+    if (!this.state.notifications)
+      return notificationGrid;
 
-                        <div className="box-two">
-                          <Panel id="panel-notification">
-                            <div>
-                              <div className="inner-content-text"> 
-                                <Panel.Title className="paragraph p-consumername">Janus Plataform</Panel.Title>
-                                <Panel.Title className="paragraph">Birth Date</Panel.Title>
-                                <Panel.Title className="paragraph">Address</Panel.Title>
-                              </div>
-
-                              <div className="inner-content-button">
-                                <Button className="paragraph" bsStyle="warning" bsSize="small">Allow</Button>
-                                <Button className="paragraph" bsStyle="warning" bsSize="small">Decline</Button>
-                              </div>
-                            </div>                              
-                          </Panel>
-                        </div>
-                    </Col>
-                </Row>
-            </Grid>
-        )
+    for (let index = 0; index < this.state.notifications.length; index++) {
+      notificationGrid.push(<NotificationPanel
+        addressReceiver={this.state.notifications[index].requesterAddress}
+        nameReceiver={this.state.notifications[index].requesterName}
+        fieldName={this.state.notifications[index].field} 
+        dataValue={this.state.notifications[index].data}
+        dataCategory={this.state.notifications[index].dataCategory}/>);
     }
+    return notificationGrid ? notificationGrid : 'No notifications available';
+  }
+  render() {
+    return (
+      <Grid>
+        <Row>
+          <Col>
+            <div className="closeButtonNotifications">
+              <CloseIconPage destination="/menu" />
+            </div>
+            <div className="header-notification">
+              <h3 className="title">Notifications</h3>
+              <p className="paragraph">See which companies are willing to consume your data.</p>
+            </div>
+            <Loader message="Loading notifications..." visible={this.state.isLoading} />
+            {this.GetNotificationGrid()}
+          </Col>
+        </Row>
+      </Grid>
+    )
+  }
 }
-
-export default Notifications;
+const mapStateToProps = state => ({
+  persona: state.persona
+});
+const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
