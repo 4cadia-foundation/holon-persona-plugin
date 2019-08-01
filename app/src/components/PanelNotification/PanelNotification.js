@@ -46,19 +46,13 @@ class PanelNotification extends Component {
         return { isRunning: nextProps.persona.isRunning };
     }
 
-    openModal() {
-        this.setState({
-            // modal: true
-        })
-    }
-
     allowClick(event) {
         event.preventDefault();
         this.setState({
             isRunning: true,
             sentToAction: true
         })
-        this.props.deliverDecryptedData(true, this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
+        this.props.allowNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
     }
 
     declineClick(event) {
@@ -67,7 +61,7 @@ class PanelNotification extends Component {
             isRunning: true,
             sentToAction: true
         })
-        this.props.deliverDecryptedData(false, this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
+        this.props.declineNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
     }
 
     render() {

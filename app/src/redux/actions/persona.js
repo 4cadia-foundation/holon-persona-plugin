@@ -6,6 +6,7 @@ import { address, abi } from '../../../config/abi';
 import * as ValidationHelper from '../../helper/validations';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
+import { buildToast, ToastTypes} from '../../helper/toast';
 
 // const wallet = new WalletStorage();
 
@@ -424,12 +425,18 @@ export function allowNotification(receiver, dataCategory, fieldName, data) {
     return dispatch => {
         return deliverDecryptedData(true, receiver, dataCategory, fieldName, data).then(
             (success) => {
-                dispatch({type: 'TOASTY_SUCCESS', message: 'Data shared successfully!'})
+                dispatch({
+                type: 'TOASTY_SUCCESS', 
+                toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
+            })
             } 
         )
         .catch(
             (exception) => {
-                dispatch({type: 'TOASTY_ERROR', message: 'Operation not executed. Try again later.'})
+                dispatch({
+                type: 'TOASTY_ERROR', 
+                toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
+                })
             }
         )
     }
