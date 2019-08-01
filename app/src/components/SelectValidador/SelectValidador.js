@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Transactor from '../../../scripts/core/Transactor';
+import store from '../../redux/store';
+
 import './SelectValidador.css';
 
 class SelectValidador extends Component {
@@ -7,24 +10,23 @@ class SelectValidador extends Component {
   constructor(props){
     super(props);
     this.state = {
-      validators: [
-        {
-          key: '1',
-          address: '0xBe43CD8E7bd3e29f5C7173E7C956a54659B3225f',
-          text: 'Yasmin Services'
-        },
-        {
-          key: '2',
-          address: '0xD3b424a49f57B1d3163fc1238bA5CAE1f2670aB6',
-          text: 'ACME Corp'
-        },
-      ]      
+      validators: [],
+      numberOfValidators: 0,
+      isRunning: true      
     }
     this.setValidator = this.setValidator.bind(this);
+    this.transactor = new Transactor();
+    this.transactor.wallet = store.getState().wallet.ethersWallet;
+    this.transactor.contractWithSigner;
   }
 
-  componentDidMount() {
-    this.props.emitValidator(this.state.validators[0].address)
+  async componentDidMount() {
+    let tmp = await this.transactor._contract.holonValidatorsList;
+    console.log('SelectValidador/componentDidMount/holonValidatorsList', tmp);
+    this.setState({
+      isRunning: false
+    });
+    //this.props.emitValidator(this.state.validators[0].address);
   }
 
   setValidator(event) {
@@ -32,19 +34,39 @@ class SelectValidador extends Component {
   }
   
   render () {
-    let optionTemplate = this.state.validators.map(v => (
-      <option key={v.key} value={v.address}>{v.text}</option>
-    ));
-    return (
-      <section>
-        <label className="paragraph">Select Validador</label>
-          <div className="dropdown">
-            <select onChange={this.setValidator} className="paragraph" value={this.state.value} id="categoryId">
-              {optionTemplate}
-            </select>
+    if (this.state.isRunning) {
+      return (
+        <section>
+          <div>
+            Loading validators from Blockchain...
           </div>                
-      </section>
-    )
+        </section>
+      )
+    }
+    if (!this.state.isRunning && this.state.validators.length>0) {
+      let optionTemplate = this.state.validators.map(v => (
+        <option key={v.key} value={v.address}>{v.text}</option>
+      ));
+      return (
+        <section>
+          <label className="paragraph">Select Validador</label>
+            <div className="dropdown">
+              <select onChange={this.setValidator} className="paragraph" value={this.state.value} id="categoryId">
+                {optionTemplate}
+              </select>
+            </div>                
+        </section>
+      )
+    }
+    if (!this.state.isRunning && this.state.validators.length>0) {
+      return (
+        <section>
+          <div>
+            There is no validator available
+          </div>                
+        </section>
+      )
+    }
   }
 }
     
