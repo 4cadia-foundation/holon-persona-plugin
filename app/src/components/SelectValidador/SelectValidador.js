@@ -10,8 +10,13 @@ class SelectValidador extends Component {
       validators: [
         {
           key: '1',
-          address: '0x1c5fBDf725C093c52A8464d226d7cf68c2605Ec0',
-          text: 'Atlas Quantum'
+          address: '0xBe43CD8E7bd3e29f5C7173E7C956a54659B3225f',
+          text: 'Yasmin Services'
+        },
+        {
+          key: '2',
+          address: '0xD3b424a49f57B1d3163fc1238bA5CAE1f2670aB6',
+          text: 'ACME Corp'
         },
       ]      
     }
