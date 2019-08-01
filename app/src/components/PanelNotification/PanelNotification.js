@@ -12,12 +12,15 @@ class PanelNotification extends Component {
 
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this.allowClick = this.allowClick.bind(this);
+        this.declineClick = this.declineClick.bind(this);
         this.openModal = this.openModal.bind(this);
         this.state = {
             nameReceiver: this.props.nameReceiver,
             addressReceiver: this.props.addressReceiver,
             fieldName: this.props.fieldName,
+            dataValue: this.props.dataValue,
+            dataCategory: this.props.dataCategory,
             isRunning: true,
             sentToAction: false
         }
@@ -49,9 +52,17 @@ class PanelNotification extends Component {
         })
     }
 
-    handleClick(event) {
+    allowClick(event) {
         event.preventDefault();
-        // this.openModal();
+        this.setState({
+            isRunning: true,
+            sentToAction: true
+        })
+        this.props.deliverDecryptedData(true, this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
+    }
+
+    declineClick(event) {
+        event.preventDefault();
     }
 
     render() {
@@ -62,13 +73,13 @@ class PanelNotification extends Component {
                         <div className="box">
                             <div className="inner-content-text">
                                 <Panel.Title className="paragraph p-consumername">{this.props.nameReceiver}</Panel.Title>
-                                <Panel.Title className="paragraph p-consumername">{this.props.addressReceiver}</Panel.Title>
+                                <Panel.Title className="paragraph p-panel">{this.props.addressReceiver}</Panel.Title>
                                 <Panel.Title className="paragraph p-panel">{this.props.fieldName}</Panel.Title>
                             </div>
 
                             <div className="inner-content-button">
-                                <Button className="paragraph" bsStyle="warning" bsSize="small" onClick={this.handleClick}>Allow</Button>
-                                <Button className="paragraph" bsStyle="warning" bsSize="small" onClick={this.handleClick}>Decline</Button>
+                                <Button className="paragraph" bsStyle="warning" bsSize="small" onClick={this.allowClick}>Allow</Button>
+                                <Button className="paragraph" bsStyle="warning" bsSize="small" onClick={this.declineClick}>Decline</Button>
                             </div>
                         </div>
                     </Panel>

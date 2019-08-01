@@ -391,12 +391,16 @@ export function GetPersonaNotifications() {
             if (personaAddress.toUpperCase() == transactor.wallet.address.toUpperCase()) {
                 let requesterAddress = letMeSeeYourDataEvent[0].value;
                 let personaField = letMeSeeYourDataEvent[2].value;
-                let requesterData = await transactor.contract.getPersonaData(requesterAddress, "name");
+                let requesterDataName = await transactor.contract.getPersonaData(requesterAddress, "name");
+                let requesterDataField = await transactor.contract.getPersonaData(requesterAddress, personaField);
+                console.log('actions/persona/GetPersonaNotifications/requesterDataField', requesterDataField);
                 personaNotifications.push({
                     hash: hash,
-                    requesterName: requesterData[1],
+                    requesterName: requesterDataName[1],
                     requesterAddress: requesterAddress,
                     field: personaField,
+                    data: requesterDataField[1],
+                    dataCategory: requesterDataField[2],
                 });
             }
         }));
@@ -415,6 +419,37 @@ export function GetPersonaNotifications() {
 //             return "Unknow category";
 //     }
 // }
+
+export function allowNotification(receiver, dataCategory, fieldName, data) {
+    return dispatch => {
+        return deliverDecryptedData(true, receiver, dataCategory, fieldName, data).then(
+            (success) => {
+                dispatch({type: 'TOASTY_SUCCESS', message: 'Data shared successfully!'})
+            } 
+        )
+        .catch(
+            (exception) => {
+                dispatch({type: 'TOASTY_ERROR', message: 'Operation not executed. Try again later.'})
+            }
+        )
+    }
+}
+
+export function declineNotification(receiver, dataCategory, fieldName, data) {
+    return dispatch => {
+        return deliverDecryptedData(false, receiver, dataCategory, fieldName, data).then(
+            (success) => {
+                dispatch({type: 'TOASTY_SUCCESS', message: 'Done! We will let the consumer know about your decision'})
+            } 
+        )
+        .catch(
+            (exception) => {
+                dispatch({type: 'TOASTY_ERROR', message: 'Operation not executed. Try again later.'})
+            }
+        )
+    }
+}
+
 export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
     return async dispatch => {
         console.log('deliverDecryptedData/starting')
