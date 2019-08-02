@@ -7,20 +7,20 @@ import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
 import './ImportWallet'
+import Loader from '../../components/Loader/Loader';
 
 class ImportWallet extends Component {
 
   constructor(props) {
       super(props);
-
       this.state = {
         phrase: '',
         password: '',
         confirm: '',
-        accounts: []
+        accounts: [],
+        isRunning: true,
+        msg: 'Importing your wallet',
       };
-
-
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.getValidationPassword = this.getValidationPassword.bind(this);
@@ -39,7 +39,8 @@ class ImportWallet extends Component {
         phrase: '',
         password: '',
         confirm: '',
-        accounts: props.accounts
+        accounts: props.accounts,
+        isRunning: false,
       };
     }
    return null;
@@ -51,6 +52,9 @@ class ImportWallet extends Component {
    **/
   handleSubmit (event) {
     event.preventDefault();
+    this.setState({
+      isRunning: true,
+    })
     const mnemonic = this.state.phrase;
     const password = this.state.password;
     this.props.restoreVault(mnemonic, password);
@@ -136,13 +140,18 @@ class ImportWallet extends Component {
     }
 
     return (
+      <div>
         <Grid>
           <Row>
             <div className="text-center">
               <h3 className="title">Import your Wallet</h3>
             </div>
           </Row>
-
+          <Row>
+            <div className="text-center">
+              &nbsp;
+            </div>
+          </Row>
           <Row>
             <Col xs={12} md={12}>
               <Form>
@@ -174,8 +183,9 @@ class ImportWallet extends Component {
 
             </Col>
           </Row>
-
         </Grid>
+        <Loader visible={this.state.isRunning} message={this.state.msg} />
+      </div>
       );
     }
 }
