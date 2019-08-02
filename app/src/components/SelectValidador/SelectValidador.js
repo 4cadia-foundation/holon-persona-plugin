@@ -21,12 +21,28 @@ class SelectValidador extends Component {
   }
 
   async componentDidMount() {
-    let tmp = await this.transactor._contract.holonValidatorsList;
-    console.log('SelectValidador/componentDidMount/holonValidatorsList', tmp);
+    let tmp = await this.transactor._contract.getTotalValidators();
+    let numberOfValidators = parseInt(tmp);
+    console.log('SelectValidador/componentDidMount/numberOfValidators', numberOfValidators);
+    let validators=[];
+    for (let x=0; x<numberOfValidators; x++) {
+      let validatorAddress = await this.transactor._contract.holonValidatorsList(x);
+      let validatorName = await this.transactor._contract.getPersonaData(validatorAddress, "name");
+      console.log('SelectValidador/componentDidMount/validator',x, validatorName, validatorAddress);
+      let item = {
+        address: validatorAddress,
+        text: validatorName[1],
+      }
+      validators.push(item);
+    }
     this.setState({
-      isRunning: false
+      isRunning: false,
+      numberOfValidators: numberOfValidators,
+      validators: validators,
     });
-    //this.props.emitValidator(this.state.validators[0].address);
+    if (numberOfValidators>0) {
+      this.props.emitValidator(this.state.validators[0].address);
+    }
   }
 
   setValidator(event) {
@@ -45,7 +61,7 @@ class SelectValidador extends Component {
     }
     if (!this.state.isRunning && this.state.validators.length>0) {
       let optionTemplate = this.state.validators.map(v => (
-        <option key={v.key} value={v.address}>{v.text}</option>
+        <option key={v.address} value={v.address}>{v.text}</option>
       ));
       return (
         <section>
@@ -58,7 +74,7 @@ class SelectValidador extends Component {
         </section>
       )
     }
-    if (!this.state.isRunning && this.state.validators.length>0) {
+    if (!this.state.isRunning && this.state.validators.length<1) {
       return (
         <section>
           <div>
