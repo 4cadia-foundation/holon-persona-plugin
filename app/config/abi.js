@@ -1,5 +1,5 @@
 module.exports = {
- "address": "0xc75A42795AF9E3D3516E95e50B21024b4c50B37C",
+ "address": "0xcDDd1d91D2B7639869FefEbCe7FE1F9DA492973a",
  "abi": [
 	{
 		"constant": true,
@@ -84,6 +84,20 @@ module.exports = {
 		],
 		"payable": true,
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getTotalValidators",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{

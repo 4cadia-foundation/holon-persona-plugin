@@ -3,9 +3,11 @@ import * as ActionTypes from '../../constants/actionsTypes';
 const wallet = new Wallet();
 
 export function restoreVault(password, seed) {
+  console.log('actions/wallet/restoreVault/starting');
   return dispatch => {
     wallet.createNewVaultAndRestore(password, seed)
       .then((wallet) => {
+        console.log('actions/wallet/restoreVault/restored');
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
           address: wallet.address,

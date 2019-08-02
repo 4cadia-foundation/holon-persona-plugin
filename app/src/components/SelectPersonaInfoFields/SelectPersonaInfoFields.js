@@ -13,7 +13,7 @@ class SelectPersonaInfoFields extends Component {
   } 
 
   componentDidMount() {
-    console.log('SelectPersonaInfoFields/personalInfo', this.props.personalInfo)
+    //console.log('SelectPersonaInfoFields/personalInfo', this.props.personalInfo)
     this.setState({
       value: this.props.personalInfo[0].field,
     })
@@ -22,6 +22,9 @@ class SelectPersonaInfoFields extends Component {
 
   setField(event) {
     this.props.emitField(event.target.value)
+    this.setState({
+      value: event.target.value,
+    })
   }
 
   render () {
