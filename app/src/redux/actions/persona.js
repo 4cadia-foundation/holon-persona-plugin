@@ -8,16 +8,8 @@ import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
 import { buildToast, ToastTypes} from '../../helper/toast';
 
-// const wallet = new WalletStorage();
-
 const transactor = new Transactor();
-const filterNewData = {
-    address: address,
-    fromBlock: 4852633,
-    toBlock: 'latest',
-    topics: [],
-};
-const filterContract = new FilterEventsBlockchain(filterNewData);
+const filterContract = new FilterEventsBlockchain();
 filterContract.setEventToFilter('newdata');
 var validationRequests = [];
 var validationRequestCheck = false;

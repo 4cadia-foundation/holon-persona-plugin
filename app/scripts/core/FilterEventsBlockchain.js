@@ -1,11 +1,20 @@
 import {Transaction} from 'ethereumjs-tx';
 import abiDecoder from 'abi-decoder';
 import { ethers } from 'ethers';
+import { abi, address } from '../../config/abi';
 
 export default class FilterEventsBlockchain {
-  constructor(filter) {
-    this.filterData = filter;
+
+  constructor() {
     this._transactor = null;
+    const filterNewData = {
+      address: address,
+      fromBlock: 4852633,
+      toBlock: 'latest',
+      topics: [],
+    };
+    this.filterData = filterNewData;
+    abiDecoder.addABI(abi);
   }
 
   set transactor(_transactor) {
@@ -60,8 +69,8 @@ export default class FilterEventsBlockchain {
    * Devido a bug no ethereumjs-tx só é possível filtrar logs de um evento (topico) por vez
    * */
   setEventToFilter(eventName) {
-    this._filterData.topics[0] = ethers.utils.id('validateme(address indexed,address indexed,datacategory,string,string,string)')
-    console.log('FilterEventsBlockchain/defineEventToFilter/validateme1', this._filterData.topics[0], '0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6');
+    // this._filterData.topics[0] = ethers.utils.id('validateme(address indexed,address indexed,datacategory,string,string,string)')
+    // console.log('FilterEventsBlockchain/defineEventToFilter/validateme1', this._filterData.topics[0], '0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6');
     if (eventName.toLowerCase() === 'newdata') {
       this._filterData.topics[0] = '0x1456b31d407e7c26146bc3a52f821b249e30d8c118995dcf93a95543e3fd8bcf';
       //this._filterData.topics[0] = ethers.utils.id('NewData(address indexed persona,DataCategory dataCategory,uint infoCategory,string field)')
@@ -79,7 +88,7 @@ export default class FilterEventsBlockchain {
       //this._filterData.topics[0] = ethers.utils.id('DeliverData(bool accepted, address indexed persona, address indexed consumer, DataCategory dataCategory, string field, string data)')
     }
     //this._filterData.topics[0] = event;
-    console.log('FilterEventsBlockchain/defineEventToFilter/Topic', eventName, this._filterData.topics[0]);
+    // console.log('FilterEventsBlockchain/defineEventToFilter/Topic', eventName, this._filterData.topics[0]);
   }
 
 
