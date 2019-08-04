@@ -1,6 +1,5 @@
 import {Transaction} from 'ethereumjs-tx';
 import abiDecoder from 'abi-decoder';
-import { ethers } from 'ethers';
 import { abi, address } from '../../config/abi';
 
 export default class FilterEventsBlockchain {
@@ -14,7 +13,8 @@ export default class FilterEventsBlockchain {
       topics: [],
     };
     this.filterData = filterNewData;
-    abiDecoder.addABI(abi);
+    this.contractDecoder = abiDecoder
+    this.contractDecoder.addABI(abi);
   }
 
   set transactor(_transactor) {
@@ -158,7 +158,7 @@ export default class FilterEventsBlockchain {
     for (let i=0; i<askValidationHashes.length; i++) {
         let receiptValidationHash = await this.getTransactionReceipt(askValidationHashes[i]);
         //console.log('actions/getPersonaData/receiptValidationHash', receiptValidationHash);
-        let receiptValidationHashDecoded = abiDecoder.decodeLogs(receiptValidationHash.logs)
+        let receiptValidationHashDecoded = this.contractDecoder.decodeLogs(receiptValidationHash.logs)
         receiptValidationHashDecoded = receiptValidationHashDecoded[0];
         //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded, personaAddress)
         //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded.events[0].value.toUpperCase(), personaAddress.toUpperCase(), receiptValidationHashDecoded.events[0].value.toUpperCase() === personaAddress.toUpperCase())
