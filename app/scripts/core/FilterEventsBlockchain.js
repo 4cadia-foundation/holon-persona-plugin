@@ -1,10 +1,8 @@
-import Transactor from './Transactor';
 import {Transaction} from 'ethereumjs-tx';
 import abiDecoder from 'abi-decoder';
 import { ethers } from 'ethers';
 
 export default class FilterEventsBlockchain {
-
   constructor(filter) {
     this.filterData = filter;
     this._transactor = null;
