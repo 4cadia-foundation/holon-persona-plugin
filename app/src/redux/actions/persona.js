@@ -307,7 +307,7 @@ export function addPersona(name, email) {
             chainId: transactor.provider.chainId
         }
         let contractOptions = {
-            gasLimit: 2000000
+            gasLimit: 4000000
         };
 
         //send ethers to the persona's address
@@ -317,7 +317,7 @@ export function addPersona(name, email) {
         transactor.contractWithSigner;
         console.log('actions/persona/addpersona/adding persona')
         //add persona with field name by default
-        let addPersonaTask = await transactor._contract.addPersona(0, 0, "name", name, 0, contractOptions);
+        let addPersonaTask = await transactor._contract.addPersona(1, 0, "name", name, 0, contractOptions);
         await addPersonaTask.wait();
 
         let item = {
@@ -330,7 +330,7 @@ export function addPersona(name, email) {
 
         //add persona's email field
         console.log('actions/persona/addpersona/adding data')
-        let addDataTask = await transactor._contract.addData(0, 0, "email", email, 0, contractOptions);
+        let addDataTask = await transactor._contract.addData(1, 0, "email", email, 0, contractOptions);
         await addDataTask.wait();
 
         item = {
