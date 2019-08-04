@@ -13,11 +13,12 @@ import { buildToast, ToastTypes} from '../../helper/toast';
 const transactor = new Transactor();
 const filterNewData = {
     address: address,
-    fromBlock: 4802349,
+    fromBlock: 4852633,
     toBlock: 'latest',
-    topics: ['0x1456b31d407e7c26146bc3a52f821b249e30d8c118995dcf93a95543e3fd8bcf']
+    topics: [],
 };
 const filterContract = new FilterEventsBlockchain(filterNewData);
+filterContract.setEventToFilter('newdata');
 var validationRequests = [];
 var validationRequestCheck = false;
 var validations = [];
@@ -44,7 +45,9 @@ function checkWallet() {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
             transactor.contractWithSigner;
-            //console.log('action/persona/checkWallet/transactor.wallet-set', transactor.wallet);
+            filterContract.transactor = transactor;
+            console.log('action/persona/checkWallet/transactor.wallet-set', transactor);
+            console.log('action/persona/checkWallet/filterContract transactor-set', filterContract);
             return true;
         } else {
             return false;
