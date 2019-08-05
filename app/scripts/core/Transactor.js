@@ -51,7 +51,7 @@ export default class Transactor extends SmartContract {
       let fieldName = field[0];
       let reputation = parseInt(field[3]);
       let numberOfValidations = parseInt(field[4]);
-      console.log('transactor/getPersonalInfo/field', field, fieldName, reputation, numberOfValidations);    
+      // console.log('transactor/getPersonalInfo/field', field, fieldName, reputation, numberOfValidations);    
       //debugger   
       if (reputation>0) {
           statusValidacao = "0";
@@ -66,9 +66,9 @@ export default class Transactor extends SmartContract {
               }
           }
       } else {
-          console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/starting', validationRequests, fieldName);    
+          // console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/starting', validationRequests, fieldName);    
           statusValidacao = ValidationHelper.fieldHasSentToValidation(validationRequests, fieldName);
-          console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/statusValidacao', statusValidacao);    
+          // console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/statusValidacao', statusValidacao);    
       }
       const descValidacao = ValidationHelper.getStatusValidationDescription(statusValidacao);
       let item = {

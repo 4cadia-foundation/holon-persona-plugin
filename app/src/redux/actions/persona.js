@@ -8,16 +8,9 @@ import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
 import { buildToast, ToastTypes} from '../../helper/toast';
 
-// const wallet = new WalletStorage();
-
 const transactor = new Transactor();
-const filterNewData = {
-    address: address,
-    fromBlock: 4802349,
-    toBlock: 'latest',
-    topics: ['0x1456b31d407e7c26146bc3a52f821b249e30d8c118995dcf93a95543e3fd8bcf']
-};
-const filterContract = new FilterEventsBlockchain(filterNewData);
+const filterContract = new FilterEventsBlockchain();
+filterContract.setEventToFilter('newdata');
 var validationRequests = [];
 var validationRequestCheck = false;
 var validations = [];
@@ -44,7 +37,9 @@ function checkWallet() {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
             transactor.contractWithSigner;
-            //console.log('action/persona/checkWallet/transactor.wallet-set', transactor.wallet);
+            filterContract.transactor = transactor;
+            console.log('action/persona/checkWallet/transactor.wallet-set', transactor);
+            console.log('action/persona/checkWallet/filterContract transactor-set', filterContract);
             return true;
         } else {
             return false;
@@ -307,7 +302,7 @@ export function addPersona(name, email) {
             chainId: transactor.provider.chainId
         }
         let contractOptions = {
-            gasLimit: 2000000
+            gasLimit: 4000000
         };
 
         //send ethers to the persona's address
@@ -317,7 +312,7 @@ export function addPersona(name, email) {
         transactor.contractWithSigner;
         console.log('actions/persona/addpersona/adding persona')
         //add persona with field name by default
-        let addPersonaTask = await transactor._contract.addPersona(0, 0, "name", name, 0, contractOptions);
+        let addPersonaTask = await transactor._contract.addPersona(1, 0, "name", name, 0, contractOptions);
         await addPersonaTask.wait();
 
         let item = {
@@ -330,7 +325,7 @@ export function addPersona(name, email) {
 
         //add persona's email field
         console.log('actions/persona/addpersona/adding data')
-        let addDataTask = await transactor._contract.addData(0, 0, "email", email, 0, contractOptions);
+        let addDataTask = await transactor._contract.addData(1, 0, "email", email, 0, contractOptions);
         await addDataTask.wait();
 
         item = {
