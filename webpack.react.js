@@ -42,18 +42,30 @@ module.exports = (watch = false) => {
           loader: 'css-loader'
         },
         {
+          test: /\.js?$/,
+          enforce: "pre",
+          loader: "eslint-loader",
+          exclude: /node_modules/,
+          options: {
+            emitWarning: true,
+            configFile: "./.eslintrc",
+            fix: true
+          }
+        },
+        {
           test: /\.js$/,
           include: [path.resolve(__dirname, 'app')],
           exclude: /node_modules/,
-          use: [{
+          use: [
+            {
             loader: 'babel-loader',
             options: {
               babelrc: false,
               presets: ['@babel/preset-env', '@babel/preset-react'],
               plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
             }
-          }]
-        }
+            }]
+        },
       ]
     }
   };

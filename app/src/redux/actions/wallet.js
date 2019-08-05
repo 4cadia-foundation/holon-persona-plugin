@@ -1,4 +1,4 @@
-import Wallet  from '../../../scripts/core/WalletStorage';
+import Wallet from '../../../scripts/core/WalletStorage';
 import * as ActionTypes from '../../constants/actionsTypes';
 const wallet = new Wallet();
 
@@ -17,8 +17,8 @@ export function restoreVault(password, seed) {
         dispatch({
           type: ActionTypes.SET_ACCOUNTS_ERROR,
         });
-      })
-  }
+      });
+  };
 }
 
 export function hasWallet() {
@@ -36,12 +36,12 @@ export function hasWallet() {
         hasWallet: true
       });
     })
-    .catch(exception => {
-      dispatch({
-        type: ActionTypes.SET_ACCOUNTS_ERROR
+      .catch(exception => {
+        dispatch({
+          type: ActionTypes.SET_ACCOUNTS_ERROR
+        });
       });
-    })
-  }
+  };
 }
 
 export function openWallet(password) {
@@ -55,31 +55,31 @@ export function openWallet(password) {
         mnemonic: wallet.mnemonic,
       });
     })
-    .catch(exception => {
-      dispatch({
-        type: ActionTypes.OPEN_WALLET_ERROR
+      .catch(exception => {
+        dispatch({
+          type: ActionTypes.OPEN_WALLET_ERROR
+        });
       });
-    })
-  }
+  };
 }
 
 export function createNewWallet(password){
   return dispatch=> {
     console.log('actions/wallet/creating new wallet');
     wallet.createNewVault(password)
-    .then((wallet) => {
-      dispatch({
-        type: ActionTypes.SET_ACCOUNTS,
-        address: wallet.address,
-        wallet: wallet,
-        mnemonic: wallet.mnemonic,       
+      .then((wallet) => {
+        dispatch({
+          type: ActionTypes.SET_ACCOUNTS,
+          address: wallet.address,
+          wallet: wallet,
+          mnemonic: wallet.mnemonic,       
+        });
+      })
+      .catch((exception) => {
+        console.log('actions/wallet/createNewWallet', exception);
+        dispatch({
+          type: ActionTypes.SET_ACCOUNTS_ERROR,
+        });
       });
-    })
-    .catch((exception) => {
-      console.log('actions/wallet/createNewWallet', exception);
-      dispatch({
-        type: ActionTypes.SET_ACCOUNTS_ERROR,
-      });
-    });
-  }
+  };
 }

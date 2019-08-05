@@ -5,17 +5,17 @@ import './HamburguerMenu.css';
 class HamburguerMenu extends Component {
   
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       showMenu: false
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
   }
   
   handleClick() {
     this.setState({
       showMenu: true
-    })
+    });
   }
   
   render () {
@@ -23,7 +23,7 @@ class HamburguerMenu extends Component {
     if (this.state.showMenu) {
       return (
         <Redirect to='/menu' />
-      )
+      );
     }
       
     return (
@@ -34,9 +34,9 @@ class HamburguerMenu extends Component {
           <span></span>
         </label>
       </nav>
-      )
-    }
+    );
   }
+}
     
 export default HamburguerMenu;
     

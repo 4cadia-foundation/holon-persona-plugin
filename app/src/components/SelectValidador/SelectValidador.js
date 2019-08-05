@@ -14,32 +14,32 @@ class SelectValidador extends Component {
           text: 'Atlas Quantum'
         },
       ]      
-    }
+    };
     this.setValidator = this.setValidator.bind(this);
   }
 
   componentDidMount() {
-    this.props.emitValidator(this.state.validators[0].address)
+    this.props.emitValidator(this.state.validators[0].address);
   }
 
   setValidator(event) {
-    this.props.emitValidator(event.target.value)
+    this.props.emitValidator(event.target.value);
   }
   
   render () {
-    let optionTemplate = this.state.validators.map(v => (
+    let optionTemplate = this.state.validators.map(v => 
       <option key={v.key} value={v.address}>{v.text}</option>
-    ));
+    );
     return (
       <section>
         <label className="paragraph">Select Validador</label>
-          <div className="dropdown">
-            <select onChange={this.setValidator} className="paragraph" value={this.state.value} id="categoryId">
-              {optionTemplate}
-            </select>
-          </div>                
+        <div className="dropdown">
+          <select onChange={this.setValidator} className="paragraph" value={this.state.value} id="categoryId">
+            {optionTemplate}
+          </select>
+        </div>                
       </section>
-    )
+    );
   }
 }
     

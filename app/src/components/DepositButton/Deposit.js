@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 import { bindActionCreators } from 'redux';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as WalletActions from "../../redux/actions/wallet";
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import EthereumQRPlugin from 'ethereum-qr-code';
 import Loader from '../../components/Loader/Loader';
-import './Deposit.css'
+import './Deposit.css';
 
 class Deposit extends Component {
 
@@ -16,18 +16,18 @@ class Deposit extends Component {
     this.state = {
       address: '',
       isLoading: true,
-    }
+    };
     this._qr = new EthereumQRPlugin();
   }
 
   componentDidMount() {
     const sendDetails = {
       to: this.props.wallet.address,
-    }
+    };
     const configDetails = {
       size:280,
       selector: '#ethereum-qr-code-address',
-    }
+    };
     console.log('qrcodeaddress', sendDetails);
     console.log('qrcodeaddress', configDetails);
     this.setState({
@@ -52,7 +52,7 @@ class Deposit extends Component {
         </div>
         <Loader visible={this.state.isLoading} message="Loading your address from wallet" />
       </div>
-    )
+    );
   }
 }
 const mapStateToProps = state => ({

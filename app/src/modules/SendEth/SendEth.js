@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Redirect, Link } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ class SendEth extends Component {
       sendTo: "",
       isRunning: true,
       sentToAction: false
-    }
+    };
     this.props.getBalance();      
   }
 
@@ -33,33 +33,33 @@ class SendEth extends Component {
       balance: this.props.persona.balance,
       address: this.props.persona.address,
       isRunning: false,
-    })
+    });
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
     //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
     if (nextProps.persona.error.length>2) {
-        const msg = 'Erro: ' + nextProps.persona.error;
-        console.error('Balance/getDerivedStateFromProps: ', msg);
-        alert(msg);
-        return { balance: 0, address: null};
+      const msg = 'Erro: ' + nextProps.persona.error;
+      console.error('Balance/getDerivedStateFromProps: ', msg);
+      alert(msg);
+      return { balance: 0, address: null };
     }    
     return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };        
   }
   
   hideAddress (adrs) {
     if (adrs.length > 30) {
-        return (adrs.substring(0, 30) + "...")
+      return adrs.substring(0, 30) + "...";
     }
     else {
-        return adrs;
+      return adrs;
     }
   }
 
   handleChange = event => {
     this.setState({
-        [event.target.id]: event.target.value
+      [event.target.id]: event.target.value
     });
   }
 
@@ -68,20 +68,20 @@ class SendEth extends Component {
     this.setState({
       isRunning: true,
       sentToAction: true
-    })
-    this.props.sendEthers(this.state.sendTo, this.state.sendValue)
+    });
+    this.props.sendEthers(this.state.sendTo, this.state.sendValue);
   }
 
   render() {
     if (this.state.sentToAction && !this.state.isRunning) {
       return (
-          <Redirect to='/menu' />
-      )
+        <Redirect to='/menu' />
+      );
     }
     return (
       <section>
         <div className="btn-add-close">
-            <CloseIconPage destination="/menu"/>
+          <CloseIconPage destination="/menu"/>
         </div>
         <h3 className="text-center title margin-bottom-30">Send ETH</h3>
         <div className="rowSend">
@@ -112,8 +112,8 @@ class SendEth extends Component {
           </div>
         </div>
         <div className="margin-top-50 send-btn">
-              <Link to="/menu"><Button className="paragraph" bsStyle="warning">Cancel</Button></Link>
-              <Button className="paragraph" bsStyle="warning" onClick={this.handleClick}>Confirm</Button>
+          <Link to="/menu"><Button className="paragraph" bsStyle="warning">Cancel</Button></Link>
+          <Button className="paragraph" bsStyle="warning" onClick={this.handleClick}>Confirm</Button>
         </div>
         <Loader message="Sending your ethers 💸" visible={this.state.isRunning} />
       </section>

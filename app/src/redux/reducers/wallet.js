@@ -10,23 +10,36 @@ const INITIAL_STATE = {
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
+  let object = {};
+
   switch(action.type) {
-    case ActionTypes.SET_ACCOUNTS:
-      return {...state, ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic};
+  case ActionTypes.SET_ACCOUNTS:
+    object = {
+      ...state,
+      ethersWallet: action.wallet,
+      address: action.address,
+      mnemonic: action.mnemonic };
     break;
-    case ActionTypes.SET_WALLET_CREATE:
-      return {...state, accounts: action.accounts};
-      break;
-    case ActionTypes.SET_ACCOUNTS_ERROR:
-      return {...state, error: action.error};
+  case ActionTypes.SET_WALLET_CREATE:
+    object = { ...state, accounts: action.accounts };
     break;
-    case ActionTypes.OPEN_WALLET:
-      return {...state, ethersWallet: action.wallet, address: action.address};
+  case ActionTypes.SET_ACCOUNTS_ERROR:
+    object = { ...state, error: action.error };
     break;
-    case ActionTypes.HAS_WALLET:
-      return {...state, hasWallet: action.hasWallet};
-    break;    
-    default:
-      return state; 
+  case ActionTypes.OPEN_WALLET:
+    object = {
+      ...state,
+      ethersWallet: action.wallet,
+      address: action.address };
+    break;
+  case ActionTypes.HAS_WALLET:
+    object = {
+      ...state,
+      hasWallet: action.hasWallet };
+    break;
+  default:
+    object = state;
   }
+
+  return object;
 }

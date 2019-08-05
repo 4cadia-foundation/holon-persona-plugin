@@ -1,8 +1,8 @@
 import SmartContract from './SmartContract';
-import {Transaction} from 'ethereumjs-tx';
+import { Transaction } from 'ethereumjs-tx';
 import abiDecoder from 'abi-decoder';
 
-export  default class FilterEventsBlockchain extends SmartContract {
+export default class FilterEventsBlockchain extends SmartContract {
 
 
   constructor(filter) {
@@ -39,7 +39,7 @@ export  default class FilterEventsBlockchain extends SmartContract {
     return this._filterData;
   }
 
-   /**
+  /**
    * @method setEventToFilter
    * @desc Set an event to filter
    * '0xdf2fb7108dabed1e6a14fa2c8d51f354ab21c8d5d0734ea4828f4637993e4938' = DeliverData
@@ -65,12 +65,12 @@ export  default class FilterEventsBlockchain extends SmartContract {
     let listTransactionHash = await this.getLogsTransactionHash();
     let publicKey = null;
     for(let index = 0; index < listTransactionHash.length; index++){
-        let transaction = await this.getTransaction(listTransactionHash[index]);
-        let address = ('0x'+ transaction.getSenderAddress().toString('hex'));
-        if (address.toLocaleLowerCase() == src.toLocaleLowerCase()){
-          publicKey = transaction.getSenderPublicKey();
-          break
-        }
+      let transaction = await this.getTransaction(listTransactionHash[index]);
+      let address = '0x'+ transaction.getSenderAddress().toString('hex');
+      if (address.toLocaleLowerCase() == src.toLocaleLowerCase()){
+        publicKey = transaction.getSenderPublicKey();
+        break;
+      }
     }
     return publicKey;
   }
@@ -83,7 +83,7 @@ export  default class FilterEventsBlockchain extends SmartContract {
    * */
   getTransaction(transactionHash) {
     return this.provider.getTransaction(transactionHash).then(data => {
-      return new Transaction(data.raw, {chain: 4, hardfork: 'petersburg'});
+      return new Transaction(data.raw, { chain: 4, hardfork: 'petersburg' });
     });
   }
 
@@ -99,7 +99,7 @@ export  default class FilterEventsBlockchain extends SmartContract {
     });
   }
 
-    /**
+  /**
    * @method getTransactionReceipt
    * @desc filter receipt transactions blockchain
    * @param {string} transactionHash - transaction hash blockchain
@@ -114,22 +114,22 @@ export  default class FilterEventsBlockchain extends SmartContract {
 
   async getValidationRequestLogs(personaAddress) {
     //get logs of validation requests
-    let validationRequests = []
+    let validationRequests = [];
     this.setEventToFilter('0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6');
     let askValidationHashes = await this.getLogsTransactionHash();
     //console.log('actions/getPersonaData/filterContract.VALIDATEME_EVENT', filterContract.VALIDATEME_EVENT)
     //console.log('actions/getPersonaData/askValidationHashes', askValidationHashes)
     for (let i=0; i<askValidationHashes.length; i++) {
-        let receiptValidationHash = await this.getTransactionReceipt(askValidationHashes[i]);
-        //console.log('actions/getPersonaData/receiptValidationHash', receiptValidationHash);
-        let receiptValidationHashDecoded = abiDecoder.decodeLogs(receiptValidationHash.logs)
-        receiptValidationHashDecoded = receiptValidationHashDecoded[0];
-        //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded)
-        if (receiptValidationHashDecoded.events[0].value.toUpperCase() == personaAddress.toUpperCase()) {
-            validationRequests.push(receiptValidationHashDecoded.events)
-            //console.log('actions/getPersonaData/validationRequests/events',receiptValidationHashDecoded.events);
-            //console.log('actions/getPersonaData/validationRequests/parse', receiptValidationHashDecoded.events[3].value, ethers.utils.id("email"), ethers.utils.id("Birth data"), ethers.utils.id("name"));
-        }
+      let receiptValidationHash = await this.getTransactionReceipt(askValidationHashes[i]);
+      //console.log('actions/getPersonaData/receiptValidationHash', receiptValidationHash);
+      let receiptValidationHashDecoded = abiDecoder.decodeLogs(receiptValidationHash.logs);
+      receiptValidationHashDecoded = receiptValidationHashDecoded[0];
+      //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded)
+      if (receiptValidationHashDecoded.events[0].value.toUpperCase() == personaAddress.toUpperCase()) {
+        validationRequests.push(receiptValidationHashDecoded.events);
+        //console.log('actions/getPersonaData/validationRequests/events',receiptValidationHashDecoded.events);
+        //console.log('actions/getPersonaData/validationRequests/parse', receiptValidationHashDecoded.events[3].value, ethers.utils.id("email"), ethers.utils.id("Birth data"), ethers.utils.id("name"));
+      }
     }
     console.log('FilterEventsBlockchain/validationRequests', validationRequests);
     return validationRequests;
@@ -148,7 +148,7 @@ export  default class FilterEventsBlockchain extends SmartContract {
     }));
   }
 
-    /**
+  /**
    * @method getLogs
    * @desc filter logs blockchain
    * @return {Logs}
@@ -160,6 +160,6 @@ export  default class FilterEventsBlockchain extends SmartContract {
   }
 
   getNewDataLogs() {
-    return this.contract.filters.NewData(null, null, null, null)
+    return this.contract.filters.NewData(null, null, null, null);
   }
 }

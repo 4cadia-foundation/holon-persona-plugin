@@ -25,7 +25,7 @@ class DataCategory extends Component {
           text: 'Financial Data'
         }
       ]
-    }
+    };
     this.props.emitCategory(1);
   }
 
@@ -34,9 +34,9 @@ class DataCategory extends Component {
   }
 
   render() {
-    let optionTemplate = this.state.values.map(v => (
+    let optionTemplate = this.state.values.map(v => 
       <option key={v.key} value={v.value}>{v.text}</option>
-    ));
+    );
     return (
       <section>
         <label>Category</label>
@@ -46,7 +46,7 @@ class DataCategory extends Component {
           </select>
         </div>
       </section>
-    )
+    );
   }
 
 }

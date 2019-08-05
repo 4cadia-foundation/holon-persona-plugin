@@ -9,8 +9,8 @@ class WalletStorage {
         let error = chrome.runtime.lastError;
         if (error) reject(error);
         resolve('value save with succesfull');
-      })
-    })
+      });
+    });
   }
 
 
@@ -21,7 +21,7 @@ class WalletStorage {
         if (error) reject(error);
         resolve(result.key);
       });
-    })
+    });
 
   }
 
@@ -32,8 +32,8 @@ class WalletStorage {
         let error = chrome.runtime.lastError;
         if (error) reject(error);
         resolve('removed with successfull');
-      })
-    })
+      });
+    });
   }
 
 
@@ -58,7 +58,7 @@ class WalletStorage {
         //console.log('createNewVaultAndRestore/exception', exception);
         reject(exception.message);
       }
-    })
+    });
   }
 
   async createNewVault(password) {
@@ -81,7 +81,7 @@ class WalletStorage {
         const encrypted = await this.getChromeStorage();
         if (!encrypted) {
           reject("wallet was not found in storage");
-          return
+          return;
         }
         //console.log('submitPassword/got wallet encrypted from store', encrypted);
         console.log('submitPassword/got wallet encrypted from store');
@@ -93,7 +93,7 @@ class WalletStorage {
       } catch (exception) {
         reject(exception.message);
       }
-    })
+    });
 
   }
 

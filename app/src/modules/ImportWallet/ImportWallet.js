@@ -1,31 +1,31 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
-import './ImportWallet'
+import './ImportWallet';
 
 class ImportWallet extends Component {
 
   constructor(props) {
-      super(props);
+    super(props);
 
-      this.state = {
-        phrase: '',
-        password: '',
-        confirm: '',
-        accounts: []
-      };
+    this.state = {
+      phrase: '',
+      password: '',
+      confirm: '',
+      accounts: []
+    };
 
 
-      this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleChange = this.handleChange.bind(this);
-      this.getValidationPassword = this.getValidationPassword.bind(this);
-      this.getValidationEqualPassword = this.getValidationEqualPassword.bind(this);
-      this.getValidationPhrase = this.getValidationPhrase.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.getValidationPassword = this.getValidationPassword.bind(this);
+    this.getValidationEqualPassword = this.getValidationEqualPassword.bind(this);
+    this.getValidationPhrase = this.getValidationPhrase.bind(this);
   }
 
 
@@ -42,7 +42,7 @@ class ImportWallet extends Component {
         accounts: props.accounts
       };
     }
-   return null;
+    return null;
   }
 
   /**
@@ -75,17 +75,17 @@ class ImportWallet extends Component {
   getValidationPassword(){
     const length = this.state.password.length;
     switch (true) {
-      case (length >= 8):
-        return 'success';
+    case length >= 8:
+      return 'success';
       break;
-      case (length > 5):
-        return 'warning';
+    case length > 5:
+      return 'warning';
       break;
-      case (length > 0):
-          return 'error';
+    case length > 0:
+      return 'error';
       break;
-      default:
-        return null;
+    default:
+      return null;
     }
   }
 
@@ -96,32 +96,32 @@ class ImportWallet extends Component {
    * @return [String, Null] error
    **/
   getValidationEqualPassword(){
-    const {password, confirm} = this.state;
+    const { password, confirm } = this.state;
     switch (true) {
-      case (password !== confirm && password.length > 0):
-        return 'error';
+    case password !== confirm && password.length > 0:
+      return 'error';
       break;
-      case (password === confirm && password.length > 0):
-        return 'success';
+    case password === confirm && password.length > 0:
+      return 'success';
       break;
-      default:
-        return null;
+    default:
+      return null;
     }
 
   }
 
   getValidationPhrase(){
-    const {phrase} = this.state;
-    let words = (phrase.length > 0) ? phrase.split(' ') : '';
+    const { phrase } = this.state;
+    let words = phrase.length > 0 ? phrase.split(' ') : '';
     switch (true) {
-      case ( (words.length > 0 && words.length < 12) || words.length > 12):
-        return 'error';
-        break;
-      case (words.length == 12):
-        return 'success';
-        break;
-      default:
-        return null;
+    case words.length > 0 && words.length < 12 || words.length > 12:
+      return 'error';
+      break;
+    case words.length == 12:
+      return 'success';
+      break;
+    default:
+      return null;
     }
   }
 
@@ -136,48 +136,48 @@ class ImportWallet extends Component {
     }
 
     return (
-        <Grid>
-          <Row>
-            <div className="text-center">
-              <h3 className="title">Import your Wallet</h3>
-            </div>
-          </Row>
+      <Grid>
+        <Row>
+          <div className="text-center">
+            <h3 className="title">Import your Wallet</h3>
+          </div>
+        </Row>
 
-          <Row>
-            <Col xs={12} md={12}>
-              <Form>
-                <FormGroup validationState={this.getValidationPhrase()}>
-                    <ControlLabel className="paragraph">Wallet Seed</ControlLabel>
-                    <FormControl className="paragraph" rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
-                    <FormControl.Feedback />
-                    <HelpBlock className="paragraph">Seed phrases are 12 words long</HelpBlock>
-                </FormGroup>
+        <Row>
+          <Col xs={12} md={12}>
+            <Form>
+              <FormGroup validationState={this.getValidationPhrase()}>
+                <ControlLabel className="paragraph">Wallet Seed</ControlLabel>
+                <FormControl className="paragraph" rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
+                <FormControl.Feedback />
+                <HelpBlock className="paragraph">Seed phrases are 12 words long</HelpBlock>
+              </FormGroup>
 
-                <FormGroup validationState={this.getValidationPassword()}>
-                    <ControlLabel className="paragraph">New Password</ControlLabel>
-                    <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
+              <FormGroup validationState={this.getValidationPassword()}>
+                <ControlLabel className="paragraph">New Password</ControlLabel>
+                <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
 
-                    <FormControl.Feedback />
-                    <HelpBlock className="paragraph">Minimum validation of 8 characters</HelpBlock>
-                </FormGroup>
+                <FormControl.Feedback />
+                <HelpBlock className="paragraph">Minimum validation of 8 characters</HelpBlock>
+              </FormGroup>
 
-                <FormGroup validationState={this.getValidationEqualPassword()}>
-                    <ControlLabel className="paragraph">Confirm Password</ControlLabel>
-                    <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
+              <FormGroup validationState={this.getValidationEqualPassword()}>
+                <ControlLabel className="paragraph">Confirm Password</ControlLabel>
+                <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
 
-                    <FormControl.Feedback />
-                    <HelpBlock className="paragraph">Password must be the same as field confirm</HelpBlock>
-                </FormGroup>
+                <FormControl.Feedback />
+                <HelpBlock className="paragraph">Password must be the same as field confirm</HelpBlock>
+              </FormGroup>
 
-                <Button className="paragraph" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
-              </Form>
+              <Button className="paragraph" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
+            </Form>
 
-            </Col>
-          </Row>
+          </Col>
+        </Row>
 
-        </Grid>
-      );
-    }
+      </Grid>
+    );
+  }
 }
 
 

@@ -40,7 +40,7 @@ class DataSubCategory extends Component {
           category: 1
         }
       ]
-    }
+    };
     this.props.emitSubCategory(this.state.values[0].text);
   }
 
@@ -50,9 +50,9 @@ class DataSubCategory extends Component {
   }
 
   render() {
-    let optionTemplate = this.state.values.map(v => (
+    let optionTemplate = this.state.values.map(v => 
       <option key={v.key} value={v.value}>{v.text}</option>
-    ));
+    );
     return (
       <section>
         <label>Subcategory</label>
@@ -62,7 +62,7 @@ class DataSubCategory extends Component {
           </select>
         </div>
       </section>
-    )
+    );
   }
 
 }

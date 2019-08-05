@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Button, Grid, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 

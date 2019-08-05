@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
@@ -71,17 +71,17 @@ class WalletPassword extends Component {
   getValidationPassword() {
     const length = this.state.password.length;
     switch (true) {
-      case (length >= 8):
-        return 'success';
-        break;
-      case (length > 5):
-        return 'warning';
-        break;
-      case (length > 0):
-        return 'error';
-        break;
-      default:
-        return null;
+    case length >= 8:
+      return 'success';
+      break;
+    case length > 5:
+      return 'warning';
+      break;
+    case length > 0:
+      return 'error';
+      break;
+    default:
+      return null;
     }
   }
 
@@ -93,14 +93,14 @@ class WalletPassword extends Component {
   getValidationEqualPassword() {
     const { password, confirm } = this.state;
     switch (true) {
-      case (password !== confirm && password.length > 7):
-        return 'error';
-        break;
-      case (password === confirm && password.length > 7):
-        return 'success';
-        break;
-      default:
-        return null;
+    case password !== confirm && password.length > 7:
+      return 'error';
+      break;
+    case password === confirm && password.length > 7:
+      return 'success';
+      break;
+    default:
+      return null;
     }
 
   }
@@ -114,29 +114,29 @@ class WalletPassword extends Component {
     }
 
     return (
-        <div className="margin-top-50">
-          <Form>
-            <div>
-                <h3 className="title margin-bottom-30" align="center">Create your wallet</h3>
-            </div>
-            <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
-              <ControlLabel className="paragraph">Password</ControlLabel>
-              <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
+      <div className="margin-top-50">
+        <Form>
+          <div>
+            <h3 className="title margin-bottom-30" align="center">Create your wallet</h3>
+          </div>
+          <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
+            <ControlLabel className="paragraph">Password</ControlLabel>
+            <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
 
-              <FormControl.Feedback />
-              <HelpBlock className="paragraph">Minimum validation of 8 characters</HelpBlock>
-            </FormGroup>
-            <FormGroup className="margin-top-10"  validationState={this.getValidationEqualPassword()}>
-              <ControlLabel className="paragraph">Confirm password</ControlLabel>
-              <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
+            <FormControl.Feedback />
+            <HelpBlock className="paragraph">Minimum validation of 8 characters</HelpBlock>
+          </FormGroup>
+          <FormGroup className="margin-top-10" validationState={this.getValidationEqualPassword()}>
+            <ControlLabel className="paragraph">Confirm password</ControlLabel>
+            <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
 
-              <FormControl.Feedback />
-              <HelpBlock className="paragraph">Password must be the same as field confirm</HelpBlock>
-            </FormGroup>
-            <Button id="buttonCreateWallet" className="paragraph" disabled={!this.validateForm()} onClick={this.handleSubmit} block bsStyle="warning" bsSize="large">Create wallet</Button>
-          </Form>
-          <Loader message="Creating your wallet ;)" visible={this.state.isLoading} />
-        </div>
+            <FormControl.Feedback />
+            <HelpBlock className="paragraph">Password must be the same as field confirm</HelpBlock>
+          </FormGroup>
+          <Button id="buttonCreateWallet" className="paragraph" disabled={!this.validateForm()} onClick={this.handleSubmit} block bsStyle="warning" bsSize="large">Create wallet</Button>
+        </Form>
+        <Loader message="Creating your wallet ;)" visible={this.state.isLoading} />
+      </div>
     );
   }
 }

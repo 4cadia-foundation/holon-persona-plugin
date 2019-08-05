@@ -1,9 +1,9 @@
 import Settings from '../../config/settings';
 import NETWORK from '../enums/Network';
-import {ethers} from 'ethers';
+import { ethers } from 'ethers';
 import config from '../../config/abi';
 
-export  default class SmartContract {
+export default class SmartContract {
 
   /**
    * create instance for smart contrat
@@ -32,7 +32,7 @@ export  default class SmartContract {
   set provider (options) {
     try {
       if (!options)
-        throw  new Error('option is not defined');
+        throw new Error('option is not defined');
       this._provider = new ethers.providers.JsonRpcProvider(`${options.provider}://${options.host}:${options.port}`);
 
     } catch(exception) {
@@ -53,8 +53,8 @@ export  default class SmartContract {
    * @return {Object} contract instance
    * */
   get contract () {    
-      return this._contract;
-   }
+    return this._contract;
+  }
 }
 
 

@@ -18,7 +18,7 @@ class Home extends Component {
       persona: this.props.persona,
       isLoading: true,
       msg: "Loading profile from Blockchain",
-    }
+    };
     this.getCampoValor = this.getCampoValor.bind(this); 
   }
 
@@ -36,19 +36,19 @@ class Home extends Component {
     //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
     //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
     if (nextProps.persona.error.length>2) {
-        const msg = 'Erro: ' + nextProps.persona.error;
-        console.error('Home/getDerivedStateFromProps: ', msg);
-        alert(msg);
-        return { isLoading: false };
+      const msg = 'Erro: ' + nextProps.persona.error;
+      console.error('Home/getDerivedStateFromProps: ', msg);
+      alert(msg);
+      return { isLoading: false };
     }
     if (nextProps.persona.readAllPersonaLogs) {
-        return { isLoading : false, persona: nextProps.persona };
+      return { isLoading : false, persona: nextProps.persona };
     }
     return null;
   }
 
   getCampoValor(campo) {
-    const {persona} = this.state;
+    const { persona } = this.state;
     if (persona.personalInfo.length < 1) {
       return '';
     }
@@ -64,16 +64,16 @@ class Home extends Component {
   getValidationDescClass(statusValidation) {
     //console.log('getValidationDescClass', statusValidation)
     if (statusValidation == "0") {
-      return "success"
+      return "success";
     } else if (statusValidation == "3") {
-      return "warning"
+      return "warning";
     } else {
-      return "danger"
+      return "danger";
     }
   }
 
   render () {
-    const {persona} = this.state;
+    const { persona } = this.state;
     
     return (
       <div>
@@ -97,23 +97,23 @@ class Home extends Component {
 
           <section className="sectionValidation">
             <Row>
-                <h5 className="paragraph titleValidation">Validations</h5>
-                <hr className="horizontalLine"></hr>
+              <h5 className="paragraph titleValidation">Validations</h5>
+              <hr className="horizontalLine"></hr>
             </Row>
             <Row>
               <Table striped className='tableValidation'>
                 <tbody>
                   {persona.personalInfo.map((item, index) =>                 
-                        <tr key={index}>
-                          <td className="paragraph text-center">{item.field}</td>
-                          <td className="paragraph text-center">{item.valor}</td>
-                          <td className="text-center">
-                            <Label bsStyle={ this.getValidationDescClass(item.statusValidationCode) }>
-                              {item.statusValidationDescription}
-                            </Label>
-                          </td>
-                        </tr>
-                    )
+                    <tr key={index}>
+                      <td className="paragraph text-center">{item.field}</td>
+                      <td className="paragraph text-center">{item.valor}</td>
+                      <td className="text-center">
+                        <Label bsStyle={ this.getValidationDescClass(item.statusValidationCode) }>
+                          {item.statusValidationDescription}
+                        </Label>
+                      </td>
+                    </tr>
+                  )
                   }          
                 </tbody>
               </Table>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './Loader.css'
+import './Loader.css';
 
 export default class Loader extends Component {
   render() {
@@ -17,6 +17,6 @@ export default class Loader extends Component {
           </h4>
         </div>
       </div>
-    )
+    );
   }
 }

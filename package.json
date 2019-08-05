@@ -4,7 +4,12 @@
   "scripts": {
     "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js",
     "watch:react": "webpack --config ./webpack.react.js --watch=true",
-    "watch:core": "webpack --config ./webpack.extension.js --watch=true"
+    "watch:core": "webpack --config ./webpack.extension.js --watch=true",
+    "lint:react": "webpack --config webpack.react.js",
+    "lint:fix": "webpack --config webpack.react.js --fix"
+  },
+  "eslintConfig": {
+
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
@@ -31,7 +36,8 @@
     "react-router-dom": "^5.0.1",
     "react-toastify": "^5.3.2",
     "redux": "^4.0.3",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "web3-providers-ws": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -45,6 +51,10 @@
     "babel-loader": "^8.0.4",
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^3.0.0",
+    "eslint": "^6.1.0",
+    "eslint-loader": "^2.2.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-watch": "^6.0.0",
     "glob": "^7.1.4",
     "style-loader": "^0.23.1",
     "url-loader": "^2.0.1",
