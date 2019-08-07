@@ -9,28 +9,36 @@ export default class EventsService {
         this._provider = provider;
         abiDecoder.addABI(abi);
     }
-    async GetEventData(eventName) {
+    async GetEventData(eventName, topicFilter = null) {
 
         let filterData = {
             address: address,
             fromBlock: 4754554, //todo: filter from last filtered block(store)
             toBlock: 'latest',
-            topics: [this._eventTopicList[eventName]]
+            topics: []
         };
+        filterData.topics[0] = this._eventTopicList[eventName];
+        if (topicFilter) {
+            topicFilter.map(filter => {
+                filterData.topics[filter.index] = filter.value;
+            });
+        }
+
         let eventHashes = await this.GetEventHash(filterData);
         if (!eventHashes) //testar 0
             return null;
 
-        let eventData = new Object();
+        let eventResult = new Object();
         for (let hashIndex = 0; hashIndex < eventHashes.length; hashIndex++) {
             let receipt = await this.GetTransactionReceipt(eventHashes[hashIndex]);
             let decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
             let eventData = decodedReceipt[0];
             eventData.events.map(event => {
-                eventData[event.name] = event.value;
+                eventResult[event.name] = event.value;
             });
         }
-        return eventData;
+        debugger;
+        return eventResult;
     }
     async GetTransactionReceipt(hash) {
         let receipt = await this._provider.getTransactionReceipt(hash);
