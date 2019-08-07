@@ -57,31 +57,37 @@ export function changeNetwork(networkID) {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         }
     }
-    return (async (dispatch) => {
-        dispatch({ type: 'RUNNING_METHOD' });
-        let options = new Object();
-        options.network = networkID;
-        if (networkID === 1) {
-            options.host = 'cloudflare-eth.com';
-            options.port = '8545';
-            options.provider = 'https';
+    try {
+        return (async (dispatch) => {
+            dispatch({ type: 'RUNNING_METHOD' });
+            let options = new Object();
+            options.network = networkID;
+            if (networkID === 1) {
+                options.host = 'cloudflare-eth.com';
+                options.port = '8545';
+                options.provider = 'https';
 
-        } else if (networkID === 4) {
-            options.host = 'rinkeby.caralabs.me';
-            options.port = '18545';
-            options.provider = 'http';
-        } else if (networkID === 99) {
-            options.host = 'localhost';
-            options.port = '8545';
-            options.provider = 'http';
-        }
-        transactor.provider = options;
-        console.log('actions/changeNetwork/newProvider', transactor);
-        // getBalance();
-        // getScore();
-        // getPersonaData();
-        dispatch({ type: 'METHOD_EXECUTED' });
-    });
+            } else if (networkID === 4) {
+                options.host = 'rinkeby.caralabs.me';
+                options.port = '18545';
+                options.provider = 'http';
+            } else if (networkID === 99) {
+                options.host = 'localhost';
+                options.port = '8545';
+                options.provider = 'http';
+            }
+            transactor.provider = options;
+            console.log('actions/changeNetwork/newProvider', transactor);
+            // getBalance();
+            // getScore();
+            // getPersonaData();
+            dispatch({ type: 'METHOD_EXECUTED' });
+        });
+    }
+    catch (err) {
+        console.error('Error actions/persona/changeNetwork: ', err)
+        dispatch({ type: 'TOASTY_ERROR', toast: buildToast('We not get change network. Try again later.', {type: ToastTypes.ERROR})})
+    }
 }
 
 export function getBalance() {
