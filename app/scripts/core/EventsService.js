@@ -1,15 +1,39 @@
 
 import abiDecoder from 'abi-decoder';
 import { address, abi } from '../../config/abi';
+import EVENT_TYPE from '../enums/EventType';
+import EventTopic from '../../config/eventTopic';
+
 let _eventTopicList;
 let _provider;
 export default class EventsService {
-    constructor(eventTopic, provider) {
-        this._eventTopicList = eventTopic;
+    constructor(provider) {
+        let eventTopics = new Object();
+        eventTopics[EVENT_TYPE.NEWDATA] = EventTopic.newData;
+        eventTopics[EVENT_TYPE.VALIDATEME] = EventTopic.validateMe;
+        eventTopics[EVENT_TYPE.VALIDATIONRESULT] = EventTopic.validationResult;
+        eventTopics[EVENT_TYPE.LETMESEEYOURDATA] = EventTopic.letMeSeeYourData;
+        eventTopics[EVENT_TYPE.DELIVERDATA] = EventTopic.deliverData;
+        this._eventTopicList = eventTopics;
         this._provider = provider;
         abiDecoder.addABI(abi);
     }
-    async GetEventData(eventName, topicFilter = null) {
+    async GetNewDataEvent(topicFilter = null) {
+        return await this.GetEventData(EVENT_TYPE.NEWDATA, topicFilter);
+    }
+    async GetValidateMeEvent(topicFilter = null) {
+        return await this.GetEventData(EVENT_TYPE.VALIDATEME, topicFilter);
+    }
+    async GetValidationResultEvent(topicFilter = null) {
+        return await this.GetEventData(EVENT_TYPE.VALIDATIONRESULT, topicFilter);
+    }
+    async GetLetSeeYourDataEvent(topicFilter = null) {
+        return await this.GetEventData(EVENT_TYPE.LETMESEEYOURDATA, topicFilter);
+    }
+    async GetDeliverDataEvent(topicFilter = null) {
+        return await this.GetEventData(EVENT_TYPE.DELIVERDATA, topicFilter);
+    }
+    async GetEventData(eventType, topicFilter = null) {
 
         let filterData = {
             address: address,
@@ -17,27 +41,28 @@ export default class EventsService {
             toBlock: 'latest',
             topics: []
         };
-        filterData.topics[0] = this._eventTopicList[eventName];
+        filterData.topics[0] = this._eventTopicList[eventType];
         if (topicFilter) {
-            topicFilter.map(filter => {
-                filterData.topics[filter.index] = filter.value;
-            });
+            for (let filterIndex = 0; filterIndex < topicFilter.length; filterIndex++) {
+                filterData.topics[filterIndex + 1] = topicFilter[filterIndex];
+            }
         }
 
         let eventHashes = await this.GetEventHash(filterData);
-        if (!eventHashes) //testar 0
+        if (!eventHashes)
             return null;
 
-        let eventResult = new Object();
+        let eventResult = [];
         for (let hashIndex = 0; hashIndex < eventHashes.length; hashIndex++) {
             let receipt = await this.GetTransactionReceipt(eventHashes[hashIndex]);
             let decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
             let eventData = decodedReceipt[0];
+            let eventResultItem = new Object();
             eventData.events.map(event => {
-                eventResult[event.name] = event.value;
+                eventResultItem[event.name] = event.value;
             });
+            eventResult.push(eventResultItem);
         }
-        debugger;
         return eventResult;
     }
     async GetTransactionReceipt(hash) {
