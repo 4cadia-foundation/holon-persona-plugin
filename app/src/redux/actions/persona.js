@@ -280,6 +280,7 @@ export function addData(infoCode, field, data, price, dispatch) {
             .catch((err) => {
                 console.error('Error actions/persona/addData/', err)
                 dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err });
+                dispatch({ type: 'TOASTY_ERROR', toast: buildToast('Transaction not executed. Try again later.', {type: ToastTypes.ERROR})})
             });
     }
 }
@@ -294,49 +295,60 @@ export function addPersona(name, email) {
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
             }
         }
-        let atlasWallet = new ethers.Wallet("619CC0075FAC10253850ECEF582B7431FCC55CBCCD0A07BAE132EB1535F09855", transactor.provider);
-        let giveEther = {
-            gasLimit: 21000,
-            to: transactor.wallet.address,
-            value: ethers.utils.parseEther("0.01"),
-            chainId: transactor.provider.chainId
+        try {
+            let atlasWallet = new ethers.Wallet("619CC0075FAC10253850ECEF582B7431FCC55CBCCD0A07BAE132EB1535F09855", transactor.provider);
+            let giveEther = {
+                gasLimit: 21000,
+                to: transactor.wallet.address,
+                value: ethers.utils.parseEther("0.01"),
+                chainId: transactor.provider.chainId
+            }
+            //send ethers to the persona's address
+            let giveEtherTask = await atlasWallet.sendTransaction(giveEther);
+            await giveEtherTask.wait();
         }
-        let contractOptions = {
-            gasLimit: 4000000
-        };
+        catch (err) {
+            console.error('Error actions/persona/addPersona/sendEth', err)
+            dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add funding: transaction failed' + err });
+            dispatch({ type: 'TOASTY_ERROR', toast: buildToast('Fundings was not transfered to your wallet. Try again later.', {type: ToastTypes.ERROR})})
+        }
+        
+        try {
+            let contractOptions = { gasLimit: 4000000 };
+            transactor.contractWithSigner;
+            console.log('actions/persona/addpersona/adding persona')
+            //add persona with field name by default
+            let addPersonaTask = await transactor._contract.addPersona(1, 0, "name", name, 0, contractOptions);
+            await addPersonaTask.wait();
 
-        //send ethers to the persona's address
-        let giveEtherTask = await atlasWallet.sendTransaction(giveEther);
-        await giveEtherTask.wait();
+            let item = {
+                field: "name",
+                valor: name,
+                statusValidationDescription: 'NotValidated',
+                statusValidationCode: 1
+            };
+            dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
 
-        transactor.contractWithSigner;
-        console.log('actions/persona/addpersona/adding persona')
-        //add persona with field name by default
-        let addPersonaTask = await transactor._contract.addPersona(1, 0, "name", name, 0, contractOptions);
-        await addPersonaTask.wait();
+            //add persona's email field
+            console.log('actions/persona/addpersona/adding data')
+            let addDataTask = await transactor._contract.addData(1, 0, "email", email, 0, contractOptions);
+            await addDataTask.wait();
 
-        let item = {
-            field: "name",
-            valor: name,
-            statusValidationDescription: 'NotValidated',
-            statusValidationCode: 1
-        };
-        dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
-
-        //add persona's email field
-        console.log('actions/persona/addpersona/adding data')
-        let addDataTask = await transactor._contract.addData(1, 0, "email", email, 0, contractOptions);
-        await addDataTask.wait();
-
-        item = {
-            field: "email",
-            valor: email,
-            statusValidationDescription: 'NotValidated',
-            statusValidationCode: 1
-        };
-        dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
-        dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
-        console.log("actions/persona/addpersona/ data added...");
+            item = {
+                field: "email",
+                valor: email,
+                statusValidationDescription: 'NotValidated',
+                statusValidationCode: 1
+            };
+            dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
+            dispatch({ type: 'READ_ALL_PERSONA_LOGS' });
+            console.log("actions/persona/addpersona/ data added...");
+        }
+        catch (err) {
+            console.error('Error actions/persona/addPersona/addFirstData', err)
+            dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add first data (name and email): failed' + err });
+            dispatch({ type: 'TOASTY_ERROR', toast: buildToast('It was not possible create your Holon ID. Try again later.', {type: ToastTypes.ERROR})})
+        }
     }
 }
 
@@ -427,19 +439,11 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
         dispatch({ type: 'CLEAN_ERROR' });
         dispatch({ type: 'RUNNING_METHOD' });
         try {
-            console.log('persona/deliverDecryptedData/parameters', decision, receiver, dataCategory, fieldName, data);
             let tx = await transactor.contract.deliverDecryptedData(decision, receiver, dataCategory, fieldName, data);
-            console.log('persona/deliverDecryptedData/tx', tx)
             if (tx) {
                 let receipt = await tx.wait(1)
                 console.log('persona/deliverDecryptedData/receipt', receipt)
                 if (receipt.status === 1) {
-                    // console.log('actions/deliverDecryptedData/loading');
-                    // validationRequests = await loadValidationRequest();                    
-                    // console.log('actions/deliverDecryptedData/loading');
-                    // let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
-                    // console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
-                    // dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo})
                     dispatch({ type: 'METHOD_EXECUTED' });
                 } else {
                     dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
@@ -455,7 +459,6 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
         }
     }
 }
-
 export function allowNotification(receiver, dataCategory, fieldName, data) {
     return dispatch => {
         return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
