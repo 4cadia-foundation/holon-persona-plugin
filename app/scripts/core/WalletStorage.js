@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import Transactor from './Transactor';
 
 class WalletStorage {
 
