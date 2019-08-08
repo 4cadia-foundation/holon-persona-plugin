@@ -210,28 +210,11 @@ export function getPersonaData() {
         console.error('actions/getPersonaData/err', err);
         return (dispatch) => {
             dispatch({type: 'ERROR_PERSONA_DATA', error: 'Get persona data failed'});
-            dispatch({toast: buildToast('We were unable to receive your data. Try again in a few minutes.', {type: ToastTypes.ERROR})})
+            dispatch({type: 'TOAST_ERROR', toast: buildToast('We were unable to receive your data. Try again in a few minutes.', {type: ToastTypes.ERROR})})
         }
     }
 }
-// export function getPersonaAddress() {
-//     if (!checkWallet()) {
-//         return (dispatch) => {
-//             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-//         }
-//     }
-//     try {
-//         return dispatch => {
-//             dispatch({ type: 'GET_PERSONA_ADDRESS', address: transactor.wallet.address });
-//         }
-//     }
-//     catch(err) {
-//         console.error('actions/persona/getPersonaAddress', err);
-//         dispatch({type: 'ERROR_PERSONA_DATA', error: 'We could not receive wallet'});
-//         dispatch({toast: buildToast('We could not receive wallet. Try again in a few minutes.', {type: ToastTypes.ERROR})})
 
-//     }
-// }
 export function askToValidate(validator, field, uriConfirmationData, dispatch) {
     if (!checkWallet()) {
         return (dispatch) => {
@@ -257,22 +240,20 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
                     let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
                     console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
                     dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo });
-                    dispatch({toast: buildToast('Info send to validation!', {type: ToastTypes.SUCCESS})});
+                    dispatch({type: 'TOAST_SUCCESS', toast: buildToast('Info send to validation!', {type: ToastTypes.SUCCESS})});
                 } else {
                     dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
-                    dispatch({toast: buildToast('Transaction on Blockchain has failed. Try again in a few minutes', {type: ToastTypes.ERROR})})
+                    dispatch({type: 'TOAST_ERROR', toast: buildToast('Transaction on Blockchain has failed. Try again in a few minutes', {type: ToastTypes.ERROR})})
                 }
             } else {
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request' });
-                dispatch({toast: buildToast('It was not possible to submit the validation request. Try again in a few minutes', {type: ToastTypes.ERROR})})
+                dispatch({type: 'TOAST_ERROR', toast: buildToast('It was not possible to submit the validation request. Try again in a few minutes', {type: ToastTypes.ERROR})})
 
             }
         } 
         catch (exception) {
-            return (dispatch) => {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
-                dispatch({toast: buildToast('It was not possible to get Persona data details. Try again in a few minutes', {type: ToastTypes.ERROR})})
-            }
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
+            dispatch({type: 'TOAST_ERROR', toast: buildToast('It was not possible to get Persona data details. Try again in a few minutes', {type: ToastTypes.ERROR})})
         }
     }
 }
@@ -300,13 +281,13 @@ export function addData(infoCode, field, data, price, dispatch) {
                         };
                         //getPersonaData()
                         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
-                        dispatch({toast: buildToast('Information added successfully!', {type: ToastTypes.SUCCESS})})
+                        dispatch({type: 'TOAST_SUCCESS', toast: buildToast('Information added successfully!', {type: ToastTypes.SUCCESS})})
                     })
             })
             .catch((err) => {
                 console.error('Error actions/persona/addData/', err)
                 dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err });
-                dispatch({ toast: buildToast('Transaction not executed. Try again later.', {type: ToastTypes.ERROR})})
+                dispatch({ type: 'TOAST_ERROR', toast: buildToast('Transaction not executed. Try again later.', {type: ToastTypes.ERROR})})
             });
     }
 }
@@ -335,10 +316,8 @@ export function addPersona(name, email) {
         }
         catch (err) {
             console.error('Error actions/persona/addPersona/sendEth', err)
-            return (dispatch) => {
-                dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add funding: transaction failed' + err });
-                dispatch({ toast: buildToast('Fundings was not transfered to your wallet. Try again later.', {type: ToastTypes.ERROR})})
-            }
+            dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add funding: transaction failed' + err });
+            dispatch({ type: 'TOAST_ERROR', toast: buildToast('Fundings was not transfered to your wallet. Try again later.', {type: ToastTypes.ERROR})})
         }
         
         try {
@@ -374,10 +353,8 @@ export function addPersona(name, email) {
         }
         catch (err) {
             console.error('Error actions/persona/addPersona/addFirstData', err)
-            return (dispatch) => {
-                dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add first data (name and email): failed' + err });
-                dispatch({ toast: buildToast('It was not possible create your Holon ID. Try again later.', {type: ToastTypes.ERROR})})
-            }
+            dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add first data (name and email): failed' + err });
+            dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible create your Holon ID. Try again later.', {type: ToastTypes.ERROR})})
         }
     }
 }
@@ -406,9 +383,7 @@ export function sendEthers(sendTo, sendValue) {
         }
         catch(err) {
             console.error('actions/persona/sendEthers: ', err);
-            return (dispatch) => {
-                dispatch({type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', {type: ToastTypes.ERROR})});
-            }
+                 dispatch({type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', {type: ToastTypes.ERROR})});
         }
     }
 }
@@ -503,6 +478,7 @@ export function allowNotification(receiver, dataCategory, fieldName, data) {
         .then(
             (success) => {
                 dispatch({ 
+                    type: 'TOAST_SUCCESS',
                     toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
                 })
             } 
@@ -510,6 +486,7 @@ export function allowNotification(receiver, dataCategory, fieldName, data) {
         .catch(
             (exception) => {
                 dispatch({
+                    type: 'TOAST_ERROR',
                     toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
                 })
             }
@@ -523,6 +500,7 @@ export function declineNotification(receiver, dataCategory, fieldName, data) {
         .then(
             (success) => {
                 dispatch({
+                type: 'TOAST_SUCCESS',
                 toast: buildToast('Done! We will let the consumer know about your decision', {type: ToastTypes.SUCCESS})
                 })
             } 
@@ -530,6 +508,7 @@ export function declineNotification(receiver, dataCategory, fieldName, data) {
         .catch(
             (exception) => {
                 dispatch({ 
+                type: 'TOAST_ERROR',
                 toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
                 })
             }
