@@ -20,9 +20,8 @@ abiDecoder.addABI(abi);
 async function loadValidationRequest() {
     console.log('actions/loadValidationRequest');
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     validationRequests = await filterContract.getValidationRequestLogs(transactor.wallet.address)
     validationRequestCheck = true;
@@ -54,9 +53,8 @@ function checkWallet() {
 export function changeNetwork(networkID) {
     console.log('actions/changeNetwork');
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     try {
         return (async (dispatch) => {
@@ -94,9 +92,8 @@ export function changeNetwork(networkID) {
 export function getBalance() {
     console.log('actions/getBalance');
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     return (async (dispatch) => {
         const balance = await transactor.wallet.getBalance();
@@ -108,9 +105,8 @@ export function getBalance() {
 export function getScore() {
     console.log('actions/getScore');
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     return (async (dispatch) => {
         const score = await transactor.contract.score(transactor.wallet.address);
@@ -122,9 +118,8 @@ export function getScore() {
 
 export function getPersonaData2() {
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     return (async (dispatch) => {
         console.log('actions/getPersonaData');
@@ -183,9 +178,8 @@ export function getPersonaData2() {
 
 export function getPersonaData() {
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     try {
         return (async (dispatch) => {
@@ -218,9 +212,8 @@ export function getPersonaData() {
 
 export function askToValidate(validator, field, uriConfirmationData) {
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     console.log('persona/askToValidate/starting')
     return async (dispatch) => {
@@ -261,9 +254,8 @@ export function askToValidate(validator, field, uriConfirmationData) {
 
 export function addData(infoCode, field, data, price, dispatch) {
     if (!checkWallet()) {
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
     }
     return (dispatch) => {
         dispatch({ type: 'RUNNING_METHOD' });
@@ -299,9 +291,8 @@ export function addPersona(name, email) {
         dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
         console.log("actions/persona/addpersona/ adding fundings...");
         if (!checkWallet()) {
-            return (dispatch) => {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-            }
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            return
         }
         try {
             let atlasWallet = new ethers.Wallet("619CC0075FAC10253850ECEF582B7431FCC55CBCCD0A07BAE132EB1535F09855", transactor.provider);
@@ -364,9 +355,8 @@ export function sendEthers(sendTo, sendValue) {
     return async dispatch => {
         dispatch({ type: 'RUNNING_METHOD' });
         if (!checkWallet()) {
-            return (dispatch) => {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-            }
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            return
         }
         try {
             //TODO: verificar como captar o gasPrice da rede para mandar o dobro
@@ -417,9 +407,8 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
     return async dispatch => {
         console.log('deliverDecryptedData/starting')
         if (!checkWallet()) {
-            return (dispatch) => {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-            }
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            return
         }
         dispatch({ type: 'CLEAN_ERROR' });
         dispatch({ type: 'RUNNING_METHOD' });
@@ -438,9 +427,8 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
             }
         } catch (exception) {
             console.error('deliverDecryptedData', exception);
-            return (dispatch) => {
-                dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
-            }
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
+            return 
         }
     }
 }

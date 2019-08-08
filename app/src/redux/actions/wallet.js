@@ -7,13 +7,13 @@ export function restoreVault(password, seed) {
   console.log('actions/wallet/restoreVault/starting');
   return dispatch => {
     wallet.createNewVaultAndRestore(password, seed)
-      .then((wallet) => {
+      .then((createdWallet) => {
         console.log('actions/wallet/restoreVault/restored');
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
-          address: wallet.address,
-          mnemonic: wallet.mnemonic,
-          wallet: wallet       
+          address: createdWallet.address,
+          mnemonic: createdWallet.mnemonic,
+          wallet: createdWallet       
         });
       })
       .catch(exception => {
