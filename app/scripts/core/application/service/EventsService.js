@@ -1,8 +1,8 @@
 
 import abiDecoder from 'abi-decoder';
-import { address, abi } from '../../config/abi';
-import EVENT_TYPE from '../enums/EventType';
-import EventTopic from '../../config/eventTopic';
+import { address, abi } from '../../../../config/abi';
+import EVENT_TYPE from '../../../enums/EventType';
+import EventTopic from '../../../../config/eventTopic';
 
 let _eventTopicList;
 let _provider;

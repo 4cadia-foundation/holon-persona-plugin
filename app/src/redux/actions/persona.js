@@ -7,7 +7,7 @@ import * as ValidationHelper from '../../helper/validations';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
 import { buildToast, ToastTypes } from '../../helper/toast';
-import EventsService from '../../../scripts/core/EventsService';
+import EventsService from '../../../scripts/core/application/service/EventsService';
 
 const transactor = new Transactor();
 const filterContract = new FilterEventsBlockchain();
