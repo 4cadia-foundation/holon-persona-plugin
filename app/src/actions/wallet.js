@@ -4,23 +4,22 @@ import {buildToast, ToastTypes} from "../helper/toast";
 
 const wallet = new Wallet();
 
-export function restoreVault(dispatch, seed, password) {
+export function restoreVault(seed, password, dispatch) {
   return wallet.createNewVaultAndRestore(seed, password)
-    .then((wallet) => {
-      return dispatch({
-          type: ActionTypes.SET_ACCOUNTS,
-          address: wallet.address,
-          mnemonic: wallet.mnemonic,
-          wallet: wallet,
-          toast: buildToast('success', {type: ToastTypes.SUCCESS})
-        });
+    .then((walletRestored) => {
+      buildToast('Wallet restored with successful', {type: ToastTypes.SUCCESS});
+
+      dispatch({
+        type: ActionTypes.SET_ACCOUNTS,
+        address: walletRestored.address,
+        mnemonic: walletRestored.mnemonic,
+        wallet: walletRestored,
+      });
+
     })
     .catch(exception => {
-      dispatch({
-        type: ActionTypes.SET_ACCOUNTS_ERROR,
-        toast: buildToast('error', {type: ToastTypes.ERROR})
-      });
-    })
+      buildToast('Wallet not restored', {type: ToastTypes.ERROR});
+    });
 }
 
 export function hasWallet() {

@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-
 import {connect} from "react-redux";
 
 import * as WalletActions from "../../actions/wallet";
-
-import './ImportWallet'
-import Loader from '../../components/Loader/Loader';
+import './ImportWallet.css';
 
 class ImportWallet extends Component {
 
@@ -22,6 +19,8 @@ class ImportWallet extends Component {
         isRunning: true,
         msg: 'Importing your wallet',
       };
+
+
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.getValidationPassword = this.getValidationPassword.bind(this);
@@ -53,12 +52,7 @@ class ImportWallet extends Component {
    **/
   handleSubmit (event) {
     event.preventDefault();
-    this.setState({
-      isRunning: true,
-    });
-    const seed = this.state.phrase;
-    const password = this.state.password;
-    WalletActions.restoreVault(this.props.dispatch, seed, password);
+    WalletActions.restoreVault(this.state.phrase, this.state.password, this.props.dispatch);
   }
 
 
@@ -134,7 +128,6 @@ class ImportWallet extends Component {
 
   render () {
     if (this.props.wallet.address.length > 2) {
-      //console.log('ImportWallet/render/address', this.props.wallet.address);
       return (
         <Redirect to="/choosecreateidentityorhome" />
       );
@@ -185,7 +178,7 @@ class ImportWallet extends Component {
             </Col>
           </Row>
         </Grid>
-        <Loader visible={this.state.isRunning} message={this.state.msg} />
+
       </div>
       );
     }

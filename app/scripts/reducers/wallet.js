@@ -1,6 +1,13 @@
 import * as Types from '../constants/types';
 
-const INITIAL_STATE = {address: '', seed:'', mnemonic: '', hasWallet: false, error: '', ethersWallet: {}};
+const INITIAL_STATE = {
+  address: '',
+  seed:'',
+  mnemonic: '',
+  hasWallet: false,
+  error: '',
+  ethersWallet: {}
+};
 
 export default function wallet(state = INITIAL_STATE, action) {
   switch(action.type) {
