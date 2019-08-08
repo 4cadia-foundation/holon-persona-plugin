@@ -15,7 +15,6 @@ module.exports = (watch = false) => {
       dns: 'empty',
       fs: 'empty',
       path: 'empty',
-      net: 'empty',
       child_process: 'empty'
     },
     output: {

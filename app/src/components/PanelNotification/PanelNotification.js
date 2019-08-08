@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Grid, Panel, Button, Modal } from 'react-bootstrap';
-import { Redirect, Link } from 'react-router-dom';
+import { Row, Grid, Panel, Button } from 'react-bootstrap';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';

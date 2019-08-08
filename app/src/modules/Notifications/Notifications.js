@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Grid, Panel, Button } from 'react-bootstrap';
+import { Row, Col, Grid } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,6 +27,7 @@ class Notifications extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     return { notifications: nextProps.persona.notifications };
   }
+
   GetNotificationGrid() {
     let notificationGrid = [];
 
@@ -43,7 +44,9 @@ class Notifications extends Component {
     }
     return notificationGrid ? notificationGrid : 'No notifications available';
   }
+
   render() {
+    
     return (
       <Grid>
         <Row>
@@ -63,8 +66,11 @@ class Notifications extends Component {
     )
   }
 }
+
 const mapStateToProps = state => ({
   persona: state.persona
 });
+
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

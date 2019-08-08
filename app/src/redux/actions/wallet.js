@@ -1,18 +1,19 @@
-import Wallet  from '../../../scripts/core/WalletStorage';
+import Wallet from '../../../scripts/core/WalletStorage';
 import * as ActionTypes from '../../constants/actionsTypes';
+
 const wallet = new Wallet();
 
 export function restoreVault(password, seed) {
   console.log('actions/wallet/restoreVault/starting');
   return dispatch => {
     wallet.createNewVaultAndRestore(password, seed)
-      .then((wallet) => {
+      .then((createdWallet) => {
         console.log('actions/wallet/restoreVault/restored');
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
-          address: wallet.address,
-          mnemonic: wallet.mnemonic,
-          wallet: wallet       
+          address: createdWallet.address,
+          mnemonic: createdWallet.mnemonic,
+          wallet: createdWallet       
         });
       })
       .catch(exception => {
@@ -49,12 +50,12 @@ export function hasWallet() {
 export function openWallet(password) {
   console.log('openWallet/password', password.length);
   return dispatch => {
-    wallet.submitPassword(password).then(wallet => {
+    wallet.submitPassword(password).then(openedWallet => {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
-        address: wallet.address,
-        wallet: wallet,
-        mnemonic: wallet.mnemonic,
+        address: openedWallet.address,
+        wallet: openedWallet,
+        mnemonic: openedWallet.mnemonic,
       });
     })
     .catch(exception => {
@@ -69,12 +70,12 @@ export function createNewWallet(password){
   return dispatch=> {
     console.log('actions/wallet/creating new wallet');
     wallet.createNewVault(password)
-    .then((wallet) => {
+    .then((createdWallet) => {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
-        address: wallet.address,
-        wallet: wallet,
-        mnemonic: wallet.mnemonic,       
+        address: createdWallet.address,
+        wallet: createdWallet,
+        mnemonic: createdWallet.mnemonic,       
       });
     })
     .catch((exception) => {

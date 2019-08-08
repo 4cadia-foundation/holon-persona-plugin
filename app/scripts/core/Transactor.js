@@ -57,7 +57,7 @@ export default class Transactor extends SmartContract {
           statusValidacao = "0";
       } else if ( (reputation==0) && (numberOfValidations>0) ) {
           console.log('transactor/getPersonalInfo/numberOfValidations > 0', field, fieldName, reputation, numberOfValidations);    
-          for (y=0; y<numberOfValidations; y++) {
+          for (let y=0; y<numberOfValidations; y++) {
               console.log('transactor/getPersonalInfo/ getPersonaDataValidatorDetails starting', this._wallet.address, fieldName, y);    
               let validation = await this._contract.getPersonaDataValidatorDetails(this._wallet.address, fieldName, y);     
               console.log('transactor/getPersonalInfo/getPersonaDataValidatorDetails/validation', validation); 

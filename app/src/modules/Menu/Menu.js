@@ -127,7 +127,7 @@ class Menu extends Component {
                 </Col>
             </Row>
     </Grid>
-)}};
+)}}
 
 const mapStateToProps = state => ({ 
     persona: state.persona
