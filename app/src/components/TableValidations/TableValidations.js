@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import {Table, Button} from 'react-bootstrap';
 import * as ValidationActions from '../../redux/actions/validations';
 import './TableValidations.css';
-import validations from "../../redux/reducers/validations";
 
 class TableValidations extends Component {
 

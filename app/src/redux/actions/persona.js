@@ -148,7 +148,7 @@ export function getPersonaData2() {
             if (reputation > 0) {
                 statusValidacao = "0";
             } else if ((reputation == 0) && (numberOfValidations > 0)) {
-                for (y = 0; y < numberOfValidations; y++) {
+                for (let y = 0; y < numberOfValidations; y++) {
                     let validation = await transactor._contract.getPersonaDataValidatorDetails(transactor.wallet.address, fieldName, y);
                     console.log('getPersonaData/validation', validation);
                     validations.push(validation);

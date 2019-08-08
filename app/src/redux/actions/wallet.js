@@ -1,5 +1,6 @@
-import Wallet  from '../../../scripts/core/WalletStorage';
+import Wallet from '../../../scripts/core/WalletStorage';
 import * as ActionTypes from '../../constants/actionsTypes';
+
 const wallet = new Wallet();
 
 export function restoreVault(password, seed) {

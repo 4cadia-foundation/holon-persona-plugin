@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import {withRouter, Redirect} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import './Navbar.css';
 
 
 class Navbar extends Component {
-
-
   constructor(props){
    super(props);
   }
-
-
 
   render () {
     let enableMenu = this.props.enableNavBar ? 'show': 'hide';
@@ -21,10 +18,6 @@ class Navbar extends Component {
       </nav>
     );
   }
-
 }
 
-export default withRouter(
-  connect(
-    (state) => ({enableNavBar: state.enableNavBar})
-  )(Navbar));
+export default withRouter(connect((state) => ({enableNavBar: state.enableNavBar}))(Navbar));
