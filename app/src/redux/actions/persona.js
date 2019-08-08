@@ -252,7 +252,7 @@ export function askToValidate(validator, field, uriConfirmationData) {
     }
 }
 
-export function addData(infoCode, field, data, price, dispatch) {
+export function addData(infoCode, field, data, price) {
     if (!checkWallet()) {
         dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         return
