@@ -5,10 +5,10 @@ export function fieldHasSentToValidation(validationRequests, field) {
         return "1";
     }
     //console.log('helper/validations/field', ethers.utils.id(field));
-    for (let k=0; k<validationRequests.length; k++) {
+    for (let k = 0; k < validationRequests.length; k++) {
         //console.log('helper/validations/fieldHasSentToValidation', validationRequests[k]);
         //console.log('helper/validations/field/compare', ethers.utils.id(field) == validationRequests[k][3].value);
-        if (field == validationRequests[k][3].value) {
+        if (field == validationRequests[k]["field"]) {
             return "3";
         }
     }
@@ -32,7 +32,7 @@ export function getStatusValidationDescription(statusValidacao) {
 
 export function updateStatusValidationField(personalInfo, validationRequests, field) {
     let newPersonalInfo = [];
-    for (let k=0; k<personalInfo.length; k++) {
+    for (let k = 0; k < personalInfo.length; k++) {
         let item = {
             field: personalInfo[k].field,
             valor: personalInfo[k].valor,
