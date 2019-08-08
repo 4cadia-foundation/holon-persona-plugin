@@ -1,0 +1,33 @@
+.rowSend {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px 0 30px 0;
+}
+
+.boxWallet {
+    min-height: 55px;
+    min-width: 250px;
+    font-size: 10pt;
+    border: solid 0.5px #A9A9A9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.send-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.inputSend {
+    font-size: 10pt;
+    min-width: 250px;
+    height: 45px;
+}
+
+.p-send {
+    margin: 0 10px 0 0;
+}

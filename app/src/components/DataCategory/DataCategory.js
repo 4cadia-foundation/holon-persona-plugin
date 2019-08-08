@@ -23,16 +23,6 @@ class DataCategory extends Component {
           key: "3",
           value: 3,
           text: 'Financial Data'
-        },
-        {
-          key: "4",
-          value: 4,
-          text: 'Social Data',
-        },
-        {
-          key: "5",
-          value: 5,
-          text: 'Others'
         }
       ]
     }

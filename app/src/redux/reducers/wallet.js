@@ -3,7 +3,7 @@ import * as ActionTypes from '../../constants/actionsTypes';
 const INITIAL_STATE = {
   address: '',
   seed:'',
-  mnemonic: 'ivory alarm violin grid uphold street clock crime across kit shop leaf',
+  mnemonic: '',
   hasWallet: false,
   error: '',
   ethersWallet: {}
@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export default function wallet(state = INITIAL_STATE, action) {
   switch(action.type) {
     case ActionTypes.SET_ACCOUNTS:
-      return {...state, ethersWallet: action.wallet, address: action.address};
+      return {...state, ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic};
     break;
     case ActionTypes.SET_WALLET_CREATE:
       return {...state, accounts: action.accounts};

@@ -1,13 +1,32 @@
-import SmartContract from './SmartContract';
 import {Transaction} from 'ethereumjs-tx';
+import abiDecoder from 'abi-decoder';
+import { abi, address } from '../../config/abi';
 
-export  default class FilterEventsBlockchain extends SmartContract {
+export default class FilterEventsBlockchain {
 
+  constructor() {
+    this._transactor = null;
+    const filterNewData = {
+      address: address,
+      fromBlock: 4852633,
+      toBlock: 'latest',
+      topics: [],
+    };
+    this.filterData = filterNewData;
+    this.contractDecoder = abiDecoder
+    this.contractDecoder.addABI(abi);
+  }
 
-  constructor(filter) {
-    super();
+  set transactor(_transactor) {
+    this._transactor = _transactor;
+  }
 
-    this.filterData = filter;
+  get transactor() {
+    return this._transactor;
+  }
+
+  get provider() {
+    return this._transactor._wallet.provider;
   }
 
   /**
@@ -41,17 +60,35 @@ export  default class FilterEventsBlockchain extends SmartContract {
    /**
    * @method setEventToFilter
    * @desc Set an event to filter
-   * '0xdf2fb7108dabed1e6a14fa2c8d51f354ab21c8d5d0734ea4828f4637993e4938' = DeliverData
-   * '0x1456b31d407e7c26146bc3a52f821b249e30d8c118995dcf93a95543e3fd8bcf' = NewData
-   * '0xe0ed6b8656a7970b4fd31dfdfe4776138c549385ec553edc68a19c88cd075300' = LetMeSeeYourData
-   * '0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547' = ValidationResult
-   * '0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6' = ValidateMe
+   * event NewData(address indexed persona, DataCategory dataCategory, uint infoCategory, string field);
+     event ValidateMe(address indexed requester, address indexed validator, DataCategory dataCategory, string field, string data, string uriConfirmationData);
+     event ValidationResult(address indexed persona, address indexed validator, string field, ValidationChoices result);
+     event LetMeSeeYourData(address indexed requester, address indexed persona, string field);
+     event DeliverData(bool accepted, address indexed persona, address indexed consumer, DataCategory dataCategory, string field, string data);
    * 
    * Devido a bug no ethereumjs-tx só é possível filtrar logs de um evento (topico) por vez
    * */
-  setEventToFilter(event) {
-    this._filterData.topics[0] = event;
-    //console.log('FilterEventsBlockchain/defineEventToFilter/Topic', this._filterData.topics[0]);
+  setEventToFilter(eventName) {
+    // this._filterData.topics[0] = ethers.utils.id('validateme(address indexed,address indexed,datacategory,string,string,string)')
+    // console.log('FilterEventsBlockchain/defineEventToFilter/validateme1', this._filterData.topics[0], '0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6');
+    if (eventName.toLowerCase() === 'newdata') {
+      this._filterData.topics[0] = '0x1456b31d407e7c26146bc3a52f821b249e30d8c118995dcf93a95543e3fd8bcf';
+      //this._filterData.topics[0] = ethers.utils.id('NewData(address indexed persona,DataCategory dataCategory,uint infoCategory,string field)')
+    } else if (eventName.toLowerCase() === 'validateme') {
+      this._filterData.topics[0] = '0xd3b557f4e8a38a85c977c23ef0ce13669bfd8516c9efb3faa4053d9f2dfeeda6';
+      //this._filterData.topics[0] = ethers.utils.id('validateme(address indexed,address indexed,datacategory,string,string,string)')
+    } else if (eventName.toLowerCase() === 'validationresult') {
+      this._filterData.topics[0] = '0xf6da3522a535c33bdb2bc75b4c5bd4f39df957ed7245d7311ead1ec9594c8547';
+      //this._filterData.topics[0] = ethers.utils.id('ValidationResult(address indexed persona, address indexed validator, string field, ValidationChoices result)')
+    } else if (eventName.toLowerCase() === 'letmeseeyourdata') {
+      this._filterData.topics[0] = '0xe0ed6b8656a7970b4fd31dfdfe4776138c549385ec553edc68a19c88cd075300';
+      // this._filterData.topics[0] = ethers.utils.id('LetMeSeeYourData(address indexed requester, address indexed persona, string field)')
+    } else if (eventName.toLowerCase() === 'deliverdata') {
+      this._filterData.topics[0] = '0xdf2fb7108dabed1e6a14fa2c8d51f354ab21c8d5d0734ea4828f4637993e4938';
+      //this._filterData.topics[0] = ethers.utils.id('DeliverData(bool accepted, address indexed persona, address indexed consumer, DataCategory dataCategory, string field, string data)')
+    }
+    //this._filterData.topics[0] = event;
+    // console.log('FilterEventsBlockchain/defineEventToFilter/Topic', eventName, this._filterData.topics[0]);
   }
 
 
@@ -110,6 +147,30 @@ export  default class FilterEventsBlockchain extends SmartContract {
     });
   }
 
+
+  async getValidationRequestLogs(personaAddress) {
+    //get logs of validation requests
+    let validationRequests = []
+    this.setEventToFilter('validateme');
+    let askValidationHashes = await this.getLogsTransactionHash();
+    //console.log('actions/getPersonaData/filterContract.VALIDATEME_EVENT', filterContract.VALIDATEME_EVENT)
+    //console.log('actions/getPersonaData/askValidationHashes', askValidationHashes)
+    for (let i=0; i<askValidationHashes.length; i++) {
+        let receiptValidationHash = await this.getTransactionReceipt(askValidationHashes[i]);
+        //console.log('actions/getPersonaData/receiptValidationHash', receiptValidationHash);
+        let receiptValidationHashDecoded = this.contractDecoder.decodeLogs(receiptValidationHash.logs)
+        receiptValidationHashDecoded = receiptValidationHashDecoded[0];
+        //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded, personaAddress)
+        //console.log('actions/getPersonaData/askValidationHashes/decoded', receiptValidationHashDecoded.events[0].value.toUpperCase(), personaAddress.toUpperCase(), receiptValidationHashDecoded.events[0].value.toUpperCase() === personaAddress.toUpperCase())
+        if (receiptValidationHashDecoded.events[0].value.toUpperCase() === personaAddress.toUpperCase()) {
+            validationRequests.push(receiptValidationHashDecoded.events)
+            // console.log('actions/getPersonaData/validationRequests/events',receiptValidationHashDecoded.events);
+            //console.log('actions/getPersonaData/validationRequests/parse', receiptValidationHashDecoded.events[3].value, ethers.utils.id("email"), ethers.utils.id("Birth data"), ethers.utils.id("name"));
+        }
+    }
+    // console.log('FilterEventsBlockchain/validationRequests', validationRequests);
+    return validationRequests;
+  }
 
 
   /**

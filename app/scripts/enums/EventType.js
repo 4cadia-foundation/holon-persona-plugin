@@ -1,0 +1,9 @@
+const EVENT_TYPE = {
+    NEWDATA: 0,
+    VALIDATEME: 1,
+    VALIDATIONRESULT: 2,
+    LETMESEEYOURDATA: 3,
+    DELIVERDATA: 4
+};
+Object.freeze(EVENT_TYPE);
+module.exports = EVENT_TYPE;

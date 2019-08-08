@@ -23,8 +23,8 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (this.state.persona.personalInfo.length === 0) {
-      this.props.getPersonaData();   
+    if (this.props.persona.numberOfFields < 1) {
+      this.props.getPersonaData(); 
     } else {
       this.setState({
         isLoading: false,
@@ -62,7 +62,7 @@ class Home extends Component {
   }
 
   getValidationDescClass(statusValidation) {
-    console.log('getValidationDescClass', statusValidation)
+    //console.log('getValidationDescClass', statusValidation)
     if (statusValidation == "0") {
       return "success"
     } else if (statusValidation == "3") {
