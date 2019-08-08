@@ -47,7 +47,6 @@ export default class EventsService {
                 filterData.topics[filterIndex + 1] = topicFilter[filterIndex];
             }
         }
-
         let eventHashes = await this.GetEventHash(filterData);
         if (!eventHashes)
             return null;
