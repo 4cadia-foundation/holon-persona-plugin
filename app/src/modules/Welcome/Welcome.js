@@ -1,17 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Grid, Row } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
-import * as WalletActions from "../../actions/wallet";
-
 import logo from '../../../images/logo.png';
-import Wallet from '../../../scripts/core/WalletStorage';
-import Settings from '../../../config/settings';
 import './Welcome.css';
-
-const wallet = new Wallet();
 
 class Welcome extends Component {
 
@@ -19,13 +11,8 @@ class Welcome extends Component {
     super(props);
   }
 
-  componentDidMount() {
-  }
-
   render() {
-
-
-    return (
+   return (
       <Grid className="gridPrincipal">
         <header>
           <Row className="text-center">
@@ -55,7 +42,6 @@ const mapStateToProps = state => ({
   wallet: state.wallet
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+export default connect(mapStateToProps)(Welcome);
 
