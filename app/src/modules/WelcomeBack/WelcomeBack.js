@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as WalletActions from "../../redux/actions/wallet";
+import * as WalletActions from "../../actions/wallet";
 
 import Loader from '../../components/Loader/Loader';
 import logo from '../../../images/logo.png';
@@ -20,7 +20,7 @@ class WelcomeBack extends Component {
           openedWallet: false,
           isProcessing: false,
           msg: "Loading",
-        };        
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -71,18 +71,18 @@ class WelcomeBack extends Component {
                     <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
                 <label className="paragraph label-welcomeback">Password</label>
-                <FormControl 
+                <FormControl
                     className="paragraph"
-                    id="password" 
-                    type="password" 
+                    id="password"
+                    type="password"
                     value={this.state.password}
-                    placeholder="The password must have 8 characters" 
+                    placeholder="The password must have 8 characters"
                     onChange={this.handleChange}
                 />
                 <Button disabled={!this.validateForm()} className="paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
                     Log in
-                </Button>    
-                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            
+                </Button>
+                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>
             </Form>
             <Loader visible={this.state.isProcessing} message={this.state.msg} />
         </Grid>
@@ -96,5 +96,5 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(WelcomeBack);

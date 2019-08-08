@@ -1,26 +1,26 @@
-import Wallet  from '../../../scripts/core/WalletStorage';
-import * as ActionTypes from '../../constants/actionsTypes';
+import Wallet  from '../../scripts/core/WalletStorage';
+import * as ActionTypes from '../constants/actionsTypes';
+import {buildToast, ToastTypes} from "../helper/toast";
+
 const wallet = new Wallet();
 
-export function restoreVault(password, seed) {
-  console.log('actions/wallet/restoreVault/starting');
-  return dispatch => {
-    wallet.createNewVaultAndRestore(password, seed)
-      .then((wallet) => {
-        console.log('actions/wallet/restoreVault/restored');
-        dispatch({
+export function restoreVault(dispatch, seed, password) {
+  return wallet.createNewVaultAndRestore(seed, password)
+    .then((wallet) => {
+      return dispatch({
           type: ActionTypes.SET_ACCOUNTS,
           address: wallet.address,
           mnemonic: wallet.mnemonic,
-          wallet: wallet       
+          wallet: wallet,
+          toast: buildToast('success', {type: ToastTypes.SUCCESS})
         });
-      })
-      .catch(exception => {
-        dispatch({
-          type: ActionTypes.SET_ACCOUNTS_ERROR,
-        });
-      })
-  }
+    })
+    .catch(exception => {
+      dispatch({
+        type: ActionTypes.SET_ACCOUNTS_ERROR,
+        toast: buildToast('error', {type: ToastTypes.ERROR})
+      });
+    })
 }
 
 export function hasWallet() {
@@ -30,7 +30,7 @@ export function hasWallet() {
         dispatch({
           type: ActionTypes.HAS_WALLET,
           hasWallet: false
-        });  
+        });
         return;
       }
       dispatch({
@@ -47,7 +47,6 @@ export function hasWallet() {
 }
 
 export function openWallet(password) {
-  console.log('openWallet/password', password.length);
   return dispatch => {
     wallet.submitPassword(password).then(wallet => {
       dispatch({
@@ -74,7 +73,7 @@ export function createNewWallet(password){
         type: ActionTypes.SET_ACCOUNTS,
         address: wallet.address,
         wallet: wallet,
-        mnemonic: wallet.mnemonic,       
+        mnemonic: wallet.mnemonic,
       });
     })
     .catch((exception) => {

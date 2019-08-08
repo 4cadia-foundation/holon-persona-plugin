@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import * as WalletActions from "../../redux/actions/wallet";
+import * as WalletActions from "../../actions/wallet";
 
 import logo from '../../../images/logo.png';
 import Wallet from '../../../scripts/core/WalletStorage';
@@ -17,23 +17,13 @@ class Welcome extends Component {
 
   constructor(props) {
     super(props);
-    if (Settings.clearStorage) {
-      wallet.clearStorage();
-    }
   }
 
   componentDidMount() {
-    this.props.hasWallet();
   }
 
   render() {
 
-    if (this.props.wallet.hasWallet) {
-      //console.log('WalletPassword/render/wallet', this.props.wallet);
-      return (
-        <Redirect to="/welcomeback" />
-      );
-    }
 
     return (
       <Grid className="gridPrincipal">

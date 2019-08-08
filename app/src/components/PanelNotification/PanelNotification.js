@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from "../../actions/persona";
 
 import './PanelNotification.css';
 

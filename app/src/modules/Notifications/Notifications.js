@@ -3,7 +3,7 @@ import { Row, Col, Grid, Panel, Button } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from "../../actions/persona";
 
 import NotificationPanel from "../../components/PanelNotification/PanelNotification";
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
@@ -37,7 +37,7 @@ class Notifications extends Component {
       notificationGrid.push(<NotificationPanel
         addressReceiver={this.state.notifications[index].requesterAddress}
         nameReceiver={this.state.notifications[index].requesterName}
-        fieldName={this.state.notifications[index].field} 
+        fieldName={this.state.notifications[index].field}
         dataValue={this.state.notifications[index].data}
         dataCategory={this.state.notifications[index].dataCategory}/>);
     }

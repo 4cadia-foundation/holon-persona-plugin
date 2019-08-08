@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from "../../actions/persona";
 
 import Loader from '../../components/Loader/Loader';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
@@ -25,15 +25,7 @@ class SendEth extends Component {
       isRunning: true,
       sentToAction: false
     }
-    this.props.getBalance();      
-  }
-
-  componentDidMount() {  
-    this.setState({
-      balance: this.props.persona.balance,
-      address: this.props.persona.address,
-      isRunning: false,
-    })
+    this.props.getBalance();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -42,10 +34,18 @@ class SendEth extends Component {
         console.error('SendEth/getDerivedStateFromProps: ', msg);
         alert(msg);
         return { balance: 0, address: null};
-    }    
-    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };        
+    }
+    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };
   }
-  
+
+  componentDidMount() {
+    this.setState({
+      balance: this.props.persona.balance,
+      address: this.props.persona.address,
+      isRunning: false,
+    })
+  }
+
   hideAddress (adrs) {
     if (adrs.length > 30) {
         return (adrs.substring(0, 30) + "...")

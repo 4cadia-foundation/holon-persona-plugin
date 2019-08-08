@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from "../../actions/persona";
 
 import Loader from '../../components/Loader/Loader';
 
@@ -19,9 +19,9 @@ class ChooseCreateIdentityOrHome extends Component {
   }
 
   componentDidMount() {
-    this.props.getPersonaData()    
+    this.props.getPersonaData()
   }
-  
+
   static getDerivedStateFromProps(nextProps, prevState) {
     //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps nextProps', nextProps.persona);
     //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps prevState', prevState);
@@ -55,7 +55,7 @@ class ChooseCreateIdentityOrHome extends Component {
   }
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
   persona: state.persona, wallet: state.wallet
 });
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);

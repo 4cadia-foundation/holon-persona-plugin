@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Table, Button} from 'react-bootstrap';
-import * as ValidationActions from '../../redux/actions/validations';
+import * as ValidationActions from '../../actions/validations';
 import './TableValidations.css';
-import validations from "../../redux/reducers/validations";
 
 class TableValidations extends Component {
 
@@ -41,7 +40,7 @@ class TableValidations extends Component {
   render () {
 
     const {modules} = this.state;
-    
+
     return (
       <section>
         <Button bsStyle="success" onClick={() => this.props.getPersonaData()}>Get Persona Data</Button>
@@ -66,9 +65,9 @@ class TableValidations extends Component {
                 <td>{doc.type}</td>
                 <td>{doc.status}</td>
                 <td>
-                  <Button 
-                    variant="outline-dark" 
-                    size="sm" 
+                  <Button
+                    variant="outline-dark"
+                    size="sm"
                     onClick={
                       () => this.props.toggleDocuments(modules, doc)
                     }>
@@ -86,7 +85,7 @@ class TableValidations extends Component {
 
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
   modules: state.validations
 });
 

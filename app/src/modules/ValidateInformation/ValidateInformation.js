@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as PersonaActions from '../../redux/actions/persona';
+import * as PersonaActions from '../../actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import SelectPersonaInfoFields from '../../components/SelectPersonaInfoFields/SelectPersonaInfoFields';
@@ -97,7 +97,7 @@ class ValidateInformation extends Component {
         return (
             <Grid>
                 <div className="btn-validate-close">
-                 <CloseIconPage destination="/menu"/>    
+                 <CloseIconPage destination="/menu"/>
                 </div>
                 <Row>
                   <Col xs={12} md={12}>
@@ -135,10 +135,10 @@ class ValidateInformation extends Component {
     }
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
     persona: state.persona
 });
-  
+
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(ValidateInformation);

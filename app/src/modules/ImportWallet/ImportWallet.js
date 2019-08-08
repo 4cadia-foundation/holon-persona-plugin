@@ -3,8 +3,8 @@ import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, Hel
 import { Redirect } from 'react-router-dom';
 
 import {connect} from "react-redux";
-import { bindActionCreators } from 'redux';
-import * as WalletActions from "../../redux/actions/wallet";
+
+import * as WalletActions from "../../actions/wallet";
 
 import './ImportWallet'
 import Loader from '../../components/Loader/Loader';
@@ -13,6 +13,7 @@ class ImportWallet extends Component {
 
   constructor(props) {
       super(props);
+
       this.state = {
         phrase: '',
         password: '',
@@ -54,10 +55,10 @@ class ImportWallet extends Component {
     event.preventDefault();
     this.setState({
       isRunning: true,
-    })
-    const mnemonic = this.state.phrase;
+    });
+    const seed = this.state.phrase;
     const password = this.state.password;
-    this.props.restoreVault(mnemonic, password);
+    WalletActions.restoreVault(this.props.dispatch, seed, password);
   }
 
 
@@ -196,6 +197,5 @@ const mapStateToProps = state => ({
   wallet: state.wallet
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImportWallet);
+export default connect(mapStateToProps)(ImportWallet);

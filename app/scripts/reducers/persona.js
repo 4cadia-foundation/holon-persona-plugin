@@ -11,10 +11,7 @@ const INITIAL_STATE = {
 
 export default function persona(state = INITIAL_STATE, action) {
 
-    //console.log('reducer persona/action', action)
-
     if (action.type == 'GET_PERSONA_BASIC_DATA') {
-        //console.log('reducer GET_PERSONA_BASIC_DATA state', state)
         return {
             ...state, personalInfo: action.novoPersonalInfo,
             numberOfFields: action.numberOfFields,

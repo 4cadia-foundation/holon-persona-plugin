@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import * as WalletActions from "../../redux/actions/wallet";
+import * as WalletActions from "../../actions/wallet";
 
 import Loader from '../../components/Loader/Loader';
 import './WalletPassword.css';

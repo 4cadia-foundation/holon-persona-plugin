@@ -3,7 +3,7 @@ import { Col, Grid, Row } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import * as WalletActions from "../../redux/actions/wallet";
+import * as WalletActions from "../../actions/wallet";
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import './BackupPhrase.css'

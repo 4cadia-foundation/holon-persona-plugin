@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
-import { bindActionCreators } from 'redux';
+
 import { connect } from "react-redux";
-import * as PersonaActions from '../../redux/actions/persona';
+import * as PersonaActions from '../../actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import DataCategory from '../../components/DataCategory/DataCategory';
@@ -42,8 +42,7 @@ class AddInformation extends Component {
             console.error('getDerivedStateFromProps: ', msg);
             return { isLoading: false };
         }
-        // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
-        // console.log('getDerivedStateFromProps prevState', prevState);
+
         if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
             return { isLoading: nextProps.persona.isRunning, executed: true };
         }
@@ -60,7 +59,7 @@ class AddInformation extends Component {
             isLoading: true,
             saveButtonCalled: true,
         })
-        this.props.addData(infoCode, field, data, price)
+      PersonaActions.addData(this.props.dispatch, infoCode, field, data, price)
     }
 
     validateForm() {
@@ -82,8 +81,6 @@ class AddInformation extends Component {
     }
 
     render() {
-        //console.log('render props', this.props)
-        // console.log('render state', this.state)
         if (this.state.executed) {
             return (
                 <Redirect to='/home' />
@@ -141,6 +138,5 @@ const mapStateToProps = state => ({
     persona: state.persona
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddInformation);
+export default connect(mapStateToProps)(AddInformation);

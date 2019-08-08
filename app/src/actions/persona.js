@@ -1,23 +1,24 @@
 import { ethers } from 'ethers';
-import Transactor from '../../../scripts/core/Transactor';
-import FilterEventsBlockchain from '../../../scripts/core/FilterEventsBlockchain';
-import store from '../store';
-import { address, abi } from '../../../config/abi';
-import * as ValidationHelper from '../../helper/validations';
+import Transactor from '../../scripts/core/Transactor';
+import FilterEventsBlockchain from '../../scripts/core/FilterEventsBlockchain';
+import { address, abi } from '../../config/abi';
+import * as ValidationHelper from '../helper/validations';
 import abiDecoder from 'abi-decoder';
-import * as ActionTypes from "../../constants/actionsTypes";
-import { buildToast, ToastTypes} from '../../helper/toast';
+import * as ActionTypes from "../constants/actionsTypes";
+import { buildToast, ToastTypes} from '../helper/toast';
 
 const transactor = new Transactor();
 const filterContract = new FilterEventsBlockchain();
 filterContract.setEventToFilter('newdata');
+
 var validationRequests = [];
 var validationRequestCheck = false;
 var validations = [];
+
 abiDecoder.addABI(abi);
 
 async function loadValidationRequest() {
-    console.log('actions/loadValidationRequest');
+
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
@@ -31,19 +32,8 @@ async function loadValidationRequest() {
 
 function checkWallet() {
     console.log('action/persona/checkingWallet');
-    //console.log('action/persona/checkWallet/globalState', store.getState());
-    //console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
     if (!transactor.wallet) {
-        if (store.getState().wallet.ethersWallet) {
-            transactor.wallet = store.getState().wallet.ethersWallet;
-            transactor.contractWithSigner;
-            filterContract.transactor = transactor;
-            console.log('action/persona/checkWallet/transactor.wallet-set', transactor);
-            console.log('action/persona/checkWallet/filterContract transactor-set', filterContract);
-            return true;
-        } else {
-            return false;
-        }
+     return false;
     } else {
         transactor.contractWithSigner;
         return true;
@@ -435,7 +425,7 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
                 console.log('persona/deliverDecryptedData/receipt', receipt)
                 if (receipt.status === 1) {
                     // console.log('actions/deliverDecryptedData/loading');
-                    // validationRequests = await loadValidationRequest();                    
+                    // validationRequests = await loadValidationRequest();
                     // console.log('actions/deliverDecryptedData/loading');
                     // let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
                     // console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
@@ -456,26 +446,24 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
     }
 }
 
-export function allowNotification(receiver, dataCategory, fieldName, data) {
-    return dispatch => {
-        return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
-        .then(
-            (success) => {
-                dispatch({
-                    type: 'TOASTY_SUCCESS', 
-                    toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
-                })
-            } 
-        )
-        .catch(
-            (exception) => {
-                dispatch({
-                    type: 'TOASTY_ERROR', 
-                    toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
-                })
-            }
-        )
-    }
+export function allowNotification(dispatch, receiver, dataCategory, fieldName, data) {
+  return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
+  .then(
+      (success) => {
+          return dispatch({
+              type: 'TOASTY_SUCCESS',
+              toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
+          })
+      }
+  )
+  .catch(
+      (exception) => {
+          return dispatch({
+              type: 'TOASTY_ERROR',
+              toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
+          })
+      }
+  )
 }
 
 export function declineNotification(receiver, dataCategory, fieldName, data) {
@@ -487,12 +475,12 @@ export function declineNotification(receiver, dataCategory, fieldName, data) {
                 type: 'TOASTY_SUCCESS',
                 toast: buildToast('Done! We will let the consumer know about your decision', {type: ToastTypes.SUCCESS})
                 })
-            } 
+            }
         )
         .catch(
             (exception) => {
                 dispatch({
-                type: 'TOASTY_ERROR', 
+                type: 'TOASTY_ERROR',
                 toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
                 })
             }

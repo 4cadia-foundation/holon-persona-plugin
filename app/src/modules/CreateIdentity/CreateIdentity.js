@@ -4,7 +4,7 @@ import { Button, ControlLabel, FormGroup, FormControl, Grid, Row } from 'react-b
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from "../../actions/persona";
 
 import Loader from '../../components/Loader/Loader';
 import './CreateIdentity.css';
