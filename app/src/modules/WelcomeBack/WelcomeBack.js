@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
-import Loader from '../../components/Loader/Loader';
+// import Loader from '../../components/Loader/Loader';
 import logo from '../../../images/logo.png';
 import './WelcomeBack.css'
 
@@ -18,8 +18,8 @@ class WelcomeBack extends Component {
         this.state = {
           password: "",
           openedWallet: false,
-          isProcessing: false,
-          msg: "Loading",
+        //   isProcessing: false,
+        //   msg: "Loading",
         };        
     }
 
@@ -27,7 +27,7 @@ class WelcomeBack extends Component {
         if (nextProps.wallet.address.length > 2) {
             //console.log('WelcomeBack/componentWillReceiveProps/address', nextProps.wallet);
             this.setState({
-                isProcessing: false,
+                // isProcessing: false,
                 openedWallet: true
             })
         }
@@ -36,8 +36,8 @@ class WelcomeBack extends Component {
     handleClick(event){
         event.preventDefault();
         this.setState({
-            isProcessing: true,
-            msg: "Openning wallet",
+            // isProcessing: true,
+            // msg: "Openning wallet",
         })
         this.props.openWallet(this.state.password);
     }
@@ -51,7 +51,6 @@ class WelcomeBack extends Component {
           [event.target.id]: event.target.value
         });
     }
-
 
   render () {
     if (this.state.openedWallet) {
@@ -84,7 +83,7 @@ class WelcomeBack extends Component {
                 </Button>    
                 <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            
             </Form>
-            <Loader visible={this.state.isProcessing} message={this.state.msg} />
+            {/* <Loader visible={this.state.isProcessing} message={this.state.msg} /> */}
         </Grid>
     );
   }

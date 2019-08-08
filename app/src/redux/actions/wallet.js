@@ -47,8 +47,10 @@ export function hasWallet() {
 }
 
 export function openWallet(password) {
+  console.log('passou por aqui')
   console.log('openWallet/password', password.length);
   return dispatch => {
+    dispatch({type: 'ENABLE_LOADING', message: 'Openning wallet'})
     wallet.submitPassword(password).then(wallet => {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
@@ -62,7 +64,10 @@ export function openWallet(password) {
         type: ActionTypes.OPEN_WALLET_ERROR
       });
     })
+    dispatch({type: 'DISABLE_LOADING'})
+    console.log('finalizou')
   }
+
 }
 
 export function createNewWallet(password){

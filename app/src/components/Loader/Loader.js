@@ -10,14 +10,12 @@ export default class Loader extends Component {
       visible: false
     }
   }
-
+  
   render() {
     return (
       <div className={this.state.visible ? "container-load" : "cont-hidden"}>
         <div className="vertical-spacer-120"></div>
-        <div className="loader">
-          &nbsp;
-        </div>
+        <div className="loader">&nbsp;</div>
         <div>
           <div className="vertical-spacer-5">&nbsp;</div>
           <h4 className="msg-loading text-center paragraph">
