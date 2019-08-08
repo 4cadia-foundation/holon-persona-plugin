@@ -23,7 +23,6 @@ class Balance extends Component {
         if (nextProps.persona.error.length>2) {
             const msg = 'Erro: ' + nextProps.persona.error;
             console.error('Balance/getDerivedStateFromProps: ', msg);
-            alert(msg);
             return { balance: 0 };
         }
         return { balance : nextProps.persona.balance };        
@@ -43,7 +42,7 @@ class Balance extends Component {
 
 const mapStateToProps = state => ({
     persona: state.persona
-  });
+});
   
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
   

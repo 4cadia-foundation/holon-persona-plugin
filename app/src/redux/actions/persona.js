@@ -212,7 +212,7 @@ export function getPersonaAddress() {
     }
 }
 
-export function askToValidate(validator, field, uriConfirmationData, dispatch) {
+export function askToValidate(validator, field, uriConfirmationData) {
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });

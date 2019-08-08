@@ -102,8 +102,8 @@ export default class FilterEventsBlockchain {
     let publicKey = null;
     for(let index = 0; index < listTransactionHash.length; index++){
         let transaction = await this.getTransaction(listTransactionHash[index]);
-        let address = ('0x'+ transaction.getSenderAddress().toString('hex'));
-        if (address.toLocaleLowerCase() == src.toLocaleLowerCase()){
+        let generatedAddress = ('0x'+ transaction.getSenderAddress().toString('hex'));
+        if (generatedAddress.toLocaleLowerCase() == src.toLocaleLowerCase()){
           publicKey = transaction.getSenderPublicKey();
           break
         }
