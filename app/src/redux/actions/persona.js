@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import Transactor from '../../../scripts/core/Transactor';
 import FilterEventsBlockchain from '../../../scripts/core/FilterEventsBlockchain';
 import store from '../store';
-import { address, abi } from '../../../config/abi';
+import { abi } from '../../../config/abi';
 import * as ValidationHelper from '../../helper/validations';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
