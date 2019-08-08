@@ -6,7 +6,8 @@ import { address, abi } from '../../../config/abi';
 import * as ValidationHelper from '../../helper/validations';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
-import { buildToast, ToastTypes} from '../../helper/toast';
+import { buildToast, ToastTypes } from '../../helper/toast';
+import EventsService from '../../../scripts/core/application/service/EventsService';
 
 const transactor = new Transactor();
 const filterContract = new FilterEventsBlockchain();
@@ -365,57 +366,28 @@ export function sendEthers(sendTo, sendValue) {
 
 export function GetPersonaNotifications() {
     return (async (dispatch) => {
-        let filterNewData = {
-            address: address,
-            fromBlock: 4754554, //todo: filter from last filtered block(store)
-            toBlock: 'latest',
-            topics: ['0xe0ed6b8656a7970b4fd31dfdfe4776138c549385ec553edc68a19c88cd075300']
-        };
-        let filterContract = new FilterEventsBlockchain(filterNewData);
-        let hashes = await filterContract.getLogsTransactionHash();
-
-        if (!hashes || hashes.length < 1)
-            return dispatch({ type: 'GET_NOTIFICATIONS', notifications: [] });
-
+        let eventsService = new EventsService(transactor._wallet.provider);
+        let eventFilter = [null, ethers.utils.hexZeroPad(transactor._wallet.address, 32)];
+        let eventData = await eventsService.GetLetSeeYourDataEvent(eventFilter);
         let personaNotifications = [];
-        await Promise.all(hashes.map(async hash => {
-            let receipt = await filterContract.getTransactionReceipt(hash);
-            let decodedReceipt = abiDecoder.decodeLogs(receipt.logs);
-            let letMeSeeYourDataEvent = decodedReceipt[0].events;
-            let personaAddress = letMeSeeYourDataEvent[1].value;
 
-            if (personaAddress.toUpperCase() == transactor.wallet.address.toUpperCase()) {
-                let requesterAddress = letMeSeeYourDataEvent[0].value;
-                let personaField = letMeSeeYourDataEvent[2].value;
-                let requesterDataName = await transactor.contract.getPersonaData(requesterAddress, "name");
-                let requesterDataField = await transactor.contract.getPersonaData(requesterAddress, personaField);
-                console.log('actions/persona/GetPersonaNotifications/requesterDataField', requesterDataField);
-                personaNotifications.push({
-                    hash: hash,
-                    requesterName: requesterDataName[1],
-                    requesterAddress: requesterAddress,
-                    field: personaField,
-                    data: requesterDataField[1],
-                    dataCategory: requesterDataField[2],
-                });
-            }
-        }));
+        if (!eventData || eventData.length == 0)
+            return dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
+
+        for (let eventIndex = 0; eventIndex < eventData.length; eventIndex++) {
+            let requesterDataName = await transactor.contract.getPersonaData(eventData[eventIndex].requester, "name");
+            let requesterDataField = await transactor.contract.getPersonaData(eventData[eventIndex].requester, eventData[eventIndex].field);
+            personaNotifications.push({
+                requesterName: requesterDataName[1],
+                requesterAddress: eventData[eventIndex].requester,
+                field: eventData[eventIndex].field,
+                data: requesterDataField[1],
+                dataCategory: requesterDataField[2],
+            });
+        }
         dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
     });
 }
-// export function GetDataCategory(categoryNumber) {
-//     switch (categoryNumber) {
-//         case 0:
-//             return "PlainText";
-//         case 1:
-//             return "IPFSHash";
-//         case 2:
-//             return "URI";
-//         default:
-//             return "Unknow category";
-//     }
-// }
-
 export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
     return async dispatch => {
         console.log('deliverDecryptedData/starting')
@@ -459,43 +431,43 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
 export function allowNotification(receiver, dataCategory, fieldName, data) {
     return dispatch => {
         return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
-        .then(
-            (success) => {
-                dispatch({
-                    type: 'TOASTY_SUCCESS', 
-                    toast: buildToast('Data shared successfully!', {type: ToastTypes.SUCCESS})
-                })
-            } 
-        )
-        .catch(
-            (exception) => {
-                dispatch({
-                    type: 'TOASTY_ERROR', 
-                    toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
-                })
-            }
-        )
+            .then(
+                (success) => {
+                    dispatch({
+                        type: 'TOASTY_SUCCESS',
+                        toast: buildToast('Data shared successfully!', { type: ToastTypes.SUCCESS })
+                    })
+                }
+            )
+            .catch(
+                (exception) => {
+                    dispatch({
+                        type: 'TOASTY_ERROR',
+                        toast: buildToast('Operation not executed. Try again later.', { type: ToastTypes.ERROR })
+                    })
+                }
+            )
     }
 }
 
 export function declineNotification(receiver, dataCategory, fieldName, data) {
     return dispatch => {
         return this.deliverDecryptedData(false, receiver, dataCategory, fieldName, data)
-        .then(
-            (success) => {
-                dispatch({
-                type: 'TOASTY_SUCCESS',
-                toast: buildToast('Done! We will let the consumer know about your decision', {type: ToastTypes.SUCCESS})
-                })
-            } 
-        )
-        .catch(
-            (exception) => {
-                dispatch({
-                type: 'TOASTY_ERROR', 
-                toast: buildToast('Operation not executed. Try again later.', {type: ToastTypes.ERROR})
-                })
-            }
-        )
+            .then(
+                (success) => {
+                    dispatch({
+                        type: 'TOASTY_SUCCESS',
+                        toast: buildToast('Done! We will let the consumer know about your decision', { type: ToastTypes.SUCCESS })
+                    })
+                }
+            )
+            .catch(
+                (exception) => {
+                    dispatch({
+                        type: 'TOASTY_ERROR',
+                        toast: buildToast('Operation not executed. Try again later.', { type: ToastTypes.ERROR })
+                    })
+                }
+            )
     }
 }
