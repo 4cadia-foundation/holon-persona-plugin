@@ -2,7 +2,6 @@ import { ethers } from 'ethers';
 import Transactor from '../../../scripts/core/Transactor';
 import store from '../store';
 import { abi } from '../../../config/abi';
-import * as ValidationHelper from '../../helper/validations';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
 import { buildToast, ToastTypes } from '../../helper/toast';
@@ -20,7 +19,7 @@ async function loadValidationRequest() {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         }
-    };
+    }
 
     let eventsService = new EventsService(transactor._wallet.provider);
     let validatemeFilter = [ethers.utils.hexZeroPad(transactor._wallet.address, 32)];
