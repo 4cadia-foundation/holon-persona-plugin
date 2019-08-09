@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 
 export function fieldHasSentToValidation(validationRequests, field) {
     if (!validationRequests) {

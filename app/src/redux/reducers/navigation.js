@@ -3,11 +3,8 @@ const INITIAL_STATE = {
 }
 
 export default function navigation (state = INITIAL_STATE, action) {
-  switch (action.type) {
-    case 'ENABLE_NAVBAR':
-      return {...state, enableNavBar: action.enableNavBar};
-    break;
-    default:
-      return state;
-  }
+  if (action.type == 'ENABLE_NAVBAR'){
+    return { ...state, enableNavBar: action.enableNavBar };
+  } 
+  return state;
 }

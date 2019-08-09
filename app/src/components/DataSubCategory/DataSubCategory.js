@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, DropdownButton, MenuItem } from 'react-bootstrap';
+
 import './DataSubCategory.css';
 
 class DataSubCategory extends Component {
@@ -64,7 +64,6 @@ class DataSubCategory extends Component {
       </section>
     )
   }
-
 }
 
 export default DataSubCategory;

@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import Transactor from './Transactor';
 
 class WalletStorage {
 
@@ -40,9 +39,7 @@ class WalletStorage {
   async createNewVaultAndRestore(seed, password) {
     return new Promise(async (resolve, reject) => {
       try {
-        let transactor = new Transactor();
         const wallet = new ethers.Wallet.fromMnemonic(seed);
-
         //console.log('createNewVaultAndRestore/seed', seed);
         //console.log('createNewVaultAndRestore/wallet', wallet);
         const encrypted = await wallet.encrypt(password);

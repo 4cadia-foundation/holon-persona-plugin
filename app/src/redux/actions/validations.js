@@ -5,7 +5,6 @@ export function toggleDocuments(module, doc) {
     }
 }
 
-
 export function publicKey() {
     return async (dispatch) => {
         try {
@@ -15,4 +14,4 @@ export function publicKey() {
         }
 
     }
-};
+}
