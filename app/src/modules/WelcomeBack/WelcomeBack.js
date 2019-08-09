@@ -3,7 +3,6 @@ import { Button, Form, FormControl, Grid, Row} from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
 import Loader from '../../components/Loader/Loader';
@@ -20,7 +19,7 @@ class WelcomeBack extends Component {
           openedWallet: false,
           isProcessing: false,
           msg: "Loading",
-        };        
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,7 +38,7 @@ class WelcomeBack extends Component {
             isProcessing: true,
             msg: "Openning wallet",
         })
-        this.props.openWallet(this.state.password);
+      WalletActions.openWallet(this.state.password, this.props.dispatch);
     }
 
     validateForm() {
@@ -71,18 +70,18 @@ class WelcomeBack extends Component {
                     <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
                 <label className="paragraph label-welcomeback">Password</label>
-                <FormControl 
+                <FormControl
                     className="paragraph"
-                    id="password" 
-                    type="password" 
+                    id="password"
+                    type="password"
                     value={this.state.password}
-                    placeholder="The password must have 8 characters" 
+                    placeholder="The password must have 8 characters"
                     onChange={this.handleChange}
                 />
                 <Button disabled={!this.validateForm()} className="paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
                     Log in
-                </Button>    
-                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            
+                </Button>
+                <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>
             </Form>
             <Loader visible={this.state.isProcessing} message={this.state.msg} />
         </Grid>
@@ -95,6 +94,5 @@ const mapStateToProps = state => ({
     wallet: state.wallet
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
-  
-export default connect(mapStateToProps, mapDispatchToProps)(WelcomeBack);
+
+export default connect(mapStateToProps)(WelcomeBack);

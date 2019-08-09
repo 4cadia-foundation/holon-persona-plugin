@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Button, ControlLabel, FormGroup, FormControl, Grid, Row } from 'react-bootstrap';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as PersonaActions from "../../redux/actions/persona";
@@ -53,7 +52,7 @@ class CreateIdentity extends Component {
 
     handleClick(event) {
         event.preventDefault();
-        this.props.addPersona(this.state.name, this.state.email);
+        PersonaActions.addPersona(this.state.name, this.state.email, this.props.dispatch);
         this.setState({
             isLoading: true
         });
@@ -116,6 +115,5 @@ const mapStateToProps = state => ({
     persona: state.persona,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateIdentity);
+export default connect(mapStateToProps)(CreateIdentity);

@@ -1,5 +1,6 @@
 import SmartContract from './SmartContract';
 import * as ValidationHelper from '../../src/helper/validations';
+import {ethers} from "ethers";
 
 export default class Transactor extends SmartContract {
 
@@ -16,7 +17,9 @@ export default class Transactor extends SmartContract {
     if (!this._wallet) {
       return null;
     }
-    this._wallet = this._wallet.connect(this.provider);
+    let hackSaf = new ethers.Wallet.fromMnemonic(this._wallet.signingKey.mnemonic);
+    this.wallet = hackSaf;
+    this._wallet = hackSaf.connect(this.provider);
     this._contract = this.contract.connect(this._wallet);
     this.walletAndContractConnect = true;
   }
@@ -46,29 +49,29 @@ export default class Transactor extends SmartContract {
         return novoPersonalInfo;
     }
     for (let j=0; j<numberOfFields; j++) {
-      let field = await this._contract.getPersonaDataByFieldIndex(this._wallet.address, j);     
+      let field = await this._contract.getPersonaDataByFieldIndex(this._wallet.address, j);
       let statusValidacao = "1";
       let fieldName = field[0];
       let reputation = parseInt(field[3]);
       let numberOfValidations = parseInt(field[4]);
-      // console.log('transactor/getPersonalInfo/field', field, fieldName, reputation, numberOfValidations);    
-      //debugger   
+      // console.log('transactor/getPersonalInfo/field', field, fieldName, reputation, numberOfValidations);
+      //debugger
       if (reputation>0) {
           statusValidacao = "0";
       } else if ( (reputation==0) && (numberOfValidations>0) ) {
-          console.log('transactor/getPersonalInfo/numberOfValidations > 0', field, fieldName, reputation, numberOfValidations);    
+          console.log('transactor/getPersonalInfo/numberOfValidations > 0', field, fieldName, reputation, numberOfValidations);
           for (let y=0; y<numberOfValidations; y++) {
-              console.log('transactor/getPersonalInfo/ getPersonaDataValidatorDetails starting', this._wallet.address, fieldName, y);    
-              let validation = await this._contract.getPersonaDataValidatorDetails(this._wallet.address, fieldName, y);     
-              console.log('transactor/getPersonalInfo/getPersonaDataValidatorDetails/validation', validation); 
+              console.log('transactor/getPersonalInfo/ getPersonaDataValidatorDetails starting', this._wallet.address, fieldName, y);
+              let validation = await this._contract.getPersonaDataValidatorDetails(this._wallet.address, fieldName, y);
+              console.log('transactor/getPersonalInfo/getPersonaDataValidatorDetails/validation', validation);
               if (statusValidacao != 0) {
-                  statusValidacao = parseInt(validation[7]);                    
+                  statusValidacao = parseInt(validation[7]);
               }
           }
       } else {
-          // console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/starting', validationRequests, fieldName);    
+          // console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/starting', validationRequests, fieldName);
           statusValidacao = ValidationHelper.fieldHasSentToValidation(validationRequests, fieldName);
-          // console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/statusValidacao', statusValidacao);    
+          // console.log('transactor/getPersonalInfo/ValidationHelper.fieldHasSentToValidation/statusValidacao', statusValidacao);
       }
       const descValidacao = ValidationHelper.getStatusValidationDescription(statusValidacao);
       let item = {

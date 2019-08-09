@@ -11,20 +11,20 @@ import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
 import './Home.css';
 
 class Home extends Component {
-  
+
   constructor(props) {
-    super(props);      
+    super(props);
     this.state = {
       persona: this.props.persona,
       isLoading: true,
       msg: "Loading profile from Blockchain",
     }
-    this.getCampoValor = this.getCampoValor.bind(this); 
+    this.getCampoValor = this.getCampoValor.bind(this);
   }
 
   componentDidMount() {
     if (this.props.persona.numberOfFields < 1) {
-      this.props.getPersonaData(); 
+      this.props.getPersonaData();
     } else {
       this.setState({
         isLoading: false,
@@ -74,7 +74,7 @@ class Home extends Component {
 
   render () {
     const {persona} = this.state;
-    
+
     return (
       <div>
         <Grid>
@@ -103,7 +103,7 @@ class Home extends Component {
             <Row>
               <Table striped className='tableValidation'>
                 <tbody>
-                  {persona.personalInfo.map((item, index) =>                 
+                  {persona.personalInfo.map((item, index) =>
                         <tr key={index}>
                           <td className="paragraph text-center">{item.field}</td>
                           <td className="paragraph text-center">{item.valor}</td>
@@ -114,7 +114,7 @@ class Home extends Component {
                           </td>
                         </tr>
                     )
-                  }          
+                  }
                 </tbody>
               </Table>
             </Row>
@@ -126,7 +126,7 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
   persona: state.persona
 });
 

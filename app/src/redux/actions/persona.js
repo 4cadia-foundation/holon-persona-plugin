@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import Transactor from '../../../scripts/core/Transactor';
-import store from '../store';
+import {proxyStore as store} from '../../store';
 import { abi } from '../../../config/abi';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
@@ -35,8 +35,8 @@ function checkWallet() {
     //console.log('action/persona/checkWallet/globalState', store.getState());
     //console.log('action/persona/checkWallet/transactor.wallet', transactor.wallet);
     if (!transactor.wallet) {
-        if (store.getState().wallet.ethersWallet) {
-            transactor.wallet = store.getState().wallet.ethersWallet;
+        if (store.state.wallet.ethersWallet) {
+            transactor.wallet = store.state.wallet.ethersWallet;
             transactor.contractWithSigner;
             console.log('action/persona/checkWallet/transactor.wallet-set', transactor);
             return true;
@@ -49,38 +49,37 @@ function checkWallet() {
     }
 }
 
-export function changeNetwork(networkID) {
+export async function changeNetwork(networkID, dispatch) {
     console.log('actions/changeNetwork');
     if (!checkWallet()) {
         dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         return
     }
     try {
-        return (async (dispatch) => {
-            dispatch({ type: 'RUNNING_METHOD' });
-            let options = new Object();
-            options.network = networkID;
-            if (networkID === 1) {
-                options.host = 'cloudflare-eth.com';
-                options.port = '8545';
-                options.provider = 'https';
+          dispatch({ type: 'RUNNING_METHOD' });
+          let options = new Object();
+          options.network = networkID;
+          if (networkID === 1) {
+              options.host = 'cloudflare-eth.com';
+              options.port = '8545';
+              options.provider = 'https';
 
-            } else if (networkID === 4) {
-                options.host = 'rinkeby.caralabs.me';
-                options.port = '18545';
-                options.provider = 'http';
-            } else if (networkID === 99) {
-                options.host = 'localhost';
-                options.port = '8545';
-                options.provider = 'http';
-            }
-            transactor.provider = options;
-            console.log('actions/changeNetwork/newProvider', transactor);
-            // getBalance();
-            // getScore();
-            // getPersonaData();
-            dispatch({ type: 'METHOD_EXECUTED' });
-        });
+          } else if (networkID === 4) {
+              options.host = 'rinkeby.caralabs.me';
+              options.port = '18545';
+              options.provider = 'http';
+          } else if (networkID === 99) {
+              options.host = 'localhost';
+              options.port = '8545';
+              options.provider = 'http';
+          }
+          transactor.provider = options;
+          console.log('actions/changeNetwork/newProvider', transactor);
+          // getBalance();
+          // getScore();
+          // getPersonaData();
+          dispatch({ type: 'METHOD_EXECUTED' });
+
     }
     catch (err) {
         console.error('Error actions/persona/changeNetwork: ', err)
@@ -88,17 +87,15 @@ export function changeNetwork(networkID) {
     }
 }
 
-export function getBalance() {
+export async function getBalance(dispatch) {
     console.log('actions/getBalance');
     if (!checkWallet()) {
         dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         return
     }
-    return (async (dispatch) => {
-        const balance = await transactor.wallet.getBalance();
-        console.log('actions/getBalance', balance);
-        dispatch({ type: 'GET_BALANCE', balance: ethers.utils.formatEther(balance) });
-    });
+      const balance = await transactor.wallet.getBalance();
+      console.log('actions/getBalance', balance);
+      dispatch({ type: 'GET_BALANCE', balance: ethers.utils.formatEther(balance) });
 }
 
 export function getScore() {
@@ -114,47 +111,42 @@ export function getScore() {
         dispatch({ type: 'GET_SCORE', validations: parseInt(score[1]), numberOfFields: parseInt(score[0]) });
     });
 }
-export function getPersonaData() {
+export async function getPersonaData(wallet, dispatch) {
     if (!checkWallet()) {
         dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         return
     }
     try {
-        return (async (dispatch) => {
-            console.log('actions/getPersonaData');
-            dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
-            console.log('actions/getPersonaData/validationRequestCheck', validationRequestCheck);
-            let validatRequests = [];
-            if (!validationRequestCheck) {
-                console.log('actions/getPersonaData/validationRequest/loading');
-                validatRequests = await loadValidationRequest();
-                console.log('actions/getPersonaData/validationRequest/loaded');
-            } else {
-                validatRequests = validationRequests;
-            }
-            console.log('actions/getPersonaData/novoPersonalInfo/loading');
-            let novoPersonalInfo = await transactor.getPersonalInfo(validatRequests);
-            console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
-            dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
-            return;
-        });
+        console.log('actions/getPersonaData');
+        dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
+        console.log('actions/getPersonaData/validationRequestCheck', validationRequestCheck);
+        let validatRequests = [];
+        if (!validationRequestCheck) {
+            console.log('actions/getPersonaData/validationRequest/loading');
+            validatRequests = await loadValidationRequest();
+            console.log('actions/getPersonaData/validationRequest/loaded');
+        } else {
+            validatRequests = validationRequests;
+        }
+        console.log('actions/getPersonaData/novoPersonalInfo/loading');
+        let novoPersonalInfo = await transactor.getPersonalInfo(validatRequests);
+        console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
+        dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
+        return;
     }
     catch (err) {
         console.error('actions/getPersonaData/err', err);
-        return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Get persona data failed' });
-            dispatch({ type: 'TOAST_ERROR', toast: buildToast('We were unable to receive your data. Try again in a few minutes.', { type: ToastTypes.ERROR }) })
-        }
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Get persona data failed' });
+        dispatch({ type: 'TOAST_ERROR', toast: buildToast('We were unable to receive your data. Try again in a few minutes.', { type: ToastTypes.ERROR }) })
     }
 }
 
-export function askToValidate(validator, field, uriConfirmationData) {
+export async function askToValidate(validator, field, uriConfirmationData, dispatch) {
     if (!checkWallet()) {
         dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         return
     }
     console.log('persona/askToValidate/starting')
-    return async (dispatch) => {
         dispatch({ type: 'RUNNING_METHOD' })
         dispatch({ type: 'CLEAN_ERROR' });
         try {
@@ -188,44 +180,44 @@ export function askToValidate(validator, field, uriConfirmationData) {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
             dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible to get Persona data details. Try again in a few minutes', { type: ToastTypes.ERROR }) })
         }
-    }
+
 }
 
-export function addData(infoCode, field, data, price) {
+export async function addData(infoCode, field, data, price, dispatch) {
     if (!checkWallet()) {
         dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
         return
     }
-    return (dispatch) => {
-        dispatch({ type: 'RUNNING_METHOD' });
-        dispatch({ type: 'CLEAN_ERROR' });
-        console.log('actions/persona/addData/ adding data', infoCode, 0, field, data, price)
-        transactor._contract.addData(infoCode, 0, field, data, price)
-            .then((tx) => {
-                tx.wait()
-                    .then((newData) => {
-                        console.log('actions/persona/addData/ data added', newData)
-                        let item = {
-                            field: field,
-                            valor: data,
-                            statusValidationDescription: 'NotValidated',
-                            statusValidationCode: 1
-                        };
-                        //getPersonaData()
-                        dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
-                        dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Information added successfully!', { type: ToastTypes.SUCCESS }) })
-                    })
-            })
-            .catch((err) => {
-                console.error('Error actions/persona/addData/', err)
-                dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err });
-                dispatch({ type: 'TOAST_ERROR', toast: buildToast('Transaction not executed. Try again later.', { type: ToastTypes.ERROR }) })
-            });
-    }
+
+  dispatch({ type: 'RUNNING_METHOD' });
+  dispatch({ type: 'CLEAN_ERROR' });
+  console.log('actions/persona/addData/ adding data', infoCode, 0, field, data, price)
+  transactor._contract.addData(infoCode, 0, field, data, price)
+      .then((tx) => {
+          tx.wait()
+              .then((newData) => {
+                  console.log('actions/persona/addData/ data added', newData)
+                  let item = {
+                      field: field,
+                      valor: data,
+                      statusValidationDescription: 'NotValidated',
+                      statusValidationCode: 1
+                  };
+                  //getPersonaData()
+                  dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
+                  dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Information added successfully!', { type: ToastTypes.SUCCESS }) })
+              })
+      })
+      .catch((err) => {
+          console.error('Error actions/persona/addData/', err)
+          dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err });
+          dispatch({ type: 'TOAST_ERROR', toast: buildToast('Transaction not executed. Try again later.', { type: ToastTypes.ERROR }) })
+      });
+
 }
 
-export function addPersona(name, email) {
-    return async dispatch => {
+export async function addPersona(name, email, dispatch) {
+
         dispatch({ type: 'RUNNING_METHOD' });
         dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
         console.log("actions/persona/addpersona/ adding fundings...");
@@ -287,63 +279,60 @@ export function addPersona(name, email) {
             dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add first data (name and email): failed' + err });
             dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible create your Holon ID. Try again later.', { type: ToastTypes.ERROR }) })
         }
+
+}
+
+export async function sendEthers(sendTo, sendValue, dispatch) {
+    dispatch({ type: 'RUNNING_METHOD' });
+    if (!checkWallet()) {
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+        return
+    }
+    try {
+        //TODO: verificar como captar o gasPrice da rede para mandar o dobro
+        let tx = {
+            gasLimit: 21000,
+            to: sendTo,
+            value: ethers.utils.parseEther(sendValue),
+            chainId: transactor.provider.chainId
+        }
+        let transferEthers = await transactor.wallet.sendTransaction(tx);
+        await transferEthers.wait();
+        // console.log(tx);
+        dispatch({ type: 'METHOD_EXECUTED' });
+        dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Ether send sucessfully', { type: ToastTypes.SUCCESS }) });
+    }
+    catch (err) {
+        console.error('actions/persona/sendEthers: ', err);
+        dispatch({ type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', { type: ToastTypes.ERROR }) });
     }
 }
 
-export function sendEthers(sendTo, sendValue) {
-    return async dispatch => {
-        dispatch({ type: 'RUNNING_METHOD' });
-        if (!checkWallet()) {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-            return
-        }
-        try {
-            //TODO: verificar como captar o gasPrice da rede para mandar o dobro
-            let tx = {
-                gasLimit: 21000,
-                to: sendTo,
-                value: ethers.utils.parseEther(sendValue),
-                chainId: transactor.provider.chainId
-            }
-            let transferEthers = await transactor.wallet.sendTransaction(tx);
-            await transferEthers.wait();
-            // console.log(tx);
-            dispatch({ type: 'METHOD_EXECUTED' });
-            dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Ether send sucessfully', { type: ToastTypes.SUCCESS }) });
-        }
-        catch (err) {
-            console.error('actions/persona/sendEthers: ', err);
-            dispatch({ type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', { type: ToastTypes.ERROR }) });
-        }
-    }
+export async function GetPersonaNotifications(dispatch) {
+      let eventsService = new EventsService(transactor._wallet.provider);
+      let eventFilter = [null, ethers.utils.hexZeroPad(transactor._wallet.address, 32)];
+      let eventData = await eventsService.GetLetSeeYourDataEvent(eventFilter);
+      let personaNotifications = [];
+
+      if (!eventData || eventData.length == 0)
+          return dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
+
+      for (let eventIndex = 0; eventIndex < eventData.length; eventIndex++) {
+          let requesterDataName = await transactor.contract.getPersonaData(eventData[eventIndex].requester, "name");
+          let requesterDataField = await transactor.contract.getPersonaData(eventData[eventIndex].requester, eventData[eventIndex].field);
+          personaNotifications.push({
+              requesterName: requesterDataName[1],
+              requesterAddress: eventData[eventIndex].requester,
+              field: eventData[eventIndex].field,
+              data: requesterDataField[1],
+              dataCategory: requesterDataField[2],
+          });
+      }
+      dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
+
 }
+export async function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data, dispatch) {
 
-export function GetPersonaNotifications() {
-    return (async (dispatch) => {
-        let eventsService = new EventsService(transactor._wallet.provider);
-        let eventFilter = [null, ethers.utils.hexZeroPad(transactor._wallet.address, 32)];
-        let eventData = await eventsService.GetLetSeeYourDataEvent(eventFilter);
-        let personaNotifications = [];
-
-        if (!eventData || eventData.length == 0)
-            return dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
-
-        for (let eventIndex = 0; eventIndex < eventData.length; eventIndex++) {
-            let requesterDataName = await transactor.contract.getPersonaData(eventData[eventIndex].requester, "name");
-            let requesterDataField = await transactor.contract.getPersonaData(eventData[eventIndex].requester, eventData[eventIndex].field);
-            personaNotifications.push({
-                requesterName: requesterDataName[1],
-                requesterAddress: eventData[eventIndex].requester,
-                field: eventData[eventIndex].field,
-                data: requesterDataField[1],
-                dataCategory: requesterDataField[2],
-            });
-        }
-        dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
-    });
-}
-export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
-    return async dispatch => {
         console.log('deliverDecryptedData/starting')
         if (!checkWallet()) {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
@@ -367,35 +356,35 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
         } catch (exception) {
             console.error('deliverDecryptedData', exception);
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
-            return 
+            return
         }
-    }
+
 }
-export function allowNotification(receiver, dataCategory, fieldName, data) {
-    return dispatch => {
-        return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
-            .then(
-                (success) => {
-                    dispatch({
-                        type: 'TOASTY_SUCCESS',
-                        toast: buildToast('Data shared successfully!', { type: ToastTypes.SUCCESS })
-                    })
-                }
-            )
-            .catch(
-                (exception) => {
-                    dispatch({
-                        type: 'TOASTY_ERROR',
-                        toast: buildToast('Operation not executed. Try again later.', { type: ToastTypes.ERROR })
-                    })
-                }
-            )
-    }
+export function allowNotification(receiver, dataCategory, fieldName, data, dispatch) {
+
+  return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data, dispatch)
+      .then(
+          (success) => {
+              dispatch({
+                  type: 'TOASTY_SUCCESS',
+                  toast: buildToast('Data shared successfully!', { type: ToastTypes.SUCCESS })
+              })
+          }
+      )
+      .catch(
+          (exception) => {
+              dispatch({
+                  type: 'TOASTY_ERROR',
+                  toast: buildToast('Operation not executed. Try again later.', { type: ToastTypes.ERROR })
+              })
+          }
+      )
+
 }
 
-export function declineNotification(receiver, dataCategory, fieldName, data) {
-    return dispatch => {
-        return this.deliverDecryptedData(false, receiver, dataCategory, fieldName, data)
+export function declineNotification(receiver, dataCategory, fieldName, data, dispatch) {
+
+        return this.deliverDecryptedData(false, receiver, dataCategory, fieldName, data, dispatch)
             .then(
                 (success) => {
                     dispatch({
@@ -412,5 +401,5 @@ export function declineNotification(receiver, dataCategory, fieldName, data) {
                     })
                 }
             )
-    }
+
 }

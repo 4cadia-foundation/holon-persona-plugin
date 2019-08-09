@@ -3,7 +3,6 @@ import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, Hel
 import { Redirect } from 'react-router-dom';
 
 import {connect} from "react-redux";
-import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
 import './ImportWallet'
@@ -57,7 +56,7 @@ class ImportWallet extends Component {
     })
     const mnemonic = this.state.phrase;
     const password = this.state.password;
-    this.props.restoreVault(mnemonic, password);
+    WalletActions.restoreVault(mnemonic, password, this.props.dispatch);
   }
 
 
@@ -155,6 +154,7 @@ class ImportWallet extends Component {
           <Row>
             <Col xs={12} md={12}>
               <Form>
+
                 <FormGroup validationState={this.getValidationPhrase()}>
                     <ControlLabel className="paragraph">Wallet Seed</ControlLabel>
                     <FormControl className="paragraph" rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
@@ -196,6 +196,5 @@ const mapStateToProps = state => ({
   wallet: state.wallet
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImportWallet);
+export default connect(mapStateToProps)(ImportWallet);

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Col, DropdownButton, Glyphicon, Grid, MenuItem, Row } from 'react-bootstrap';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
@@ -14,17 +13,17 @@ import '../../styles/_utils.css';
 import '../Menu/Menu.css';
 
 class Menu extends Component {
-  
+
     constructor (props) {
       super(props)
       this.state = {
         closeMenu: false,
-        
+
       }
       this.handleClick = this.handleClick.bind(this);
       this.handleNetworkChange = this.handleNetworkChange.bind(this);
     }
-    
+
     handleClick() {
       this.setState({
         closeMenu: true
@@ -32,8 +31,8 @@ class Menu extends Component {
     }
 
     handleNetworkChange(event) {
-        console.log('menu/handleNetworkChange/event.target.value', event.target.value);
-        this.props.changeNetwork(event.target.value);
+      console.log('menu/handleNetworkChange/event.target.value', event.target.value);
+      PersonaActions.changeNetwork(event.target.value, this.props.dispatch);
     }
 
     render() {
@@ -63,7 +62,7 @@ class Menu extends Component {
                     <div className="links">
                         <div className="flex-column">
                             <Link to='/addinformation'>
-                                <Glyphicon id="glyph-color" glyph="plus"/> 
+                                <Glyphicon id="glyph-color" glyph="plus"/>
                                 <a className="space-icon-p paragraph">Add information</a>
                             </Link>
                         </div>
@@ -84,7 +83,7 @@ class Menu extends Component {
                     <div className="links2">
                         <div className="flex-column">
                             <Link to="/profile">
-                                <Glyphicon id="glyph-color" glyph="user"/> 
+                                <Glyphicon id="glyph-color" glyph="user"/>
                                 <a href="" className="space-icon-p paragraph">Profile</a>
                             </Link>
                         </div>
@@ -129,10 +128,8 @@ class Menu extends Component {
     </Grid>
 )}}
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
     persona: state.persona
 });
-  
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-  
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+
+export default connect(mapStateToProps)(Menu);

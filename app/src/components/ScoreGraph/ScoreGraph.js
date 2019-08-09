@@ -10,7 +10,7 @@ class ScoreGraph extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {validations: 0, numberOfFields: 0};        
+      this.state = {validations: 0, numberOfFields: 0};
   }
 
   componentDidMount() {
@@ -26,7 +26,7 @@ class ScoreGraph extends Component {
           alert(msg);
           return { validations: 0, numberOfFields: 0 };
       }
-      return { validations: nextProps.persona.validations, numberOfFields: nextProps.persona.numberOfFields };        
+      return { validations: nextProps.persona.validations, numberOfFields: nextProps.persona.numberOfFields };
   }
 
   render() {
@@ -36,7 +36,7 @@ class ScoreGraph extends Component {
         <div>
           <div className="score-validations">
             <GaugeChart id="gauge-chart1" percent={percentage} />
-            <br /> 
+            <br />
             {(percentage*100)} %
           </div>
         </div>
