@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Col, Form, FormControl, Grid, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
@@ -83,7 +82,7 @@ class ValidateInformation extends Component {
             saveButtonCalled: true,
             loadingMsg: 'Submitting data to validator',
         });
-        this.props.askToValidate(validator, field, uriConfirmationData);
+      PersonaActions.askToValidate(validator, field, uriConfirmationData, this.props.dispatch);
     }
 
     render () {
@@ -97,7 +96,7 @@ class ValidateInformation extends Component {
         return (
             <Grid>
                 <div className="btn-validate-close">
-                 <CloseIconPage destination="/menu"/>    
+                 <CloseIconPage destination="/menu"/>
                 </div>
                 <Row>
                   <Col xs={12} md={12}>
@@ -135,10 +134,9 @@ class ValidateInformation extends Component {
     }
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
     persona: state.persona
 });
-  
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-  
-export default connect(mapStateToProps, mapDispatchToProps)(ValidateInformation);
+
+
+export default connect(mapStateToProps)(ValidateInformation);

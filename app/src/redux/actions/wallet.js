@@ -3,35 +3,32 @@ import * as ActionTypes from '../../constants/actionsTypes';
 
 const wallet = new Wallet();
 
-export function restoreVault(password, seed) {
+export function restoreVault(password, seed, dispatch) {
   console.log('actions/wallet/restoreVault/starting');
-  return dispatch => {
-    wallet.createNewVaultAndRestore(password, seed)
-      .then((createdWallet) => {
-        console.log('actions/wallet/restoreVault/restored');
-        dispatch({
-          type: ActionTypes.SET_ACCOUNTS,
-          address: createdWallet.address,
-          mnemonic: createdWallet.mnemonic,
-          wallet: createdWallet       
-        });
-      })
-      .catch(exception => {
-        dispatch({
-          type: ActionTypes.SET_ACCOUNTS_ERROR,
-        });
-      })
-  }
+  wallet.createNewVaultAndRestore(password, seed)
+    .then((createdWallet) => {
+      console.log('actions/wallet/restoreVault/restored');
+      dispatch({
+        type: ActionTypes.SET_ACCOUNTS,
+        address: createdWallet.address,
+        mnemonic: createdWallet.mnemonic,
+        wallet: createdWallet
+      });
+    })
+    .catch(exception => {
+      dispatch({
+        type: ActionTypes.SET_ACCOUNTS_ERROR,
+      });
+    })
 }
 
-export function hasWallet() {
-  return dispatch => {
+export const hasWallet = (dispatch) => {
     wallet.getChromeStorage().then((content) => {
       if (!content) {
         dispatch({
           type: ActionTypes.HAS_WALLET,
           hasWallet: false
-        });  
+        });
         return;
       }
       dispatch({
@@ -44,12 +41,10 @@ export function hasWallet() {
         type: ActionTypes.SET_ACCOUNTS_ERROR
       });
     })
-  }
 }
 
-export function openWallet(password) {
+export const openWallet = (password, dispatch) => {
   console.log('openWallet/password', password.length);
-  return dispatch => {
     wallet.submitPassword(password).then(openedWallet => {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
@@ -63,7 +58,6 @@ export function openWallet(password) {
         type: ActionTypes.OPEN_WALLET_ERROR
       });
     })
-  }
 }
 
 export function createNewWallet(password){
@@ -75,7 +69,7 @@ export function createNewWallet(password){
         type: ActionTypes.SET_ACCOUNTS,
         address: createdWallet.address,
         wallet: createdWallet,
-        mnemonic: createdWallet.mnemonic,       
+        mnemonic: createdWallet.mnemonic,
       });
     })
     .catch((exception) => {

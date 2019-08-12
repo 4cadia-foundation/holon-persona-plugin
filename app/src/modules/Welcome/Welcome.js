@@ -3,7 +3,6 @@ import { Button, Grid, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
 import logo from '../../../images/logo.png';
@@ -23,7 +22,7 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-    this.props.hasWallet();
+    WalletActions.hasWallet(this.props.dispatch);
   }
 
   render() {
@@ -65,7 +64,6 @@ const mapStateToProps = state => ({
   wallet: state.wallet
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+export default connect(mapStateToProps)(Welcome);
 

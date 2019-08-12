@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import { bindActionCreators } from 'redux';
 import {connect} from "react-redux";
 import * as PersonaActions from "../../redux/actions/persona";
 
@@ -10,11 +9,11 @@ class Balance extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {balance: 0};        
+        this.state = {balance: 0};
     }
 
     componentDidMount() {
-        this.props.getBalance();
+      PersonaActions.getBalance(this.props.dispatch);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -25,7 +24,7 @@ class Balance extends Component {
             console.error('Balance/getDerivedStateFromProps: ', msg);
             return { balance: 0 };
         }
-        return { balance : nextProps.persona.balance };        
+        return { balance : nextProps.persona.balance };
     }
 
     render() {
@@ -43,7 +42,7 @@ class Balance extends Component {
 const mapStateToProps = state => ({
     persona: state.persona
 });
-  
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-  
-export default connect(mapStateToProps, mapDispatchToProps)(Balance);
+
+
+
+export default connect(mapStateToProps)(Balance);

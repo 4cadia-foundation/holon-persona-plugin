@@ -50,7 +50,7 @@ class PanelNotification extends Component {
             isRunning: true,
             sentToAction: true
         })
-        this.props.allowNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
+      PersonaActions.allowNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue, this.props.dispatch)
     }
 
     declineClick(event) {
@@ -59,7 +59,7 @@ class PanelNotification extends Component {
             isRunning: true,
             sentToAction: true
         })
-        this.props.declineNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
+      PersonaActions.declineNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue, this.props.dispatch)
     }
 
     render() {
@@ -89,6 +89,5 @@ const mapStateToProps = reduxState => ({
     persona: reduxState.persona
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(PanelNotification);
+export default connect(mapStateToProps)(PanelNotification);

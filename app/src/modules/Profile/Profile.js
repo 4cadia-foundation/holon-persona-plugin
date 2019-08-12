@@ -18,11 +18,11 @@ class Profile extends Component {
         this.state = {
             persona: this.props.persona,
             isLoading: true,
-        };    
+        };
         this.getCampoValor = this.getCampoValor.bind(this);
     }
 
-    componentDidMount(){        
+    componentDidMount(){
         if (this.props.persona.numberOfFields > 0){
             this.setState({
                 isLoading:false
@@ -53,7 +53,7 @@ class Profile extends Component {
         }
         return filtro[0].valor;
     }
-    
+
 
     render() {
         const {persona} = this.state;
@@ -66,7 +66,7 @@ class Profile extends Component {
                     <div className="text-center margin-top-15 margin-bottom-30">
                         <img src={user} alt="user" alt="user" />
                     </div>
-                    <Row> 
+                    <Row>
                         <Col bsClass="text-center">
                             <div className="text-center">
                                 <FormControl
@@ -74,11 +74,11 @@ class Profile extends Component {
                                     type="text"
                                     value={ this.getCampoValor('name') }
                                     readOnly
-                                    className="text-center paragraph" 
+                                    className="text-center paragraph"
                                 />
                             </div>
                         </Col>
-                    </Row>      
+                    </Row>
                     <Row className="text-center margin-top-10">
                         <Col>
                             <FormControl
@@ -86,10 +86,10 @@ class Profile extends Component {
                                 type="text"
                                 value={ this.getCampoValor('email') }
                                 readOnly
-                                className="text-center paragraph" 
+                                className="text-center paragraph"
                             />
                         </Col>
-                    </Row>       
+                    </Row>
                         {
                             persona.personalInfo.filter((f) => f.field != 'name' && f.field != 'email').map((val, idx) =>
                             {
@@ -103,17 +103,17 @@ class Profile extends Component {
                                                 value={val.valor}
                                                 readOnly
                                                 className="text-center paragraph"
-                                            />                      
+                                            />
                                         </Col>
                                     </Row>
                                 )
                             })
-                        }                            
+                        }
                     <Row className="margin-top-50 text-center paragraph">
                         <Col>
                             <ScoreGraph/>
                         </Col>
-                    </Row>       
+                    </Row>
                 </Grid>
                 <Loader visible={this.state.isLoading} />
             </div>
@@ -121,10 +121,10 @@ class Profile extends Component {
     }
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
     persona: state.persona
 });
-  
+
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

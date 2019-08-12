@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom';
 
-import { bindActionCreators } from 'redux';
+
 import { connect } from 'react-redux';
 import * as PersonaActions from "../../redux/actions/persona";
 
@@ -14,14 +14,14 @@ class ChooseCreateIdentityOrHome extends Component {
     this.state = {
       isLoading: true,
       numberOfPersonalInfoRecorded: -1,
-      msg: "Loading information from Blockchain",
+      msg: "Loading information from Blockchain"
     }
   }
 
   componentDidMount() {
-    this.props.getPersonaData()    
+    PersonaActions.getPersonaData(this.props.wallet,this.props.dispatch)
   }
-  
+
   static getDerivedStateFromProps(nextProps, prevState) {
     //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps nextProps', nextProps.persona);
     //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps prevState', prevState);
@@ -55,8 +55,8 @@ class ChooseCreateIdentityOrHome extends Component {
   }
 }
 
-const mapStateToProps = state => ({ 
-  persona: state.persona, wallet: state.wallet
+const mapStateToProps = state => ({
+  persona: state.persona, wallet: state.wallet,
 });
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(ChooseCreateIdentityOrHome);
+
+export default connect(mapStateToProps)(ChooseCreateIdentityOrHome);

@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
 import Transactor from '../../../scripts/core/Transactor';
-import store from '../../redux/store';
+import {proxyStore as store}  from '../../store';
 
 import './SelectValidador.css';
 
 class SelectValidador extends Component {
-  
+
   constructor(props){
     super(props);
     this.state = {
       validators: [],
       numberOfValidators: 0,
-      isRunning: true      
+      isRunning: true
     }
     this.setValidator = this.setValidator.bind(this);
     this.transactor = new Transactor();
@@ -48,14 +48,14 @@ class SelectValidador extends Component {
   setValidator(event) {
     this.props.emitValidator(event.target.value)
   }
-  
+
   render () {
     if (this.state.isRunning) {
       return (
         <section>
           <div>
             Loading validators from Blockchain...
-          </div>                
+          </div>
         </section>
       )
     }
@@ -70,7 +70,7 @@ class SelectValidador extends Component {
               <select onChange={this.setValidator} className="paragraph" value={this.state.value} id="categoryId">
                 {optionTemplate}
               </select>
-            </div>                
+            </div>
         </section>
       )
     }
@@ -79,11 +79,11 @@ class SelectValidador extends Component {
         <section>
           <div>
             There is no validator available
-          </div>                
+          </div>
         </section>
       )
     }
   }
 }
-    
+
 export default SelectValidador;

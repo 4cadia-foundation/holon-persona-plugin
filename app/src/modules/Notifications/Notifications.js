@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row, Col, Grid } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as PersonaActions from "../../redux/actions/persona";
 
 import NotificationPanel from "../../components/PanelNotification/PanelNotification";
@@ -19,7 +18,7 @@ class Notifications extends Component {
     };
   }
   async componentDidMount() {
-    await this.props.GetPersonaNotifications();
+    await PersonaActions.GetPersonaNotifications(this.props.dispatch);
     this.setState({
       isLoading: false
     });
@@ -38,7 +37,7 @@ class Notifications extends Component {
       notificationGrid.push(<NotificationPanel
         addressReceiver={this.state.notifications[index].requesterAddress}
         nameReceiver={this.state.notifications[index].requesterName}
-        fieldName={this.state.notifications[index].field} 
+        fieldName={this.state.notifications[index].field}
         dataValue={this.state.notifications[index].data}
         dataCategory={this.state.notifications[index].dataCategory}/>);
     }
@@ -46,7 +45,7 @@ class Notifications extends Component {
   }
 
   render() {
-    
+
     return (
       <Grid>
         <Row>
@@ -71,6 +70,5 @@ const mapStateToProps = state => ({
   persona: state.persona
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export default connect(mapStateToProps)(Notifications);

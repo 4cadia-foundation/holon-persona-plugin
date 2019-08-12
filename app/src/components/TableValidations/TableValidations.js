@@ -40,7 +40,7 @@ class TableValidations extends Component {
   render () {
 
     const {modules} = this.state;
-    
+
     return (
       <section>
         <Button bsStyle="success" onClick={() => this.props.getPersonaData()}>Get Persona Data</Button>
@@ -65,9 +65,9 @@ class TableValidations extends Component {
                 <td>{doc.type}</td>
                 <td>{doc.status}</td>
                 <td>
-                  <Button 
-                    variant="outline-dark" 
-                    size="sm" 
+                  <Button
+                    variant="outline-dark"
+                    size="sm"
                     onClick={
                       () => this.props.toggleDocuments(modules, doc)
                     }>
@@ -85,7 +85,7 @@ class TableValidations extends Component {
 
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
   modules: state.validations
 });
 

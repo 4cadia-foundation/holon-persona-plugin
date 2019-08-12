@@ -8,9 +8,15 @@
     "128": "images/icon-128.png"
   },
   "default_locale": "en",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "css": [],
+      "js": ["main.bundle.js"]
+    }
+  ],
   "background": {
     "scripts": [
-      "chromereload.js",
       "main.extension.bundle.js"
     ],
     "persistent": true

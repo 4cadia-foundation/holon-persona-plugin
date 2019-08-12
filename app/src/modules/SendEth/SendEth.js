@@ -3,7 +3,6 @@ import { Button } from 'react-bootstrap';
 import { Redirect, Link } from 'react-router-dom';
 
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
 import * as PersonaActions from "../../redux/actions/persona";
 
 import Loader from '../../components/Loader/Loader';
@@ -25,10 +24,10 @@ class SendEth extends Component {
       isRunning: true,
       sentToAction: false
     }
-    this.props.getBalance();      
+    this.props.getBalance();
   }
 
-  componentDidMount() {  
+  componentDidMount() {
     this.setState({
       balance: this.props.persona.balance,
       address: this.props.persona.address,
@@ -42,10 +41,10 @@ class SendEth extends Component {
         console.error('SendEth/getDerivedStateFromProps: ', msg);
         alert(msg);
         return { balance: 0, address: null};
-    }    
-    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };        
+    }
+    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };
   }
-  
+
   hideAddress (adrs) {
     if (adrs.length > 30) {
         return (adrs.substring(0, 30) + "...")
@@ -67,7 +66,7 @@ class SendEth extends Component {
       isRunning: true,
       sentToAction: true
     })
-    this.props.sendEthers(this.state.sendTo, this.state.sendValue)
+    PersonaActions.sendEthers(this.state.sendTo, this.state.sendValue, this.props.dispatch)
   }
 
   render() {

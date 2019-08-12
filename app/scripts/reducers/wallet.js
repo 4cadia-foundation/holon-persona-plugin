@@ -1,4 +1,4 @@
-import * as ActionTypes from '../../constants/actionsTypes';
+import * as ActionTypes from '../../src/constants/actionsTypes';
 
 const INITIAL_STATE = {
   address: '',
@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export default function wallet(state = INITIAL_STATE, action) {
   switch(action.type) {
     case ActionTypes.SET_ACCOUNTS:
-      return {...state, ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic};
+      return {...state, ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic, example: action};
     break;
     case ActionTypes.SET_WALLET_CREATE:
       return {...state, accounts: action.accounts};
@@ -25,8 +25,8 @@ export default function wallet(state = INITIAL_STATE, action) {
     break;
     case ActionTypes.HAS_WALLET:
       return {...state, hasWallet: action.hasWallet};
-    break;    
+    break;
     default:
-      return state; 
+      return state;
   }
 }
