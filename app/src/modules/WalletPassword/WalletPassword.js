@@ -47,7 +47,7 @@ class WalletPassword extends Component {
     this.setState({
       isLoading: true
     });
-    this.props.createNewWallet(this.state.password);
+    WalletActions.createNewWallet(this.state.password, this.props.dispatch);
   }
 
   validateForm() {
@@ -145,7 +145,6 @@ const mapStateToProps = state => ({
   wallet: state.wallet
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletPassword);
+export default connect(mapStateToProps)(WalletPassword);
 

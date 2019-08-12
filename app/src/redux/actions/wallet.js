@@ -60,8 +60,7 @@ export const openWallet = (password, dispatch) => {
     })
 }
 
-export function createNewWallet(password){
-  return dispatch=> {
+export function createNewWallet(password, dispatch){
     console.log('actions/wallet/creating new wallet');
     wallet.createNewVault(password)
     .then((createdWallet) => {
@@ -78,5 +77,4 @@ export function createNewWallet(password){
         type: ActionTypes.SET_ACCOUNTS_ERROR,
       });
     });
-  }
 }
