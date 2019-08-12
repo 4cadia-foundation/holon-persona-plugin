@@ -21,85 +21,101 @@ let routers = [
     path: '/',
     exact: true,
     component: Welcome
-  },
+},
   {
     path: '/importwallet',
     component: ImportWallet,
-    exact: false
+    exact: false,
+    privateRouter: true
   },
   {
     path: '/choosecreateidentityorhome',
     component: ChooseCreateIdentityOrHome,
-    exact: false
+    exact: false,
+    privateRouter: true
   },
   {
     path: '/welcomeback',
     component: WelcomeBack,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/menu',
     component: Menu,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/backupphrase',
     component: BackupPhrase,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/walletpassword',
     component: WalletPassword,
-    exact: false
+    exact: false,
+    privateRouter: true
   },
   {
     path: '/choosecreateorimport',
     component: ChooseCreateOrImport,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/home',
     component: Home,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/createidentity',
     component: CreateIdentity,
-    exact: false
+    exact: false,
+    privateRouter: true
   },
   {
     path: '/addinformation',
     component: AddInformation,
-    exact: false
+    exact: false,
+    privateRouter: true
   },
   {
     path: '/profile',
     component: Profile,
-    exact: false
+    exact: false,
+    privateRouter: true
   },
   { path: '/notifications',
     component: Notifications,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/menu',
     component: Menu,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/validateinformation',
     component: ValidateInformation,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/depositbutton',
     component: DepositButton,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     path: '/sendeth',
     component: SendEth,
-    exact: false
+    exact: false,
+    privateRouter: false
   },
   {
     component: Notfound,
