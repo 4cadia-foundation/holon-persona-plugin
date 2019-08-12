@@ -1,5 +1,7 @@
 import Wallet from '../../../scripts/core/WalletStorage';
 import * as ActionTypes from '../../constants/actionsTypes';
+import { buildToast } from '../../helper/toast';
+import { ToastType } from 'react-toastify';
 
 const wallet = new Wallet();
 
@@ -44,8 +46,9 @@ export const hasWallet = (dispatch) => {
 }
 
 export const openWallet = (password, dispatch) => {
-  console.log('openWallet/password', password.length);
-    wallet.submitPassword(password).then(openedWallet => {
+  // console.log('openWallet/password', password.length);
+    wallet.submitPassword(password)
+    .then(openedWallet => {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
         address: openedWallet.address,
@@ -54,9 +57,8 @@ export const openWallet = (password, dispatch) => {
       });
     })
     .catch(exception => {
-      dispatch({
-        type: ActionTypes.OPEN_WALLET_ERROR
-      });
+      dispatch({ type: ActionTypes.OPEN_WALLET_ERROR, error: error });
+      dispatch({type: 'TOAST_ERROR', toast: buildToast('Incorrect password, try again.', {type: ToastType.ERROR})});
     })
 }
 
