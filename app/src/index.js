@@ -19,7 +19,7 @@ class App extends Component {
          {routers.map((item, index) =>  item.privateRouter ? (
              <Route key={index} path={item.path} component={item.component} exact={item.exact} />
            ) : (
-             <PrivateRoute  path={item.path} component={item.component} exact={item.exact} />
+             <PrivateRoute  key={index} path={item.path} component={item.component} exact={item.exact} />
            )
           )
          }

@@ -25,15 +25,7 @@
     "storage",
     "clipboardWrite",
     "unlimitedStorage",
-    "notifications",
-    "tabs",
-    "activeTab",
-    "webRequest",
-    "*://*.eth/",
-    "*://*.google.com/",
-    "http://localhost:8545/",
-    "http://*.caralabs.me/",
-    "https://*.infura.io/"
+    "notifications"
   ],
   "browser_action": {
     "default_icon": {
