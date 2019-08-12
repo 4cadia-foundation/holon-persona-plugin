@@ -122,7 +122,5 @@ const mapStateToProps = reduxState => ({
   persona: reduxState.persona
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions,dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(SendEth);
+export default connect(mapStateToProps)(SendEth);
 
