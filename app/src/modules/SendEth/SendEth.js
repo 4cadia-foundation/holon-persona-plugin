@@ -24,7 +24,7 @@ class SendEth extends Component {
       isRunning: true,
       sentToAction: false
     }
-    this.props.getBalance();
+    PersonaActions.getBalance(this.props.dispatch);
   }
 
   componentDidMount() {
