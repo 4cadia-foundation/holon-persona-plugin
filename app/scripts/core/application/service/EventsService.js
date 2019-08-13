@@ -70,6 +70,10 @@ export default class EventsService {
     }
     async GetEventHash(filterData) {
         let events = await this._provider.getLogs(filterData);
+
+        if (!events || events.length == 0)
+            return null;
+
         let hashes = [];
         events.map(event => {
             hashes.push(event.transactionHash);
