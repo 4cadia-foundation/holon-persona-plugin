@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
-
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = (watch = false) => {
   let module = {
@@ -22,6 +22,7 @@ module.exports = (watch = false) => {
       path: path.resolve(__dirname, 'dist')
     },
     plugins:[
+      new MomentLocalesPlugin(),
       new CopyPlugin([
         {from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist')}
       ])
