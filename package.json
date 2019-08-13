@@ -5,6 +5,7 @@
     "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js",
     "watch:react": "webpack --config ./webpack.react.js --watch=true",
     "test": "jest",
+    "coverage": "jest --coverage",
     "watch:core": "webpack --config ./webpack.extension.js --watch=true"
   },
   "dependencies": {

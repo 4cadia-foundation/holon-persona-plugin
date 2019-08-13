@@ -70,7 +70,7 @@ export default class EventsService {
     }
     async GetEventHash(filterData) {
         let events = await this._provider.getLogs(filterData);
-
+        debugger;
         if (!events || events.length == 0)
             return null;
 
