@@ -23,6 +23,9 @@ export default function wallet(state = INITIAL_STATE, action) {
     case ActionTypes.OPEN_WALLET:
       return {...state, ethersWallet: action.wallet, address: action.address};
     break;
+    case ActionTypes.OPEN_WALLET_ERROR:
+      return{...state, error: action.error.message, openedWallet: false};
+      break;
     case ActionTypes.HAS_WALLET:
       return {...state, hasWallet: action.hasWallet};
     break;    
