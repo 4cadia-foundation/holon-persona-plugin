@@ -56,8 +56,14 @@ class WalletStorage {
           reject(error);
         }
         console.log('getOpenedWalletStorage/wallet', result, result.wallet_opened);
-        if (!result.wallet_opened || !result.wallet_opened.address || result.wallet_opened.address.length < 10) {
+        if (!result.wallet_opened || !result.wallet_opened.address || !result.wallet_opened.latestUpdate || result.wallet_opened.address.length < 10) {
           reject({name : "WalletStateNotStoragedError", message : "Wallet State wast Not Stored Yet"});
+        }
+        console.log('result.wallet_opened', result.wallet_opened);
+        console.log('getOpenedWalletStorage/time: ', (Date.now() - result.wallet_opened.latestUpdate))
+        if ((Date.now() - result.wallet_opened.latestUpdate) > 120000) {
+          this.clearOpenedWalletStorage();
+          reject({name : "WalletStateTimeoutError", message : "Wallet State time out"});
         }
         resolve(result.wallet_opened);
       });
@@ -66,7 +72,7 @@ class WalletStorage {
 
   clearOpenedWalletStorage() {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.remove(['wallet-opened'], () => {
+      chrome.storage.local.remove(['wallet_opened'], () => {
         let error = chrome.runtime.lastError;
         if (error) reject(error);
         resolve('removed with successfull');

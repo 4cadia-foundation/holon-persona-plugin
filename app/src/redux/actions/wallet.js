@@ -7,7 +7,7 @@ export function restoreVault(password, seed) {
   return dispatch => {
     wallet.createNewVaultAndRestore(password, seed)
       .then((walletResult) => {
-        const walletObj = { type: ActionTypes.SET_ACCOUNTS, address: walletResult.address, mnemonic: walletResult.mnemonic, wallet: walletResult };
+        const walletObj = { type: ActionTypes.SET_ACCOUNTS, latestUpdate: Date.now(), address: walletResult.address, mnemonic: walletResult.mnemonic, wallet: walletResult };
         wallet.setOpenedWalletStorage(walletObj);
         console.log('actions/wallet/restoreVault/restored');
         dispatch(walletObj);
@@ -62,7 +62,7 @@ export function openWallet(password) {
   console.log('openWallet/password', password.length);
   return dispatch => {
     wallet.submitPassword(password).then(walletResult => {
-      const walletObj = { type: ActionTypes.SET_ACCOUNTS, address: walletResult.address, mnemonic: walletResult.mnemonic, wallet: walletResult };
+      const walletObj = { type: ActionTypes.SET_ACCOUNTS, latestUpdate: Date.now(), address: walletResult.address, mnemonic: walletResult.mnemonic, wallet: walletResult };
       console.log('openWallet/success');
       wallet.setOpenedWalletStorage(walletObj);
       dispatch(walletObj);
@@ -81,7 +81,7 @@ export function createNewWallet(password){
     console.log('actions/wallet/creating new wallet');
     wallet.createNewVault(password)
     .then((walletResult) => {
-      const walletObj = { type: ActionTypes.SET_ACCOUNTS, address: walletResult.address, mnemonic: walletResult.mnemonic, wallet: walletResult };
+      const walletObj = { type: ActionTypes.SET_ACCOUNTS, latestUpdate: Date.now(), address: walletResult.address, mnemonic: walletResult.mnemonic, wallet: walletResult };
       wallet.setOpenedWalletStorage(walletObj);
       dispatch(walletObj);
     })

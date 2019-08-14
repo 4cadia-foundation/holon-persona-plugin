@@ -33,7 +33,7 @@ class WalletPassword extends Component {
     if (nextProps.wallet.error.length > 2) {
       const msg = 'Erro: ' + nextProps.wallet.error;
       console.error('WalletPassword/getDerivedStateFromProps: ', msg);
-      alert(msg);
+      //alert(msg);
       return { isLoading: false };
     }
     if (nextProps.wallet.address.length > 2) {

@@ -49,6 +49,10 @@ class Menu extends Component {
             )
         }
 
+        if (!this.props.persona.address || this.props.persona.address.length < 10) {
+            <Redirect to="/welcomeback" />
+        }
+
         return(
         <Grid>
             <Row>
@@ -130,7 +134,8 @@ class Menu extends Component {
 )}};
 
 const mapStateToProps = state => ({ 
-    persona: state.persona
+    persona: state.persona,
+    wallet: state.wallet,
 });
   
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);

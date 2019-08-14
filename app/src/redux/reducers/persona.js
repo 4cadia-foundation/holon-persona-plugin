@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     validations: 0,
     isRunning: false,
     hasCheckedPersonaStorage: false,
+    latestUpdate: Date.now(),
 }
 
 export default function persona(state = INITIAL_STATE, action) {
@@ -22,6 +23,7 @@ export default function persona(state = INITIAL_STATE, action) {
             address: action.address,
             isRunning: false,
             readAllPersonaLogs: true,
+            latestUpdate: action.latestUpdate,
         }
     }
 
@@ -84,6 +86,10 @@ export default function persona(state = INITIAL_STATE, action) {
 
     if (action.type == 'ERROR_PERSONA_DATA') {
         return { ...state, error: action.error, isRunning: false };
+    }
+
+    if (action.type == 'ERROR_WALLET_IS_NOT_SET') {
+        return { ...state, error: action.error, isRunning: false, address: '' };
     }
 
     if (action.type == 'CLEAN_ERROR') {

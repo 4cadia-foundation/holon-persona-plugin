@@ -33,7 +33,7 @@ async function loadValidationRequest() {
 function checkWallet() {
     console.log('action/persona/checkingWallet');
     try {
-        console.log('action/persona/checkingWallet/store', store.getState());
+        //console.log('action/persona/checkingWallet/store', store.getState());
         if (!transactor.wallet) {            
             if (store.getState().wallet.ethersWallet) {
                 let pk = store.getState().wallet.ethersWallet.signingKey.privateKey.substring(2);
@@ -41,11 +41,11 @@ function checkWallet() {
                 const walletTmp = new ethers.Wallet(pk)
                 // const walletTmp = new ethers.Wallet.fromMnemonic(store.getState().wallet.ethersWallet.mnemonic)
                 transactor.wallet = walletTmp;
-                console.log('action/persona/checkingWallet/transactor', transactor);
+                //console.log('action/persona/checkingWallet/transactor', transactor);
                 transactor.contractWithSigner;
                 filterContract.transactor = transactor;
-                console.log('action/persona/checkWallet/transactor.wallet-set', transactor);
-                console.log('action/persona/checkWallet/filterContract transactor-set', filterContract);
+                //console.log('action/persona/checkWallet/transactor.wallet-set', transactor);
+                //console.log('action/persona/checkWallet/filterContract transactor-set', filterContract);
                 return true;
             } else {
                 return false;
@@ -107,7 +107,7 @@ export function getBalance() {
     console.log('actions/getBalance');
     if (!checkWallet()) {
         return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            dispatch({ type: 'ERROR_WALLET_IS_NOT_SET', error: 'Wallet was not set' });
         }
     }
     return (async (dispatch) => {
@@ -121,7 +121,7 @@ export function getScore() {
     console.log('actions/getScore');
     if (!checkWallet()) {
         return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            dispatch({ type: 'ERROR_WALLET_IS_NOT_SET', error: 'Wallet was not set' });
         }
     }
     return (async (dispatch) => {
@@ -149,7 +149,7 @@ export function checkPersonaStorage(dispatch) {
 export function getPersonaData() {
     if (!checkWallet()) {
         return (dispatch) => {
-            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+            dispatch({ type: 'ERROR_WALLET_IS_NOT_SET', error: 'Wallet was not set' });
             dispatch({type: 'TOAST_ERROR', toast: buildToast('We were unable to receive your data. Try again in a few minutes.', {type: ToastTypes.ERROR})})
         }
     }
@@ -169,7 +169,13 @@ export function getPersonaData() {
             console.log('actions/getPersonaData/novoPersonalInfo/loading');
             let novoPersonalInfo = await transactor.getPersonalInfo(validatRequests);
             console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
-            const objPersonaData = { type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length };
+            const objPersonaData = { 
+                type: 'GET_PERSONA_BASIC_DATA', 
+                latestUpdate: Date.now(), 
+                novoPersonalInfo: novoPersonalInfo, 
+                address: transactor.wallet.address, 
+                numberOfFields: novoPersonalInfo.length 
+            };
             await personaStorage.setChromeStorage(objPersonaData);
             dispatch(objPersonaData);
             return;
@@ -205,6 +211,14 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
                     console.log('actions/askToValidate/novoPersonalInfo/loading');
                     let novoPersonalInfo = await transactor.getPersonalInfo(validationRequests);
                     console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
+                    const objPersonaData = { 
+                        type: 'GET_PERSONA_BASIC_DATA', 
+                        latestUpdate: Date.now(), 
+                        novoPersonalInfo: novoPersonalInfo, 
+                        address: transactor.wallet.address, 
+                        numberOfFields: novoPersonalInfo.length 
+                    };
+                    await personaStorage.setChromeStorage(objPersonaData);
                     dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo });
                     dispatch({type: 'TOAST_SUCCESS', toast: buildToast('Info send to validation!', {type: ToastTypes.SUCCESS})});
                 } else {
@@ -245,8 +259,16 @@ export function addData(infoCode, field, data, price, dispatch) {
                             statusValidationDescription: 'NotValidated',
                             statusValidationCode: 1
                         };
-                        //getPersonaData()
                         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
+                        let personalInfo = store.getState().persona.personalInfo;
+                        const objPersonaData = { 
+                            type: 'GET_PERSONA_BASIC_DATA', 
+                            latestUpdate: Date.now(), 
+                            novoPersonalInfo: personalInfo, 
+                            address: transactor.wallet.address, 
+                            numberOfFields: personalInfo.length 
+                        };
+                        personaStorage.setChromeStorage(objPersonaData);
                         dispatch({type: 'TOAST_SUCCESS', toast: buildToast('Information added successfully!', {type: ToastTypes.SUCCESS})})
                     })
             })

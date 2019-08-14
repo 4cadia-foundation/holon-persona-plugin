@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import {connect} from "react-redux";
@@ -23,13 +24,18 @@ class Balance extends Component {
         if (nextProps.persona.error.length>2) {
             const msg = 'Erro: ' + nextProps.persona.error;
             console.error('Balance/getDerivedStateFromProps: ', msg);
-            alert(msg);
+            //alert(msg);
             return { balance: 0 };
         }
         return { balance : nextProps.persona.balance };        
     }
 
     render() {
+        if (this.props.persona.error.length>2 && this.props.persona.balance===0 && this.props.persona.address.length<10) {
+            return (
+                <Redirect to="/welcomeback" />
+            )
+        }
         return(
             <div id="container-balance">
                 <p id="p-balance" className="text-center paragraph">

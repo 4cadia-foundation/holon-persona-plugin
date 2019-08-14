@@ -23,7 +23,7 @@ class ScoreGraph extends Component {
       if (nextProps.persona.error.length>2) {
           const msg = 'Erro: ' + nextProps.persona.error;
           console.error('ScoreGraph/getDerivedStateFromProps: ', msg);
-          alert(msg);
+          //alert(msg);
           return { validations: 0, numberOfFields: 0 };
       }
       return { validations: nextProps.persona.validations, numberOfFields: nextProps.persona.numberOfFields };        

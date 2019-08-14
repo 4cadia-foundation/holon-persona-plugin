@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Label, Table } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -38,7 +39,6 @@ class Home extends Component {
     if (nextProps.persona.error.length>2) {
         const msg = 'Erro: ' + nextProps.persona.error;
         console.error('Home/getDerivedStateFromProps: ', msg);
-        alert(msg);
         return { isLoading: false };
     }
     if (nextProps.persona.readAllPersonaLogs) {
@@ -75,6 +75,10 @@ class Home extends Component {
   render () {
     const {persona} = this.state;
     
+    if (!persona.address || persona.address.length < 10) {
+      <Redirect to="/welcomeback" />
+    }
+
     return (
       <div>
         <Grid>

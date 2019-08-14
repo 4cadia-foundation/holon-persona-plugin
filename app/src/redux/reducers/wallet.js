@@ -7,13 +7,14 @@ const INITIAL_STATE = {
   hasWallet: false,
   error: '',
   hasCheckedWalletStorage: false,
-  ethersWallet: {}
+  ethersWallet: {},
+  latestUpdate: Date.now(),
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
   switch(action.type) {
     case ActionTypes.SET_ACCOUNTS:
-      return {...state, ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic, hasWallet: true};
+      return {...state, ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic, hasWallet: true, latestUpdate: action.latestUpdate};
     break;
     case ActionTypes.SET_WALLET_CREATE:
       return {...state, accounts: action.accounts};
