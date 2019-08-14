@@ -34,7 +34,6 @@ export default function persona(state = INITIAL_STATE, action) {
         return { ...state, readAllPersonaLogs: false }
     }
 
-
     if (action.type == 'RUNNING_METHOD') {
         // console.log('reducer/RUNNING_METHOD')
         return { ...state, isRunning: true }

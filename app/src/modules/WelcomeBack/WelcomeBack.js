@@ -22,22 +22,24 @@ class WelcomeBack extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.wallet.address.length > 2) {
-            //console.log('WelcomeBack/componentWillReceiveProps/address', nextProps.wallet);
-            this.setState({
-                isProcessing: false,
-                openedWallet: true
-            })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.wallet.error.length > 2 && prevState.isLoading && prevState.password.length > 1) {
+            const msg = 'Erro: ' + nextProps.wallet.error;
+            console.log('WelcomeBack/getDerivedStateFromProps', msg);
+            return { isProcessing: false, openedWallet: false, password: ""};
+        } 
+        else if (nextProps.wallet.openedWallet) {
+            return {openedWallet: nextProps.wallet.openedWallet};
         }
+        return null;
     }
 
-    handleClick(event){
+    handleClick(event) {
         event.preventDefault();
         this.setState({
             isProcessing: true,
             msg: "Openning wallet",
-        })
+        });
       WalletActions.openWallet(this.state.password, this.props.dispatch);
     }
 
