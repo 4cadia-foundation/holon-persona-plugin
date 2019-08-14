@@ -42,13 +42,13 @@ describe("GetEventHash Tests", () => {
 });
 
 describe("GetTopicFilters Tests", () => {
-    it("No filterTopic retuns at least eventType hash as default filter", async () => {
+    it("No filterTopic retuns at least eventType hash as default filter", () => {
         let topics = _eventsService.GetTopicFilters(EVENT_TYPE.NEWDATA);
         expect(topics).toContain(EventTopic.newData);
         expect(topics.length).toBe(1);
     });
 
-    it("When using filters retuns topic hash and filters successfuly", async () => {
+    it("When using filters retuns topic hash and filters successfuly", () => {
         let filters = ['filter1', 'filter2'];
         let topics = _eventsService.GetTopicFilters(EVENT_TYPE.LETMESEEYOURDATA, filters);
         expect(topics).toContain(EventTopic.letMeSeeYourData);
@@ -59,12 +59,22 @@ describe("GetTopicFilters Tests", () => {
 });
 
 describe("FillEventTopics Tests", () => {
-    it("Correctly adds all smart contracts event hashes", async () => {
+    it("Correctly adds all smart contracts event hashes", () => {
         let events = _eventsService.FillEventTopics();
         expect(events[EVENT_TYPE.NEWDATA]).toBe(EventTopic.newData);
         expect(events[EVENT_TYPE.VALIDATEME]).toBe(EventTopic.validateMe);
         expect(events[EVENT_TYPE.VALIDATIONRESULT]).toBe(EventTopic.validationResult);
         expect(events[EVENT_TYPE.LETMESEEYOURDATA]).toBe(EventTopic.letMeSeeYourData);
         expect(events[EVENT_TYPE.DELIVERDATA]).toBe(EventTopic.deliverData);
+    });
+});
+
+describe("GetLetSeeYourDataEvent Tests", () => {
+    it("Returns event mapped as an object successfuly", async () => {
+        let eventResult = await _eventsService.GetLetSeeYourDataEvent(null);
+        expect(eventResult[0].requester).toBe(letMeSeeYourDataSample.decodedEvent.requester);
+        expect(eventResult[0].persona).toBe(letMeSeeYourDataSample.decodedEvent.persona);
+        expect(eventResult[0].field).toBe(letMeSeeYourDataSample.decodedEvent.field);
+        expect(eventResult.length).toBe(1);
     });
 });

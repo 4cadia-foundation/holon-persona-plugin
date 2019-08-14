@@ -50,6 +50,11 @@ module.exports = {
       },
       "status": 1,
       "byzantium": true
+    },
+    decodedEvent: {
+      "requester": "0x613c2bff5d45294159e01c12d96bee85dd9876ae",
+      "persona": "0x0e2f70226bfa7b471d894f675be1c6bfac88b15b",
+      "field": "name"
     }
   },
 }
