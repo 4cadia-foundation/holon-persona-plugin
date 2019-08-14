@@ -50,7 +50,7 @@ class Menu extends Component {
         }
 
         if (!this.props.persona.address || this.props.persona.address.length < 10) {
-            <Redirect to="/welcomeback" />
+            <Redirect to="/welcome" />
         }
 
         return(

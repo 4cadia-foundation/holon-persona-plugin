@@ -34,7 +34,7 @@ class Welcome extends Component {
     console.log('Welcome/render/props', this.props.persona, this.props.wallet)  
     // if (this.props.wallet.hasCheckedWalletStorage) {
     if (this.props.persona.hasCheckedPersonaStorage && this.props.wallet.hasCheckedWalletStorage) {
-      if (this.props.persona.numberOfFields > 0 && this.props.wallet.hasWallet) {
+      if (this.props.persona.numberOfFields > 0 && this.props.wallet.mnemonic.length > 10) {
         return (
           <Redirect to="/home" />
         );

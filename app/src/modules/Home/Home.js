@@ -76,7 +76,7 @@ class Home extends Component {
     const {persona} = this.state;
     
     if (!persona.address || persona.address.length < 10) {
-      <Redirect to="/welcomeback" />
+      <Redirect to="/welcome" />
     }
 
     return (

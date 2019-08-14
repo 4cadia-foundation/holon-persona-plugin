@@ -33,7 +33,7 @@ class Balance extends Component {
     render() {
         if (this.props.persona.error.length>2 && this.props.persona.balance===0 && this.props.persona.address.length<10) {
             return (
-                <Redirect to="/welcomeback" />
+                <Redirect to="/welcome" />
             )
         }
         return(
