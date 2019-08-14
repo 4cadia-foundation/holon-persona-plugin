@@ -13,7 +13,6 @@ class WalletStorage {
     })
   }
 
-
   getChromeStorage() {
     return new Promise((resolve, reject) => {
       chrome.storage.local.get(['key'], (result) => {
@@ -22,7 +21,6 @@ class WalletStorage {
         resolve(result.key);
       });
     })
-
   }
 
 
@@ -36,11 +34,49 @@ class WalletStorage {
     })
   }
 
+  setOpenedWalletStorage(value) {
+    return new Promise((resolve, reject) => {
+      console.log('setOpenedWalletStorage/starting');
+      chrome.storage.local.set({ 'wallet_opened': value }, () => {
+        console.log('setOpenedWalletStorage/promiss resolved');
+        let error = chrome.runtime.lastError;
+        if (error) reject(error);
+        console.log('setOpenedWalletStorage', value)
+        resolve('value saved succesfully');
+      })
+    })
+  }
+
+  getOpenedWalletStorage() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(['wallet_opened'], (result) => {
+        let error = chrome.runtime.lastError;
+        if (error) {
+          console.log('getOpenedWalletStorage/error', error)
+          reject(error);
+        }
+        console.log('getOpenedWalletStorage/wallet', result, result.wallet_opened);
+        if (!result.wallet_opened || !result.wallet_opened.address || result.wallet_opened.address.length < 10) {
+          reject({name : "WalletStateNotStoragedError", message : "Wallet State wast Not Stored Yet"});
+        }
+        resolve(result.wallet_opened);
+      });
+    })
+  }
+
+  clearOpenedWalletStorage() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.remove(['wallet-opened'], () => {
+        let error = chrome.runtime.lastError;
+        if (error) reject(error);
+        resolve('removed with successfull');
+      })
+    })
+  }
 
   async createNewVaultAndRestore(seed, password) {
     return new Promise(async (resolve, reject) => {
       try {
-        let transactor = new Transactor();
         const wallet = new ethers.Wallet.fromMnemonic(seed);
 
         //console.log('createNewVaultAndRestore/seed', seed);

@@ -20,7 +20,8 @@ class WelcomeBack extends Component {
           openedWallet: false,
           isProcessing: false,
           msg: "Loading",
-        };        
+        };   
+        console.log('WelcomeBack/componentDidMount/props', this.props.persona)     
     }
 
     componentWillReceiveProps(nextProps) {
@@ -92,7 +93,8 @@ class WelcomeBack extends Component {
 }
 
 const mapStateToProps = state => ({
-    wallet: state.wallet
+    wallet: state.wallet,
+    persona: state.persona,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);

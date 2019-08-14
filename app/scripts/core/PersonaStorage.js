@@ -2,22 +2,25 @@ export default class PersonaStorage {
 
   setChromeStorage(value) {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.set({ 'persona': value }, () => {
+      chrome.storage.local.set({'persona': value }, () => {
         let error = chrome.runtime.lastError;
         if (error) reject(error);
+        console.log('setChromeStorage', value)
         resolve('value save with succesfull');
       })
     })
   }
 
-
   getChromeStorage() {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.get('persona', (result) => {
+      chrome.storage.local.get(['persona'], (result) => {
         let error = chrome.runtime.lastError;
         if (error) reject(error);
-        if (!result.numberOfFields || result.numberOfFields < 1) reject({name : "PersonaStateNotStoragedError", message : "Persona State wast Not Storaged Yet"});
-        resolve(result);
+        console.log('getChromeStorage', result.persona);
+        if (!result.persona || !result.persona.numberOfFields || result.persona.numberOfFields < 1) {
+          reject({name : "PersonaStateNotStoragedError", message : "Persona State wast Not Stored Yet"});
+        }
+        resolve(result.persona);
       });
     })
 

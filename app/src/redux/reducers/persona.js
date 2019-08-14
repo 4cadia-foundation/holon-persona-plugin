@@ -6,12 +6,13 @@ const INITIAL_STATE = {
     readAllPersonaLogs: false,
     balance: 0,
     validations: 0,
-    isRunning: false
+    isRunning: false,
+    hasCheckedPersonaStorage: false,
 }
 
 export default function persona(state = INITIAL_STATE, action) {
 
-    //console.log('reducer persona/action', action)
+    // console.log('reducer persona/action', action)
 
     if (action.type == 'GET_PERSONA_BASIC_DATA') {
         //console.log('reducer GET_PERSONA_BASIC_DATA state', state)
@@ -22,6 +23,11 @@ export default function persona(state = INITIAL_STATE, action) {
             isRunning: false,
             readAllPersonaLogs: true,
         }
+    }
+
+    if (action.type == 'HAS_CHECKED_PERSONA_STORAGE') {
+        console.log('reducer/HAS_CHECKED_PERSONA_STORAGE')
+        return { ...state, hasCheckedPersonaStorage: true }
     }
 
     if (action.type == 'READ_ALL_PERSONA_LOGS') {

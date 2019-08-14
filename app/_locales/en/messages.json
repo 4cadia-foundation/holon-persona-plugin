@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "boilerplate extension",
-    "description": "The name of the application"
+    "message": "Holon Persona",
+    "description": "Holon Persona plugin is a tool to create decentralized Identity at Web3"
   },
   "appDescription": {
-    "message": "boilerplate for extension chrome used in project 4cadia",
-    "description": "The description of the application"
+    "message": "Holon Persona plugin is a tool to create decentralized Identity at Web3 by 4Cadia",
+    "description": "Holon Persona plugin is a tool to create decentralized Identity at Web3"
   }
 }
