@@ -81,6 +81,8 @@ class ValidateInformation extends Component {
         return this.state.uriConfirmationData.length > 1;
     }
 
+    
+
     handleClick(event) {
         event.preventDefault();
         const validator = this.state.validator;
