@@ -23,14 +23,16 @@ class WelcomeBack extends Component {
         };        
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.wallet.address.length > 2) {
-            //console.log('WelcomeBack/componentWillReceiveProps/address', nextProps.wallet);
-            this.setState({
-                isProcessing: false,
-                openedWallet: true
-            })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.wallet.error.length > 2 && prevState.isProcessing && prevState.password.length > 1) {
+            const msg = 'Erro: ' + nextProps.wallet.error;
+            console.log('WelcomeBack/getDerivedStateFromProps', msg);
+            return { isProcessing: false, password: ""};
+        } 
+        else if (nextProps.wallet.openedWallet) {
+           return {openedWallet: nextProps.wallet.openedWallet};
         }
+      return null;
     }
 
     handleClick(event){
@@ -51,7 +53,6 @@ class WelcomeBack extends Component {
           [event.target.id]: event.target.value
         });
     }
-
 
   render () {
     if (this.state.openedWallet) {
