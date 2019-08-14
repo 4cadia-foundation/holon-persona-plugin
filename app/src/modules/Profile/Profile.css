@@ -3,4 +3,10 @@
     flex-direction: row-reverse;
 }
 
+.did-address {
+    font-size: 0.8em;
+}
 
+.did-document {
+    font-size: 0.7em;
+}

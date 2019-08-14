@@ -113,7 +113,40 @@ class Profile extends Component {
                         <Col>
                             <ScoreGraph/>
                         </Col>
-                    </Row>       
+                    </Row>
+                    <Row>
+                        <Col>
+                            <hr />
+                        </Col>
+                    </Row>
+                    <Row className="margin-top-15 text-center paragraph">
+                        <Col>
+                            <h3>DID Credentials</h3>
+                        </Col>
+                    </Row>
+                    <Row className="margin-top-15 text-center paragraph did-address">
+                        <Col>
+                            {`did:ethr:${this.props.persona.address}`}
+                        </Col>
+                    </Row>
+                    <Row className="margin-top-15 paragraph did-document">
+                        <Col>
+                            <code>
+                            {`{
+                                    '@context': 'https://w3id.org/did/v1',
+                                    id: 'did:ethr:${this.props.persona.address}',
+                                    publicKey: [{
+                                        id: 'did:ethr:${this.props.persona.address}#owner',
+                                        type: 'Secp256k1VerificationKey2018',
+                                        owner: 'did:ethr:${this.props.persona.address}',
+                                        ethereumAddress: '${this.props.persona.address}'}],
+                                    authentication: [{
+                                        type: 'Secp256k1SignatureAuthentication2018',
+                                        publicKey: 'did:ethr:${this.props.persona.address}#owner'}]
+                                }`}
+                            </code>
+                        </Col>
+                    </Row>
                 </Grid>
                 <Loader visible={this.state.isLoading} />
             </div>
