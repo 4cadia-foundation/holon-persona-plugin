@@ -1,15 +1,21 @@
 import EventsService from '../../../core/application/service/EventsService';
 import { letMeSeeYourDataSample } from '../../template/eventsSample'
-
+import EVENT_TYPE from '../../../../scripts/enums/EventType';
+import EventTopic from '../../../../config/eventTopic';
 
 let _eventsService;
 
 beforeEach(() => {
     let getLogsMock = jest.fn(async (filterData) => {
-        return letMeSeeYourDataSample;
+        return letMeSeeYourDataSample.event;
     });
+    let transReceiptMock = jest.fn(async (hash) => {
+        return letMeSeeYourDataSample.eventReceipt;
+    });
+
     let provider = {
-        getLogs: getLogsMock
+        getLogs: getLogsMock,
+        getTransactionReceipt: transReceiptMock
     };
     _eventsService = new EventsService(provider);
 });
@@ -30,9 +36,35 @@ describe("GetEventHash Tests", () => {
 
     it("Returns 2 transactionHashes", async () => {
         var hashes = await _eventsService.GetEventHash(null);
-        expect(hashes).toContain(letMeSeeYourDataSample[0].transactionHash);
-        expect(hashes).toContain(letMeSeeYourDataSample[1].transactionHash);
-        expect(hashes.length).toBe(2);
+        expect(hashes).toContain(letMeSeeYourDataSample.event[0].transactionHash);
+        expect(hashes.length).toBe(letMeSeeYourDataSample.event.length);
     });
 });
 
+describe("GetTopicFilters Tests", () => {
+    it("No filterTopic retuns at least eventType hash as default filter", async () => {
+        let topics = _eventsService.GetTopicFilters(EVENT_TYPE.NEWDATA);
+        expect(topics).toContain(EventTopic.newData);
+        expect(topics.length).toBe(1);
+    });
+
+    it("When using filters retuns topic hash and filters successfuly", async () => {
+        let filters = ['filter1', 'filter2'];
+        let topics = _eventsService.GetTopicFilters(EVENT_TYPE.LETMESEEYOURDATA, filters);
+        expect(topics).toContain(EventTopic.letMeSeeYourData);
+        expect(topics).toContain(filters[0]);
+        expect(topics).toContain(filters[1]);
+        expect(topics.length).toBe(3);
+    });
+});
+
+describe("FillEventTopics Tests", () => {
+    it("Correctly adds all smart contracts event hashes", async () => {
+        let events = _eventsService.FillEventTopics();
+        expect(events[EVENT_TYPE.NEWDATA]).toBe(EventTopic.newData);
+        expect(events[EVENT_TYPE.VALIDATEME]).toBe(EventTopic.validateMe);
+        expect(events[EVENT_TYPE.VALIDATIONRESULT]).toBe(EventTopic.validationResult);
+        expect(events[EVENT_TYPE.LETMESEEYOURDATA]).toBe(EventTopic.letMeSeeYourData);
+        expect(events[EVENT_TYPE.DELIVERDATA]).toBe(EventTopic.deliverData);
+    });
+});

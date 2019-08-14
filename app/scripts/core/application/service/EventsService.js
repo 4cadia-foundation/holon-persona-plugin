@@ -8,16 +8,11 @@ let _eventTopicList;
 let _provider;
 export default class EventsService {
     constructor(provider) {
-        let eventTopics = new Object();
-        eventTopics[EVENT_TYPE.NEWDATA] = EventTopic.newData;
-        eventTopics[EVENT_TYPE.VALIDATEME] = EventTopic.validateMe;
-        eventTopics[EVENT_TYPE.VALIDATIONRESULT] = EventTopic.validationResult;
-        eventTopics[EVENT_TYPE.LETMESEEYOURDATA] = EventTopic.letMeSeeYourData;
-        eventTopics[EVENT_TYPE.DELIVERDATA] = EventTopic.deliverData;
-        this._eventTopicList = eventTopics;
+        this._eventTopicList = this.FillEventTopics();
         this._provider = provider;
         abiDecoder.addABI(abi);
     }
+
     async GetNewDataEvent(topicFilter = null) {
         return await this.GetEventData(EVENT_TYPE.NEWDATA, topicFilter);
     }
@@ -39,14 +34,9 @@ export default class EventsService {
             address: address,
             fromBlock: 4754554, //todo: filter from last filtered block(store)
             toBlock: 'latest',
-            topics: []
+            topics: this.GetTopicFilters(eventType, topicFilter)
         };
-        filterData.topics[0] = this._eventTopicList[eventType];
-        if (topicFilter) {
-            for (let filterIndex = 0; filterIndex < topicFilter.length; filterIndex++) {
-                filterData.topics[filterIndex + 1] = topicFilter[filterIndex];
-            }
-        }
+
         let eventHashes = await this.GetEventHash(filterData);
         if (!eventHashes)
             return null;
@@ -63,6 +53,25 @@ export default class EventsService {
             eventResult.push(eventResultItem);
         }
         return eventResult;
+    }
+    GetTopicFilters(eventType, topicFilter = null) {
+        let topics = [];
+        topics[0] = this._eventTopicList[eventType];
+        if (topicFilter) {
+            for (let filterIndex = 0; filterIndex < topicFilter.length; filterIndex++) {
+                topics[filterIndex + 1] = topicFilter[filterIndex];
+            }
+        }
+        return topics;
+    }
+    FillEventTopics() {
+        let eventTopics = new Object();
+        eventTopics[EVENT_TYPE.NEWDATA] = EventTopic.newData;
+        eventTopics[EVENT_TYPE.VALIDATEME] = EventTopic.validateMe;
+        eventTopics[EVENT_TYPE.VALIDATIONRESULT] = EventTopic.validationResult;
+        eventTopics[EVENT_TYPE.LETMESEEYOURDATA] = EventTopic.letMeSeeYourData;
+        eventTopics[EVENT_TYPE.DELIVERDATA] = EventTopic.deliverData;
+        return eventTopics;
     }
     async GetTransactionReceipt(hash) {
         let receipt = await this._provider.getTransactionReceipt(hash);
