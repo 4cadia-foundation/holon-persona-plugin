@@ -18,7 +18,6 @@ class Ipfs extends Component {
     this.captureFile = this.captureFile.bind(this);
     this.convertToBuffer = this.convertToBuffer.bind(this);
     this.handleSubmitIPFS = this.handleSubmitIPFS.bind(this);
-    this.handleChangeIPFS = this.handleChangeIPFS.bind(this);
   }
   captureFile(event) {
     event.stopPropagation()

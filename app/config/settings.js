@@ -3,5 +3,10 @@ module.exports = {
   host: 'rinkeby.caralabs.me',
   port: '18575',
   network: 4,
-  clearStorage: false
+  clearStorage: false,
+  ipfs: {
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https'
+},
 };
