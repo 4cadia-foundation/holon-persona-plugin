@@ -49,8 +49,10 @@ export function hasWallet() {
 
 export function openWallet(password) {
   console.log('openWallet/password', password.length);
-  return dispatch => {
-    wallet.submitPassword(password).then(wallet => {
+  return (async (dispatch) => {
+    dispatch({ type: ActionTypes.OPEN_WALLET })
+    await wallet.submitPassword(password)
+    .then(wallet => {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
         address: wallet.address,
@@ -62,7 +64,7 @@ export function openWallet(password) {
       dispatch({ type: ActionTypes.OPEN_WALLET_ERROR, error: exception });
       dispatch({ type: 'TOAST_ERROR', toast: buildToast('Incorrect password! Try again.', { type: ToastTypes.ERROR } )});
     })
-  }
+  })
 }
 
 export function createNewWallet(password){

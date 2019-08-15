@@ -23,18 +23,6 @@ class WelcomeBack extends Component {
         };        
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.wallet.error.length > 2 && prevState.isProcessing && prevState.password.length > 1) {
-            const msg = 'Erro: ' + nextProps.wallet.error;
-            console.log('WelcomeBack/getDerivedStateFromProps', msg);
-            return { isProcessing: false, password: ""};
-        } 
-        else if (nextProps.wallet.openedWallet) {
-           return {openedWallet: nextProps.wallet.openedWallet};
-        }
-      return null;
-    }
-
     handleClick(event){
         event.preventDefault();
         this.setState({
@@ -54,7 +42,19 @@ class WelcomeBack extends Component {
         });
     }
 
-  render () {
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.wallet.error.length > 2 && prevState.isProcessing && prevState.password.length > 1) {
+            const msg = 'Erro: ' + nextProps.wallet.error;
+            console.log('WelcomeBack/getDerivedStateFromProps', msg);
+            return { isProcessing: false, password: ""};
+        }
+        if (nextProps.wallet.openedWallet) {
+            return { openedWallet: nextProps.wallet.openedWallet };
+        }
+        return null;
+    }
+
+    render () {
     if (this.state.openedWallet) {
         return (
           <Redirect to="/choosecreateidentityorhome" />

@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 export default function wallet(state = INITIAL_STATE, action) {
   switch(action.type) {
     case ActionTypes.SET_ACCOUNTS:
-      return {...state, ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic};
+      return {...state, error:'', ethersWallet: action.wallet, address: action.address, mnemonic: action.mnemonic, openedWallet: true};
     break;
     case ActionTypes.SET_WALLET_CREATE:
       return {...state, accounts: action.accounts};
@@ -22,7 +22,7 @@ export default function wallet(state = INITIAL_STATE, action) {
       return {...state, error: action.error};
     break;
     case ActionTypes.OPEN_WALLET:
-      return {...state, ethersWallet: action.wallet, address: action.address};
+      return {...state, error: '', openedWallet: false};
     break;
     case ActionTypes.OPEN_WALLET_ERROR:
       return{...state, error: action.error.message, openedWallet: false};
