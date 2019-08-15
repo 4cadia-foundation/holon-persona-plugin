@@ -10,6 +10,7 @@ import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import SelectPersonaInfoFields from '../../components/SelectPersonaInfoFields/SelectPersonaInfoFields';
 import SelectValidador from '../../components/SelectValidador/SelectValidador';
 import Loader from '../../components/Loader/Loader';
+import Ipfs from '../../components/Ipfs/Ipfs';
 import '../../styles/_utils.css';
 import './ValidateInformation.css'
 
@@ -18,6 +19,7 @@ class ValidateInformation extends Component {
         super(props);
         this.state = {
             validator: '',
+            ipfsHash: '',
             field: '',
             uriConfirmationData: '',
             isLoading: true,
@@ -29,6 +31,8 @@ class ValidateInformation extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.setValidator = this.setValidator.bind(this);
         this.setField = this.setField.bind(this);
+        this.setIpfsHash = this.setIpfsHash.bind(this);
+
     }
 
     componentDidMount() {
@@ -69,15 +73,26 @@ class ValidateInformation extends Component {
         })
     }
 
+    setIpfsHash(hash) {
+        this.setState({ ipfsHash: hash });
+    }
+
     validateForm() {
         return this.state.uriConfirmationData.length > 1;
     }
+
+    
 
     handleClick(event) {
         event.preventDefault();
         const validator = this.state.validator;
         const field = this.state.field;
-        const uriConfirmationData = this.state.uriConfirmationData;
+        var uriConfirmationData = '';
+        if (this.state.ipfsHash.length > 10){
+            uriConfirmationData = this.state.ipfsHash;
+        } else {
+            uriConfirmationData = this.state.uriConfirmationData;
+        }
         this.setState({
             isLoading: true,
             saveButtonCalled: true,
@@ -124,6 +139,9 @@ class ValidateInformation extends Component {
                                 onChange={this.handleChange}
                             />
                         </div>
+                    </div>
+                    <div>
+                        <Ipfs emitIpfsHash={this.setIpfsHash}/>
                     </div>
                 </Form>
                 <Button disabled={!this.validateForm()} id="btn-validate-save" className="paragraph" bsSize="large" block bsStyle="warning" onClick={this.handleClick}>
