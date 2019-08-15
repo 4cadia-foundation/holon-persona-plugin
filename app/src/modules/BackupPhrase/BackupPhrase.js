@@ -32,9 +32,17 @@ class BackupPhrase extends Component {
                                 Anyone with this phrase can takes your Ether forever.
                             </p>
                         </div>
-                        <div className="backup-phrase paragraph margin-top-30">
+                        <div className="backup-phrase paragraph">
                             <div className="mnemonic-returned">
                                 {this.props.mnemonic}
+                            </div>
+                        </div>
+                        <div className="paragraph-pk text-center">
+                            <p className="paragraph"><strong>Private Key</strong></p>
+                        </div>
+                        <div className="paragraph">
+                            <div className="privateKey-returned">
+                                {this.props.ethersWallet.privateKey.substring(2)}
                             </div>
                         </div>
                     </Col>
@@ -45,7 +53,8 @@ class BackupPhrase extends Component {
 }
 
 const mapStateToProps = state => ({
-   mnemonic: state.wallet.mnemonic
+   mnemonic: state.wallet.mnemonic,
+   ethersWallet: state.wallet.ethersWallet,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
