@@ -5,7 +5,6 @@ const INITIAL_STATE = {
   seed:'',
   mnemonic: '',
   hasWallet: false,
-  openedWallet: false,
   error: '',
   ethersWallet: {}
 };
@@ -29,7 +28,7 @@ export default function wallet(state = INITIAL_STATE, action) {
       break;
     case ActionTypes.HAS_WALLET:
       return {...state, hasWallet: action.hasWallet};
-      break;    
+    break;    
     default:
       return state; 
   }

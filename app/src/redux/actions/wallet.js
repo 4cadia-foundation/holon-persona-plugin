@@ -1,5 +1,4 @@
 import Wallet  from '../../../scripts/core/WalletStorage';
-import { buildToast, ToastTypes } from '../../helper/toast';
 import * as ActionTypes from '../../constants/actionsTypes';
 const wallet = new Wallet();
 
@@ -59,8 +58,9 @@ export function openWallet(password) {
       });
     })
     .catch(exception => {
-      dispatch({ type: ActionTypes.OPEN_WALLET_ERROR, error: exception });
-      dispatch({ type: 'TOAST_ERROR', toast: buildToast('Incorrect password! Try again.', { type: ToastTypes.ERROR } )});
+      dispatch({
+        type: ActionTypes.OPEN_WALLET_ERROR
+      });
     })
   }
 }
