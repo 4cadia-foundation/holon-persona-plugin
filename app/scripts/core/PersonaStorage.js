@@ -20,7 +20,7 @@ export default class PersonaStorage {
         if (!result.persona || !result.persona.numberOfFields || !result.persona.latestUpdate || result.persona.numberOfFields < 1) {
           reject({name : "PersonaStateNotStoragedError", message : "Persona State wast Not Stored Yet"});
         }
-        if ((Date.now() - result.persona.latestUpdate) > 120000) {
+        if ((Date.now() - result.persona.latestUpdate) > 600000) {
           this.clearPersonaStorage();
           reject({name : "PersonaStateTimeoutError", message : "Persona State time out"});
         }

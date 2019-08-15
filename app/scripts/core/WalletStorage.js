@@ -61,7 +61,7 @@ class WalletStorage {
         }
         console.log('result.wallet_opened', result.wallet_opened);
         console.log('getOpenedWalletStorage/time: ', (Date.now() - result.wallet_opened.latestUpdate))
-        if ((Date.now() - result.wallet_opened.latestUpdate) > 120000) {
+        if ((Date.now() - result.wallet_opened.latestUpdate) > 600000) {
           this.clearOpenedWalletStorage();
           reject({name : "WalletStateTimeoutError", message : "Wallet State time out"});
         }
