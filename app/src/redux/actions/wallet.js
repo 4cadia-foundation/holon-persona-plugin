@@ -1,6 +1,7 @@
 import Wallet  from '../../../scripts/core/WalletStorage';
-import { buildToast, ToastTypes } from '../../helper/toast';
 import * as ActionTypes from '../../constants/actionsTypes';
+import { buildToast, ToastTypes } from '../../helper/toast';
+
 const wallet = new Wallet();
 
 export function restoreVault(password, seed) {
