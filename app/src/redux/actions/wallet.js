@@ -1,5 +1,7 @@
 import Wallet  from '../../../scripts/core/WalletStorage';
 import * as ActionTypes from '../../constants/actionsTypes';
+import { buildToast, ToastTypes } from '../../helper/toast';
+
 const wallet = new Wallet();
 
 export function restoreVault(password, seed) {
@@ -48,8 +50,10 @@ export function hasWallet() {
 
 export function openWallet(password) {
   console.log('openWallet/password', password.length);
-  return dispatch => {
-    wallet.submitPassword(password).then(wallet => {
+  return (async (dispatch) => {
+    dispatch({ type: ActionTypes.OPEN_WALLET })
+    await wallet.submitPassword(password)
+    .then(wallet => {
       dispatch({
         type: ActionTypes.SET_ACCOUNTS,
         address: wallet.address,
@@ -58,11 +62,10 @@ export function openWallet(password) {
       });
     })
     .catch(exception => {
-      dispatch({
-        type: ActionTypes.OPEN_WALLET_ERROR
-      });
+      dispatch({ type: ActionTypes.OPEN_WALLET_ERROR, error: exception });
+      dispatch({ type: 'TOAST_ERROR', toast: buildToast('Incorrect password! Try again.', { type: ToastTypes.ERROR } )});
     })
-  }
+  })
 }
 
 export function createNewWallet(password){
