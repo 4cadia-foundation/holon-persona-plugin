@@ -3,7 +3,7 @@ const glob = require('glob');
 
 const CopyPlugin = require('copy-webpack-plugin');
 
-const files = glob.sync('./app/scripts/**/*.js', { dot: true, ignore: ['./app/scripts/chromereload.js']});
+const files = glob.sync('./app/scripts/**/*.js', { dot: true, ignore: ['./app/scripts/chromereload.js'] });
 
 
 module.exports = (watch = false) => {
@@ -18,12 +18,12 @@ module.exports = (watch = false) => {
     },
     plugins: [
       new CopyPlugin([
-        {from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist/index.html')},
-        {from: path.resolve(__dirname, 'app/config'), to: path.resolve(__dirname, 'dist/config')},
-        {from: path.resolve(__dirname, 'app/_locales'), to: path.resolve(__dirname, 'dist/_locales')},
-        {from: path.resolve(__dirname, 'app/images'), to: path.resolve(__dirname, 'dist/images')},
-        {from: path.resolve(__dirname, 'app/chromereload.js'), to: path.resolve(__dirname, 'dist')},
-        {from: path.resolve(__dirname, 'app/manifest.json'), to: path.resolve(__dirname, 'dist')}
+        { from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist/index.html') },
+        { from: path.resolve(__dirname, 'app/config'), to: path.resolve(__dirname, 'dist/config') },
+        { from: path.resolve(__dirname, 'app/_locales'), to: path.resolve(__dirname, 'dist/_locales') },
+        { from: path.resolve(__dirname, 'app/images'), to: path.resolve(__dirname, 'dist/images') },
+        { from: path.resolve(__dirname, 'app/chromereload.js'), to: path.resolve(__dirname, 'dist') },
+        { from: path.resolve(__dirname, 'app/manifest.json'), to: path.resolve(__dirname, 'dist') }
       ])
     ],
     module: {
@@ -31,13 +31,14 @@ module.exports = (watch = false) => {
         {
           test: /\.js$/,
           include: [path.resolve(__dirname, 'app')],
-          exclude: /node_modules/,
+          exclude: [
+            path.resolve(__dirname, 'node_modules'),
+            path.resolve(__dirname, 'app', 'scripts', 'test')
+          ],
           use: [{
             loader: 'babel-loader',
             options: {
-              babelrc: false,
-              presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-transform-runtime']
+              babelrc: true
             }
           }]
         }
@@ -45,7 +46,7 @@ module.exports = (watch = false) => {
     }
   }
 
-  if (watch){
+  if (watch) {
     module.watch = true;
   }
 
