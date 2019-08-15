@@ -8,6 +8,7 @@ import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
 import { buildToast, ToastTypes } from '../../helper/toast';
 import EventsService from '../../../scripts/core/application/service/EventsService';
+import Cryptography from '../../../scripts/core/Cryptography';
 
 const transactor = new Transactor();
 const filterContract = new FilterEventsBlockchain();
@@ -202,6 +203,9 @@ export function getPersonaData() {
             }
             console.log('actions/getPersonaData/novoPersonalInfo/loading');
             let novoPersonalInfo = await transactor.getPersonalInfo(validatRequests);
+            for(let index = 0; index < novoPersonalInfo.length ; index++) {
+                novoPersonalInfo[index].valor = await decriptedData(novoPersonalInfo[index].valor);
+            }
             console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
             dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
             return;
@@ -293,6 +297,35 @@ export function addData(infoCode, field, data, price, dispatch) {
     }
 }
 
+
+async function encrypteData(data) {
+    try {
+        let { privateKey } = store.getState().wallet.ethersWallet.signingKey;
+        let privateKeyWithoutConstant = privateKey.slice(2, privateKey.length);
+        if(!privateKey)
+            throw new Error('Public key not defined');
+        
+        const dataEncrepted = await Cryptography.encryptWithPublicKeyEcies(privateKeyWithoutConstant, data);
+        return dataEncrepted.toString('hex');
+    } catch (error) {
+        console.error('Error actions/persona/encrypteDataWithPublicKey/', err); 
+    }
+}
+
+async function decriptedData(data){
+    try {
+        let { privateKey } = store.getState().wallet.ethersWallet.signingKey;
+        let privateKeyWithoutConstant = privateKey.slice(2, privateKey.length);
+        if(!privateKey)
+            throw new Error('Public key not defined');
+        
+        const dataEncrepted = await Cryptography.decryptedWithPrivateKeyEcies(privateKeyWithoutConstant, data);
+        return dataEncrepted.toString();
+    } catch (error) {
+        console.error('Error actions/persona/encrypteDataWithPublicKey/', err); 
+    } 
+}
+
 export function addPersona(name, email) {
     return async dispatch => {
         dispatch({ type: 'RUNNING_METHOD' });
@@ -326,7 +359,9 @@ export function addPersona(name, email) {
             transactor.contractWithSigner;
             console.log('actions/persona/addpersona/adding persona')
             //add persona with field name by default
-            let addPersonaTask = await transactor._contract.addPersona(1, 0, "name", name, 0, contractOptions);
+            let nameEncrypted = await encrypteData(name);
+            
+            let addPersonaTask = await transactor._contract.addPersona(1, 0, "name", nameEncrypted, 0, contractOptions);
             await addPersonaTask.wait();
 
             let item = {
@@ -337,9 +372,11 @@ export function addPersona(name, email) {
             };
             dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
 
+            let emailEncrypted = await encrypteData(email);
+            
             //add persona's email field
             console.log('actions/persona/addpersona/adding data')
-            let addDataTask = await transactor._contract.addData(1, 0, "email", email, 0, contractOptions);
+            let addDataTask = await transactor._contract.addData(1, 0, "email", emailEncrypted, 0, contractOptions);
             await addDataTask.wait();
 
             item = {

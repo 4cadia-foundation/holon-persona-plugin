@@ -1,6 +1,6 @@
 import * as EthCrypto from 'eth-crypto';
 import * as Passworder from 'browser-passworder';
-
+import Ecies from 'ecies-parity';
 
 /**
  * @class Cryptography
@@ -17,9 +17,45 @@ export default class Cryptography {
    * */
   static async encrypt(publicKey, message) {
     try {
-      return await EthCrypto.encryptWithPublicKey(publicKey,message);
+      let encryptedData = await Ecies.encrypt(publicKey,message);
+      return encryptedData;
     } catch (exception) {
       console.error('[Crypto - encrypt]' + exception);
+    }
+  }
+
+  /**
+   * @method encryptWithPublicKeyEcies
+   * @description Method for encrypted message with public key using ecies
+   * @param {String} privateKey - privateKey
+   * @param {String} message - text in string for encript
+   * @return {String} return a text encript
+   * */
+  static async encryptWithPublicKeyEcies(privateKey, message){
+    try {
+      let buffer = Buffer.from(privateKey, 'hex');
+      let publicKey = Ecies.getPublic(buffer);
+      return await Ecies.encrypt(publicKey, Buffer.from(message));
+    } catch (exception) {
+      console.error('[Crypto - encryptWithPublicKeyEcies]' + exception);
+    }
+  }
+
+
+  /**
+   * @method decryptedWithPrivateKeyEcies
+   * @description Method for decrypt message with private key using ecies
+   * @param {String} privateKey - privateKey
+   * @param {String} message - text encrypted for decrypt
+   * @return {String} return a text decrypted
+   * */
+  static async decryptedWithPrivateKeyEcies(privateKey, message){
+    try {
+      let buffer = Buffer.from(privateKey, 'hex');
+      let serialisedCipher = Buffer.from(message, 'hex');
+      return await Ecies.decrypt(buffer, serialisedCipher);
+    } catch (exception) {
+      console.error('[Crypto - decryptedWithPrivateKeyEcies]' + exception);
     }
   }
 
