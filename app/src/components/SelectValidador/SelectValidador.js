@@ -53,7 +53,7 @@ class SelectValidador extends Component {
     if (this.state.isRunning) {
       return (
         <section>
-          <div>
+          <div className="paragraph loading-optionValidator">
             Loading validators from Blockchain...
           </div>                
         </section>

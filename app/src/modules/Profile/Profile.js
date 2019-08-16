@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Grid,FormControl, Row } from 'react-bootstrap';
+import { Col, Grid, FormControl, Row  } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -114,39 +114,36 @@ class Profile extends Component {
                             <ScoreGraph/>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
-                            <hr />
-                        </Col>
-                    </Row>
-                    <Row className="margin-top-15 text-center paragraph">
+                    <Row className="margin-top-10 text-center text">
                         <Col>
                             <h3>DID Credentials</h3>
                         </Col>
                     </Row>
-                    <Row className="margin-top-15 text-center paragraph did-address">
-                        <Col>
-                            {`did:ethr:${this.props.persona.address}`}
-                        </Col>
-                    </Row>
-                    <Row className="margin-top-15 paragraph did-document">
-                        <Col>
-                            <code>
-                            {`{
-                                    '@context': 'https://w3id.org/did/v1',
-                                    id: 'did:ethr:${this.props.persona.address}',
-                                    publicKey: [{
-                                        id: 'did:ethr:${this.props.persona.address}#owner',
-                                        type: 'Secp256k1VerificationKey2018',
-                                        owner: 'did:ethr:${this.props.persona.address}',
-                                        ethereumAddress: '${this.props.persona.address}'}],
-                                    authentication: [{
-                                        type: 'Secp256k1SignatureAuthentication2018',
-                                        publicKey: 'did:ethr:${this.props.persona.address}#owner'}]
-                                }`}
-                            </code>
-                        </Col>
-                    </Row>
+                    <div className="container-did-adress">
+                        <div className="text-center paragraph did-address">
+                            <Col>
+                                {`did:ethr:${this.props.persona.address}`}
+                            </Col>
+                        </div>
+                        <div className="paragraph did-document">
+                            <Col>
+                                <code>
+                                {`{
+                                        '@context': 'https://w3id.org/did/v1',
+                                        id: 'did:ethr:${this.props.persona.address}',
+                                        publicKey: [{
+                                            id: 'did:ethr:${this.props.persona.address}#owner',
+                                            type: 'Secp256k1VerificationKey2018',
+                                            owner: 'did:ethr:${this.props.persona.address}',
+                                            ethereumAddress: '${this.props.persona.address}'}],
+                                        authentication: [{
+                                            type: 'Secp256k1SignatureAuthentication2018',
+                                            publicKey: 'did:ethr:${this.props.persona.address}#owner'}]
+                                    }`}
+                                </code>
+                            </Col>
+                        </div>
+                    </div>
                 </Grid>
                 <Loader visible={this.state.isLoading} />
             </div>

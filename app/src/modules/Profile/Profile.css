@@ -10,3 +10,14 @@
 .did-document {
     font-size: 0.7em;
 }
+
+.container-did-adress {
+    border: ridge var(--color-orange);
+    padding: 12px;
+    word-break: break-all;
+}
+
+.line-profile {
+    border: 0.5px solid black;
+    width: 100%;
+}

@@ -7,8 +7,7 @@
 }
 
 .hash-ipfs {
-    border-color: black;
-    border: ridge;
+    border: ridge var(--color-orange);
     height: 50px;
     margin-left: 15px;;
 }
@@ -18,7 +17,7 @@
     margin: 6px; 
 }
 
-.titulo-ipfs {
+.title-ipfs {
     display: flex;
     margin-left: 15px;
 } 
