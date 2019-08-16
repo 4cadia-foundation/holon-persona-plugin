@@ -12,15 +12,15 @@
 }
 
 .margin-top-50 {
-    margin-top: 50px;
-}
-
-.margin-bottom-30 {
-    margin-bottom: 30px
+    margin-top: 0px;
 }
 
 .margin-bottom-50 {
     margin-bottom: 50px
+}
+
+.margin-bottom-70 {
+    margin-bottom: 70px
 }
 
 .space-between {

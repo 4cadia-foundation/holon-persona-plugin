@@ -11,8 +11,11 @@
     margin-top: 20px;
 }
 
+.margin-welcomeBack {
+    margin-top: 90px;
+}
+
 #password {
     margin-bottom: 50px;
     font-size: 10pt;
-
 }

@@ -117,7 +117,7 @@ class WalletPassword extends Component {
         <div className="margin-top-50">
           <Form>
             <div>
-                <h3 className="title margin-bottom-30" align="center">Create your wallet</h3>
+                <h3 className="title margin-bottom-70" align="center">Create your wallet</h3>
             </div>
             <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
               <ControlLabel className="paragraph">Password</ControlLabel>

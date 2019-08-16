@@ -62,7 +62,7 @@ class WelcomeBack extends Component {
     }
 
     return (
-        <Grid className="margin-top-50">
+        <Grid className="margin-welcomeBack">
             <Row className="text-center">
                 <img className="logo" src={logo} alt="Logo" />
             </Row>
