@@ -38,7 +38,7 @@ class BackupPhrase extends Component {
                             </div>
                         </div>
                         <div className="paragraph-pk text-center">
-                            <p className="paragraph"><strong>Private Key</strong></p>
+                            <h4 className="title">Private Key</h4>
                         </div>
                         <div className="paragraph">
                             <div className="privateKey-returned">
