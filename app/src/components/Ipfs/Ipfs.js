@@ -60,7 +60,7 @@ class Ipfs extends Component {
                         <p>Select file to confirm your data</p>
                         <input type="file" name="fileToSend" id="fileToSend" onChange={this.captureFile} />
                         <br />
-                        <button bsStyle="warning" type="submit">Send it</button>
+                        <button type="submit">Send it</button>
                       </div>
                       <label className="paragraph label-add title-ipfs">Your hash</label>
                       <div className="hash-ipfs paragraph">

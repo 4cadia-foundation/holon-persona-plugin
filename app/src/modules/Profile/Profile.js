@@ -114,7 +114,7 @@ class Profile extends Component {
                             <ScoreGraph/>
                         </Col>
                     </Row>
-                    <Row className="margin-top-10 text-center text">
+                    <Row className="margin-top-10 margin-bottom-10 text-center text">
                         <Col>
                             <h3>DID Credentials</h3>
                         </Col>
