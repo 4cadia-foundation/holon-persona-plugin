@@ -116,12 +116,12 @@ class ValidateInformation extends Component {
                 </div>
                 <Row>
                   <Col xs={12} md={12}>
-                      <div className="margin-top-50 text-center">
+                      <div className="margin-top-18 text-center">
                           <h3 className="title">Validation</h3>
                       </div>
                   </Col>
                 </Row>
-                <Form className="margin-top-50">
+                <Form className="margin-top-10">
                     <div className="space-between">
                         <div>
                             <SelectPersonaInfoFields emitField={this.setField} personalInfo={this.props.persona.personalInfo} />

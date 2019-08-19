@@ -56,15 +56,15 @@ class Ipfs extends Component {
             <Row>
                 <Col>
                     <form className="title text-center margin-top-30" onSubmit={this.handleSubmitIPFS}>
-                      <div className="ipfs-image">
+                      <div className="ipfs-image paragraph">
                         <p>Select file to confirm your data</p>
                         <input type="file" name="fileToSend" id="fileToSend" onChange={this.captureFile} />
                         <br />
                         <button type="submit">Send it</button>
                       </div>
-                      <label className="paragraph label-add titulo-ipfs">Your hash</label>
-                      <div className="hash-ipfs">
-                        <div className="hash-ipfs-return">
+                      <label className="paragraph label-add title-ipfs">Your hash</label>
+                      <div className="hash-ipfs paragraph">
+                        <div className="hash-ipfs-return paragraph">
                           {this.state.formIPFS}
                         </div>
                       </div>

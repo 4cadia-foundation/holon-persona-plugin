@@ -15,25 +15,26 @@
 
 .backup-phrase {
     border: ridge var(--color-orange);
-    height: 120px;
 }
 
 .mnemonic-returned {
     display: flex;
     height: 80px;
-    margin: 10px;
     align-items: center;
-    justify-content: center;
     font-size: 18px;
+    padding: 5px;
 }
+
 .paragraph-pk{
-    margin-top: 20px
+    margin-top: 36px;
 }
+
 .privateKey-returned {
     border: ridge var(--color-orange);
     display: flex;
-    height: 60px;
-    font-size: 16px;
-    overflow: auto;
+    height: 80px;
     padding: 5px;
+    font-size: 16px;
+    align-items: center;
+    word-break: break-word;
 }

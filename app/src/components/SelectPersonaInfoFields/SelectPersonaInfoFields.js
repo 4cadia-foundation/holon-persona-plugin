@@ -42,7 +42,6 @@ class SelectPersonaInfoFields extends Component {
         </section>
     )
   }
-
 }
 
 export default SelectPersonaInfoFields;
