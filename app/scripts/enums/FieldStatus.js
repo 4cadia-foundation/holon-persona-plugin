@@ -1,0 +1,9 @@
+const FIELD_STATUS = {
+    VALIDATED: 0,
+    NOT_VALIDATED: 1,
+    CANNOT_EVALUATE: 2,
+    NEW_DATA: 3,
+    VALIDATION_PENDING: 4
+};
+Object.freeze(FIELD_STATUS);
+module.exports = FIELD_STATUS;
