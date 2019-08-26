@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
 import Transactor from '../../../scripts/core/Transactor';
-import FilterEventsBlockchain from '../../../scripts/core/FilterEventsBlockchain';
 import store from '../store';
 import { address, abi } from '../../../config/abi';
 import abiDecoder from 'abi-decoder';
@@ -9,11 +8,6 @@ import { buildToast, ToastTypes } from '../../helper/toast';
 import EventsService from '../../../scripts/core/application/service/EventsService';
 
 const transactor = new Transactor();
-const filterContract = new FilterEventsBlockchain();
-filterContract.setEventToFilter('newdata');
-var validationRequests = [];
-var validationRequestCheck = false;
-var validations = [];
 abiDecoder.addABI(abi);
 
 function checkWallet() {
@@ -24,9 +18,6 @@ function checkWallet() {
         if (store.getState().wallet.ethersWallet) {
             transactor.wallet = store.getState().wallet.ethersWallet;
             transactor.contractWithSigner;
-            filterContract.transactor = transactor;
-            console.log('action/persona/checkWallet/transactor.wallet-set', transactor);
-            console.log('action/persona/checkWallet/filterContract transactor-set', filterContract);
             return true;
         } else {
             return false;
