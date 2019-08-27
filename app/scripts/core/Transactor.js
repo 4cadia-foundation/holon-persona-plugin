@@ -98,7 +98,7 @@ export default class Transactor extends SmartContract {
       case FIELD_STATUS.CANNOT_EVALUATE:
         return 'CannotEvaluate';
       case FIELD_STATUS.NEW_DATA: //todo: Devo retornar NoData ou continuar como Pending?
-        return 'NoData';
+        return 'Pending';
       case FIELD_STATUS.VALIDATION_PENDING:
         return 'Pending';
       default:
