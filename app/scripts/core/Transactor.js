@@ -35,7 +35,6 @@ export default class Transactor extends SmartContract {
   }
 
   async getPersonalInfo() {
-    debugger;
     let novoPersonalInfo = [];
     if (!this.walletAndContractConnect) {
       return novoPersonalInfo;
@@ -53,15 +52,11 @@ export default class Transactor extends SmartContract {
       let reputation = parseInt(field[3]);
       let numberOfValidations = parseInt(field[4]);
       // console.log('transactor/getPersonalInfo/field', field, fieldName, reputation, numberOfValidations);    
-      //debugger   
       if (reputation > 0) {
-        debugger;
         statusValidacao = FIELD_STATUS.VALIDATED;
       } else if ((reputation == 0) && (numberOfValidations > 0)) {
         console.log('transactor/getPersonalInfo/numberOfValidations > 0', field, fieldName, reputation, numberOfValidations);
-        debugger;
         for (let y = 0; y < numberOfValidations; y++) {
-          debugger;
           console.log('transactor/getPersonalInfo/ getPersonaDataValidatorDetails starting', this._wallet.address, fieldName, y);
           let validation = await this._contract.getPersonaDataValidatorDetails(this._wallet.address, fieldName, y);
           console.log('transactor/getPersonalInfo/getPersonaDataValidatorDetails/validation', validation);
@@ -70,14 +65,11 @@ export default class Transactor extends SmartContract {
           }
         }
       } else {
-        debugger;
         let lastStatus = await this.contract.GetFieldLastStatus(fieldName);
-        debugger;
         statusValidacao = parseInt(lastStatus);
       }
 
       const descValidacao = this.getStatusValidationDescription(statusValidacao);
-      debugger;
       let item = {
         field: field[0],
         valor: field[1],

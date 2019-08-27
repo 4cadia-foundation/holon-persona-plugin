@@ -107,7 +107,6 @@ export function getPersonaData() {
         return (async (dispatch) => {
             console.log('actions/getPersonaData');
             dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
-            debugger;
             let novoPersonalInfo = await transactor.getPersonalInfo();
             console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
             dispatch({ type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo: novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length });
@@ -134,9 +133,7 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
         dispatch({ type: 'RUNNING_METHOD' })
         dispatch({ type: 'CLEAN_ERROR' });
         try {
-            debugger;
             let tx = await transactor.contract.askToValidate(validator, field, uriConfirmationData)
-            debugger;
             console.log('persona/askToValidate/tx', tx)
             if (tx) {
                 let receipt = await tx.wait(1)
@@ -208,7 +205,6 @@ export function addPersona(name, email) {
             }
         }
         try {
-            debugger;
             let atlasWallet = new ethers.Wallet("619CC0075FAC10253850ECEF582B7431FCC55CBCCD0A07BAE132EB1535F09855", transactor.provider);
             let giveEther = {
                 gasLimit: 21000,
