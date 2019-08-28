@@ -1,5 +1,5 @@
 module.exports = {
-	"address": "0x94e5b58c169ffef7f64ad1a710e2e1605284b5b3",
+	"address": "0xa43975715d2173a62270ab50e36553b9ad83c909",
 	"abi": [
 		{
 			"constant": true,
@@ -661,6 +661,51 @@ module.exports = {
 			"type": "function"
 		},
 		{
+			"constant": true,
+			"inputs": [],
+			"name": "GetRequestedFields",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address[]"
+				},
+				{
+					"name": "",
+					"type": "string[]"
+				},
+				{
+					"name": "",
+					"type": "string[]"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "persona",
+					"type": "address"
+				},
+				{
+					"name": "_field",
+					"type": "string"
+				}
+			],
+			"name": "fieldIsAllowed",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
 			"constant": false,
 			"inputs": [
 				{
@@ -672,15 +717,7 @@ module.exports = {
 					"type": "address"
 				},
 				{
-					"name": "_dataCategory",
-					"type": "uint8"
-				},
-				{
 					"name": "_field",
-					"type": "string"
-				},
-				{
-					"name": "_data",
 					"type": "string"
 				}
 			],

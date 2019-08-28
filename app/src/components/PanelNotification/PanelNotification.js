@@ -18,8 +18,6 @@ class PanelNotification extends Component {
             nameReceiver: this.props.nameReceiver,
             addressReceiver: this.props.addressReceiver,
             fieldName: this.props.fieldName,
-            dataValue: this.props.dataValue,
-            dataCategory: this.props.dataCategory,
             isRunning: true,
             sentToAction: false
         }
@@ -51,7 +49,7 @@ class PanelNotification extends Component {
             isRunning: true,
             sentToAction: true
         })
-        this.props.allowNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
+        this.props.allowNotification(this.props.addressReceiver, this.props.fieldName)
     }
 
     declineClick(event) {
@@ -60,7 +58,7 @@ class PanelNotification extends Component {
             isRunning: true,
             sentToAction: true
         })
-        this.props.declineNotification(this.props.addressReceiver, this.props.dataCategory, this.props.fieldName, this.props.dataValue)
+        this.props.declineNotification(this.props.addressReceiver, this.props.fieldName)
     }
 
     render() {
