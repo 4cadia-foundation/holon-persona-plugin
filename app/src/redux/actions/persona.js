@@ -5,7 +5,6 @@ import { address, abi } from '../../../config/abi';
 import abiDecoder from 'abi-decoder';
 import * as ActionTypes from "../../constants/actionsTypes";
 import { buildToast, ToastTypes } from '../../helper/toast';
-import EventsService from '../../../scripts/core/application/service/EventsService';
 
 const transactor = new Transactor();
 abiDecoder.addABI(abi);
@@ -64,7 +63,7 @@ export function changeNetwork(networkID) {
     }
     catch (err) {
         console.error('Error actions/persona/changeNetwork: ', err)
-        dispatch({ type: 'TOASTY_ERROR', toast: buildToast('We not get change network. Try again later.', {type: ToastTypes.ERROR})})
+        dispatch({ type: 'TOASTY_ERROR', toast: buildToast('We not get change network. Try again later.', { type: ToastTypes.ERROR }) })
     }
 }
 
@@ -113,11 +112,11 @@ export function getPersonaData() {
             return;
         });
     }
-    catch(err) {
+    catch (err) {
         console.error('actions/getPersonaData/err', err);
         return (dispatch) => {
-            dispatch({type: 'ERROR_PERSONA_DATA', error: 'Get persona data failed'});
-            dispatch({type: 'TOAST_ERROR', toast: buildToast('We were unable to receive your data. Try again in a few minutes.', {type: ToastTypes.ERROR})})
+            dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Get persona data failed' });
+            dispatch({ type: 'TOAST_ERROR', toast: buildToast('We were unable to receive your data. Try again in a few minutes.', { type: ToastTypes.ERROR }) })
         }
     }
 }
@@ -142,20 +141,20 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
                     let novoPersonalInfo = await transactor.getPersonalInfo();
                     console.log('actions/askToValidate/novoPersonalInfo', novoPersonalInfo);
                     dispatch({ type: 'ASKED_TO_VALIDATE', personalInfo: novoPersonalInfo });
-                    dispatch({type: 'TOAST_SUCCESS', toast: buildToast('Info send to validation!', {type: ToastTypes.SUCCESS})});
+                    dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Info send to validation!', { type: ToastTypes.SUCCESS }) });
                 } else {
                     dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
-                    dispatch({type: 'TOAST_ERROR', toast: buildToast('Transaction on Blockchain has failed. Try again in a few minutes', {type: ToastTypes.ERROR})})
+                    dispatch({ type: 'TOAST_ERROR', toast: buildToast('Transaction on Blockchain has failed. Try again in a few minutes', { type: ToastTypes.ERROR }) })
                 }
             } else {
                 dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request' });
-                dispatch({type: 'TOAST_ERROR', toast: buildToast('It was not possible to submit the validation request. Try again in a few minutes', {type: ToastTypes.ERROR})})
+                dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible to submit the validation request. Try again in a few minutes', { type: ToastTypes.ERROR }) })
 
             }
-        } 
+        }
         catch (exception) {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
-            dispatch({type: 'TOAST_ERROR', toast: buildToast('It was not possible to get Persona data details. Try again in a few minutes', {type: ToastTypes.ERROR})})
+            dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible to get Persona data details. Try again in a few minutes', { type: ToastTypes.ERROR }) })
         }
     }
 }
@@ -183,13 +182,13 @@ export function addData(infoCode, field, data, price, dispatch) {
                         };
                         //getPersonaData()
                         dispatch({ type: ActionTypes.ADD_PERSONA_DATA, newField: item })
-                        dispatch({type: 'TOAST_SUCCESS', toast: buildToast('Information added successfully!', {type: ToastTypes.SUCCESS})})
+                        dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Information added successfully!', { type: ToastTypes.SUCCESS }) })
                     })
             })
             .catch((err) => {
                 console.error('Error actions/persona/addData/', err)
                 dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Transaction failed: ' + err });
-                dispatch({ type: 'TOAST_ERROR', toast: buildToast('Transaction not executed. Try again later.', {type: ToastTypes.ERROR})})
+                dispatch({ type: 'TOAST_ERROR', toast: buildToast('Transaction not executed. Try again later.', { type: ToastTypes.ERROR }) })
             });
     }
 }
@@ -219,9 +218,9 @@ export function addPersona(name, email) {
         catch (err) {
             console.error('Error actions/persona/addPersona/sendEth', err)
             dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add funding: transaction failed' + err });
-            dispatch({ type: 'TOAST_ERROR', toast: buildToast('Fundings was not transfered to your wallet. Try again later.', {type: ToastTypes.ERROR})})
+            dispatch({ type: 'TOAST_ERROR', toast: buildToast('Fundings was not transfered to your wallet. Try again later.', { type: ToastTypes.ERROR }) })
         }
-        
+
         try {
             let contractOptions = { gasLimit: 4000000 };
             transactor.contractWithSigner;
@@ -256,7 +255,7 @@ export function addPersona(name, email) {
         catch (err) {
             console.error('Error actions/persona/addPersona/addFirstData', err)
             dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: 'Add first data (name and email): failed' + err });
-            dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible create your Holon ID. Try again later.', {type: ToastTypes.ERROR})})
+            dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible create your Holon ID. Try again later.', { type: ToastTypes.ERROR }) })
         }
     }
 }
@@ -281,40 +280,31 @@ export function sendEthers(sendTo, sendValue) {
             await transferEthers.wait();
             // console.log(tx);
             dispatch({ type: 'METHOD_EXECUTED' });
-            dispatch({type: 'TOAST_SUCCESS', toast: buildToast('Ether send sucessfully', {type: ToastTypes.SUCCESS})});
+            dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Ether send sucessfully', { type: ToastTypes.SUCCESS }) });
         }
-        catch(err) {
+        catch (err) {
             console.error('actions/persona/sendEthers: ', err);
-                 dispatch({type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', {type: ToastTypes.ERROR})});
+            dispatch({ type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', { type: ToastTypes.ERROR }) });
         }
     }
 }
 
 export function GetPersonaNotifications() {
     return (async (dispatch) => {
-        let eventsService = new EventsService(transactor._wallet.provider);
-        let eventFilter = [null, ethers.utils.hexZeroPad(transactor._wallet.address, 32)];
-        let eventData = await eventsService.GetLetSeeYourDataEvent(eventFilter);
         let personaNotifications = [];
-
-        if (!eventData || eventData.length == 0)
-            return dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
-
-        for (let eventIndex = 0; eventIndex < eventData.length; eventIndex++) {
-            let requesterDataName = await transactor.contract.getPersonaData(eventData[eventIndex].requester, "name");
-            let requesterDataField = await transactor.contract.getPersonaData(eventData[eventIndex].requester, eventData[eventIndex].field);
+        let notifications = await transactor.contract.GetRequestedFields();
+        for (let notfIndex = 0; notfIndex < notifications[0].length; notfIndex++) {
             personaNotifications.push({
-                requesterName: requesterDataName[1],
-                requesterAddress: eventData[eventIndex].requester,
-                field: eventData[eventIndex].field,
-                data: requesterDataField[1],
-                dataCategory: requesterDataField[2],
+                requesterAddress: notifications[0][notfIndex],
+                requesterName: notifications[1][notfIndex],
+                field: notifications[2][notfIndex],
             });
+
         }
         dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
     });
 }
-export function deliverDecryptedData(decision, receiver, dataCategory, fieldName, data) {
+export function deliverDecryptedData(decision, receiver, fieldName) {
     return async dispatch => {
         console.log('deliverDecryptedData/starting')
         if (!checkWallet()) {
@@ -325,7 +315,7 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
         dispatch({ type: 'CLEAN_ERROR' });
         dispatch({ type: 'RUNNING_METHOD' });
         try {
-            let tx = await transactor.contract.deliverDecryptedData(decision, receiver, dataCategory, fieldName, data);
+            let tx = await transactor.contract.deliverDecryptedData(decision, receiver, fieldName);
             if (tx) {
                 let receipt = await tx.wait(1)
                 console.log('persona/deliverDecryptedData/receipt', receipt)
@@ -345,9 +335,9 @@ export function deliverDecryptedData(decision, receiver, dataCategory, fieldName
         }
     }
 }
-export function allowNotification(receiver, dataCategory, fieldName, data) {
+export function allowNotification(receiver, fieldName) {
     return dispatch => {
-        return this.deliverDecryptedData(true, receiver, dataCategory, fieldName, data)
+        return this.deliverDecryptedData(true, receiver, fieldName)
             .then(
                 (success) => {
                     dispatch({
@@ -367,9 +357,9 @@ export function allowNotification(receiver, dataCategory, fieldName, data) {
     }
 }
 
-export function declineNotification(receiver, dataCategory, fieldName, data) {
+export function declineNotification(receiver, fieldName) {
     return dispatch => {
-        return this.deliverDecryptedData(false, receiver, dataCategory, fieldName, data)
+        return this.deliverDecryptedData(false, receiver, fieldName)
             .then(
                 (success) => {
                     dispatch({
