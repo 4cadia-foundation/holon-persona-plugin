@@ -1,5 +1,5 @@
 module.exports = {
-	"address": "0xa43975715d2173a62270ab50e36553b9ad83c909",
+	"address": "0x954d663ea1d26e7cece7db42c60b59d51c74c723",
 	"abi": [
 		{
 			"constant": true,
@@ -686,7 +686,7 @@ module.exports = {
 			"constant": true,
 			"inputs": [
 				{
-					"name": "persona",
+					"name": "personaAddress",
 					"type": "address"
 				},
 				{
@@ -694,11 +694,15 @@ module.exports = {
 					"type": "string"
 				}
 			],
-			"name": "fieldIsAllowed",
+			"name": "getAllowedField",
 			"outputs": [
 				{
 					"name": "",
 					"type": "bool"
+				},
+				{
+					"name": "",
+					"type": "string"
 				}
 			],
 			"payable": false,
