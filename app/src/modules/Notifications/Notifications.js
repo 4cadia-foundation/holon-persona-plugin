@@ -29,7 +29,7 @@ class Notifications extends Component {
   }
   GetNotificationGrid() {
     let notificationGrid = [];
-
+    console.log('this.state.notifications :', this.state.notifications);
     if (!this.state.notifications)
       return notificationGrid;
 
@@ -39,7 +39,14 @@ class Notifications extends Component {
         nameReceiver={this.state.notifications[index].requesterName}
         fieldName={this.state.notifications[index].field}/>);
     }
-    return notificationGrid ? notificationGrid : 'No notifications available';
+    console.log('this.state.notifications 2:', this.state.notifications.length);
+
+    let noNot =<div className="margin-top-212">
+    <p className="information paragraph text-center">No notifications available. 😉 </p>
+  </div>;
+
+
+    return notificationGrid.length > 0 ? notificationGrid : noNot;
   }
   render() {
     return (

@@ -65,7 +65,7 @@ class Home extends Component {
     //console.log('getValidationDescClass', statusValidation)
     if (statusValidation == "0") {
       return "success"
-    } else if (statusValidation == "3") {
+    } else if (statusValidation == "4") {
       return "warning"
     } else {
       return "danger"

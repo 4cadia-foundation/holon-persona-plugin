@@ -7,3 +7,12 @@
 .closeButtonNotifications {
     margin: 0 0 -15px 270px;
 }
+.information {
+    color: var(--color-orange);
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .margin-top-212 {
+    margin-top: 212px;
+  }
