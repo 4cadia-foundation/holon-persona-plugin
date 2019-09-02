@@ -64,19 +64,19 @@ class Menu extends Component {
                         <div className="flex-column">
                             <Link to='/addinformation'>
                                 <Glyphicon id="glyph-color" glyph="plus"/> 
-                                <a className="space-icon-p paragraph">Add information</a>
+                                <span className="space-icon-p paragraph">Add information</span>
                             </Link>
                         </div>
                         <div className="flex-column">
                             <Link to="/validateinformation">
                                 <Glyphicon id="glyph-color" glyph="ok"/>
-                                <a href="" className="space-icon-p paragraph">Validate information</a>
+                                <span className="space-icon-p paragraph">Validate information</span>
                             </Link>
                         </div>
                         <div className="flex-column">
                             <Link to="/notifications">
                                 <Glyphicon id="glyph-color" glyph="download-alt"/>
-                                <a href="" className="space-icon-p paragraph">Notifications</a>
+                                <span className="space-icon-p paragraph">Notifications</span>
                             </Link>
                         </div>
                     </div>
@@ -85,7 +85,7 @@ class Menu extends Component {
                         <div className="flex-column">
                             <Link to="/profile">
                                 <Glyphicon id="glyph-color" glyph="user"/> 
-                                <a href="" className="space-icon-p paragraph">Profile</a>
+                                <span className="space-icon-p paragraph">Profile</span>
                             </Link>
                         </div>
                         <div className="flex-column">
@@ -97,7 +97,7 @@ class Menu extends Component {
                         <div className="flex-column">
                             <Link to="/backupphrase">
                                 <Glyphicon id="glyph-color" glyph="lock"/>
-                                <a href="" className="space-icon-p paragraph">Secret Backup Phrase</a>
+                                <span className="space-icon-p paragraph">Secret Backup Phrase</span>
                             </Link>
                         </div>
                         <div  className="flex-column">
