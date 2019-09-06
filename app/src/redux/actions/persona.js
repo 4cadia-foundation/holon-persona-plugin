@@ -132,10 +132,14 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
         dispatch({ type: 'RUNNING_METHOD' })
         dispatch({ type: 'CLEAN_ERROR' });
         try {
-            let tx = await transactor.contract.askToValidate(validator, field, uriConfirmationData)
+            let txParams = {
+                gasLimit: 3000000,
+                value: ethers.utils.parseUnits('10000', 'wei')
+            };
+            let tx = await transactor.contract.askToValidate(validator, field, uriConfirmationData, txParams)
             console.log('persona/askToValidate/tx', tx)
             if (tx) {
-                let receipt = await tx.wait(1)
+                let receipt = await tx.wait()
                 console.log('persona/askToValidate/receipt', receipt)
                 if (receipt.status === 1) {
                     let novoPersonalInfo = await transactor.getPersonalInfo();
