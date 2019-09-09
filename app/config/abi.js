@@ -1,5 +1,5 @@
 module.exports = {
-	"address": "0x6c5796a7607d0859648156de00fd970dddde6e16",
+	"address": "0xd42C7Ca194576Bee7ABe1B99AB8C587F88a29CFB",
 	"abi": [
 		{
 		  "constant": true,
@@ -773,5 +773,5 @@ module.exports = {
 		  "stateMutability": "view",
 		  "type": "function"
 		}
-	]
+	  ],
 }
