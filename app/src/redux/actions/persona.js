@@ -324,7 +324,19 @@ export function deliverDecryptedData(decision, receiver, fieldName) {
                 let receipt = await tx.wait(1)
                 console.log('persona/deliverDecryptedData/receipt', receipt)
                 if (receipt.status === 1) {
+                    let personaNotifications = [];
+                    let notifications = await transactor.contract.GetRequestedFields();
+                    for (let notfIndex = 0; notfIndex < notifications[0].length; notfIndex++) {
+                        personaNotifications.push({
+                            requesterAddress: notifications[0][notfIndex],
+                            requesterName: notifications[1][notfIndex],
+                            field: notifications[2][notfIndex],
+                        });
+
+                    }
+                    dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
                     dispatch({ type: 'METHOD_EXECUTED' });
+
                 } else {
                     dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
                 }
@@ -351,6 +363,7 @@ export function allowNotification(receiver, fieldName) {
                 }
             )
             .catch(
+  
                 (exception) => {
                     dispatch({
                         type: 'TOASTY_ERROR',
