@@ -19,6 +19,7 @@ class Notifications extends Component {
     };
   }
   async componentDidMount() {
+    console.log('Modules/Notification/componentDidMount');
     await this.props.GetPersonaNotifications();
     this.setState({
       isLoading: false
@@ -35,6 +36,7 @@ class Notifications extends Component {
 
     for (let index = 0; index < this.state.notifications.length; index++) {
       notificationGrid.push(<NotificationPanel
+        key={this.state.notifications[index]}
         addressReceiver={this.state.notifications[index].requesterAddress}
         nameReceiver={this.state.notifications[index].requesterName}
         fieldName={this.state.notifications[index].field}/>);

@@ -6,7 +6,8 @@ const INITIAL_STATE = {
     readAllPersonaLogs: false,
     balance: 0,
     validations: 0,
-    isRunning: false
+    isRunning: false,
+    fieldName: "",
 }
 
 export default function persona(state = INITIAL_STATE, action) {
@@ -21,6 +22,7 @@ export default function persona(state = INITIAL_STATE, action) {
             address: action.address,
             isRunning: false,
             readAllPersonaLogs: true,
+            fieldName: action.fieldName,
         }
     }
 
@@ -87,5 +89,10 @@ export default function persona(state = INITIAL_STATE, action) {
     if (action.type == 'GET_NOTIFICATIONS') {
         return { ...state, notifications: action.notifications }
     }
+    if (action.type == 'REFRESH_NOTIFICATIONS') {
+        console.log('reducer/REFRESH_NOTIFICATIONS/FieldName.....:', action.fieldName)
+        return { ...state, notifications: action.notifications.splice(action.notifications.indexOf(action.fieldName), 1) }
+    }
+
     return state;
 }
