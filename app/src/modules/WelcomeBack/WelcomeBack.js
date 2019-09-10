@@ -48,7 +48,7 @@ class WelcomeBack extends Component {
             console.log('WelcomeBack/getDerivedStateFromProps', msg);
             return { isProcessing: false, password: ""};
         }
-        if (nextProps.wallet.openedWallet) {
+        if (nextProps.wallet.openedWallet && prevState.password.length > 1) {
             return { openedWallet: nextProps.wallet.openedWallet };
         }
         return null;
