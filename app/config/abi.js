@@ -1,5 +1,5 @@
 module.exports = {
-	"address": "0x9478215607d6aac37f013ee5d1e54f40b2873eed",
+	"address": "0x94bfda4046b7f55adb47be4b37164f15d00e418a",
 	"abi": [
 		{
 			"constant": true,
@@ -440,6 +440,25 @@ module.exports = {
 			],
 			"payable": false,
 			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_persona",
+					"type": "address"
+				}
+			],
+			"name": "PagaEth",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": true,
+			"stateMutability": "payable",
 			"type": "function"
 		},
 		{
