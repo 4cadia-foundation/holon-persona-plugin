@@ -8,7 +8,7 @@ import * as PersonaActions from '../../redux/actions/persona';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import Loader from '../../components/Loader/Loader';
 import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
-import user from '../../../images/user.png';
+import avatar from '../../../images/avatar.svg';
 import '../../styles/_utils.css';
 import './Profile.css';
 
@@ -64,7 +64,7 @@ class Profile extends Component {
                         <CloseIconPage destination="/menu"/>
                     </div>
                     <div className="text-center margin-top-15 margin-bottom-30">
-                        <img src={user} alt="user" alt="user" />
+                        <img src={avatar} alt="Avatar" className={'avatar'}/>
                     </div>
                     <Row> 
                         <Col bsClass="text-center">
