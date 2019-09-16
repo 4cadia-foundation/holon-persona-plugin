@@ -15,6 +15,7 @@ class PanelNotification extends Component {
         this.allowClick = this.allowClick.bind(this);
         this.declineClick = this.declineClick.bind(this);
         this.state = {
+            key: this.props.key,
             nameReceiver: this.props.nameReceiver,
             addressReceiver: this.props.addressReceiver,
             fieldName: this.props.fieldName,
@@ -50,6 +51,7 @@ class PanelNotification extends Component {
             sentToAction: true
         })
         this.props.allowNotification(this.props.addressReceiver, this.props.fieldName)
+        console.log('Components/PanelNotification/allowCLick....');
     }
 
     declineClick(event) {

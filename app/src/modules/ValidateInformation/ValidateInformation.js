@@ -140,9 +140,9 @@ class ValidateInformation extends Component {
                             />
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         <Ipfs emitIpfsHash={this.setIpfsHash}/>
-                    </div>
+                    </div> */}
                 </Form>
                 <Button disabled={!this.validateForm()} id="btn-validate-save" className="paragraph" bsSize="large" block bsStyle="warning" onClick={this.handleClick}>
                     Save

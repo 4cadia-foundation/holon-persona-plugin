@@ -132,10 +132,14 @@ export function askToValidate(validator, field, uriConfirmationData, dispatch) {
         dispatch({ type: 'RUNNING_METHOD' })
         dispatch({ type: 'CLEAN_ERROR' });
         try {
-            let tx = await transactor.contract.askToValidate(validator, field, uriConfirmationData)
+            let txParams = {
+                gasLimit: 3000000,
+                value: ethers.utils.parseUnits('10000', 'wei')
+            };
+            let tx = await transactor.contract.askToValidate(validator, field, uriConfirmationData, txParams)
             console.log('persona/askToValidate/tx', tx)
             if (tx) {
-                let receipt = await tx.wait(1)
+                let receipt = await tx.wait()
                 console.log('persona/askToValidate/receipt', receipt)
                 if (receipt.status === 1) {
                     let novoPersonalInfo = await transactor.getPersonalInfo();
@@ -320,7 +324,19 @@ export function deliverDecryptedData(decision, receiver, fieldName) {
                 let receipt = await tx.wait(1)
                 console.log('persona/deliverDecryptedData/receipt', receipt)
                 if (receipt.status === 1) {
+                    let personaNotifications = [];
+                    let notifications = await transactor.contract.GetRequestedFields();
+                    for (let notfIndex = 0; notfIndex < notifications[0].length; notfIndex++) {
+                        personaNotifications.push({
+                            requesterAddress: notifications[0][notfIndex],
+                            requesterName: notifications[1][notfIndex],
+                            field: notifications[2][notfIndex],
+                        });
+
+                    }
+                    dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
                     dispatch({ type: 'METHOD_EXECUTED' });
+
                 } else {
                     dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
                 }
@@ -347,6 +363,7 @@ export function allowNotification(receiver, fieldName) {
                 }
             )
             .catch(
+  
                 (exception) => {
                     dispatch({
                         type: 'TOASTY_ERROR',
