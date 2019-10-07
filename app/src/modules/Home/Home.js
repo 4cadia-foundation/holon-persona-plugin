@@ -76,52 +76,22 @@ class Home extends Component {
     const {persona} = this.state;
     
     return (
-      <div>
-        <Grid>
+        <div className="fund">
           <HamburguerMenu />
-          <section className="sectionBasicInfo">
-            <hr className="horizontalLine" />
-            <Row className="text-center">
-              <img className="logoHome" src={logo} alt="Logo" />
-            </Row>
-            <Row className="text-center">
-              <p className="paragraph basicInfoHome">{ this.props.persona.address }</p>
-            </Row>
-            <Row className="text-center">
-              <p className="paragraph basicInfoHome">{ this.getCampoValor('name') }</p>
-            </Row>
-            <Row className="text-center">
-              <p className="paragraph basicInfoHome">{ this.getCampoValor('email') }</p>
-            </Row>
-          </section>
-
-          <section className="sectionValidation">
-            <Row>
-                <h5 className="paragraph titleValidation">Validations</h5>
-                <hr className="horizontalLine"></hr>
-            </Row>
-            <Row>
-              <Table striped className='tableValidation'>
-                <tbody>
-                  {persona.personalInfo.map((item, index) =>                 
-                        <tr key={index}>
-                          <td className="paragraph text-center">{item.field}</td>
-                          <td className="paragraph text-center">{item.valor}</td>
-                          <td className="text-center">
-                            <Label bsStyle={ this.getValidationDescClass(item.statusValidationCode) }>
-                              {item.statusValidationDescription}
-                            </Label>
-                          </td>
-                        </tr>
-                    )
-                  }          
-                </tbody>
-              </Table>
-            </Row>
-          </section>
-        </Grid>
-        <Loader visible={this.state.isLoading} message={this.state.msg} />
-      </div>
+          <div className="card-fund">
+            <div className="card-text">
+              <Row className="text-center">
+                <p className="paragraph basicInfoHome">{ this.props.persona.address }</p>
+              </Row>
+              <Row className="text-center">
+                <p className="paragraph basicInfoHome">{ this.getCampoValor('name') }</p>
+              </Row>
+              <Row className="text-center">
+                <p className="paragraph basicInfoHome">{ this.getCampoValor('email') }</p>
+              </Row>
+            </div>
+          </div>
+        </div>
     );
   }
 }

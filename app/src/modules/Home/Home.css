@@ -1,4 +1,4 @@
-.logoHome {
+/* .logoHome {
     height: 45px;
     width: 50px;
     margin-bottom: 20px;
@@ -30,4 +30,32 @@
 
 .sectionBasicInfo {
     margin-top: 70px;
+} */
+
+.fund {
+    position: absolute;
+    width: 351.1px;
+    height: 234px;
+    background: var(--color-orange);
+}
+
+.hollonApp {
+    padding: 0;
+}
+
+.card-fund {
+    position: relative;
+    height: 80%;
+    width: 80%;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 30%;
+    margin-left: 12%;
+}
+
+.card-text {
+    flex-direction: column;
+    margin-top: 30%;
+    font-size: 10px;
 }
