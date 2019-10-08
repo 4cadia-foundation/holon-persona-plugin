@@ -16,17 +16,17 @@ class Balance extends Component {
     this.props.getBalance();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    // console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
-    // console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
-    if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('Balance/getDerivedStateFromProps: ', msg);
-      alert(msg);
-      return { balance: 0 };
-    }
-    return { balance: nextProps.persona.balance };
-  }
+  // static getDerivedStateFromProps(nextProps, _) {
+  //   // console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
+  //   // console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
+  //   if (nextProps.persona.error.length > 2) {
+  //     const msg = `Erro: ${nextProps.persona.error}`;
+  //     console.error('Balance/getDerivedStateFromProps: ', msg);
+  //     alert(msg);
+  //     return { balance: 0 };
+  //   }
+  //   return { balance: nextProps.persona.balance };
+  // }
 
   render() {
     return (

@@ -16,7 +16,7 @@ class Deposit extends Component {
       address: '',
       isLoading: true,
     };
-    this._qr = new EthereumQRPlugin();
+    this.qr = new EthereumQRPlugin();
   }
 
   componentDidMount() {
@@ -27,13 +27,11 @@ class Deposit extends Component {
       size: 280,
       selector: '#ethereum-qr-code-address',
     };
-    console.log('qrcodeaddress', sendDetails);
-    console.log('qrcodeaddress', configDetails);
     this.setState({
       isLoading: false,
       address: this.props.wallet.address,
     });
-    this._qr.toCanvas(sendDetails, configDetails);
+    this.qr.toCanvas(sendDetails, configDetails);
   }
 
   render() {

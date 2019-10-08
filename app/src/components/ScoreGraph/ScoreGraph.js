@@ -16,18 +16,22 @@ class ScoreGraph extends Component {
     this.props.getScore();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps, _) {
     if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('ScoreGraph/getDerivedStateFromProps: ', msg);
-      alert(msg);
       return { validations: 0, numberOfFields: 0 };
     }
-    return { validations: nextProps.persona.validations, numberOfFields: nextProps.persona.numberOfFields };
+    return {
+      validations: nextProps.persona.validations,
+      numberOfFields: nextProps.persona.numberOfFields,
+    };
   }
 
   render() {
-    const percentage = ((this.state.validations + this.state.numberOfFields > 10 ? 10 : this.state.validations + this.state.numberOfFields) / 10);
+    const percentage = (
+      (this.state.validations + this.state.numberOfFields > 10 ? 10
+        : this.state.validations + this.state.numberOfFields) / 10
+    );
+
     return (
       <div>
         <div className="score-validations">

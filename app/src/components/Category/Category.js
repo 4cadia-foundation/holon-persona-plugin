@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
 import './Category.css';
 
 class Category extends Component {
@@ -120,7 +118,6 @@ class Category extends Component {
 
   setCategory(event) {
     this.props.emitCategory(event.target.value);
-    console.log('DataCategory/setcategory/Category....:', event.target.value);
     this.setState({
       category: event.target.value,
     });
@@ -135,30 +132,24 @@ class Category extends Component {
     const optionTemplate = this.state.category.values.map((v) => (
         <option key={v.key} value={v.value}>{v.text}</option>
     ));
-    const optionTemplateSC = this.state.subCategory.values.map((v) => (
-        <option key={v.key} value={v.value}>{v.text}</option>
-    ));
+
     return (
       !this.state.loading && (
         <section>
             <label>Category</label>
             <div className="dropdown">
-                <select onChange={this.onFirstSelect} defaultValue={this.state.value} id="categoryId">
-                    {optionTemplate }
-                </select>
-                {/* <select value={this.state.value} onChange={this.setCategory} id="categoryId">
-                    {optionTemplate}
-                </select>                 */}
+              <select onChange={this.onFirstSelect} defaultValue={this.state.value} id="categoryId">
+                {optionTemplate }
+              </select>
             </div>
             <br />
             <label>Subcategory</label>
             <div className="dropdown">
-                <select id="subCategoryId" onChange={this.setSubCategory} onClick={this.setSubCategory}>
-                    {/* {this.state.count.map(d => <option value={d}>{d}</option>)} */}
-                    {this.state.subCategory.values.filter((f) => f.category == this.state.selectedCategory).map((v) => (
-                        <option key={v.key} value={v.value}>{v.text}</option>
-                    ))}
-                </select>
+              <select id="subCategoryId" onChange={this.setSubCategory} onClick={this.setSubCategory}>
+                {this.state.subCategory.values.filter((f) => f.category === this.state.selectedCategory)
+                  .map((v) => (<option key={v.key} value={v.value}>{v.text}</option>))
+                }
+              </select>
             </div>
         </section>
       )
@@ -166,5 +157,3 @@ class Category extends Component {
   }
 }
 export default Category;
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<App />, rootElement);

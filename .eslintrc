@@ -21,17 +21,20 @@
       "browser": true
     },
     "globals": {
-      "chrome": true,
-      "document": false,
-      "navigator": false,
-      "web3": true,
-      "window": false
+      "chrome": "writable",
+      "document": "readonly",
+      "navigator": "readonly",
+      "web3": "writable",
+      "window": "readonly",
+      "Link": "readonly",
+      "React": "readonly"
     },
     "rules": {
       "eol-last": 0,
       "quotes": [
         2,
         "single"
-      ]
+      ],
+      "no-unused-vars": "off"
     }
 }

@@ -4,10 +4,6 @@ import { IoIosClose } from 'react-icons/io';
 import './CloseIconPage.css';
 
 class CloseIconPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
             <button type="button" className="closeButton" aria-label="Close" >

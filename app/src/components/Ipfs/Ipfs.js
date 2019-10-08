@@ -1,10 +1,15 @@
 import { Row, Col } from 'react-bootstrap';
 import React, { Component } from 'react';
-import Settings from '../../../config/settings';
-import './Ipfs.css';
 import IPFS from 'ipfs-http-client';
 
-const ipfs = new IPFS({ host: Settings.ipfs.host, port: Settings.ipfs.port, protocol: Settings.ipfs.protocol });
+import Settings from '../../../config/settings';
+import './Ipfs.css';
+
+const ipfs = new IPFS({
+  host: Settings.ipfs.host,
+  port: Settings.ipfs.port,
+  protocol: Settings.ipfs.protocol,
+});
 
 class Ipfs extends Component {
   constructor(props) {
@@ -40,14 +45,13 @@ class Ipfs extends Component {
     event.preventDefault();
     await ipfs.add(this.state.buffer, (err, ipfsHash) => {
       if (err) {
-        console.error(err.message);
+        // console.error(err.message);
         this.setState({
           buffer: '',
           statusMsg: err.message,
         });
         return;
       }
-      console.log('handleClick/sucesso/ipfsHash', ipfsHash);
       this.setState({
         formIPFS: ipfsHash[0].hash,
       });

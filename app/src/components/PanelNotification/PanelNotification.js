@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {
-  Row, Grid, Panel, Button, Modal,
-} from 'react-bootstrap';
-import { Redirect, Link } from 'react-router-dom';
-
+// eslint-disable-next-line object-curly-newline
+import { Row, Grid, Panel, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
+
 import { bindActionCreators } from 'redux';
 import * as PersonaActions from '../../redux/actions/persona';
-
 import './PanelNotification.css';
 
 class PanelNotification extends Component {
@@ -25,23 +22,7 @@ class PanelNotification extends Component {
     };
   }
 
-  componentDidMount() {
-    // if (this.props.persona.numberOfFields > 0){
-    //     this.setState({
-    //         isLoading:false
-    //     })
-    // } else {
-    //     this.props.getPersonaData();
-    // }
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('PanelNotification/getDerivedStateFromProps: ', msg);
-      alert(msg);
-      return { balance: 0, address: null };
-    }
+  static getDerivedStateFromProps(nextProps, _) {
     return { isRunning: nextProps.persona.isRunning };
   }
 
@@ -52,7 +33,7 @@ class PanelNotification extends Component {
       sentToAction: true,
     });
     this.props.allowNotification(this.props.addressReceiver, this.props.fieldName);
-    console.log('Components/PanelNotification/allowCLick....');
+    // console.log('Components/PanelNotification/allowCLick....');
   }
 
   declineClick(event) {
