@@ -5,6 +5,8 @@
     "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js",
     "watch:react": "webpack --config ./webpack.react.js --watch=true",
     "watch:core": "webpack --config ./webpack.extension.js --watch=true",
+    "eslint:fix": "eslint --fix ./app/src/**/**/**.js",
+    "eslint": "eslint ./app/src/**/**/**.js",
     "test": "jest",
     "coverage": "jest --coverage"
   },
@@ -34,7 +36,10 @@
     "react-router-dom": "^5.0.1",
     "react-toastify": "^5.3.2",
     "redux": "^4.0.3",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "webpack": "^4.35.3",
+    "webpack-livereload-plugin": "^2.2.0",
+    "copy-webpack-plugin": "^5.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -45,16 +50,18 @@
     "@babel/preset-react": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.9.0",
     "babel-eslint": "^9.0.0",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "babel-loader": "^8.0.4",
-    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^3.0.0",
     "glob": "^7.1.4",
     "style-loader": "^0.23.1",
     "url-loader": "^2.0.1",
-    "webpack": "^4.35.3",
     "jest": "^24.8.0",
     "webpack-cli": "^3.3.5",
-    "webpack-livereload-plugin": "^2.2.0",
     "wiredep": "^4.0.0"
   },
   "engines": {
