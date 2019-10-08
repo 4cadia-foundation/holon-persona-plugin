@@ -52,7 +52,7 @@ class Welcome extends Component {
         </section>
         <footer>
           <Row className="text-center">
-            <Button bsStyle="warning" bsSize="large" block className="welcomeButton paragraph" onClick={() => this.props.history.push('/choosecreateorimport')}>Get started</Button>
+            <Button bsStyle="warning" bsSize="large" block className="welcomeButton paragraph" onClick={() => this.props.history.push('/introductionholon')}>Get started</Button>
           </Row>
         </footer>
       </Grid>
