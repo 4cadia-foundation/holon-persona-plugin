@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Redirect, Link } from 'react-router-dom';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from '../../redux/actions/persona';
 
 import Loader from '../../components/Loader/Loader';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
@@ -12,7 +12,6 @@ import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import './SendEth.css';
 
 class SendEth extends Component {
-
   constructor(props) {
     super(props);
     this.hideAddress = this.hideAddress.bind(this);
@@ -20,44 +19,42 @@ class SendEth extends Component {
     this.state = {
       balance: 0,
       address: null,
-      sendValue: "",
-      sendTo: "",
+      sendValue: '',
+      sendTo: '',
       isRunning: true,
-      sentToAction: false
-    }
-    this.props.getBalance();      
+      sentToAction: false,
+    };
+    this.props.getBalance();
   }
 
-  componentDidMount() {  
+  componentDidMount() {
     this.setState({
       balance: this.props.persona.balance,
       address: this.props.persona.address,
       isRunning: false,
-    })
+    });
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.persona.error.length>2) {
-        const msg = 'Erro: ' + nextProps.persona.error;
-        console.error('SendEth/getDerivedStateFromProps: ', msg);
-        alert(msg);
-        return { balance: 0, address: null};
-    }    
-    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };        
-  }
-  
-  hideAddress (adrs) {
-    if (adrs.length > 30) {
-        return (adrs.substring(0, 30) + "...")
+    if (nextProps.persona.error.length > 2) {
+      const msg = `Erro: ${nextProps.persona.error}`;
+      console.error('SendEth/getDerivedStateFromProps: ', msg);
+      alert(msg);
+      return { balance: 0, address: null };
     }
-    else {
-        return adrs;
-    }
+    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };
   }
 
-  handleChange = event => {
+  hideAddress(adrs) {
+    if (adrs.length > 30) {
+      return (`${adrs.substring(0, 30)}...`);
+    }
+    return adrs;
+  }
+
+  handleChange = (event) => {
     this.setState({
-        [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
   }
 
@@ -65,16 +62,16 @@ class SendEth extends Component {
     event.preventDefault();
     this.setState({
       isRunning: true,
-      sentToAction: true
-    })
-    this.props.sendEthers(this.state.sendTo, this.state.sendValue)
+      sentToAction: true,
+    });
+    this.props.sendEthers(this.state.sendTo, this.state.sendValue);
   }
 
   render() {
     if (this.state.sentToAction && !this.state.isRunning) {
       return (
           <Redirect to='/menu' />
-      )
+      );
     }
     return (
       <section>
@@ -119,11 +116,10 @@ class SendEth extends Component {
   }
 }
 
-const mapStateToProps = reduxState => ({
-  persona: reduxState.persona
+const mapStateToProps = (reduxState) => ({
+  persona: reduxState.persona,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions,dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(PersonaActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendEth);
-

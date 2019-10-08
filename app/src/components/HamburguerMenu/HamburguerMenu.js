@@ -3,29 +3,27 @@ import { Redirect } from 'react-router-dom';
 import './HamburguerMenu.css';
 
 class HamburguerMenu extends Component {
-  
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      showMenu: false
-    }
+      showMenu: false,
+    };
     this.handleClick = this.handleClick.bind(this);
   }
-  
+
   handleClick() {
     this.setState({
-      showMenu: true
-    })
+      showMenu: true,
+    });
   }
-  
-  render () {
-    
+
+  render() {
     if (this.state.showMenu) {
       return (
         <Redirect to='/menu' />
-      )
+      );
     }
-      
+
     return (
       <nav className="nav-toggle" onClick={ this.handleClick }>
         <label htmlFor="navicon" className="hamburger">
@@ -34,9 +32,8 @@ class HamburguerMenu extends Component {
           <span></span>
         </label>
       </nav>
-      )
-    }
+    );
   }
-    
+}
+
 export default HamburguerMenu;
-    

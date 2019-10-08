@@ -2,21 +2,19 @@ import React, { Component } from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-import * as WalletActions from "../../redux/actions/wallet";
+import { connect } from 'react-redux';
+import * as WalletActions from '../../redux/actions/wallet';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-import './BackupPhrase.css'
+import './BackupPhrase.css';
 
 class BackupPhrase extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props){
-        super(props);
-    }
-
-    render() {
-
-        return (
+  render() {
+    return (
             <Grid>
                 <Row>
                     <Col>
@@ -48,15 +46,15 @@ class BackupPhrase extends Component {
                     </Col>
                 </Row>
             </Grid>
-         )
-     }
+    );
+  }
 }
 
-const mapStateToProps = state => ({
-   mnemonic: state.wallet.mnemonic,
-   ethersWallet: state.wallet.ethersWallet,
+const mapStateToProps = (state) => ({
+  mnemonic: state.wallet.mnemonic,
+  ethersWallet: state.wallet.ethersWallet,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(WalletActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BackupPhrase);

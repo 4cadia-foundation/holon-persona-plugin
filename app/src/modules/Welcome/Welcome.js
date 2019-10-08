@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Button, Grid, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as WalletActions from "../../redux/actions/wallet";
+import * as WalletActions from '../../redux/actions/wallet';
 
 import logo from '../../../images/logo.png';
 import Wallet from '../../../scripts/core/WalletStorage';
@@ -14,7 +14,6 @@ import './Welcome.css';
 const wallet = new Wallet();
 
 class Welcome extends Component {
-
   constructor(props) {
     super(props);
     if (Settings.clearStorage) {
@@ -27,9 +26,8 @@ class Welcome extends Component {
   }
 
   render() {
-
     if (this.props.wallet.hasWallet) {
-      //console.log('WalletPassword/render/wallet', this.props.wallet);
+      // console.log('WalletPassword/render/wallet', this.props.wallet);
       return (
         <Redirect to="/welcomeback" />
       );
@@ -58,14 +56,12 @@ class Welcome extends Component {
       </Grid>
     );
   }
-
 }
 
-const mapStateToProps = state => ({
-  wallet: state.wallet
+const mapStateToProps = (state) => ({
+  wallet: state.wallet,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(WalletActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
-

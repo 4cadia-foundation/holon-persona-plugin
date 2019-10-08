@@ -1,47 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {Table, Button} from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import * as ValidationActions from '../../redux/actions/validations';
 import './TableValidations.css';
-import validations from "../../redux/reducers/validations";
+import validations from '../../redux/reducers/validations';
 
 class TableValidations extends Component {
-
-  state = { modules: [
-    {
-      id: 1,
-      type: 'RG',
-      status: 'Aproved'
-    },
-    {
-      id: 2,
-      type: 'CPF',
-      status: 'Waiting Aprovation'
-    }
-  ]}
+  state = {
+    modules: [
+      {
+        id: 1,
+        type: 'RG',
+        status: 'Aproved',
+      },
+      {
+        id: 2,
+        type: 'CPF',
+        status: 'Waiting Aprovation',
+      },
+    ],
+  }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      modules: this.props.modules
-    }
+      modules: this.props.modules,
+    };
 
 
     this.handleClick = this.handleClick.bind(this);
-
   }
 
 
-  handleClick(){
+  handleClick() {
     this.props.publicKey();
   }
 
-  render () {
+  render() {
+    const { modules } = this.state;
 
-    const {modules} = this.state;
-    
     return (
       <section>
         <Button bsStyle="success" onClick={() => this.props.getPersonaData()}>Get Persona Data</Button>
@@ -60,15 +59,15 @@ class TableValidations extends Component {
 
           <tbody>
           {
-            modules.map( doc => (
+            modules.map((doc) => (
               <tr key={doc.id}>
                 <td>{doc.id}</td>
                 <td>{doc.type}</td>
                 <td>{doc.status}</td>
                 <td>
-                  <Button 
-                    variant="outline-dark" 
-                    size="sm" 
+                  <Button
+                    variant="outline-dark"
+                    size="sm"
                     onClick={
                       () => this.props.toggleDocuments(modules, doc)
                     }>
@@ -83,13 +82,12 @@ class TableValidations extends Component {
       </section>
     );
   }
-
 }
 
-const mapStateToProps = state => ({ 
-  modules: state.validations
+const mapStateToProps = (state) => ({
+  modules: state.validations,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ValidationActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(ValidationActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableValidations);

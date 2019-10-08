@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
@@ -15,83 +15,82 @@ import './AddInformation.css';
 import Category from '../../components/Category/Category';
 
 class AddInformation extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.setCategory = this.setCategory.bind(this);
+    this.setSubCategory = this.setSubCategory.bind(this);
+    this.state = {
+      category: '',
+      subCategory: '',
+      info: '',
+      cost: 0,
+      isLoading: true,
+      executed: false,
+      saveButtonCalled: false,
+    };
+  }
 
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.setCategory = this.setCategory.bind(this);
-        this.setSubCategory = this.setSubCategory.bind(this);
-        this.state = {
-            category: "",
-            subCategory: "",
-            info: "",
-            cost: 0,
-            isLoading: true,
-            executed: false,
-            saveButtonCalled: false,
-        };
+  componentDidMount() {
+    this.setState({
+      isLoading: false,
+    });
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.persona.error.length > 2) {
+      const msg = `Erro: ${nextProps.persona.error}`;
+      console.error('getDerivedStateFromProps: ', msg);
+      return { isLoading: false };
     }
-
-    componentDidMount() {
-        this.setState({
-            isLoading: false
-        });
+    // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
+    // console.log('getDerivedStateFromProps prevState', prevState);
+    if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
+      return { isLoading: nextProps.persona.isRunning, executed: true };
     }
+    return null;
+  }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.persona.error.length > 2) {
-            const msg = 'Erro: ' + nextProps.persona.error;
-            console.error('getDerivedStateFromProps: ', msg);
-            return { isLoading: false };
-        }
-        // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
-        // console.log('getDerivedStateFromProps prevState', prevState);
-        if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
-            return { isLoading: nextProps.persona.isRunning, executed: true };
-        }
-        return null;
-    }
+  handleClick(event) {
+    event.preventDefault();
+    const infoCode = this.state.category;
+    const field = this.state.subCategory;
+    const data = this.state.info;
+    const price = this.state.cost;
+    this.setState({
+      isLoading: true,
+      saveButtonCalled: true,
+    });
+    this.props.addData(infoCode, field, data, price);
+  }
 
-    handleClick(event) {
-        event.preventDefault();
-        const infoCode = this.state.category
-        const field = this.state.subCategory
-        const data = this.state.info
-        const price = this.state.cost
-        this.setState({
-            isLoading: true,
-            saveButtonCalled: true,
-        })
-        this.props.addData(infoCode, field, data, price)
-    }
+  validateForm() {
+    return this.state.info.length > 1;
+  }
 
-    validateForm() {
-        return this.state.info.length > 1;
-    }
-
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
+    handleChange = (event) => {
+      this.setState({
+        [event.target.id]: event.target.value,
+      });
     }
 
     setCategory(cat) {
-        this.setState({ category: cat });
+      this.setState({ category: cat });
     }
 
     setSubCategory(subCat) {
-        this.setState({ subCategory: subCat });
+      this.setState({ subCategory: subCat });
     }
 
     render() {
-        //console.log('render props', this.props)
-        // console.log('render state', this.state)
-        if (this.state.executed) {
-            return (
-                <Redirect to='/home' />
-            )
-        }
+      // console.log('render props', this.props)
+      // console.log('render state', this.state)
+      if (this.state.executed) {
         return (
+                <Redirect to='/home' />
+        );
+      }
+      return (
             <div>
                 <div className="btn-add-close">
                     <CloseIconPage destination="/menu"/>
@@ -135,15 +134,14 @@ class AddInformation extends Component {
                 </Form>
                 <Loader message="Adding identity info" visible={this.state.isLoading} />
             </div>
-        );
+      );
     }
-
 }
 
-const mapStateToProps = state => ({
-    persona: state.persona
+const mapStateToProps = (state) => ({
+  persona: state.persona,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(PersonaActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddInformation);

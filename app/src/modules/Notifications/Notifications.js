@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col, Grid, Panel, Button } from 'react-bootstrap';
+import {
+  Row, Col, Grid, Panel, Button,
+} from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from '../../redux/actions/persona';
 
-import NotificationPanel from "../../components/PanelNotification/PanelNotification";
+import NotificationPanel from '../../components/PanelNotification/PanelNotification';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import Loader from '../../components/Loader/Loader';
 import './Notifications.css';
@@ -15,24 +17,26 @@ class Notifications extends Component {
     super(props);
     this.state = {
       notifications: [],
-      isLoading: true
+      isLoading: true,
     };
   }
+
   async componentDidMount() {
     console.log('Modules/Notification/componentDidMount');
     await this.props.GetPersonaNotifications();
     this.setState({
-      isLoading: false
+      isLoading: false,
     });
   }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     return { notifications: nextProps.persona.notifications };
   }
+
   GetNotificationGrid() {
-    let notificationGrid = [];
+    const notificationGrid = [];
     console.log('this.state.notifications :', this.state.notifications);
-    if (!this.state.notifications)
-      return notificationGrid;
+    if (!this.state.notifications) return notificationGrid;
 
     for (let index = 0; index < this.state.notifications.length; index++) {
       notificationGrid.push(<NotificationPanel
@@ -43,13 +47,14 @@ class Notifications extends Component {
     }
     console.log('this.state.notifications 2:', this.state.notifications.length);
 
-    let noNot =<div className="margin-top-212">
+    const noNot = <div className="margin-top-212">
     <p className="information paragraph text-center">No notifications available. 😉 </p>
   </div>;
 
 
     return notificationGrid.length > 0 ? notificationGrid : noNot;
   }
+
   render() {
     return (
       <Grid>
@@ -67,11 +72,11 @@ class Notifications extends Component {
           </Col>
         </Row>
       </Grid>
-    )
+    );
   }
 }
-const mapStateToProps = state => ({
-  persona: state.persona
+const mapStateToProps = (state) => ({
+  persona: state.persona,
 });
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(PersonaActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

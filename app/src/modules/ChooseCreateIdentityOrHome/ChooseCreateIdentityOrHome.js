@@ -1,62 +1,60 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from '../../redux/actions/persona';
 
 import Loader from '../../components/Loader/Loader';
 
 class ChooseCreateIdentityOrHome extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isLoading: true,
       numberOfPersonalInfoRecorded: -1,
-      msg: "Loading information from Blockchain",
-    }
+      msg: 'Loading information from Blockchain',
+    };
   }
 
   componentDidMount() {
-    this.props.getPersonaData()    
+    this.props.getPersonaData();
   }
-  
+
   static getDerivedStateFromProps(nextProps, prevState) {
-    //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps nextProps', nextProps.persona);
-    //console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps prevState', prevState);
-    if (nextProps.persona.error.length>2) {
-        const msg = 'Erro: ' + nextProps.persona.error;
-        console.error('ChooseCreateIdentityOrHome/getDerivedStateFromProps: ', msg);
-        return { isLoading: false };
+    // console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps nextProps', nextProps.persona);
+    // console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps prevState', prevState);
+    if (nextProps.persona.error.length > 2) {
+      const msg = `Erro: ${nextProps.persona.error}`;
+      console.error('ChooseCreateIdentityOrHome/getDerivedStateFromProps: ', msg);
+      return { isLoading: false };
     }
-    if (nextProps.persona.readAllPersonaLogs ) {
-      return { isLoading : false, numberOfPersonalInfoRecorded: nextProps.persona.numberOfFields };
+    if (nextProps.persona.readAllPersonaLogs) {
+      return { isLoading: false, numberOfPersonalInfoRecorded: nextProps.persona.numberOfFields };
     }
     return null;
   }
 
   render() {
-    //console.log('ChooseCreateIdentityOrHome/render state', this.state);
+    // console.log('ChooseCreateIdentityOrHome/render state', this.state);
     if (this.state.numberOfPersonalInfoRecorded >= 2) {
-      //console.log('ChooseCreateIdentityOrHome/rendering to home', this.state);
+      // console.log('ChooseCreateIdentityOrHome/rendering to home', this.state);
       return (
         <Redirect to="/home" />
-      )
-    } else if (!this.state.isLoading && this.state.numberOfPersonalInfoRecorded === 0) {
+      );
+    } if (!this.state.isLoading && this.state.numberOfPersonalInfoRecorded === 0) {
       return (
         <Redirect to="/createidentity" />
-      )
-    } else {
-      return (
-        <Loader visible={this.state.isLoading} message={this.state.msg} />
-      )
+      );
     }
+    return (
+        <Loader visible={this.state.isLoading} message={this.state.msg} />
+    );
   }
 }
 
-const mapStateToProps = state => ({ 
-  persona: state.persona, wallet: state.wallet
+const mapStateToProps = (state) => ({
+  persona: state.persona, wallet: state.wallet,
 });
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(PersonaActions, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(ChooseCreateIdentityOrHome);

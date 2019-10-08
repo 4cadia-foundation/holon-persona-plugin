@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import './Loader.css'
+import './Loader.css';
 
 export default class Loader extends Component {
   render() {
     return (
-      <div className={this.props.visible ? "container-load" : "cont-hidden"}>
+      <div className={this.props.visible ? 'container-load' : 'cont-hidden'}>
         <div className="vertical-spacer-120"></div>
         <div className="loader">
           &nbsp;
@@ -17,6 +17,6 @@ export default class Loader extends Component {
           </h4>
         </div>
       </div>
-    )
+    );
   }
 }

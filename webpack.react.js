@@ -1,11 +1,11 @@
+require('webpack');
 const path = require('path');
-const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 
 module.exports = (watch = false) => {
-  let module = {
+  const module = {
     mode: 'development',
     entry: './app/src/index.js',
     devtool: 'inline-source-map',
@@ -15,31 +15,36 @@ module.exports = (watch = false) => {
       dns: 'empty',
       fs: 'empty',
       path: 'empty',
-      net: 'empty',
-      child_process: 'empty'
+      child_process: 'empty',
     },
     output: {
       filename: 'main.bundle.js',
-      path: path.resolve(__dirname, 'dist')
+      path: path.resolve(__dirname, 'dist'),
     },
-    plugins:[
+    plugins: [
       new CopyPlugin([
-        {from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist')}
-      ])
+        { from: path.resolve(__dirname, 'app/src/index.html'), to: path.resolve(__dirname, 'dist') },
+      ]),
     ],
     module: {
       rules: [
         {
+          enforce: 'pre',
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          loader: 'eslint-loader',
+        },
+        {
           test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)|\.png($|\?)|\.jpg($|\?)/,
-          loader: 'url-loader'
+          loader: 'url-loader',
         },
         {
           test: /\.css$/,
-          loader: 'style-loader'
+          loader: 'style-loader',
         },
         {
           test: /\.css$/,
-          loader: 'css-loader'
+          loader: 'css-loader',
         },
         {
           test: /\.js$/,
@@ -50,15 +55,15 @@ module.exports = (watch = false) => {
             options: {
               babelrc: false,
               presets: ['@babel/preset-env', '@babel/preset-react'],
-              plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
-            }
-          }]
-        }
-      ]
-    }
+              plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime'],
+            },
+          }],
+        },
+      ],
+    },
   };
 
-  if (watch){
+  if (watch) {
     module.watch = true;
     module.plugins.push(new LiveReloadPlugin());
   }

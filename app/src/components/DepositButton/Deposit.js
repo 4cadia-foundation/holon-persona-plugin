@@ -1,33 +1,32 @@
 import React, { Component } from 'react';
 
 import { bindActionCreators } from 'redux';
-import {connect} from "react-redux";
-import * as WalletActions from "../../redux/actions/wallet";
-
-import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
+import { connect } from 'react-redux';
 import EthereumQRPlugin from 'ethereum-qr-code';
-import Loader from '../../components/Loader/Loader';
-import './Deposit.css'
+import * as WalletActions from '../../redux/actions/wallet';
+
+import CloseIconPage from '../CloseIconPage/CloseIconPage';
+import Loader from '../Loader/Loader';
+import './Deposit.css';
 
 class Deposit extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       address: '',
       isLoading: true,
-    }
+    };
     this._qr = new EthereumQRPlugin();
   }
 
   componentDidMount() {
     const sendDetails = {
       to: this.props.wallet.address,
-    }
+    };
     const configDetails = {
-      size:280,
+      size: 280,
       selector: '#ethereum-qr-code-address',
-    }
+    };
     console.log('qrcodeaddress', sendDetails);
     console.log('qrcodeaddress', configDetails);
     this.setState({
@@ -52,13 +51,13 @@ class Deposit extends Component {
         </div>
         <Loader visible={this.state.isLoading} message="Loading your address from wallet" />
       </div>
-    )
+    );
   }
 }
-const mapStateToProps = state => ({
-  wallet: state.wallet
+const mapStateToProps = (state) => ({
+  wallet: state.wallet,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(WalletActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deposit);

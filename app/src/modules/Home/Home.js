@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Row, Label, Table } from 'react-bootstrap';
+import {
+  Grid, Row, Label, Table,
+} from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,20 +13,19 @@ import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
 import './Home.css';
 
 class Home extends Component {
-  
   constructor(props) {
-    super(props);      
+    super(props);
     this.state = {
       persona: this.props.persona,
       isLoading: true,
-      msg: "Loading profile from Blockchain",
-    }
-    this.getCampoValor = this.getCampoValor.bind(this); 
+      msg: 'Loading profile from Blockchain',
+    };
+    this.getCampoValor = this.getCampoValor.bind(this);
   }
 
   componentDidMount() {
     if (this.props.persona.numberOfFields < 1) {
-      this.props.getPersonaData(); 
+      this.props.getPersonaData();
     } else {
       this.setState({
         isLoading: false,
@@ -33,28 +34,26 @@ class Home extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
-    //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
-    if (nextProps.persona.error.length>2) {
-        const msg = 'Erro: ' + nextProps.persona.error;
-        console.error('Home/getDerivedStateFromProps: ', msg);
-        alert(msg);
-        return { isLoading: false };
+    // console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
+    // console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
+    if (nextProps.persona.error.length > 2) {
+      const msg = `Erro: ${nextProps.persona.error}`;
+      console.error('Home/getDerivedStateFromProps: ', msg);
+      alert(msg);
+      return { isLoading: false };
     }
     if (nextProps.persona.readAllPersonaLogs) {
-        return { isLoading : false, persona: nextProps.persona };
+      return { isLoading: false, persona: nextProps.persona };
     }
     return null;
   }
 
   getCampoValor(campo) {
-    const {persona} = this.state;
+    const { persona } = this.state;
     if (persona.personalInfo.length < 1) {
       return '';
     }
-    let filtro = persona.personalInfo.filter(item => {
-      return item.field == campo;
-    });
+    const filtro = persona.personalInfo.filter((item) => item.field == campo);
     if (!filtro[0]) {
       return '';
     }
@@ -62,19 +61,18 @@ class Home extends Component {
   }
 
   getValidationDescClass(statusValidation) {
-    //console.log('getValidationDescClass', statusValidation)
-    if (statusValidation == "0") {
-      return "success"
-    } else if (statusValidation == "4") {
-      return "warning"
-    } else {
-      return "danger"
+    // console.log('getValidationDescClass', statusValidation)
+    if (statusValidation == '0') {
+      return 'success';
+    } if (statusValidation == '4') {
+      return 'warning';
     }
+    return 'danger';
   }
 
-  render () {
-    const {persona} = this.state;
-    
+  render() {
+    const { persona } = this.state;
+
     return (
       <div>
         <Grid>
@@ -103,8 +101,7 @@ class Home extends Component {
             <Row>
               <Table striped className='tableValidation'>
                 <tbody>
-                  {persona.personalInfo.map((item, index) =>                 
-                        <tr key={index}>
+                  {persona.personalInfo.map((item, index) => <tr key={index}>
                           <td className="paragraph text-center">{item.field}</td>
                           <td className="paragraph text-center">{item.valor}</td>
                           <td className="text-center">
@@ -112,9 +109,8 @@ class Home extends Component {
                               {item.statusValidationDescription}
                             </Label>
                           </td>
-                        </tr>
-                    )
-                  }          
+                        </tr>)
+                  }
                 </tbody>
               </Table>
             </Row>
@@ -126,10 +122,10 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({ 
-  persona: state.persona
+const mapStateToProps = (state) => ({
+  persona: state.persona,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(PersonaActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

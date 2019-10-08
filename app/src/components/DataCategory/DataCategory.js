@@ -3,29 +3,28 @@ import { Dropdown, DropdownButton, MenuItem } from 'react-bootstrap';
 import './DataCategory.css';
 
 class DataCategory extends Component {
-
   constructor(props) {
     super(props);
     this.setCategory = this.setCategory.bind(this);
     this.state = {
       values: [
         {
-          key: "1",
+          key: '1',
           value: 1,
-          text: 'Personal Data'
+          text: 'Personal Data',
         },
         {
-          key: "2",
+          key: '2',
           value: 2,
-          text: 'Professional Data'
+          text: 'Professional Data',
         },
         {
-          key: "3",
+          key: '3',
           value: 3,
-          text: 'Financial Data'
-        }
-      ]
-    }
+          text: 'Financial Data',
+        },
+      ],
+    };
     this.props.emitCategory(1);
   }
 
@@ -34,7 +33,7 @@ class DataCategory extends Component {
   }
 
   render() {
-    let optionTemplate = this.state.values.map(v => (
+    const optionTemplate = this.state.values.map((v) => (
       <option key={v.key} value={v.value}>{v.text}</option>
     ));
     return (
@@ -46,12 +45,8 @@ class DataCategory extends Component {
           </select>
         </div>
       </section>
-    )
+    );
   }
-
 }
 
 export default DataCategory;
-
-
-

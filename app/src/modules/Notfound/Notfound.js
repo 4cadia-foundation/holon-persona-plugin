@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './Notfound.css';
 
 class Notfound extends Component {
-
-  render () {
+  render() {
     return (
       <div className="notfound">
         <h3 className="title">Sorry 😞</h3>
@@ -14,7 +13,6 @@ class Notfound extends Component {
       </div>
     );
   }
-
 }
 
 export default Notfound;

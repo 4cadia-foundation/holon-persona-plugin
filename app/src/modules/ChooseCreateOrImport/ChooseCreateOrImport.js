@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { Button, Col, Glyphicon, Grid, Row, Panel } from 'react-bootstrap';
+import {
+  Button, Col, Glyphicon, Grid, Row, Panel,
+} from 'react-bootstrap';
 
-import "./ChooseCreateOrImport.css";
+import './ChooseCreateOrImport.css';
 
 class ChooseCreateOrImport extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return(
+  render() {
+    return (
             <Grid>
                 <Row className="margin-top-50">
                     <Col xs={12} md={12}>
@@ -42,8 +43,8 @@ class ChooseCreateOrImport extends Component {
                     </Row>
                 </div>
             </Grid>
-        )
-    }
+    );
+  }
 }
 
 

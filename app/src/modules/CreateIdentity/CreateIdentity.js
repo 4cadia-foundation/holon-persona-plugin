@@ -1,70 +1,71 @@
-import React, { Component } from 'react'
-import { Button, ControlLabel, FormGroup, FormControl, Grid, Row } from 'react-bootstrap';
+import React, { Component } from 'react';
+import {
+  Button, ControlLabel, FormGroup, FormControl, Grid, Row,
+} from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import * as PersonaActions from "../../redux/actions/persona";
+import * as PersonaActions from '../../redux/actions/persona';
 
 import Loader from '../../components/Loader/Loader';
 import './CreateIdentity.css';
 
 class CreateIdentity extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      name: '',
+      email: '',
+      isLoading: true,
+    };
+  }
 
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.state = {
-            name: "",
-            email: "",
-            isLoading: true,
-        };
+  componentDidMount() {
+    this.setState({
+      isLoading: false,
+    });
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // console.log('CreateIdentity/getDerivedStateFromProps nextProps', nextProps.persona);
+    // console.log('CreateIdentity/getDerivedStateFromProps prevState', prevState);
+    if (nextProps.persona.error.length > 2) {
+      const msg = `Erro: ${nextProps.persona.error}`;
+      console.error('CreateIdentity/getDerivedStateFromProps: ', msg);
+      return { isLoading: false };
     }
-
-    componentDidMount() {
-        this.setState({
-            isLoading: false
-        })
+    if (nextProps.persona.readAllPersonaLogs && nextProps.persona.numberOfFields >= 2) {
+      return { isLoading: false, redirect: true };
     }
+    return null;
+  }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        //console.log('CreateIdentity/getDerivedStateFromProps nextProps', nextProps.persona);
-        //console.log('CreateIdentity/getDerivedStateFromProps prevState', prevState);
-        if (nextProps.persona.error.length > 2) {
-            const msg = 'Erro: ' + nextProps.persona.error;
-            console.error('CreateIdentity/getDerivedStateFromProps: ', msg);
-            return { isLoading: false };
-        }
-        if (nextProps.persona.readAllPersonaLogs && nextProps.persona.numberOfFields >= 2) {
-            return { isLoading: false, redirect: true };
-        }
-        return null;
-    }
+  validateForm() {
+    return this.state.name.length > 3 && this.state.email.length > 7;
+  }
 
-    validateForm() {
-        return this.state.name.length > 3 && this.state.email.length > 7;
-    }
-
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
+    handleChange = (event) => {
+      this.setState({
+        [event.target.id]: event.target.value,
+      });
     }
 
     handleClick(event) {
-        event.preventDefault();
-        this.props.addPersona(this.state.name, this.state.email);
-        this.setState({
-            isLoading: true
-        });
+      event.preventDefault();
+      this.props.addPersona(this.state.name, this.state.email);
+      this.setState({
+        isLoading: true,
+      });
     }
 
     render() {
-        //console.log('CreateIdentity/render state', this.state);
-        if (this.state.redirect && !this.state.isLoading) {
-            return <Redirect to='/home' />
-        }
-        return (
+      // console.log('CreateIdentity/render state', this.state);
+      if (this.state.redirect && !this.state.isLoading) {
+        return <Redirect to='/home' />;
+      }
+      return (
             <div>
                 <Grid>
                     <Row className="margin-top-50">
@@ -106,16 +107,16 @@ class CreateIdentity extends Component {
                 </Grid>
                 <Loader message="Initializing your identity..." visible={this.state.isLoading} />
             </div>
-        );
+      );
     }
 }
 
-const mapStateToProps = state => ({
-    name: state.name,
-    email: state.email,
-    persona: state.persona,
+const mapStateToProps = (state) => ({
+  name: state.name,
+  email: state.email,
+  persona: state.persona,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(PersonaActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateIdentity);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Col, DropdownButton, Glyphicon, Grid, MenuItem, Row } from 'react-bootstrap';
+import {
+  Button, Col, DropdownButton, Glyphicon, Grid, MenuItem, Row,
+} from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,45 +13,43 @@ import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import Loader from '../../components/Loader/Loader';
 import Settings from '../../../config/settings';
 import '../../styles/_utils.css';
-import '../Menu/Menu.css';
+import './Menu.css';
 
 class Menu extends Component {
-  
-    constructor (props) {
-      super(props)
-      this.state = {
-        closeMenu: false,
-        
-      }
-      this.handleClick = this.handleClick.bind(this);
-      this.handleNetworkChange = this.handleNetworkChange.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      closeMenu: false,
+
+    };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleNetworkChange = this.handleNetworkChange.bind(this);
+  }
+
+  handleClick() {
+    this.setState({
+      closeMenu: true,
+    });
+  }
+
+  handleNetworkChange(event) {
+    console.log('menu/handleNetworkChange/event.target.value', event.target.value);
+    this.props.changeNetwork(event.target.value);
+  }
+
+  render() {
+    let network = '';
+    if (Settings.network === 4) {
+      network = 'rinkeby.';
     }
-    
-    handleClick() {
-      this.setState({
-        closeMenu: true
-      })
-    }
 
-    handleNetworkChange(event) {
-        console.log('menu/handleNetworkChange/event.target.value', event.target.value);
-        this.props.changeNetwork(event.target.value);
-    }
-
-    render() {
-
-        let network = '';
-        if (Settings.network === 4) {
-            network = "rinkeby.";
-        }
-
-        if (this.state.closeMenu) {
-            return (
+    if (this.state.closeMenu) {
+      return (
               <Redirect to='/home' />
-            )
-        }
+      );
+    }
 
-        return(
+    return (
         <Grid>
             <Row>
                 <Col>
@@ -63,7 +63,7 @@ class Menu extends Component {
                     <div className="links">
                         <div className="flex-column">
                             <Link to='/addinformation'>
-                                <Glyphicon id="glyph-color" glyph="plus"/> 
+                                <Glyphicon id="glyph-color" glyph="plus"/>
                                 <span className="space-icon-p paragraph">Add information</span>
                             </Link>
                         </div>
@@ -84,12 +84,12 @@ class Menu extends Component {
                     <div className="links2">
                         <div className="flex-column">
                             <Link to="/profile">
-                                <Glyphicon id="glyph-color" glyph="user"/> 
+                                <Glyphicon id="glyph-color" glyph="user"/>
                                 <span className="space-icon-p paragraph">Profile</span>
                             </Link>
                         </div>
                         <div className="flex-column">
-                            <a href={"https://" + network + "etherscan.io/address/" + this.props.persona.address} target="_blank">
+                            <a href={`https://${network}etherscan.io/address/${this.props.persona.address}`} target="_blank">
                                 <Glyphicon id="glyph-color" glyph="share"/>
                                 <span className="space-icon-p paragraph">Etherscan</span>
                             </a>
@@ -100,7 +100,7 @@ class Menu extends Component {
                                 <span className="space-icon-p paragraph">Secret Backup Phrase</span>
                             </Link>
                         </div>
-                        <div  className="flex-column">
+                        <div className="flex-column">
                             <Glyphicon id="glyph-color" glyph="cog"/>
                                 <DropdownButton
                                     onChange={this.handleNetworkChange}
@@ -127,12 +127,14 @@ class Menu extends Component {
                 </Col>
             </Row>
     </Grid>
-)}};
+    );
+  }
+}
 
-const mapStateToProps = state => ({ 
-    persona: state.persona
+const mapStateToProps = (state) => ({
+  persona: state.persona,
 });
-  
-const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
-  
+
+const mapDispatchToProps = (dispatch) => bindActionCreators(PersonaActions, dispatch);
+
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
