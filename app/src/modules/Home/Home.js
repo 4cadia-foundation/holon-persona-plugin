@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import { Grid, Row, Label, Table } from 'react-bootstrap';
+import { Row, Collapse, Well, Button} from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
-import logo from '../../../images/logo.png';
+import logo from '../../../images/icon-19.png';
 import Loader from '../../components/Loader/Loader';
 import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
 import './Home.css';
 
 class Home extends Component {
   
-  constructor(props) {
-    super(props);      
+  constructor(props, context) {
+    super(props, context);      
     this.state = {
       persona: this.props.persona,
       isLoading: true,
       msg: "Loading profile from Blockchain",
+      open: false
     }
     this.getCampoValor = this.getCampoValor.bind(this); 
   }
@@ -74,10 +75,14 @@ class Home extends Component {
 
   render () {
     const {persona} = this.state;
-    
     return (
-        <div className="fund">
-          <HamburguerMenu />
+      <div>
+        <div className={this.props.location.pathname === '/home' ? 'fund-orange': ''}>   </div>
+        <HamburguerMenu />
+        <Row className="logo-home">
+              <img className="logoHome" src={logo} alt="Logo" />
+        </Row>
+        <div>
           <div className="card-fund">
             <div className="card-text">
               <Row className="text-center">
@@ -89,9 +94,29 @@ class Home extends Component {
               <Row className="text-center">
                 <p className="paragraph basicInfoHome">{ this.getCampoValor('email') }</p>
               </Row>
-            </div>
           </div>
         </div>
+      </div>
+        <div className="validations-title">
+          <p>Validations</p>
+          <hr className="linha-home"></hr>
+        </div>
+          <div>
+          <Button onClick={() => this.setState({ open: this.state.open })}>
+            click
+          </Button>
+          <Collapse in={this.state.open}>
+            <div>
+              <Well>
+                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                accusamus terry richardson ad squid. Nihil anim keffiyeh
+                helvetica, craft beer labore wes anderson cred nesciunt sapiente
+                ea proident.
+              </Well>
+            </div>
+          </Collapse>
+        </div>
+      </div>
     );
   }
 }
