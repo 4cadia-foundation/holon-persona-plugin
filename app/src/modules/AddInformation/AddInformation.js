@@ -12,6 +12,8 @@ import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
 import './AddInformation.css';
 
+import Category from '../../components/Category/Category';
+
 class AddInformation extends Component {
 
     constructor(props) {
@@ -100,11 +102,12 @@ class AddInformation extends Component {
                     </div>
                     <br />
                     <div>
-                        <DataCategory emitCategory={this.setCategory} />
+                        {/* <DataCategory emitCategory={this.setCategory} /> */}
+                        <Category emitCategory={this.setCategory} emitSubCategory={this.setSubCategory}/>
                     </div>
                     <br />
                     <div>
-                        <DataSubCategory emitSubCategory={this.setSubCategory} />
+                        {/* <DataSubCategory emitSubCategory={this.setSubCategory} /> */}
                     </div>
                     <br />
                     <label className="paragraph label-add">Insert your info here</label>
