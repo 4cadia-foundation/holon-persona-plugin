@@ -9,6 +9,7 @@ import logo from '../../../images/icon-19.png';
 import Loader from '../../components/Loader/Loader';
 import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
 import './Home.css';
+import HomeCard from '../../components/HomeCard/HomeCard';
 
 class Home extends Component {
   
@@ -34,8 +35,6 @@ class Home extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
-    //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
     if (nextProps.persona.error.length>2) {
         const msg = 'Erro: ' + nextProps.persona.error;
         console.error('Home/getDerivedStateFromProps: ', msg);
@@ -101,21 +100,9 @@ class Home extends Component {
           <p>Validations</p>
           <hr className="linha-home"></hr>
         </div>
-          <div>
-          <Button onClick={() => this.setState({ open: this.state.open })}>
-            click
-          </Button>
-          <Collapse in={this.state.open}>
-            <div>
-              <Well>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life
-                accusamus terry richardson ad squid. Nihil anim keffiyeh
-                helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                ea proident.
-              </Well>
-            </div>
-          </Collapse>
-        </div>
+          <div className="app">
+            <HomeCard title="Aqui tem um titulo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</HomeCard>
+          </div>
       </div>
     );
   }
