@@ -14,19 +14,13 @@ import Profile from './modules/Profile/Profile'
 import SendEth from './modules/SendEth/SendEth';
 import ValidateInformation from './modules/ValidateInformation/ValidateInformation';
 import WalletPassword from './modules/WalletPassword/WalletPassword';
-import Welcome from './modules/Welcome/Welcome';
 import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
 
 let routers = [
   {
     path: '/',
-    component: Welcome,
-    exact: true
-  },
-  {
-    path: '/introductionholon',
     component: IntroductionHolon,
-    exact: false
+    exact: true
   },
   {
     path: '/importwallet',
