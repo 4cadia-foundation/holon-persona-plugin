@@ -11,11 +11,11 @@ import Settings from '../../../config/settings';
 import checked from '../../../images/checked.png';
 import id from '../../../images/id.png';
 import validate from '../../../images/validate.png';
-import './IntroductionHolon.css';
+import './Welcome.css';
 
 const wallet = new Wallet();
 
-class IntroductionHolon extends Component {
+class Welcome extends Component {
   constructor(props) {
     super(props);
     if (Settings.clearStorage) {
@@ -62,7 +62,6 @@ class IntroductionHolon extends Component {
               <Carousel.Caption>
                 <h2 className="title text-introduction margin-top-80">Welcome to Holon</h2>
                 <p className="paragraph text-introduction margin-top-10">Connecting you to the Decentralized Web.</p>
-                {/* <h3 className="title text-introduction margin-top-80">You're propriety of your data.</h3> */}
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -92,4 +91,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(WalletActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(IntroductionHolon);
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
