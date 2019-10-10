@@ -21,12 +21,8 @@ class ChooseCreateIdentityOrHome extends Component {
     this.props.getPersonaData();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    // console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps nextProps', nextProps.persona);
-    // console.log('ChooseCreateIdentityOrHome/getDerivedStateFromProps prevState', prevState);
+  static getDerivedStateFromProps(nextProps, _) {
     if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('ChooseCreateIdentityOrHome/getDerivedStateFromProps: ', msg);
       return { isLoading: false };
     }
     if (nextProps.persona.readAllPersonaLogs) {

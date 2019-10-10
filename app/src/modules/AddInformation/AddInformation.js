@@ -7,8 +7,6 @@ import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-import DataCategory from '../../components/DataCategory/DataCategory';
-import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
 import './AddInformation.css';
 
@@ -39,8 +37,6 @@ class AddInformation extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('getDerivedStateFromProps: ', msg);
       return { isLoading: false };
     }
     // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
@@ -83,8 +79,6 @@ class AddInformation extends Component {
     }
 
     render() {
-      // console.log('render props', this.props)
-      // console.log('render state', this.state)
       if (this.state.executed) {
         return (
                 <Redirect to='/home' />
@@ -101,12 +95,13 @@ class AddInformation extends Component {
                     </div>
                     <br />
                     <div>
-                        {/* <DataCategory emitCategory={this.setCategory} /> */}
-                        <Category emitCategory={this.setCategory} emitSubCategory={this.setSubCategory}/>
+                        <Category
+                          tCategory={this.setCategory}
+                          emitSubCategory={this.setSubCategory}
+                        />
                     </div>
                     <br />
                     <div>
-                        {/* <DataSubCategory emitSubCategory={this.setSubCategory} /> */}
                     </div>
                     <br />
                     <label className="paragraph label-add">Insert your info here</label>

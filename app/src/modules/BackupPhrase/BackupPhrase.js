@@ -9,10 +9,6 @@ import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import './BackupPhrase.css';
 
 class BackupPhrase extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
             <Grid>

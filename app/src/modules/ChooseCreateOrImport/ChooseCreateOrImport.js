@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import {
-  Button, Col, Glyphicon, Grid, Row, Panel,
-} from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Button, Col, Glyphicon, Grid, Row, Panel } from 'react-bootstrap';
 
 import './ChooseCreateOrImport.css';
 
 class ChooseCreateOrImport extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
             <Grid>

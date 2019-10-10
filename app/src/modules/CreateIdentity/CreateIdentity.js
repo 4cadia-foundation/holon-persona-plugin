@@ -32,8 +32,8 @@ class CreateIdentity extends Component {
     // console.log('CreateIdentity/getDerivedStateFromProps nextProps', nextProps.persona);
     // console.log('CreateIdentity/getDerivedStateFromProps prevState', prevState);
     if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('CreateIdentity/getDerivedStateFromProps: ', msg);
+      // const msg = `Erro: ${nextProps.persona.error}`;
+      // console.error('CreateIdentity/getDerivedStateFromProps: ', msg);
       return { isLoading: false };
     }
     if (nextProps.persona.readAllPersonaLogs && nextProps.persona.numberOfFields >= 2) {

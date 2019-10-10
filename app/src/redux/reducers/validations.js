@@ -18,12 +18,12 @@ const INITIAL_STATE = {
 
 export default function validations(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'SET_MODULE_ACTIVE':
+    case 'SET_MODULE_ACTIVE': {
       return { ...state, activeDocument: action.doc };
-      break;
-    case 'SET_PUBLIC_KEY':
+    }
+    case 'SET_PUBLIC_KEY': {
       return { ...state, publicKey: action.publicKey };
-      break;
+    }
     default:
       return state;
   }

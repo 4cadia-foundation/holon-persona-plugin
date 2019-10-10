@@ -78,19 +78,17 @@ class ImportWallet extends Component {
    * */
   getValidationPassword() {
     const { length } = this.state.password;
-    switch (true) {
-      case (length >= 8):
-        return 'success';
-        break;
-      case (length > 5):
-        return 'warning';
-        break;
-      case (length > 0):
-        return 'error';
-        break;
-      default:
-        return null;
+    let statusLengthPassword = null;
+    if (length >= 8) {
+      statusLengthPassword = 'success';
     }
+    if (length > 5) {
+      statusLengthPassword = 'warning';
+    }
+    if (length > 0) {
+      statusLengthPassword = 'error';
+    }
+    return statusLengthPassword;
   }
 
 
@@ -101,33 +99,28 @@ class ImportWallet extends Component {
    * */
   getValidationEqualPassword() {
     const { password, confirm } = this.state;
-    switch (true) {
-      case (password !== confirm && password.length > 0):
-        return 'error';
-        break;
-      case (password === confirm && password.length > 0):
-        return 'success';
-        break;
-      default:
-        return null;
+    let statusEqualPassword = null;
+    if (password !== confirm && password.length > 0) {
+      statusEqualPassword = 'error';
     }
+    if (password === confirm && password.length > 0) {
+      statusEqualPassword = 'success';
+    }
+    return statusEqualPassword;
   }
 
   getValidationPhrase() {
     const { phrase } = this.state;
     const words = (phrase.length > 0) ? phrase.split(' ') : '';
-    switch (true) {
-      case ((words.length > 0 && words.length < 12) || words.length > 12):
-        return 'error';
-        break;
-      case (words.length == 12):
-        return 'success';
-        break;
-      default:
-        return null;
+    let statusValidationPhrase = null;
+    if ((words.length > 0 && words.length < 12) || words.length > 12) {
+      statusValidationPhrase = 'error';
     }
+    if (words.length === 12) {
+      statusValidationPhrase = 'success';
+    }
+    return statusValidationPhrase;
   }
-
 
   render() {
     if (this.props.wallet.address.length > 2) {

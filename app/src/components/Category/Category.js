@@ -146,7 +146,9 @@ class Category extends Component {
             <label>Subcategory</label>
             <div className="dropdown">
               <select id="subCategoryId" onChange={this.setSubCategory} onClick={this.setSubCategory}>
-                {this.state.subCategory.values.filter((f) => f.category === this.state.selectedCategory)
+                {this.state.subCategory.values.filter(
+                  (f) => f.category === this.state.selectedCategory,
+                )
                   .map((v) => (<option key={v.key} value={v.value}>{v.text}</option>))
                 }
               </select>
