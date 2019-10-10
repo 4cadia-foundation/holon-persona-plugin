@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Button, Form, FormControl, Grid, Row,
-} from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Button, Form, FormControl, Grid, Row } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -44,12 +43,17 @@ class WelcomeBack extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-      if (nextProps.wallet.error.length > 2 && prevState.isProcessing && prevState.password.length > 1) {
+      if (nextProps.wallet.error.length > 2
+        && prevState.isProcessing
+        && prevState.password.length > 1
+      ) {
         const msg = `Erro: ${nextProps.wallet.error}`;
-        console.log('WelcomeBack/getDerivedStateFromProps', msg);
         return { isProcessing: false, password: '' };
       }
-      if (nextProps.wallet.openedWallet && prevState.isProcessing && prevState.password.length >= 8) {
+      if (nextProps.wallet.openedWallet
+        && prevState.isProcessing
+        && prevState.password.length >= 8
+      ) {
         return { openedWallet: nextProps.wallet.openedWallet };
       }
       return null;

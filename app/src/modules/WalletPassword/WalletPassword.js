@@ -33,8 +33,8 @@ class WalletPassword extends Component {
     // console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
     if (nextProps.wallet.error.length > 2) {
       const msg = `Erro: ${nextProps.wallet.error}`;
-      console.error('WalletPassword/getDerivedStateFromProps: ', msg);
-      alert(msg);
+      // console.error('WalletPassword/getDerivedStateFromProps: ', msg);
+      // alert(msg);
       return { isLoading: false };
     }
     if (nextProps.wallet.address.length > 2) {
@@ -72,19 +72,17 @@ class WalletPassword extends Component {
     * */
   getValidationPassword() {
     const { length } = this.state.password;
-    switch (true) {
-      case (length >= 8):
-        return 'success';
-        break;
-      case (length > 5):
-        return 'warning';
-        break;
-      case (length > 0):
-        return 'error';
-        break;
-      default:
-        return null;
+    let validationPassword = null;
+    if (length >= 8) {
+      validationPassword = 'success';
     }
+    if (length > 5) {
+      validationPassword = 'warning';
+    }
+    if (length > 0) {
+      validationPassword = 'error';
+    }
+    return validationPassword;
   }
 
   /**
@@ -94,16 +92,14 @@ class WalletPassword extends Component {
    * */
   getValidationEqualPassword() {
     const { password, confirm } = this.state;
-    switch (true) {
-      case (password !== confirm && password.length > 7):
-        return 'error';
-        break;
-      case (password === confirm && password.length > 7):
-        return 'success';
-        break;
-      default:
-        return null;
+    let equalPassword = null;
+    if (password !== confirm && password.length > 7) {
+      equalPassword = 'error';
     }
+    if (password === confirm && password.length > 7) {
+      equalPassword = 'success';
+    }
+    return equalPassword;
   }
 
   render() {

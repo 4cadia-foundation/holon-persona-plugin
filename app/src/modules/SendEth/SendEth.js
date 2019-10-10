@@ -14,7 +14,6 @@ import './SendEth.css';
 class SendEth extends Component {
   constructor(props) {
     super(props);
-    this.hideAddress = this.hideAddress.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
       balance: 0,
@@ -35,17 +34,18 @@ class SendEth extends Component {
     });
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps, _) {
     if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('SendEth/getDerivedStateFromProps: ', msg);
-      alert(msg);
       return { balance: 0, address: null };
     }
-    return { balance: nextProps.persona.balance, address: nextProps.persona.address, isRunning: nextProps.persona.isRunning };
+    return {
+      balance: nextProps.persona.balance,
+      address: nextProps.persona.address,
+      isRunning: nextProps.persona.isRunning,
+    };
   }
 
-  hideAddress(adrs) {
+  hideAddress = (adrs) => {
     if (adrs.length > 30) {
       return (`${adrs.substring(0, 30)}...`);
     }

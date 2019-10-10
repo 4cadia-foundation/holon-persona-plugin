@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Grid, Row, Label, Table,
-} from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Grid, Row, Label, Table } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -37,9 +36,6 @@ class Home extends Component {
     // console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
     // console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
     if (nextProps.persona.error.length > 2) {
-      const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('Home/getDerivedStateFromProps: ', msg);
-      alert(msg);
       return { isLoading: false };
     }
     if (nextProps.persona.readAllPersonaLogs) {
@@ -53,21 +49,24 @@ class Home extends Component {
     if (persona.personalInfo.length < 1) {
       return '';
     }
-    const filtro = persona.personalInfo.filter((item) => item.field == campo);
+    const filtro = persona.personalInfo.filter((item) => item.field === campo);
     if (!filtro[0]) {
       return '';
     }
     return filtro[0].valor;
   }
 
-  getValidationDescClass(statusValidation) {
+  getValidationDescClass = (statusValidation) => {
     // console.log('getValidationDescClass', statusValidation)
-    if (statusValidation == '0') {
-      return 'success';
-    } if (statusValidation == '4') {
-      return 'warning';
+    let status = 'danger';
+
+    if (statusValidation === '0') {
+      status = 'success';
     }
-    return 'danger';
+    if (statusValidation === '4') {
+      status = 'warning';
+    }
+    return status;
   }
 
   render() {
@@ -105,7 +104,9 @@ class Home extends Component {
                           <td className="paragraph text-center">{item.field}</td>
                           <td className="paragraph text-center">{item.valor}</td>
                           <td className="text-center">
-                            <Label bsStyle={ this.getValidationDescClass(item.statusValidationCode) }>
+                            <Label
+                            bsStyle={ this.getValidationDescClass(item.statusValidationCode)
+                            }>
                               {item.statusValidationDescription}
                             </Label>
                           </td>

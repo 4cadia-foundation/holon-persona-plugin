@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Row, Col, Grid, Panel, Button,
-} from 'react-bootstrap';
+import { Row, Col, Grid } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,7 +20,6 @@ class Notifications extends Component {
   }
 
   async componentDidMount() {
-    console.log('Modules/Notification/componentDidMount');
     await this.props.GetPersonaNotifications();
     this.setState({
       isLoading: false,
@@ -35,7 +32,6 @@ class Notifications extends Component {
 
   GetNotificationGrid() {
     const notificationGrid = [];
-    console.log('this.state.notifications :', this.state.notifications);
     if (!this.state.notifications) return notificationGrid;
 
     for (let index = 0; index < this.state.notifications.length; index++) {
@@ -45,8 +41,6 @@ class Notifications extends Component {
         nameReceiver={this.state.notifications[index].requesterName}
         fieldName={this.state.notifications[index].field}/>);
     }
-    console.log('this.state.notifications 2:', this.state.notifications.length);
-
     const noNot = <div className="margin-top-212">
     <p className="information paragraph text-center">No notifications available. 😉 </p>
   </div>;

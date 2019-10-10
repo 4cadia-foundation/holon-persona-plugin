@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Col, Grid, FormControl, Row,
-} from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Col, Grid, FormControl, Row } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -35,7 +34,7 @@ class Profile extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.persona.address != nextProps.persona.address) {
+    if (prevState.persona.address !== nextProps.persona.address) {
       return { persona: nextProps.persona, isLoading: false };
     }
 
@@ -47,7 +46,7 @@ class Profile extends Component {
     if (persona.personalInfo.length < 1) {
       return '';
     }
-    const filtro = persona.personalInfo.filter((item) => item.field == campo);
+    const filtro = persona.personalInfo.filter((item) => item.field === campo);
     if (!filtro[0]) {
       return '';
     }
@@ -91,7 +90,7 @@ class Profile extends Component {
                         </Col>
                     </Row>
                         {
-                            persona.personalInfo.filter((f) => f.field != 'name' && f.field != 'email').map((val, idx) => (
+                            persona.personalInfo.filter((f) => f.field !== 'name' && f.field !== 'email').map((val, idx) => (
                                     <Row className="text-center margin-top-10" key={`row_${idx.toString()}`}>
                                         <Col>
                                             <FormControl

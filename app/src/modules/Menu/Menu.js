@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import {
-  Button, Col, DropdownButton, Glyphicon, Grid, MenuItem, Row,
-} from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Button, Col, DropdownButton, Glyphicon, Grid, MenuItem, Row } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -33,7 +32,6 @@ class Menu extends Component {
   }
 
   handleNetworkChange(event) {
-    console.log('menu/handleNetworkChange/event.target.value', event.target.value);
     this.props.changeNetwork(event.target.value);
   }
 

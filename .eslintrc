@@ -26,8 +26,7 @@
       "navigator": "readonly",
       "web3": "writable",
       "window": "readonly",
-      "Link": "readonly",
-      "React": "readonly"
+      "dispatch": "writable"
     },
     "rules": {
       "eol-last": 0,
@@ -35,6 +34,9 @@
         2,
         "single"
       ],
-      "no-unused-vars": "off"
+      "no-unused-vars": "off",
+      "radix":"warn",
+      "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+      "class-methods-use-this": ["error", { "exceptMethods": ["hideAdress"] }]
     }
 }

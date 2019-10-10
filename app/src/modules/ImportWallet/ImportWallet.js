@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import {
-  Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock,
-} from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as WalletActions from '../../redux/actions/wallet';
 
-import './ImportWallet';
+// import './ImportWallet';
 import Loader from '../../components/Loader/Loader';
 
 class ImportWallet extends Component {
@@ -32,8 +31,8 @@ class ImportWallet extends Component {
 
   /**
    * @method getDerivedStateFromProps
-   * @description getDerivedStateFromProps this is method of live cycle react for detect modifications in props
-   * */
+   * @description getDerivedStateFromProps this is method of live cycle react for detect
+   * modifications in props */
   static getDerivedStateFromProps(props, state) {
     if (props.accounts !== state.accounts) {
       return {

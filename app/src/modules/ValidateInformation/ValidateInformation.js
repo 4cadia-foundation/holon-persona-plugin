@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Button, Col, Form, FormControl, Grid, Row,
-} from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Button, Col, Form, FormControl, Grid, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
@@ -45,7 +44,6 @@ class ValidateInformation extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.persona.error.length > 2) {
       const msg = `Erro: ${nextProps.persona.error}`;
-      console.error('validateInformation/getDerivedStateFromProps: ', msg);
       return { isLoading: false };
     }
     // console.log('validateInformation/getDerivedStateFromProps nextProps', nextProps.persona);
@@ -124,7 +122,10 @@ class ValidateInformation extends Component {
                 <Form className="margin-top-10">
                     <div className="space-between">
                         <div>
-                            <SelectPersonaInfoFields emitField={this.setField} personalInfo={this.props.persona.personalInfo} />
+                            <SelectPersonaInfoFields
+                              emitField={this.setField}
+                              personalInfo={this.props.persona.personalInfo}
+                            />
                         </div>
                         <div className="margin-top-10">
                             <SelectValidador emitValidator={this.setValidator} />
