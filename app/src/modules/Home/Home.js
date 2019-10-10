@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Collapse, Well, Button} from 'react-bootstrap';
+import { Row, Glyphicon} from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
 import logo from '../../../images/icon-19.png';
+import user from '../../../images/boy.png'
 import Loader from '../../components/Loader/Loader';
 import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
 import './Home.css';
@@ -18,6 +19,7 @@ class Home extends Component {
     this.state = {
       persona: this.props.persona,
       isLoading: true,
+      validationResults: [],
       msg: "Loading profile from Blockchain",
       open: false
     }
@@ -61,29 +63,17 @@ class Home extends Component {
     return filtro[0].valor;
   }
 
-  getValidationDescClass(statusValidation) {
-    //console.log('getValidationDescClass', statusValidation)
-    if (statusValidation == "0") {
-      return "success"
-    } else if (statusValidation == "4") {
-      return "warning"
-    } else {
-      return "danger"
-    }
-  }
-
   render () {
-    const {persona} = this.state;
+
     return (
       <div>
         <div className={this.props.location.pathname === '/home' ? 'fund-orange': ''}>   </div>
-        <HamburguerMenu />
-        <Row className="logo-home">
-              <img className="logoHome" src={logo} alt="Logo" />
-        </Row>
+          <HamburguerMenu />
+          <img className="logoHome" src={logo} alt="Logo" />
         <div>
           <div className="card-fund">
-            <div className="card-text">
+            <div className="card-text text-center">
+              <img className="logoHome" src={user} alt="Logo" />
               <Row className="text-center">
                 <p className="paragraph basicInfoHome">{ this.props.persona.address }</p>
               </Row>
@@ -98,11 +88,12 @@ class Home extends Component {
       </div>
         <div className="validations-title">
           <p>Validations</p>
-          <hr className="linha-home"></hr>
+          <Glyphicon glyph="plus" />
         </div>
-          <div className="app">
-            <HomeCard title="Aqui tem um titulo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</HomeCard>
-          </div>
+        <hr className="linha-home"></hr>
+        <div>
+          <HomeCard />
+        </div>
       </div>
     );
   }

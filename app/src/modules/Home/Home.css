@@ -9,7 +9,7 @@
 
 .card-fund {
     position: relative;
-    height: 218px;
+    height: 209px;
     width: 87%;
     background-color: white;
     border: 1px solid black;
@@ -19,8 +19,8 @@
 }
 
 .card-text {
-    flex-direction: column;
-    margin-top: 30%;
+    height: 150px;
+    margin-top: 10%;
     font-size: 11px;
 }
 
@@ -32,9 +32,14 @@
     background-color: var(--color-black);
     height: 1px;
     width: 100%;
+    margin-top: 5px;
 }
 
 .validations-title {
+    width: 300px;;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     font-size: 20px;
     margin-top: 10%;
 }

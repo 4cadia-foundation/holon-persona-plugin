@@ -5,6 +5,9 @@
 }
 
 .card-header {
+    height: 40px;
+    color: var(--color-black);
+    border-left: solid;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -14,21 +17,17 @@
     font-size: 1.15em;
 }
 
-
 .card-history-detail {
+    margin-left: 1px;
     border-top: 1px solid silver;
     padding-top: 10px;
     height: auto;
 }
 
 .card-history-detail span {
-    color: #7e7e7e;
+    color: black;
 }
 
-.card-history-detail.show {
-    display: block;
-}
-
-.card-history-detail.hide {
-    display: none;
+.title {
+    margin-left: 10px;
 }
