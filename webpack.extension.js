@@ -7,14 +7,13 @@ const files = glob.sync('./app/scripts/**/*.js', { dot: true, ignore: ['./app/sc
 
 
 module.exports = (watch = false) => {
-
-  let module = {
+  const module = {
     mode: 'development',
     entry: files,
     devtool: 'inline-source-map',
     output: {
       filename: 'main.extension.bundle.js',
-      path: path.resolve(__dirname, 'dist')
+      path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
       new CopyPlugin([
@@ -23,8 +22,8 @@ module.exports = (watch = false) => {
         { from: path.resolve(__dirname, 'app/_locales'), to: path.resolve(__dirname, 'dist/_locales') },
         { from: path.resolve(__dirname, 'app/images'), to: path.resolve(__dirname, 'dist/images') },
         { from: path.resolve(__dirname, 'app/chromereload.js'), to: path.resolve(__dirname, 'dist') },
-        { from: path.resolve(__dirname, 'app/manifest.json'), to: path.resolve(__dirname, 'dist') }
-      ])
+        { from: path.resolve(__dirname, 'app/manifest.json'), to: path.resolve(__dirname, 'dist') },
+      ]),
     ],
     module: {
       rules: [
@@ -33,18 +32,18 @@ module.exports = (watch = false) => {
           include: [path.resolve(__dirname, 'app')],
           exclude: [
             path.resolve(__dirname, 'node_modules'),
-            path.resolve(__dirname, 'app', 'scripts', 'test')
+            path.resolve(__dirname, 'app', 'scripts', 'test'),
           ],
           use: [{
             loader: 'babel-loader',
             options: {
-              babelrc: true
-            }
-          }]
-        }
-      ]
-    }
-  }
+              babelrc: true,
+            },
+          }],
+        },
+      ],
+    },
+  };
 
   if (watch) {
     module.watch = true;

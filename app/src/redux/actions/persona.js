@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
 import { ethers } from 'ethers';
 import abiDecoder from 'abi-decoder';
 import Transactor from '../../../scripts/core/Transactor';
@@ -79,7 +81,7 @@ export function getScore() {
   }
   return (async (dispatch) => {
     const score = await transactor.contract.score(transactor.wallet.address);
-    dispatch({ type: 'GET_SCORE', validations: parseInt(score[1]), numberOfFields: parseInt(score[0]) });
+    dispatch({ type: 'GET_SCORE', validations: parseInt(score[1], 10), numberOfFields: parseInt(score[0], 10) });
   });
 }
 
@@ -91,10 +93,10 @@ export function getPersonaData() {
   }
   try {
     return (async (dispatch) => {
-      console.log('actions/getPersonaData');
+      // console.log('actions/getPersonaData');
       dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
       const novoPersonalInfo = await transactor.getPersonalInfo();
-      console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
+      // console.log('actions/getPersonaData/novoPersonalInfo', novoPersonalInfo);
       dispatch({
         type: 'GET_PERSONA_BASIC_DATA', novoPersonalInfo, address: transactor.wallet.address, numberOfFields: novoPersonalInfo.length,
       });
@@ -180,7 +182,7 @@ export function addData(infoCode, field, data, price) {
   };
 }
 
-export function addPersona(name, email) {
+export async function addPersona(name, email) {
   // return async (dispatch) => {
   dispatch({ type: 'RUNNING_METHOD' });
   dispatch({ type: 'WILL_READ_ALL_PERSONA_LOGS' });
@@ -189,6 +191,7 @@ export function addPersona(name, email) {
       dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
     };
   }
+
   try {
     const atlasWallet = new ethers.Wallet('619CC0075FAC10253850ECEF582B7431FCC55CBCCD0A07BAE132EB1535F09855', transactor.provider);
     const giveEther = {
@@ -207,6 +210,7 @@ export function addPersona(name, email) {
 
   try {
     const contractOptions = { gasLimit: 4000000 };
+    // eslint-disable-next-line no-unused-expressions
     transactor.contractWithSigner;
     // add persona with field name by default
     const addPersonaTask = await transactor._contract.addPersona(1, 0, 'name', name, 0, contractOptions);
@@ -236,31 +240,33 @@ export function addPersona(name, email) {
     dispatch({ type: ActionTypes.ERROR_PERSONA_DATA, error: `Add first data (name and email): failed${err}` });
     dispatch({ type: 'TOAST_ERROR', toast: buildToast('It was not possible create your Holon ID. Try again later.', { type: ToastTypes.ERROR }) });
   }
-};
+  return null;
+}
 
-export function sendEthers(sendTo, sendValue) {
-  return async (dispatch) => {
-    dispatch({ type: 'RUNNING_METHOD' });
-    if (!checkWallet()) {
-      return () => {
-        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-      };
-    }
-    try {
-      const tx = {
-        gasLimit: 21000,
-        to: sendTo,
-        value: ethers.utils.parseEther(sendValue),
-        chainId: transactor.provider.chainId,
-      };
-      const transferEthers = await transactor.wallet.sendTransaction(tx);
-      await transferEthers.wait();
-      dispatch({ type: 'METHOD_EXECUTED' });
-      dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Ether send sucessfully', { type: ToastTypes.SUCCESS }) });
-    } catch (err) {
-      dispatch({ type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', { type: ToastTypes.ERROR }) });
-    }
-  };
+export async function sendEthers(sendTo, sendValue) {
+  // return (dispatch) => {
+  dispatch({ type: 'RUNNING_METHOD' });
+  if (!checkWallet()) {
+    return () => {
+      dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+    };
+  }
+
+  try {
+    const tx = {
+      gasLimit: 21000,
+      to: sendTo,
+      value: ethers.utils.parseEther(sendValue),
+      chainId: transactor.provider.chainId,
+    };
+    const transferEthers = await transactor.wallet.sendTransaction(tx);
+    await transferEthers.wait();
+    dispatch({ type: 'METHOD_EXECUTED' });
+    dispatch({ type: 'TOAST_SUCCESS', toast: buildToast('Ether send sucessfully', { type: ToastTypes.SUCCESS }) });
+  } catch (err) {
+    dispatch({ type: 'TOAST_ERROR', toast: buildToast('We had a problem to make your transaction. Try again later.', { type: ToastTypes.ERROR }) });
+  }
+  return null;
 }
 
 export function GetPersonaNotifications() {
@@ -277,44 +283,48 @@ export function GetPersonaNotifications() {
     dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
   });
 }
-export function deliverDecryptedData(decision, receiver, fieldName) {
-  return async (dispatch) => {
-    if (!checkWallet()) {
-      return () => {
-        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
-      };
-    }
-    dispatch({ type: 'CLEAN_ERROR' });
-    dispatch({ type: 'RUNNING_METHOD' });
-    try {
-      const tx = await transactor.contract.deliverDecryptedData(decision, receiver, fieldName);
-      if (tx) {
-        const receipt = await tx.wait(1);
-        if (receipt.status === 1) {
-          const personaNotifications = [];
-          const notifications = await transactor.contract.GetRequestedFields();
-          for (let notfIndex = 0; notfIndex < notifications[0].length; notfIndex++) {
-            personaNotifications.push({
-              requesterAddress: notifications[0][notfIndex],
-              requesterName: notifications[1][notfIndex],
-              field: notifications[2][notfIndex],
-            });
-          }
-          dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
-          dispatch({ type: 'METHOD_EXECUTED' });
-        } else {
-          dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
+
+export async function deliverDecryptedData(decision, receiver, fieldName) {
+  // return (async (dispatch) => {
+  if (!checkWallet()) {
+    return () => {
+      dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
+    };
+  }
+
+  dispatch({ type: 'CLEAN_ERROR' });
+  dispatch({ type: 'RUNNING_METHOD' });
+
+  try {
+    const tx = await transactor.contract.deliverDecryptedData(decision, receiver, fieldName);
+    if (tx) {
+      const receipt = await tx.wait(1);
+      if (receipt.status === 1) {
+        const personaNotifications = [];
+        const notifications = await transactor.contract.GetRequestedFields();
+        for (let notfIndex = 0; notfIndex < notifications[0].length; notfIndex++) {
+          personaNotifications.push({
+            requesterAddress: notifications[0][notfIndex],
+            requesterName: notifications[1][notfIndex],
+            field: notifications[2][notfIndex],
+          });
         }
+        dispatch({ type: 'GET_NOTIFICATIONS', notifications: personaNotifications });
+        dispatch({ type: 'METHOD_EXECUTED' });
       } else {
-        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request' });
+        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'askToValidate: Transaction on Blockchain has failed' });
       }
-    } catch (exception) {
-      return () => {
-        dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
-      };
+    } else {
+      dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to submit the validation request' });
     }
-  };
+  } catch (exception) {
+    return () => {
+      dispatch({ type: 'ERROR_PERSONA_DATA', error: 'It was not possible to get Persona data details' });
+    };
+  }
+  return null;
 }
+
 export function allowNotification(receiver, fieldName) {
   return (dispatch) => this.deliverDecryptedData(true, receiver, fieldName)
     .then(

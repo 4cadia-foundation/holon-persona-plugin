@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 
 import Transactor from '../../../scripts/core/Transactor';
@@ -16,24 +17,27 @@ class SelectValidador extends Component {
     this.setValidator = this.setValidator.bind(this);
     this.transactor = new Transactor();
     this.transactor.wallet = store.getState().wallet.ethersWallet;
+    // eslint-disable-next-line no-unused-expressions
     this.transactor.contractWithSigner;
   }
 
   async componentDidMount() {
     const tmp = await this.transactor._contract.getTotalValidators();
-    const numberOfValidators = parseInt(tmp);
-    console.log('SelectValidador/componentDidMount/numberOfValidators', numberOfValidators);
+    const numberOfValidators = parseInt(tmp, 10);
+    // console.log('SelectValidador/componentDidMount/numberOfValidators', numberOfValidators);
     const validators = [];
     for (let x = 0; x < numberOfValidators; x++) {
-      const validatorAddress = await this.transactor._contract.holonValidatorsList(x);
-      const validatorName = await this.transactor._contract.getPersonaData(validatorAddress, 'name');
-      console.log('SelectValidador/componentDidMount/validator', x, validatorName, validatorAddress);
+      const validatorAddress = this.transactor._contract.holonValidatorsList(x);
+      const validatorName = this.transactor._contract.getPersonaData(validatorAddress, 'name');
+      // console.log('SelectValidador/validator', x, validatorName, validatorAddress);
       const item = {
         address: validatorAddress,
         text: validatorName[1],
       };
       validators.push(item);
     }
+    await Promise.all(validators);
+
     this.setState({
       isRunning: false,
       numberOfValidators,
@@ -58,6 +62,7 @@ class SelectValidador extends Component {
         </section>
       );
     }
+
     if (!this.state.isRunning && this.state.validators.length > 0) {
       const optionTemplate = this.state.validators.map((v) => (
         <option key={v.address} value={v.address}>{v.text}</option>
@@ -73,15 +78,24 @@ class SelectValidador extends Component {
         </section>
       );
     }
-    if (!this.state.isRunning && this.state.validators.length < 1) {
-      return (
-        <section>
-          <div>
-            There is no validator available
-          </div>
-        </section>
-      );
-    }
+
+    // if (!this.state.isRunning && this.state.validators.length < 1) {
+    //   return (
+    //     <section>
+    //       <div>
+    //         There is no validator available
+    //       </div>
+    //     </section>
+    //   );
+    // }
+
+    return (
+      <section>
+        <div>
+          There is no validator available
+        </div>
+      </section>
+    );
   }
 }
 

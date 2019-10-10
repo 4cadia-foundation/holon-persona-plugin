@@ -37,6 +37,7 @@
       "no-unused-vars": "off",
       "radix":"warn",
       "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-      "class-methods-use-this": ["error", { "exceptMethods": ["hideAdress"] }]
+      "class-methods-use-this": ["error", { "exceptMethods": ["hideAdress"] }],
+      "no-underscore-dangle": ["error", { "allowAfterThis": true }]
     }
 }

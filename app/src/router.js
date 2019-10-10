@@ -7,103 +7,104 @@ import Notfound from './modules/Notfound/Notfound';
 import CreateIdentity from './modules/CreateIdentity/CreateIdentity';
 import AddInformation from './modules/AddInformation/AddInformation';
 import Home from './modules/Home/Home';
-import Menu from  './modules/Menu/Menu';
+import Menu from './modules/Menu/Menu';
 import ValidateInformation from './modules/ValidateInformation/ValidateInformation';
 import BackupPhrase from './modules/BackupPhrase/BackupPhrase';
 import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
-import Profile from './modules/Profile/Profile'
+import Profile from './modules/Profile/Profile';
 import Notifications from './modules/Notifications/Notifications';
 import DepositButton from './components/DepositButton/Deposit';
 import SendEth from './modules/SendEth/SendEth';
 
-let routers = [
+const routers = [
   {
     path: '/',
     exact: true,
-    component: Welcome
+    component: Welcome,
   },
   {
     path: '/importwallet',
     component: ImportWallet,
-    exact: false
+    exact: false,
   },
   {
     path: '/choosecreateidentityorhome',
     component: ChooseCreateIdentityOrHome,
-    exact: false
+    exact: false,
   },
   {
     path: '/welcomeback',
     component: WelcomeBack,
-    exact: false
+    exact: false,
   },
   {
     path: '/menu',
     component: Menu,
-    exact: false
+    exact: false,
   },
   {
     path: '/backupphrase',
     component: BackupPhrase,
-    exact: false
+    exact: false,
   },
   {
     path: '/walletpassword',
     component: WalletPassword,
-    exact: false
+    exact: false,
   },
   {
     path: '/choosecreateorimport',
     component: ChooseCreateOrImport,
-    exact: false
+    exact: false,
   },
   {
     path: '/home',
     component: Home,
-    exact: false
+    exact: false,
   },
   {
     path: '/createidentity',
     component: CreateIdentity,
-    exact: false
+    exact: false,
   },
   {
     path: '/addinformation',
     component: AddInformation,
-    exact: false
+    exact: false,
   },
   {
     path: '/profile',
     component: Profile,
-    exact: false
+    exact: false,
   },
-  { path: '/notifications',
+  {
+    path: '/notifications',
     component: Notifications,
-    exact: false
+    exact: false,
   },
   {
     path: '/menu',
     component: Menu,
-    exact: false
+    exact: false,
   },
   {
     path: '/validateinformation',
     component: ValidateInformation,
-    exact: false
+    exact: false,
   },
   {
     path: '/depositbutton',
     component: DepositButton,
-    exact: false
+    exact: false,
   },
   {
     path: '/sendeth',
     component: SendEth,
-    exact: false
+    exact: false,
   },
   {
     component: Notfound,
-    exact: false
+    exact: false,
   },
 ];
 

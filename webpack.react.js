@@ -30,7 +30,7 @@ module.exports = (watch = false) => {
       rules: [
         {
           enforce: 'pre',
-          test: /\.(js|jsx)$/,
+          test: /\.(js)$/,
           exclude: /node_modules/,
           loader: 'eslint-loader',
         },

@@ -5,19 +5,19 @@ import { buildToast, ToastTypes } from '../../helper/toast';
 const wallet = new Wallet();
 
 export function restoreVault(password, seed) {
-  console.log('actions/wallet/restoreVault/starting');
+  // console.log('actions/wallet/restoreVault/starting');
   return (dispatch) => {
     wallet.createNewVaultAndRestore(password, seed)
-      .then((wallet) => {
-        console.log('actions/wallet/restoreVault/restored');
+      .then((personaWallet) => {
+        // console.log('actions/wallet/restoreVault/restored');
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
-          address: wallet.address,
-          mnemonic: wallet.mnemonic,
-          wallet,
+          address: personaWallet.address,
+          mnemonic: personaWallet.mnemonic,
+          personaWallet,
         });
       })
-      .catch((exception) => {
+      .catch(() => {
         dispatch({
           type: ActionTypes.SET_ACCOUNTS_ERROR,
         });
@@ -40,7 +40,7 @@ export function hasWallet() {
         hasWallet: true,
       });
     })
-      .catch((exception) => {
+      .catch(() => {
         dispatch({
           type: ActionTypes.SET_ACCOUNTS_ERROR,
         });
@@ -49,16 +49,16 @@ export function hasWallet() {
 }
 
 export function openWallet(password) {
-  console.log('openWallet/password', password.length);
+  // console.log('openWallet/password', password.length);
   return (async (dispatch) => {
     dispatch({ type: ActionTypes.OPEN_WALLET });
     await wallet.submitPassword(password)
-      .then((wallet) => {
+      .then((personaWallet) => {
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
-          address: wallet.address,
-          wallet,
-          mnemonic: wallet.mnemonic,
+          address: personaWallet.address,
+          personaWallet,
+          mnemonic: personaWallet.mnemonic,
         });
       })
       .catch((exception) => {
@@ -70,18 +70,18 @@ export function openWallet(password) {
 
 export function createNewWallet(password) {
   return (dispatch) => {
-    console.log('actions/wallet/creating new wallet');
+    // console.log('actions/wallet/creating new wallet');
     wallet.createNewVault(password)
-      .then((wallet) => {
+      .then((personaWallet) => {
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
-          address: wallet.address,
-          wallet,
-          mnemonic: wallet.mnemonic,
+          address: personaWallet.address,
+          personaWallet,
+          mnemonic: personaWallet.mnemonic,
         });
       })
-      .catch((exception) => {
-        console.log('actions/wallet/createNewWallet', exception);
+      .catch(() => {
+        // console.log('actions/wallet/createNewWallet', exception);
         dispatch({
           type: ActionTypes.SET_ACCOUNTS_ERROR,
         });

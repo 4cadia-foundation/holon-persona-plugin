@@ -5,9 +5,8 @@ import * as Passworder from 'browser-passworder';
 /**
  * @class Cryptography
  * @description Class for manager cryptographyc with Elliptic curve using ecies library
- **/
+ * */
 export default class Cryptography {
-
   /**
    * @method encrypt
    * @description Method for encripted message with public key
@@ -17,9 +16,9 @@ export default class Cryptography {
    * */
   static async encrypt(publicKey, message) {
     try {
-      return await EthCrypto.encryptWithPublicKey(publicKey,message);
+      return await EthCrypto.encryptWithPublicKey(publicKey, message);
     } catch (exception) {
-      console.error('[Crypto - encrypt]' + exception);
+      console.error(`[Crypto - encrypt]${exception}`);
     }
   }
 
@@ -32,24 +31,19 @@ export default class Cryptography {
    * */
   static async decrypt(privateKey, encrypted) {
     try {
-      return  EthCrypto.decryptWithPrivateKey(privateKey,encrypted);
-    }catch(exception){
-      console.error('[Crypto - decrypt]' + exception);
+      return EthCrypto.decryptWithPrivateKey(privateKey, encrypted);
+    } catch (exception) {
+      console.error(`[Crypto - decrypt]${exception}`);
     }
   }
 
 
-  static encryptWithPassworder(password, secrets){
-    return Passworder.encrypt(password, secrets).then((blob) => {
-      return blob;
-    }).catch( error => {
-      return error;
-    });
+  static encryptWithPassworder(password, secrets) {
+    return Passworder.encrypt(password, secrets).then((blob) => blob).catch((error) => error);
   }
 
 
-  static decryptWithPassworder(password, blob){
+  static decryptWithPassworder(password, blob) {
     return Passworder.decrypt(password, blob);
   }
-
 }

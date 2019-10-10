@@ -5,8 +5,8 @@
     "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js",
     "watch:react": "webpack --config ./webpack.react.js --watch=true",
     "watch:core": "webpack --config ./webpack.extension.js --watch=true",
-    "eslint:fix": "eslint --fix ./app/src/**/**/**.js",
-    "eslint": "eslint ./app/src/**/**/**.js",
+    "eslint:fix": "eslint --fix ./app/**/**/**.js",
+    "eslint": "eslint ./app/**/**/**.js",
     "test": "jest",
     "coverage": "jest --coverage"
   },
@@ -39,7 +39,8 @@
     "redux-thunk": "^2.3.0",
     "webpack": "^4.35.3",
     "webpack-livereload-plugin": "^2.2.0",
-    "copy-webpack-plugin": "^5.0.3"
+    "copy-webpack-plugin": "^5.0.3",
+    "glob": "^7.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -58,7 +59,6 @@
     "eslint-loader": "^2.2.1",
     "babel-loader": "^8.0.4",
     "css-loader": "^3.0.0",
-    "glob": "^7.1.4",
     "style-loader": "^0.23.1",
     "url-loader": "^2.0.1",
     "jest": "^24.8.0",
