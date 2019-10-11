@@ -7,9 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import store from './redux/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/main.css';
-
 import routers from './router';
+
+import './styles/main.css';
 
 export default () => (
   <div className="hollonApp">

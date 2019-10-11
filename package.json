@@ -5,8 +5,8 @@
     "compile": "webpack --config webpack.react.js && webpack --config webpack.extension.js",
     "watch:react": "webpack --config ./webpack.react.js --watch=true",
     "watch:core": "webpack --config ./webpack.extension.js --watch=true",
-    "eslint:fix": "eslint --fix ./app/**/**/**.js",
-    "eslint": "eslint ./app/**/**/**.js",
+    "eslint:fix": "eslint --fix app/src --ext .js",
+   "eslint": "eslint app/src --ext .js",
     "test": "jest",
     "coverage": "jest --coverage"
   },
