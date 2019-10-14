@@ -67,7 +67,7 @@ class Home extends Component {
 
     return (
       <div>
-        <div className={this.props.location.pathname === '/home' ? 'fund-orange': ''}>   </div>
+        <div className={this.props.location.pathname === '/home' ? 'fund-orange': ''}></div>
           <HamburguerMenu />
           <img className="logoHome" src={logo} alt="Logo" />
         <div>

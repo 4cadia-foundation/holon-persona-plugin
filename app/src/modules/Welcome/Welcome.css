@@ -3,6 +3,7 @@
 }
 
 .welcomeButton {
+   margin-right: 35%;
    margin-top: 50px;
    display: inline-block;
 }

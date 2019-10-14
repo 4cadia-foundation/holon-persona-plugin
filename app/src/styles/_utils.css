@@ -37,6 +37,15 @@
     justify-content: space-between;
 }
 
+.button-screen {
+    width: 50%;
+    margin-left: 25%;
+}
+
+.text-information {
+    font-size: 12px;
+}
+
 .large-textarea {
     height: 280px;
 }
