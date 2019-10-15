@@ -73,14 +73,14 @@ class WalletPassword extends Component {
   getValidationPassword() {
     const { length } = this.state.password;
     let validationPassword = null;
-    if (length >= 8) {
-      validationPassword = 'success';
+    if (length > 0) {
+      validationPassword = 'error';
     }
     if (length > 5) {
       validationPassword = 'warning';
     }
-    if (length > 0) {
-      validationPassword = 'error';
+    if (length >= 8) {
+      validationPassword = 'success';
     }
     return validationPassword;
   }

@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as WalletActions from '../../redux/actions/wallet';
 
-// import './ImportWallet';
 import Loader from '../../components/Loader/Loader';
 
 class ImportWallet extends Component {
@@ -79,14 +78,14 @@ class ImportWallet extends Component {
   getValidationPassword() {
     const { length } = this.state.password;
     let statusLengthPassword = null;
-    if (length >= 8) {
-      statusLengthPassword = 'success';
+    if (length > 0) {
+      statusLengthPassword = 'error';
     }
     if (length > 5) {
       statusLengthPassword = 'warning';
     }
-    if (length > 0) {
-      statusLengthPassword = 'error';
+    if (length >= 8) {
+      statusLengthPassword = 'success';
     }
     return statusLengthPassword;
   }

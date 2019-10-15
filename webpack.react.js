@@ -28,13 +28,12 @@ module.exports = (watch = false) => {
     ],
     module: {
       rules: [
-        // {
-        //   enforce: 'pre',
-        //   test: path.resolve(__dirname, 'src'),
-        //   exclude: [/node_modules/, path.resolve(__dirname, 'config'),
-        //  path.resolve(__dirname, 'scripts'), path.resolve('test')],
-        //   loader: 'eslint-loader',
-        // },
+        {
+          test: path.resolve(__dirname, 'src'),
+          exclude: [/node_modules/, path.resolve(__dirname, 'config'),
+            path.resolve(__dirname, 'scripts'), path.resolve('test')],
+          loader: 'eslint-loader',
+        },
         {
           test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)|\.png($|\?)|\.jpg($|\?)/,
           loader: 'url-loader',

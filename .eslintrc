@@ -35,6 +35,7 @@
         "single"
       ],
       "no-unused-vars": "off",
+      "no-undef": "off",
       "radix":"warn",
       "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
       "class-methods-use-this": ["error", { "exceptMethods": ["hideAdress"] }],

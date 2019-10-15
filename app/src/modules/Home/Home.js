@@ -57,7 +57,6 @@ class Home extends Component {
   }
 
   getValidationDescClass = (statusValidation) => {
-    // console.log('getValidationDescClass', statusValidation)
     let status = 'danger';
 
     if (statusValidation === '0') {
