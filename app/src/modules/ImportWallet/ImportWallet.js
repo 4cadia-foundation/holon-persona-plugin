@@ -154,7 +154,7 @@ class ImportWallet extends Component {
           </Row>
           <Row>
             <Col xs={12} md={12}>
-              <Form>
+              <Form onSubmit={ this.handleSubmit }>
                 <FormGroup validationState={this.getValidationPhrase()}>
                     <ControlLabel className="paragraph">Wallet Seed</ControlLabel>
                     <FormControl className="paragraph" rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
@@ -182,9 +182,9 @@ class ImportWallet extends Component {
                   <HelpBlock className="paragraph text-information">Password must be the same as field confirm</HelpBlock>
                 </FormGroup>
 
-                <Button className="button-screen paragraph margin-top-20" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
+                <Button className="button-screen paragraph margin-top-20" bsSize="large" type="submit" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
               </Form>
-              <Glyphicon glyph="chevron-left" className="margin-top-20"/>
+              <Glyphicon glyph="chevron-left" className="margin-top-20" onClick={() => this.props.history.push('/choosecreateorimport')}/>
             </Col>
           </Row>
         </Grid>
