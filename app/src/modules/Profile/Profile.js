@@ -8,6 +8,7 @@ import * as PersonaActions from '../../redux/actions/persona';
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import Loader from '../../components/Loader/Loader';
 import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
+import SliderSaveOption from '../../components/SliderSaveOption/SliderSaveOption';
 import avatar from '../../../images/avatar.svg';
 import '../../styles/_utils.css';
 import './Profile.css';
@@ -66,7 +67,12 @@ class Profile extends Component {
                     <div className="text-center margin-top-15 margin-bottom-30">
                         <img src={avatar} alt="Avatar" className={'avatar'}/>
                     </div>
-                    <Row> 
+                    <Row>
+                        <Col>
+                            <SliderSaveOption/>
+                        </Col>
+                    </Row>
+                    <Row className="margin-top-50"> 
                         <Col bsClass="text-center">
                             <div className="text-center">
                                 <FormControl

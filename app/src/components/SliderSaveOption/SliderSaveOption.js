@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './SliderSaveOption.css';
+
 class SliderSaveOption extends Component {
 
     constructor(props) {
@@ -9,12 +11,10 @@ class SliderSaveOption extends Component {
     render() {
         return (
             <section>
-                <div className="sliderContainer margin-top-30">
-                    <input type="range" min="1" max="3" step="1" className="slider"/>
-                    <div className="optionsSave margin-top-10">
-                        <p>Save Local</p>
-                        <p>Save in Blockchain</p>
-                    </div>
+                <div className="slider-container margin-top-30">
+                    <p className="paragraph">Browser</p>
+                    <input type="range" min="1" max="2" step="1" className="slider" id="slider-size"/>
+                    <p className="paragraph">Blockchain</p>
                 </div>
             </section>
         )

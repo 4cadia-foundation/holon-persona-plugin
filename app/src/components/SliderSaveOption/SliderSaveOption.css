@@ -1,5 +1,13 @@
-.sliderContainer{
-    width: 100%;
+#slider-size {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.slider-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
  
 .slider {
@@ -28,9 +36,4 @@
     -moz-border-radius: 100px;
     border-radius: 100px;
     cursor: pointer;
-}
-
-.optionsSave {
-    display:flex;
-    justify-content: space-between;
 }
