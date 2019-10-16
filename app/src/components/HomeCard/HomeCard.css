@@ -1,0 +1,33 @@
+.card-history  {
+    padding: 28px 0px 19px;
+    height: auto;
+    
+}
+
+.card-header {
+    height: 40px;
+    color: var(--color-black);
+    border-left: solid;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.box-info h4 {
+    font-size: 1.15em;
+}
+
+.card-history-detail {
+    margin-left: 1px;
+    border-top: 1px solid silver;
+    padding-top: 10px;
+    height: auto;
+}
+
+.card-history-detail span {
+    color: black;
+}
+
+.title {
+    margin-left: 10px;
+}

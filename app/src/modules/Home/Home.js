@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
-import { Grid, Row, Label, Table } from 'react-bootstrap';
+import { Row, Glyphicon} from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
-import logo from '../../../images/logo.png';
+import logo from '../../../images/icon-19.png';
+import user from '../../../images/boy.png'
 import Loader from '../../components/Loader/Loader';
 import HamburguerMenu from '../../components/HamburguerMenu/HamburguerMenu';
 import './Home.css';
+import HomeCard from '../../components/HomeCard/HomeCard';
 
 class Home extends Component {
   
-  constructor(props) {
-    super(props);      
+  constructor(props, context) {
+    super(props, context);      
     this.state = {
       persona: this.props.persona,
       isLoading: true,
+      validationResults: [],
       msg: "Loading profile from Blockchain",
+      open: false
     }
     this.getCampoValor = this.getCampoValor.bind(this); 
   }
@@ -33,8 +37,6 @@ class Home extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    //console.log('WalletPassword/getDerivedStateFromProps nextProps', nextProps.persona);
-    //console.log('WalletPassword/getDerivedStateFromProps prevState', prevState);
     if (nextProps.persona.error.length>2) {
         const msg = 'Erro: ' + nextProps.persona.error;
         console.error('Home/getDerivedStateFromProps: ', msg);
@@ -61,66 +63,37 @@ class Home extends Component {
     return filtro[0].valor;
   }
 
-  getValidationDescClass(statusValidation) {
-    //console.log('getValidationDescClass', statusValidation)
-    if (statusValidation == "0") {
-      return "success"
-    } else if (statusValidation == "4") {
-      return "warning"
-    } else {
-      return "danger"
-    }
-  }
-
   render () {
-    const {persona} = this.state;
-    
+
     return (
       <div>
-        <Grid>
+        <div className={this.props.location.pathname === '/home' ? 'fund-orange': ''}>   </div>
           <HamburguerMenu />
-          <section className="sectionBasicInfo">
-            <hr className="horizontalLine" />
-            <Row className="text-center">
-              <img className="logoHome" src={logo} alt="Logo" />
-            </Row>
-            <Row className="text-center">
-              <p className="paragraph basicInfoHome">{ this.props.persona.address }</p>
-            </Row>
-            <Row className="text-center">
-              <p className="paragraph basicInfoHome">{ this.getCampoValor('name') }</p>
-            </Row>
-            <Row className="text-center">
-              <p className="paragraph basicInfoHome">{ this.getCampoValor('email') }</p>
-            </Row>
-          </section>
-
-          <section className="sectionValidation">
-            <Row>
-                <h5 className="paragraph titleValidation">Validations</h5>
-                <hr className="horizontalLine"></hr>
-            </Row>
-            <Row>
-              <Table striped className='tableValidation'>
-                <tbody>
-                  {persona.personalInfo.map((item, index) =>                 
-                        <tr key={index}>
-                          <td className="paragraph text-center">{item.field}</td>
-                          <td className="paragraph text-center">{item.valor}</td>
-                          <td className="text-center">
-                            <Label bsStyle={ this.getValidationDescClass(item.statusValidationCode) }>
-                              {item.statusValidationDescription}
-                            </Label>
-                          </td>
-                        </tr>
-                    )
-                  }          
-                </tbody>
-              </Table>
-            </Row>
-          </section>
-        </Grid>
-        <Loader visible={this.state.isLoading} message={this.state.msg} />
+          <img className="logoHome" src={logo} alt="Logo" />
+        <div>
+          <div className="card-fund">
+            <div className="card-text text-center">
+              <img className="logoHome" src={user} alt="Logo" />
+              <Row className="text-center">
+                <p className="paragraph basicInfoHome">{ this.props.persona.address }</p>
+              </Row>
+              <Row className="text-center">
+                <p className="paragraph basicInfoHome">{ this.getCampoValor('name') }</p>
+              </Row>
+              <Row className="text-center">
+                <p className="paragraph basicInfoHome">{ this.getCampoValor('email') }</p>
+              </Row>
+          </div>
+        </div>
+      </div>
+        <div className="validations-title">
+          <p>Validations</p>
+          <Glyphicon glyph="plus" />
+        </div>
+        <hr className="linha-home"></hr>
+        <div>
+          <HomeCard />
+        </div>
       </div>
     );
   }

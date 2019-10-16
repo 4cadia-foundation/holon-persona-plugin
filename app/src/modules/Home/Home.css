@@ -1,33 +1,45 @@
-.logoHome {
-    height: 45px;
-    width: 50px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+.fund-orange {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 518px;
+    width: 100%;
+    background: linear-gradient(180deg, var(--color-orange) 50%, transparent 50%);
 }
 
-.horizontalLine {
-    border: 0.5px solid black;
-    width: 295px;
+.card-fund {
+    position: relative;
+    height: 209px;
+    width: 87%;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 7%;
+    margin-left: 6%;
 }
 
-.basicInfoHome {
-    font-size: 10pt;
+.card-text {
+    height: 150px;
+    margin-top: 10%;
+    font-size: 11px;
 }
 
-.tableValidation {
-    margin-top: 2px;
-    margin-left: 0px;
+.logo-home {
+    margin-left: 73%;
 }
 
-.sectionValidation {
-    margin-top: 40px;
+.linha-home {
+    background-color: var(--color-black);
+    height: 1px;
+    width: 100%;
+    margin-top: 5px;
 }
 
-.titleValidation {
-    font-weight: bold;
-    margin-bottom: -15px;
-}
-
-.sectionBasicInfo {
-    margin-top: 70px;
+.validations-title {
+    width: 300px;;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-top: 10%;
 }

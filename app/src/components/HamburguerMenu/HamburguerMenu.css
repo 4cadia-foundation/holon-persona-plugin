@@ -1,7 +1,6 @@
 .nav-toggle {
+    margin-top: 20px;
     display: block;
-    padding: 40px 10px 15px 10px;
-    background: #fff;
     position: fixed;
     top: 0px;
     left: 24px;
@@ -15,7 +14,6 @@
     display: inline-block;
     height: 0.6em;
     font-size: 1.2em;
-    background: #fff;
 }
 
 .hamburger span {
