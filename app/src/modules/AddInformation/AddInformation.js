@@ -3,12 +3,10 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-import DataCategory from '../../components/DataCategory/DataCategory';
-import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
 import './AddInformation.css';
 
@@ -22,9 +20,9 @@ class AddInformation extends Component {
         this.setCategory = this.setCategory.bind(this);
         this.setSubCategory = this.setSubCategory.bind(this);
         this.state = {
-            category: "",
-            subCategory: "",
-            info: "",
+            category: '',
+            subCategory: '',
+            info: '',
             cost: 0,
             isLoading: true,
             executed: false,
@@ -84,8 +82,6 @@ class AddInformation extends Component {
     }
 
     render() {
-        //console.log('render props', this.props)
-        // console.log('render state', this.state)
         if (this.state.executed) {
             return (
                 <Redirect to='/home' />
@@ -102,7 +98,6 @@ class AddInformation extends Component {
                     </div>
                     <br />
                     <div>
-                        {/* <DataCategory emitCategory={this.setCategory} /> */}
                         <Category emitCategory={this.setCategory} emitSubCategory={this.setSubCategory}/>
                     </div>
                     <br />
