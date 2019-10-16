@@ -42,8 +42,6 @@ class AddInformation extends Component {
             console.error('getDerivedStateFromProps: ', msg);
             return { isLoading: false };
         }
-        // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
-        // console.log('getDerivedStateFromProps prevState', prevState);
         if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
             return { isLoading: nextProps.persona.isRunning, executed: true };
         }
@@ -100,32 +98,30 @@ class AddInformation extends Component {
                     <div>
                         <Category emitCategory={this.setCategory} emitSubCategory={this.setSubCategory}/>
                     </div>
-                    <br />
-                    <div>
-                        {/* <DataSubCategory emitSubCategory={this.setSubCategory} /> */}
-                    </div>
-                    <br />
                     <label className="paragraph label-add">Insert your info here</label>
                     <FormControl
+                        className="input-add-info paragraph"
                         id="info"
                         type="text"
                         value={this.state.info}
                         placeholder="Information"
                         onChange={this.handleChange}
                     />
-                    <br />
                     <label className="paragraph label-add">How much do you want to get for this information?</label>
                     <FormControl
+                        className="input-add-info paragraph"
                         id="cost"
                         type="text"
                         value={this.state.cost}
                         placeholder="Value in wei"
                         onChange={this.handleChange}
-                        className="paragraph"
                         />
                     <br />
-                    <Button disabled={!this.validateForm()} bsSize="large" id="btn-add-save" className="btn-block btn-warning paragraph" type="submit" onClick={this.handleClick}>
-                        Save
+                    <Button className="btn-browser btn-warning paragraph" type="submit" onClick={this.handleClick}>
+                        Save Browser
+                    </Button>
+                    <Button className="btn-blockchain btn-warning paragraph" type="submit" onClick={this.handleClick}>
+                        Save Blockchain
                     </Button>
                 </Form>
                 <Loader message="Adding identity info" visible={this.state.isLoading} />
