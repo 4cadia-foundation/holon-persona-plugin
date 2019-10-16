@@ -1,9 +1,42 @@
-.gridPrincipal {
-    margin-top: 140px;
+.containerPrincipal {
+    display: flex;
 }
 
-.welcomeButton {
-   margin-right: 35%;
-   margin-top: 50px;
-   display: inline-block;
+.carousel {
+    position: unset;
+}
+
+.carousel-control.left{
+    background-image: var(--color-white)
+}
+
+.carousel-control.right{
+    background-image: var(--color-white)
+}
+
+.glyphicon {
+    color: var(--color-orange)
+}
+
+.carousel-indicators li {
+    background-color: var(--color-orange)
+}
+
+.carousel-indicators .active {
+    background-color: var(--color-orange)
+}
+
+.carousel-caption {
+    position: unset;
+}
+
+.text-introduction {
+    color: var(--color-black)
+}
+
+.carousel-inner>.active, .carousel-inner>.next, .carousel-inner>.prev {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 150px;
 }

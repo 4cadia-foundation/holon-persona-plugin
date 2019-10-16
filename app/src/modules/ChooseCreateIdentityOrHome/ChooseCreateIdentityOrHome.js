@@ -58,5 +58,7 @@ class ChooseCreateIdentityOrHome extends Component {
 const mapStateToProps = state => ({ 
   persona: state.persona, wallet: state.wallet
 });
+
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
+
 export default connect(mapStateToProps, mapDispatchToProps)(ChooseCreateIdentityOrHome);
