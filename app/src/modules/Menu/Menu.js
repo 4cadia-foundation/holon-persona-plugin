@@ -40,7 +40,7 @@ class Menu extends Component {
 
         let network = '';
         if (Settings.network === 4) {
-            network = "rinkeby.";
+            network = 'rinkeby.';
         }
 
         if (this.state.closeMenu) {
@@ -89,7 +89,7 @@ class Menu extends Component {
                             </Link>
                         </div>
                         <div className="flex-column">
-                            <a href={"https://" + network + "etherscan.io/address/" + this.props.persona.address} target="_blank">
+                            <a href={'https://" + network + "etherscan.io/address/' + this.props.persona.address} target="_blank">
                                 <Glyphicon id="glyph-color" glyph="share"/>
                                 <span className="space-icon-p paragraph">Etherscan</span>
                             </a>
