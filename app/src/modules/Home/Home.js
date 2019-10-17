@@ -73,7 +73,7 @@ class Home extends Component {
         <div>
           <div className="card-fund">
             <div className="card-text text-center">
-              <img className="logoHome" src={user} alt="Logo" />
+              <img className="logoHome margin-bottom-10" src={user} alt="Logo" />
               <Row className="text-center">
                 <p className="paragraph basicInfoHome">{ this.props.persona.address }</p>
               </Row>
@@ -87,7 +87,7 @@ class Home extends Component {
         </div>
       </div>
         <div className="validations-title">
-          <p>Validations</p>
+          <p className="title">Information</p>
           <Glyphicon glyph="plus" />
         </div>
         <hr className="linha-home"></hr>
