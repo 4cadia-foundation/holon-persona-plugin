@@ -1,5 +1,5 @@
 module.exports = {
-	"address": "0x94bfda4046b7f55adb47be4b37164f15d00e418a",
+	"address": "0xAEb132Ad71F161f09798D4Ed9eDb065F40396326",
 	"abi": [
 		{
 			"constant": true,
