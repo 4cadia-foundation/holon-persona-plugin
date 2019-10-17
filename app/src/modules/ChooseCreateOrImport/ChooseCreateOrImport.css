@@ -13,3 +13,7 @@
     padding: 20px 10px;
     box-sizing: border-box;
 }
+
+.panel-default {
+    border-color: black;
+}
