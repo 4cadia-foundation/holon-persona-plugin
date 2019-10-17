@@ -77,12 +77,12 @@ class WelcomeBack extends Component {
                         id="password" 
                         type="password" 
                         value={this.state.password}
-                        placeholder="The password must have 8 characters" 
                         onChange={this.handleChange}></input>
                     <label for="name" class="label-name">
                         <span class="content-name">Confirm password</span>
                     </label>
                 </div>
+                <p className="paragraph confirm-password">The password must have 8 characters</p>
                 <Button disabled={!this.validateForm()} type="submit" className="margin-top-30 button-screen paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
                     Log in
                 </Button>    

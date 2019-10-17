@@ -98,7 +98,7 @@ class CreateIdentity extends Component {
                                         componentClass="input"
                                         id="email"
                                         type="email"
-                                        placeholder="email@example.com"
+                                        placeholder="Email"
                                         value={this.state.email}
                                         onChange={this.handleChange} />
 

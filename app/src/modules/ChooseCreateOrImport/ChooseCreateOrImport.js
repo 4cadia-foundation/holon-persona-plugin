@@ -40,7 +40,6 @@ class ChooseCreateOrImport extends Component {
                             </Panel>
                         </Col>
                     </Row>
-                    <Glyphicon glyph="chevron-left"/>
                 </div>
             </Grid>
         )
