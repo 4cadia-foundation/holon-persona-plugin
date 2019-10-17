@@ -7,9 +7,8 @@ import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import Loader from '../../components/Loader/Loader';
-import Score from '../../components/ScoreGraph/Score';
+import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
 import SliderSaveOption from '../../components/SliderSaveOption/SliderSaveOption';
-import avatar from '../../../images/avatar.svg';
 import '../../styles/_utils.css';
 import './Profile.css';
 
@@ -64,13 +63,8 @@ class Profile extends Component {
                     <div className="btn-profile-close">
                         <CloseIconPage destination="/menu"/>
                     </div>
-                    <div className="text-center margin-top-15 margin-bottom-30">
-                        <img src={avatar} alt="Avatar" className={'avatar'}/>
-                    </div>
                     <Row>
-                        <Col>
-                            <SliderSaveOption/>
-                        </Col>
+                        <SliderSaveOption/>
                     </Row>
                     <Row className="margin-top-50"> 
                         <Col bsClass="text-center">
@@ -115,10 +109,8 @@ class Profile extends Component {
                                 )
                             })
                         }                            
-                    <Row className="margin-top-50 text-center paragraph">
-                        <Col>
-                            <Score/>
-                        </Col>
+                    <Row className="margin-top-10 text-center paragraph">
+                        <ScoreGraph/>
                     </Row>
                     <Row className="margin-top-10 margin-bottom-10 text-center text">
                         <Col>
