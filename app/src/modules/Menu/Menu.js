@@ -74,6 +74,12 @@ class Menu extends Component {
                             </Link>
                         </div>
                         <div className="flex-column">
+                            <Link to="/saveblockchain">
+                                <Glyphicon id="glyph-color" glyph="saved"/>
+                                <span className="space-icon-p paragraph">Save in Blockchain</span>
+                            </Link>
+                        </div>
+                        <div className="flex-column">
                             <Link to="/profile">
                                 <Glyphicon id="glyph-color" glyph="user"/> 
                                 <span className="space-icon-p paragraph">Profile</span>

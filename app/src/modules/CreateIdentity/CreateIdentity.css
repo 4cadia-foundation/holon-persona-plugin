@@ -1,3 +1,21 @@
 #btn-create-save {
     margin-top: 50px;
 }
+
+.buttons-identity {
+    width: 300px;
+    margin-left: -10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buttons-identity-size {
+    height: 20%;
+}
+
+.btn-block {
+    height: 38px;
+    width: 129px;
+    font-size: 12px;
+}
