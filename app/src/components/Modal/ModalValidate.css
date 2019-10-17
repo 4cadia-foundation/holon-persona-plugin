@@ -1,0 +1,11 @@
+.modal-container {
+    position: none;
+}
+
+.modal-container .modal, .modal-container .modal-backdrop {
+    position: none;
+}
+
+.modal-content {
+    margin-top: 50%;
+}
