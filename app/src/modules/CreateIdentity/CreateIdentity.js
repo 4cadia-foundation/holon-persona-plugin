@@ -28,8 +28,6 @@ class CreateIdentity extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        //console.log('CreateIdentity/getDerivedStateFromProps nextProps', nextProps.persona);
-        //console.log('CreateIdentity/getDerivedStateFromProps prevState', prevState);
         if (nextProps.persona.error.length > 2) {
             const msg = 'Erro: ' + nextProps.persona.error;
             console.error('CreateIdentity/getDerivedStateFromProps: ', msg);
@@ -60,7 +58,6 @@ class CreateIdentity extends Component {
     }
 
     render() {
-        //console.log('CreateIdentity/render state', this.state);
         if (this.state.redirect && !this.state.isLoading) {
             return <Redirect to='/home' />
         }
@@ -101,7 +98,7 @@ class CreateIdentity extends Component {
                                         componentClass="input"
                                         id="email"
                                         type="email"
-                                        placeholder="email@example.com"
+                                        placeholder="Email"
                                         value={this.state.email}
                                         onChange={this.handleChange} />
 
@@ -110,8 +107,12 @@ class CreateIdentity extends Component {
                                     </label>
                                 </div>
                             </FormGroup>
-
-                            <Button id="btn-create-save" type="submit" className="paragraph button-screen" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
+                            
+                            <div className="buttons-identity">
+                                <Button  id="btn-create-save" type="submit" className="paragraph buttons-identity-size" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Save in Blockchain</Button>
+                                <Button  id="btn-create-save" type="submit" className="paragraph buttons-identity-size" block bsSize="large" bsStyle="warning" > Save in browser</Button>
+                            </div>
+                            
                         </Form>
                     </div>
 

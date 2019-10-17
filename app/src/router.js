@@ -15,6 +15,8 @@ import ValidateInformation from './modules/ValidateInformation/ValidateInformati
 import WalletPassword from './modules/WalletPassword/WalletPassword';
 import Welcome from './modules/Welcome/Welcome'
 import WelcomeBack from './modules/WelcomeBack/WelcomeBack';
+import SaveBlockchain from './modules/SaveBlockchain/SaveBlockchain';
+import { FaSleigh } from 'react-icons/fa';
 
 let routers = [
   {
@@ -100,6 +102,11 @@ let routers = [
     path: '/sendeth',
     component: SendEth,
     exact: false
+  },
+  {
+    path: '/saveblockchain',
+    component: SaveBlockchain,
+    exact: FaSleigh
   },
   {
     component: Notfound,
