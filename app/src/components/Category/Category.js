@@ -1,7 +1,5 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-
-import "./Category.css";
+import React, { Component } from 'react';
+import './Category.css';
 
 class Category extends Component {
   constructor(props) {
@@ -15,17 +13,17 @@ class Category extends Component {
       category: {
       values: [
         {
-          key: "1",
+          key: '1',
           value: 1,
           text: 'Personal Data'
         },
         {
-          key: "2",
+          key: '2',
           value: 2,
           text: 'Professional Data'
         },
         {
-          key: "3",
+          key: '3',
           value: 3,
           text: 'Financial Data'
         }
@@ -34,61 +32,61 @@ class Category extends Component {
     subCategory: {
         values: [
             {
-              key: "1",
+              key: '1',
               value: 1,
               text: 'Birth Date',
               category: 1
             },
             {
-              key: "2",
+              key: '2',
               value: 2,
               text: 'RG',
               category: 1
             },
             {
-              key: "3",
+              key: '3',
               value: 3,
               text: 'CPF',
               category: 1
             },
             {
-              key: "4",
+              key: '4',
               value: 4,
               text: 'Gender',
               category: 1
             },
             {
-              key: "5",
+              key: '5',
               value: 5,
               text: 'Address',
               category: 1
             },
             {
-              key: "6",
+              key: '6',
               value: 6,
               text: 'Profession',
               category: 2
             },
             {
-              key: "7",
+              key: '7',
               value: 7,
               text: 'Company',
               category: 2
             },
             {
-              key: "8",
+              key: '8',
               value: 8,
               text: 'Occupation',
               category: 2
             },
             {
-              key: "9",
+              key: '9',
               value: 9,
               text: 'Annual income',
               category: 3
             },
             {
-              key: "9",
+              key: '9',
               value: 9,
               text: 'Bank reference',
               category: 3
@@ -139,20 +137,16 @@ class Category extends Component {
     return (
       !this.state.loading && (
         <section>
-            <label>Category</label>
-            <div className="dropdown">                
+            <label className="paragraph">Category</label>
+            <div className="paragraph dropdown">                
                 <select onChange={this.onFirstSelect} defaultValue={this.state.value} id="categoryId">
                     {optionTemplate }
                 </select>
-                {/* <select value={this.state.value} onChange={this.setCategory} id="categoryId">
-                    {optionTemplate}
-                </select>                 */}
             </div>
             <br />
-            <label>Subcategory</label>
-            <div className="dropdown">
+            <label className="paragraph">Subcategory</label>
+            <div className="paragraph dropdown">
                 <select id="subCategoryId" onChange={this.setSubCategory} onClick={this.setSubCategory}>
-                    {/* {this.state.count.map(d => <option value={d}>{d}</option>)} */}
                     {this.state.subCategory.values.filter(f => f.category == this.state.selectedCategory).map(v => (
                         <option key={v.key} value={v.value}>{v.text}</option>
                         ))}
@@ -164,5 +158,4 @@ class Category extends Component {
   }
 }
 export default Category;
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<App />, rootElement);
+

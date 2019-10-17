@@ -40,7 +40,7 @@ class Menu extends Component {
 
         let network = '';
         if (Settings.network === 4) {
-            network = "rinkeby.";
+            network = 'rinkeby.';
         }
 
         if (this.state.closeMenu) {
@@ -60,13 +60,7 @@ class Menu extends Component {
                         <h3 id="title-menu" className="title">Identity</h3>
                     </div>
                     <hr className="line-menu"/>
-                    <div className="links">
-                        <div className="flex-column">
-                            <Link to='/addinformation'>
-                                <Glyphicon id="glyph-color" glyph="plus"/> 
-                                <span className="space-icon-p paragraph">Add information</span>
-                            </Link>
-                        </div>
+                    <div className="links2">
                         <div className="flex-column">
                             <Link to="/validateinformation">
                                 <Glyphicon id="glyph-color" glyph="ok"/>
@@ -85,10 +79,6 @@ class Menu extends Component {
                                 <span className="space-icon-p paragraph">Save in Blockchain</span>
                             </Link>
                         </div>
-                    </div>
-
-                    <hr className="line-menu" />
-                    <div className="links2">
                         <div className="flex-column">
                             <Link to="/profile">
                                 <Glyphicon id="glyph-color" glyph="user"/> 
@@ -96,7 +86,7 @@ class Menu extends Component {
                             </Link>
                         </div>
                         <div className="flex-column">
-                            <a href={"https://" + network + "etherscan.io/address/" + this.props.persona.address} target="_blank">
+                            <a href={'https://" + network + "etherscan.io/address/' + this.props.persona.address} target="_blank">
                                 <Glyphicon id="glyph-color" glyph="share"/>
                                 <span className="space-icon-p paragraph">Etherscan</span>
                             </a>
