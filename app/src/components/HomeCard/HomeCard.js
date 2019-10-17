@@ -69,7 +69,6 @@ class HomeCard extends Component{
     }
 
     getValidationDescClass(statusValidation) {
-        //console.log('getValidationDescClass', statusValidation)
         if (statusValidation == "0") {
           return "success"
         } else if (statusValidation == "4") {
@@ -82,7 +81,6 @@ class HomeCard extends Component{
     render() {
         const {persona} = this.state;
         const enableDetail = this.state.enableDetail;
-        const { status, field } = this.props.personData;
         const { toggle, emitClick } = this.props;
 
         return(
@@ -95,7 +93,7 @@ class HomeCard extends Component{
                 <div className='box-info'>
                 {persona.personalInfo.map((item, index) => 
                     <div key={index}>
-                        <h4 className='title' >{ item.valor }</h4>
+                        <h4 className='title' > { item.valor } </h4>
                     </div>
                     )
                 }
@@ -108,10 +106,10 @@ class HomeCard extends Component{
                   {persona.personalInfo.map((item, index) => 
                     <div key={index}>
                         <div className='col-md-4'>
-                          <p> <span>Field: </span>{item.valor}</p>
+                          <p> <span className="paragraph">Field: </span>{item.valor}</p>
                         </div>
                         <div className='col-md-4'>
-                            <p> <span>Status: </span> 
+                            <p> <span className="paragraph">Status: </span> 
                             <Label bsStyle={ this.getValidationDescClass(item.statusValidationCode) }>
                               {item.statusValidationDescription}
                             </Label></p>
