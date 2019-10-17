@@ -93,7 +93,7 @@ class HomeCard extends Component{
                 <div className='box-info'>
                 {persona.personalInfo.map((item, index) => 
                     <div key={index}>
-                        <h4 className='title' >{ item.valor }</h4>
+                        <h4 className='title' > { item.valor } </h4>
                     </div>
                     )
                 }
