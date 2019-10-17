@@ -1,198 +1,111 @@
 module.exports = {
-	"address": "0x777E64F1a9c8Cfa87809D2Ec1193C32787aa3D9f",
+	"address": "0x94bfda4046b7f55adb47be4b37164f15d00e418a",
 	"abi": [
 		{
-			"constant": false,
+			"constant": true,
 			"inputs": [
-				{
-					"name": "_infoCode",
-					"type": "uint256"
-				},
-				{
-					"name": "_dataCategory",
-					"type": "uint8"
-				},
-				{
-					"name": "_field",
-					"type": "string"
-				},
-				{
-					"name": "_data",
-					"type": "string"
-				},
-				{
-					"name": "_price",
-					"type": "uint256"
-				}
-			],
-			"name": "addData",
-			"outputs": [
 				{
 					"name": "",
-					"type": "bool"
+					"type": "address"
 				}
 			],
-			"payable": false,
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "_index",
-					"type": "uint256"
-				},
-				{
-					"name": "_details",
-					"type": "string"
-				}
-			],
-			"name": "addInfoCategory",
+			"name": "members",
 			"outputs": [
 				{
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"payable": false,
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "_infoCode",
-					"type": "uint256"
-				},
-				{
-					"name": "_dataCategory",
-					"type": "uint8"
-				},
-				{
-					"name": "_field",
-					"type": "string"
-				},
-				{
-					"name": "_data",
-					"type": "string"
-				},
-				{
-					"name": "_price",
-					"type": "uint256"
-				}
-			],
-			"name": "addPersona",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"payable": false,
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "_strategy",
-					"type": "uint8"
-				},
-				{
-					"name": "_price",
-					"type": "uint256"
-				}
-			],
-			"name": "addValidator",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"payable": true,
-			"stateMutability": "payable",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "_address",
+					"name": "personalAddress",
 					"type": "address"
 				},
 				{
-					"name": "_field",
-					"type": "string"
-				}
-			],
-			"name": "askDecryptedData",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"payable": true,
-			"stateMutability": "payable",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "_validator",
-					"type": "address"
+					"name": "pendingDataDeliver",
+					"type": "uint256"
 				},
 				{
-					"name": "_field",
-					"type": "string"
-				},
-				{
-					"name": "_proofUrl",
-					"type": "string"
-				}
-			],
-			"name": "askToValidate",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"payable": true,
-			"stateMutability": "payable",
-			"type": "function"
-		},
-		{
-			"constant": false,
-			"inputs": [
-				{
-					"name": "_accept",
-					"type": "bool"
-				},
-				{
-					"name": "_address",
-					"type": "address"
-				},
-				{
-					"name": "_field",
-					"type": "string"
-				}
-			],
-			"name": "deliverDecryptedData",
-			"outputs": [
-				{
-					"name": "",
+					"name": "exists",
 					"type": "bool"
 				}
 			],
 			"payable": false,
-			"stateMutability": "nonpayable",
+			"stateMutability": "view",
 			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "holonValidators",
+			"outputs": [
+				{
+					"name": "validatorAddress",
+					"type": "address"
+				},
+				{
+					"name": "reputation",
+					"type": "uint256"
+				},
+				{
+					"name": "strategy",
+					"type": "uint8"
+				},
+				{
+					"name": "price",
+					"type": "uint256"
+				},
+				{
+					"name": "exists",
+					"type": "bool"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "holonValidatorsList",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "infoCategories",
+			"outputs": [
+				{
+					"name": "",
+					"type": "string"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"payable": true,
+			"stateMutability": "payable",
+			"type": "constructor"
 		},
 		{
 			"anonymous": false,
@@ -345,10 +258,208 @@ module.exports = {
 			"type": "event"
 		},
 		{
-			"inputs": [],
+			"constant": true,
+			"inputs": [
+				{
+					"name": "_strategy",
+					"type": "uint8"
+				},
+				{
+					"name": "valueInformed",
+					"type": "uint256"
+				}
+			],
+			"name": "correctPrice",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": false,
+			"stateMutability": "pure",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_infoCode",
+					"type": "uint256"
+				},
+				{
+					"name": "_dataCategory",
+					"type": "uint8"
+				},
+				{
+					"name": "_field",
+					"type": "string"
+				},
+				{
+					"name": "_data",
+					"type": "string"
+				},
+				{
+					"name": "_price",
+					"type": "uint256"
+				}
+			],
+			"name": "addPersona",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_infoCode",
+					"type": "uint256"
+				},
+				{
+					"name": "_dataCategory",
+					"type": "uint8"
+				},
+				{
+					"name": "_field",
+					"type": "string"
+				},
+				{
+					"name": "_data",
+					"type": "string"
+				},
+				{
+					"name": "_price",
+					"type": "uint256"
+				}
+			],
+			"name": "addData",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_strategy",
+					"type": "uint8"
+				},
+				{
+					"name": "_price",
+					"type": "uint256"
+				}
+			],
+			"name": "addValidator",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
 			"payable": true,
 			"stateMutability": "payable",
-			"type": "constructor"
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_index",
+					"type": "uint256"
+				},
+				{
+					"name": "_details",
+					"type": "string"
+				}
+			],
+			"name": "addInfoCategory",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_validator",
+					"type": "address"
+				},
+				{
+					"name": "_field",
+					"type": "string"
+				},
+				{
+					"name": "_proofUrl",
+					"type": "string"
+				}
+			],
+			"name": "askToValidate",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": true,
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "_field",
+					"type": "string"
+				}
+			],
+			"name": "GetFieldLastStatus",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint8"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_persona",
+					"type": "address"
+				}
+			],
+			"name": "PagaEth",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": true,
+			"stateMutability": "payable",
+			"type": "function"
 		},
 		{
 			"constant": false,
@@ -375,75 +486,6 @@ module.exports = {
 			],
 			"payable": true,
 			"stateMutability": "payable",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "_strategy",
-					"type": "uint8"
-				},
-				{
-					"name": "valueInformed",
-					"type": "uint256"
-				}
-			],
-			"name": "correctPrice",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"payable": false,
-			"stateMutability": "pure",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "personaAddress",
-					"type": "address"
-				},
-				{
-					"name": "_field",
-					"type": "string"
-				}
-			],
-			"name": "getAllowedField",
-			"outputs": [
-				{
-					"name": "",
-					"type": "bool"
-				},
-				{
-					"name": "",
-					"type": "string"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "_field",
-					"type": "string"
-				}
-			],
-			"name": "GetFieldLastStatus",
-			"outputs": [
-				{
-					"name": "",
-					"type": "uint8"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
 			"type": "function"
 		},
 		{
@@ -538,6 +580,25 @@ module.exports = {
 				{
 					"name": "_address",
 					"type": "address"
+				}
+			],
+			"name": "getPersonaNumberOfFields",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "_address",
+					"type": "address"
 				},
 				{
 					"name": "_field",
@@ -596,22 +657,26 @@ module.exports = {
 			"type": "function"
 		},
 		{
-			"constant": true,
+			"constant": false,
 			"inputs": [
 				{
 					"name": "_address",
 					"type": "address"
+				},
+				{
+					"name": "_field",
+					"type": "string"
 				}
 			],
-			"name": "getPersonaNumberOfFields",
+			"name": "askDecryptedData",
 			"outputs": [
 				{
 					"name": "",
-					"type": "uint256"
+					"type": "bool"
 				}
 			],
-			"payable": false,
-			"stateMutability": "view",
+			"payable": true,
+			"stateMutability": "payable",
 			"type": "function"
 		},
 		{
@@ -638,82 +703,22 @@ module.exports = {
 		},
 		{
 			"constant": true,
-			"inputs": [],
-			"name": "getTotalValidators",
-			"outputs": [
-				{
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
 			"inputs": [
 				{
-					"name": "",
+					"name": "personaAddress",
 					"type": "address"
+				},
+				{
+					"name": "_field",
+					"type": "string"
 				}
 			],
-			"name": "holonValidators",
+			"name": "getAllowedField",
 			"outputs": [
 				{
-					"name": "validatorAddress",
-					"type": "address"
-				},
-				{
-					"name": "reputation",
-					"type": "uint256"
-				},
-				{
-					"name": "strategy",
-					"type": "uint8"
-				},
-				{
-					"name": "price",
-					"type": "uint256"
-				},
-				{
-					"name": "exists",
+					"name": "",
 					"type": "bool"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"name": "holonValidatorsList",
-			"outputs": [
-				{
-					"name": "",
-					"type": "address"
-				}
-			],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"constant": true,
-			"inputs": [
-				{
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"name": "infoCategories",
-			"outputs": [
+				},
 				{
 					"name": "",
 					"type": "string"
@@ -724,30 +729,30 @@ module.exports = {
 			"type": "function"
 		},
 		{
-			"constant": true,
+			"constant": false,
 			"inputs": [
 				{
-					"name": "",
+					"name": "_accept",
+					"type": "bool"
+				},
+				{
+					"name": "_address",
 					"type": "address"
+				},
+				{
+					"name": "_field",
+					"type": "string"
 				}
 			],
-			"name": "members",
+			"name": "deliverDecryptedData",
 			"outputs": [
 				{
-					"name": "personalAddress",
-					"type": "address"
-				},
-				{
-					"name": "pendingDataDeliver",
-					"type": "uint256"
-				},
-				{
-					"name": "exists",
+					"name": "",
 					"type": "bool"
 				}
 			],
 			"payable": false,
-			"stateMutability": "view",
+			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
@@ -764,6 +769,20 @@ module.exports = {
 					"name": "",
 					"type": "uint256"
 				},
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "getTotalValidators",
+			"outputs": [
 				{
 					"name": "",
 					"type": "uint256"
