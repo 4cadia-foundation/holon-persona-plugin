@@ -7,7 +7,7 @@ import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import Loader from '../../components/Loader/Loader';
-import ScoreGraph from '../../components/ScoreGraph/ScoreGraph';
+import Score from '../../components/Score/Score';
 import SliderSaveOption from '../../components/SliderSaveOption/SliderSaveOption';
 import '../../styles/_utils.css';
 import './Profile.css';
@@ -110,7 +110,7 @@ class Profile extends Component {
                             })
                         }                            
                     <Row className="margin-top-10 text-center paragraph">
-                        <ScoreGraph/>
+                        <Score/>
                     </Row>
                     <Row className="margin-top-10 margin-bottom-10 text-center text">
                         <Col>

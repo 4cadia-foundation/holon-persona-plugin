@@ -5,9 +5,9 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 
 import { bindActionCreators } from 'redux';
 import * as PersonaActions from "../../redux/actions/persona";
-import './ScoreGraph.css';
+import './Score.css';
 
-class ScoreGraph extends Component {
+class Score extends Component {
   
   static propTypes = {
     color: PropTypes.string,
@@ -48,13 +48,10 @@ class ScoreGraph extends Component {
                 stroke: `rgba(240, 173, 78, ${percentage * 1})`,
                 strokeLinecap: 'round',
                 transition: 'stroke-dashoffset 0.5s ease 0s',
-                // transformOrigin: 'center center',
-                
               },
               trail: {
                 stroke: '#d6d6d6',
                 strokeLinecap: 'round',
-                // transformOrigin: 'center center',
               },
               text: {
                 fill: '#f0ad4e',
@@ -76,4 +73,4 @@ const mapStateToProps = state => ({
   
 const mapDispatchToProps = dispatch => bindActionCreators(PersonaActions, dispatch);
   
-export default connect(mapStateToProps, mapDispatchToProps)(ScoreGraph);
+export default connect(mapStateToProps, mapDispatchToProps)(Score);
