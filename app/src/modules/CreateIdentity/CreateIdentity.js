@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, ControlLabel, FormGroup, FormControl, Grid, Row } from 'react-bootstrap';
+import { Button, Glyphicon, FormGroup, Grid, Row, Form } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -78,31 +78,44 @@ class CreateIdentity extends Component {
                         </Row>
                     </div>
                     <div>
+                        <Form onSubmit={ this.handleClick }>
+                            <FormGroup>
+                                <div class="form">
+                                    <input type="password" autocomplete="off" required                                 
+                                        componentClass="input"
+                                        id="name"
+                                        type="text"
+                                        value={this.state.name}
+                                        placeholder="Name"
+                                        onChange={this.handleChange} />
 
-                        <FormGroup>
-                            <ControlLabel className="paragraph">Name</ControlLabel>
-                            <FormControl
-                                componentClass="input"
-                                id="name"
-                                type="text"
-                                value={this.state.name}
-                                placeholder="Name"
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <ControlLabel className="paragraph">Email</ControlLabel>
-                            <FormControl
-                                componentClass="input"
-                                id="email"
-                                type="email"
-                                placeholder="email@example.com"
-                                value={this.state.email}
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
+                                    <label for="name" class="label-name">
+                                        <span class="content-name">Name</span>
+                                    </label>
+                                </div>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <div class="form">
+                                    <input type="password" autocomplete="off" required                                 
+                                        componentClass="input"
+                                        id="email"
+                                        type="email"
+                                        placeholder="email@example.com"
+                                        value={this.state.email}
+                                        onChange={this.handleChange} />
+
+                                    <label for="name" class="label-name">
+                                        <span class="content-name">Email</span>
+                                    </label>
+                                </div>
+                            </FormGroup>
+
+                            <Button id="btn-create-save" type="submit" className="paragraph button-screen" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
+                        </Form>
                     </div>
-                    <Button id="btn-create-save" className="paragraph" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
+
+                    <Glyphicon glyph="chevron-left" className="margin-top-20" onClick={() => this.props.history.push('/walletpassword')}/>
                 </Grid>
                 <Loader message="Initializing your identity..." visible={this.state.isLoading} />
             </div>
