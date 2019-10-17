@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Glyphicon} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,7 +21,7 @@ class Home extends Component {
       persona: this.props.persona,
       isLoading: true,
       validationResults: [],
-      msg: "Loading profile from Blockchain",
+      msg: 'Loading profile from Blockchain',
       open: false
     }
     this.getCampoValor = this.getCampoValor.bind(this); 
@@ -36,7 +37,7 @@ class Home extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps, _) {
     if (nextProps.persona.error.length>2) {
         const msg = 'Erro: ' + nextProps.persona.error;
         console.error('Home/getDerivedStateFromProps: ', msg);
@@ -88,7 +89,9 @@ class Home extends Component {
       </div>
         <div className="validations-title">
           <p>Validations</p>
-          <Glyphicon glyph="plus" />
+          <Link to='/addinformation'>
+            <Glyphicon glyph="plus" />
+          </Link>
         </div>
         <hr className="linha-home"></hr>
         <div>
