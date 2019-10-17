@@ -26,6 +26,10 @@ export class SaveBlockchain extends Component {
             isLoading: true
         });
     }
+
+    // validateForm() {
+    //     return this.state.name.length > 3 && this.state.email.length > 7;
+    // }
     
     render() {
 

@@ -71,15 +71,15 @@ class WelcomeBack extends Component {
                     <h3 align="center" className="title" >Welcome Back</h3>
                     <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
-                <div className="margin-top-20 form">
-                    <input type="password" required 		            
+                <div class="margin-top-20 form">
+                    <input type="password" autocomplete="off" required 		            
                         className="paragraph"
                         id="password" 
                         type="password" 
                         value={this.state.password}
                         onChange={this.handleChange}></input>
-                    <label type="name" className="label-name">
-                        <span className="content-name">Confirm password</span>
+                    <label for="name" class="label-name">
+                        <span class="content-name">Confirm password</span>
                     </label>
                 </div>
                 <p className="paragraph confirm-password">The password must have 8 characters</p>
