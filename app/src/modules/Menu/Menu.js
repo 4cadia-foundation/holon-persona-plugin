@@ -60,13 +60,7 @@ class Menu extends Component {
                         <h3 id="title-menu" className="title">Identity</h3>
                     </div>
                     <hr className="line-menu"/>
-                    <div className="links">
-                        <div className="flex-column">
-                            <Link to='/addinformation'>
-                                <Glyphicon id="glyph-color" glyph="plus"/> 
-                                <span className="space-icon-p paragraph">Add information</span>
-                            </Link>
-                        </div>
+                    <div className="links2">
                         <div className="flex-column">
                             <Link to="/validateinformation">
                                 <Glyphicon id="glyph-color" glyph="ok"/>
@@ -79,9 +73,6 @@ class Menu extends Component {
                                 <span className="space-icon-p paragraph">Notifications</span>
                             </Link>
                         </div>
-                    </div>
-                    <hr className="line-menu" />
-                    <div className="links2">
                         <div className="flex-column">
                             <Link to="/profile">
                                 <Glyphicon id="glyph-color" glyph="user"/> 

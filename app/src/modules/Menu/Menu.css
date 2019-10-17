@@ -23,23 +23,22 @@
     width: 100%;
 }
 
-.links{
-    height: 100px;
+/* .links{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 20px;
+}  */
+
+.links2 {
+    height: 210px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-top: 20px;
     margin-left: 20px;
     color:#000; 
-} 
-
-.links2 {
-    height: 130px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-top: 20px;
-    margin-left: 20px;
 }
 
 .space-icon-p {
