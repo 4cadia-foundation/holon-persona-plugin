@@ -88,7 +88,7 @@ class AddInformation extends Component {
         return (
             <div>
                 <div className="btn-add-close">
-                    <CloseIconPage destination="/menu"/>
+                    <CloseIconPage destination="/home"/>
                 </div>
                 <Form>
                     <div className="margin-top-10">
@@ -117,10 +117,10 @@ class AddInformation extends Component {
                         onChange={this.handleChange}
                         />
                     <br />
-                    <Button className="btn-browser btn-warning paragraph" type="submit" onClick={this.handleClick}>
+                    <Button disabled={!this.validateForm()} className="btn-browser btn-warning paragraph" type="submit" onClick={this.handleClick}>
                         Save Browser
                     </Button>
-                    <Button className="btn-blockchain btn-warning paragraph" type="submit" onClick={this.handleClick}>
+                    <Button disabled={!this.validateForm()} className="btn-blockchain btn-warning paragraph" type="submit" onClick={this.handleClick}>
                         Save Blockchain
                     </Button>
                 </Form>
