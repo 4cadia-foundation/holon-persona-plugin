@@ -3,8 +3,17 @@
     margin-bottom: 0px;
 }
 
-#btn-add-save {
-    margin-top: 16px;
+.input-add-info {
+    border: 1px solid var(--color-black);
+    border-radius: 10px;
+}
+
+.btn-blockchain {
+    margin: 16px;
+}
+
+.btn-browser {
+    margin: 16px;
 }
 
 .btn-add-close {
@@ -15,3 +24,4 @@
 .label-add {
     margin-top: 13px;
 }
+

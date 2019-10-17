@@ -3,12 +3,10 @@ import { Button, Form, FormControl } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import * as PersonaActions from '../../redux/actions/persona';
 
 import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
-import DataCategory from '../../components/DataCategory/DataCategory';
-import DataSubCategory from '../../components/DataSubCategory/DataSubCategory';
 import Loader from '../../components/Loader/Loader';
 import './AddInformation.css';
 
@@ -22,9 +20,9 @@ class AddInformation extends Component {
         this.setCategory = this.setCategory.bind(this);
         this.setSubCategory = this.setSubCategory.bind(this);
         this.state = {
-            category: "",
-            subCategory: "",
-            info: "",
+            category: '',
+            subCategory: '',
+            info: '',
             cost: 0,
             isLoading: true,
             executed: false,
@@ -44,8 +42,6 @@ class AddInformation extends Component {
             console.error('getDerivedStateFromProps: ', msg);
             return { isLoading: false };
         }
-        // console.log('getDerivedStateFromProps nextProps', nextProps.persona);
-        // console.log('getDerivedStateFromProps prevState', prevState);
         if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
             return { isLoading: nextProps.persona.isRunning, executed: true };
         }
@@ -84,8 +80,6 @@ class AddInformation extends Component {
     }
 
     render() {
-        //console.log('render props', this.props)
-        // console.log('render state', this.state)
         if (this.state.executed) {
             return (
                 <Redirect to='/home' />
@@ -94,7 +88,7 @@ class AddInformation extends Component {
         return (
             <div>
                 <div className="btn-add-close">
-                    <CloseIconPage destination="/menu"/>
+                    <CloseIconPage destination="/home"/>
                 </div>
                 <Form>
                     <div className="margin-top-10">
@@ -102,35 +96,32 @@ class AddInformation extends Component {
                     </div>
                     <br />
                     <div>
-                        {/* <DataCategory emitCategory={this.setCategory} /> */}
                         <Category emitCategory={this.setCategory} emitSubCategory={this.setSubCategory}/>
                     </div>
-                    <br />
-                    <div>
-                        {/* <DataSubCategory emitSubCategory={this.setSubCategory} /> */}
-                    </div>
-                    <br />
                     <label className="paragraph label-add">Insert your info here</label>
                     <FormControl
+                        className="input-add-info paragraph"
                         id="info"
                         type="text"
                         value={this.state.info}
                         placeholder="Information"
                         onChange={this.handleChange}
                     />
-                    <br />
                     <label className="paragraph label-add">How much do you want to get for this information?</label>
                     <FormControl
+                        className="input-add-info paragraph"
                         id="cost"
                         type="text"
                         value={this.state.cost}
                         placeholder="Value in wei"
                         onChange={this.handleChange}
-                        className="paragraph"
                         />
                     <br />
-                    <Button disabled={!this.validateForm()} bsSize="large" id="btn-add-save" className="btn-block btn-warning paragraph" type="submit" onClick={this.handleClick}>
-                        Save
+                    <Button disabled={!this.validateForm()} className="btn-browser btn-warning paragraph" type="submit" onClick={this.handleClick}>
+                        Save Browser
+                    </Button>
+                    <Button disabled={!this.validateForm()} className="btn-blockchain btn-warning paragraph" type="submit" onClick={this.handleClick}>
+                        Save Blockchain
                     </Button>
                 </Form>
                 <Loader message="Adding identity info" visible={this.state.isLoading} />
