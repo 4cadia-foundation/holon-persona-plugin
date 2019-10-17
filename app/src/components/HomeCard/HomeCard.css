@@ -5,6 +5,7 @@
 }
 
 .card-header {
+    cursor: pointer;
     height: 40px;
     color: var(--color-black);
     border-left: solid;
