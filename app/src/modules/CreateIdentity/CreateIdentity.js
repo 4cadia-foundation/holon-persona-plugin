@@ -77,8 +77,8 @@ class CreateIdentity extends Component {
                     <div>
                         <Form onSubmit={ this.handleClick }>
                             <FormGroup>
-                                <div class="form">
-                                    <input type="password" autocomplete="off" required                                 
+                                <div className="form">
+                                    <input type="password" required                                 
                                         componentClass="input"
                                         id="name"
                                         type="text"
@@ -86,15 +86,15 @@ class CreateIdentity extends Component {
                                         placeholder="Name"
                                         onChange={this.handleChange} />
 
-                                    <label for="name" class="label-name">
-                                        <span class="content-name">Name</span>
+                                    <label type="name" className="label-name">
+                                        <span className="content-name">Name</span>
                                     </label>
                                 </div>
                             </FormGroup>
 
                             <FormGroup>
-                                <div class="form">
-                                    <input type="password" autocomplete="off" required                                 
+                                <div className="form">
+                                    <input type="password" required                                 
                                         componentClass="input"
                                         id="email"
                                         type="email"
@@ -102,8 +102,8 @@ class CreateIdentity extends Component {
                                         value={this.state.email}
                                         onChange={this.handleChange} />
 
-                                    <label for="name" class="label-name">
-                                        <span class="content-name">Email</span>
+                                    <label type="name" className="label-name">
+                                        <span className="content-name">Email</span>
                                     </label>
                                 </div>
                             </FormGroup>
