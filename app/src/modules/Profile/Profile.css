@@ -17,14 +17,7 @@
     word-break: break-all;
 }
 
-.line-profile {
-    border: 0.5px solid black;
-    width: 100%;
-}
-
-
-.avatar {
-    width: 100px;
-    height: 100px;
-    padding: 10px;
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
 }

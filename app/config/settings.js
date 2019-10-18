@@ -1,7 +1,7 @@
 module.exports = {
   provider: 'http',
-  host: 'rinkeby.caralabs.me',
-  port: '18575',
+  host: 'localhost',
+  port: '8545',
   network: 4,
   clearStorage: false,
   ipfs: {
