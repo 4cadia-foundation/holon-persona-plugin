@@ -163,20 +163,20 @@ class ImportWallet extends Component {
                 </FormGroup>
 
                 <FormGroup validationState={this.getValidationPassword()}>
-                  <div class="form">
-                    <input type="password" autocomplete="off" required value={ this.state.password } onChange={ event => this.handleChange(event, 'password')}></input>
-                    <label for="name" class="label-name">
-                        <span class="content-name">New password</span>
+                  <div className="form">
+                    <input type="password" required value={ this.state.password } onChange={ event => this.handleChange(event, 'password')}></input>
+                    <label type="name" className="label-name">
+                        <span className="content-name">New password</span>
                     </label>
                   </div>
                   <HelpBlock className="paragraph text-information">Minimum validation of 8 characters</HelpBlock>
                 </FormGroup>
 
                 <FormGroup validationState={this.getValidationEqualPassword()}>
-                  <div class="form">
-                      <input type="password" autocomplete="off" required value={ this.state.confirm } onChange={ event => this.handleChange(event, 'confirm')}></input>
-                      <label for="name" class="label-name">
-                          <span class="content-name">Confirm password</span>
+                  <div className="form">
+                      <input type="password" required value={ this.state.confirm } onChange={ event => this.handleChange(event, 'confirm')}></input>
+                      <label type="name" className="label-name">
+                          <span className="content-name">Confirm password</span>
                       </label>
                   </div>
                   <HelpBlock className="paragraph text-information">Password must be the same as field confirm</HelpBlock>

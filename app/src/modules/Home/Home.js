@@ -88,7 +88,7 @@ class Home extends Component {
         </div>
       </div>
         <div className="validations-title">
-          <p>Information</p>
+          <p className="title">Information</p>
           <Link to='/addinformation'>
             <Glyphicon glyph="plus" />
           </Link>

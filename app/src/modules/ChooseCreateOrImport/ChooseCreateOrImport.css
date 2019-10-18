@@ -15,5 +15,5 @@
 }
 
 .panel-default {
-    border-color: black;
+    border-color: var(--color-black);
 }
