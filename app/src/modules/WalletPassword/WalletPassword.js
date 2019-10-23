@@ -120,10 +120,10 @@ class WalletPassword extends Component {
                 <h3 className="title margin-bottom-70" align="center">Create your wallet</h3>
             </div>
             <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
-              <div class="form">
-                <input type="password" autocomplete="off" required value={ this.state.password } onChange={ event => this.handleChange(event, 'password')}></input>
-                <label for="name" class="label-name">
-                  <span class="content-name">Password</span>
+              <div className="form">
+                <input type="password" required value={ this.state.password } onChange={ event => this.handleChange(event, 'password')}></input>
+                <label htmlFor="name" className="label-name">
+                  <span className="content-name">Password</span>
                 </label>
               </div>
 
@@ -132,10 +132,10 @@ class WalletPassword extends Component {
             </FormGroup>
 
             <FormGroup className="margin-top-10"  validationState={this.getValidationEqualPassword()}>
-              <div class="form">
-                <input type="password" autocomplete="off" required value={ this.state.confirm } onChange={ event => this.handleChange(event, 'confirm')}></input>
-                <label for="name" class="label-name">
-                  <span class="content-name">Confirm password</span>
+              <div className="form">
+                <input type="password" required value={ this.state.confirm } onChange={ event => this.handleChange(event, 'confirm')}></input>
+                <label htmlFor="name" className="label-name">
+                  <span className="content-name">Confirm password</span>
                 </label>
               </div>
 

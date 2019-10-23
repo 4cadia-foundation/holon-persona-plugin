@@ -1,6 +1,7 @@
 .panel{
     width: 300px;
     display: flex;
+    margin-left: -19px;
     align-items: center;
     justify-content: space-evenly;
 }

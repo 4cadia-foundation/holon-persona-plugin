@@ -77,40 +77,38 @@ class CreateIdentity extends Component {
                     <div>
                         <Form onSubmit={ this.handleClick }>
                             <FormGroup>
-                                <div class="form">
-                                    <input type="password" autocomplete="off" required                                 
+                                <div className="form">
+                                    <input type="password" required                                 
                                         componentClass="input"
                                         id="name"
                                         type="text"
                                         value={this.state.name}
-                                        placeholder="Name"
                                         onChange={this.handleChange} />
 
-                                    <label for="name" class="label-name">
-                                        <span class="content-name">Name</span>
+                                    <label htmlFor="name" className="label-name">
+                                        <span className="content-name">Name</span>
                                     </label>
                                 </div>
                             </FormGroup>
 
                             <FormGroup>
-                                <div class="form">
-                                    <input type="password" autocomplete="off" required                                 
+                                <div className="form">
+                                    <input type="password" required                                 
                                         componentClass="input"
                                         id="email"
                                         type="email"
-                                        placeholder="Email"
                                         value={this.state.email}
                                         onChange={this.handleChange} />
 
-                                    <label for="name" class="label-name">
-                                        <span class="content-name">Email</span>
+                                    <label htmlFor="name" className="label-name">
+                                        <span className="content-name">Email</span>
                                     </label>
                                 </div>
                             </FormGroup>
                             
                             <div className="buttons-identity">
-                                <Button  id="btn-create-save" type="submit" className="paragraph buttons-identity-size" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Save in Blockchain</Button>
-                                <Button  id="btn-create-save" type="submit" className="paragraph buttons-identity-size" block bsSize="large" bsStyle="warning" > Save in browser</Button>
+                                <Button  id="btn-block" type="submit" className="margin-top-5 paragraph buttons-identity-size" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Save in Blockchain</Button>
+                                <Button  id="btn-block" type="submit" className="paragraph buttons-identity-size" block bsSize="large" bsStyle="warning" > Save in browser</Button>
                             </div>
                             
                         </Form>
