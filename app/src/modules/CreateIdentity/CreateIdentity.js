@@ -83,10 +83,9 @@ class CreateIdentity extends Component {
                                         id="name"
                                         type="text"
                                         value={this.state.name}
-                                        placeholder="Name"
                                         onChange={this.handleChange} />
 
-                                    <label type="name" className="label-name">
+                                    <label htmlFor="name" className="label-name">
                                         <span className="content-name">Name</span>
                                     </label>
                                 </div>
@@ -98,19 +97,18 @@ class CreateIdentity extends Component {
                                         componentClass="input"
                                         id="email"
                                         type="email"
-                                        placeholder="Email"
                                         value={this.state.email}
                                         onChange={this.handleChange} />
 
-                                    <label type="name" className="label-name">
+                                    <label htmlFor="name" className="label-name">
                                         <span className="content-name">Email</span>
                                     </label>
                                 </div>
                             </FormGroup>
                             
                             <div className="buttons-identity">
-                                <Button  id="btn-create-save" type="submit" className="paragraph buttons-identity-size" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Save in Blockchain</Button>
-                                <Button  id="btn-create-save" type="submit" className="paragraph buttons-identity-size" block bsSize="large" bsStyle="warning" > Save in browser</Button>
+                                <Button  id="btn-block" type="submit" className="margin-top-5 paragraph buttons-identity-size" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Save in Blockchain</Button>
+                                <Button  id="btn-block" type="submit" className="paragraph buttons-identity-size" block bsSize="large" bsStyle="warning" > Save in browser</Button>
                             </div>
                             
                         </Form>

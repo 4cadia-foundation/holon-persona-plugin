@@ -165,7 +165,7 @@ class ImportWallet extends Component {
                 <FormGroup validationState={this.getValidationPassword()}>
                   <div className="form">
                     <input type="password" required value={ this.state.password } onChange={ event => this.handleChange(event, 'password')}></input>
-                    <label type="name" className="label-name">
+                    <label htmlFor="name" className="label-name">
                         <span className="content-name">New password</span>
                     </label>
                   </div>
@@ -175,7 +175,7 @@ class ImportWallet extends Component {
                 <FormGroup validationState={this.getValidationEqualPassword()}>
                   <div className="form">
                       <input type="password" required value={ this.state.confirm } onChange={ event => this.handleChange(event, 'confirm')}></input>
-                      <label type="name" className="label-name">
+                      <label htmlFor="name" className="label-name">
                           <span className="content-name">Confirm password</span>
                       </label>
                   </div>

@@ -4,6 +4,7 @@
 
 .buttons-identity {
     width: 300px;
+    margin-top: 40px;
     margin-left: -10px;
     display: flex;
     flex-direction: row;
@@ -14,7 +15,7 @@
     height: 20%;
 }
 
-.btn-block {
+#btn-block {
     height: 38px;
     width: 129px;
     font-size: 12px;

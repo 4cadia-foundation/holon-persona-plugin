@@ -122,7 +122,7 @@ class WalletPassword extends Component {
             <FormGroup className="margin-top-10" validationState={this.getValidationPassword()}>
               <div className="form">
                 <input type="password" required value={ this.state.password } onChange={ event => this.handleChange(event, 'password')}></input>
-                <label type="name" className="label-name">
+                <label htmlFor="name" className="label-name">
                   <span className="content-name">Password</span>
                 </label>
               </div>
@@ -131,10 +131,10 @@ class WalletPassword extends Component {
               <HelpBlock className="paragraph text-information">Minimum validation of 8 characters</HelpBlock>
             </FormGroup>
 
-            <FormGroup className="margin-top-10" validationState={this.getValidationEqualPassword()}>
+            <FormGroup className="margin-top-10"  validationState={this.getValidationEqualPassword()}>
               <div className="form">
                 <input type="password" required value={ this.state.confirm } onChange={ event => this.handleChange(event, 'confirm')}></input>
-                <label type="name" className="label-name">
+                <label htmlFor="name" className="label-name">
                   <span className="content-name">Confirm password</span>
                 </label>
               </div>

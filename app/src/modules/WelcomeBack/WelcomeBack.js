@@ -78,7 +78,7 @@ class WelcomeBack extends Component {
                         type="password" 
                         value={this.state.password}
                         onChange={this.handleChange}></input>
-                    <label type="name" className="label-name">
+                    <label htmlFor="name" className="label-name">
                         <span className="content-name">Confirm password</span>
                     </label>
                 </div>
