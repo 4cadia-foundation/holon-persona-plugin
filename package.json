@@ -29,6 +29,7 @@
     "react-circular-progressbar": "^2.0.1",
     "react-dom": "^16.8.6",
     "react-gauge-chart": "^0.2.1",
+    "react-html-id": "^0.1.5",
     "react-icons": "^3.7.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",

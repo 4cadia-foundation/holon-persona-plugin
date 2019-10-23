@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Label} from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import uniqueId from 'react-html-id';
+
 import * as PersonaActions from '../../redux/actions/persona';
 
 import './HomeCard.css';
@@ -10,17 +12,22 @@ class HomeCard extends Component{
 
     constructor ( props ){
         super( props );
-
+        
         this.state = {
             list: []
         };
+        
+        uniqueId.enableUniqueIds(this);
+        this.showDetails = this.showDetails.bind(this);
+        // this.onLoad.bind(this);
+        // this.parseData.bind(this);
+
     }
 
     componentDidMount() {
         if (this.props.persona.numberOfFields < 1) {
           this.props.getPersonaData(); 
         }
-        debugger;
         this.onLoad(this.props.persona.personalInfo);
     }
 
@@ -36,29 +43,32 @@ class HomeCard extends Component{
     }
 
     onLoad ( data ) {
-        debugger;
         this.setState ({
             list: this.parseData(data)
         });
     }
 
-    parseData ( data ) {
-        debugger;
+    parseData ( data ){
         return data.map ( (item, index) => {
-            debugger;
-            return {...item, details: false };
+            return {...item, details: false, id: this.nextUniqueId()};
+        });
+    }
+
+    showDetails ( person ) {
+        const updated = {...person, details: !person.details };
+        const list = this.state.list.map(item => (item.id === person.id)? updated : item );
+        this.setState({
+            list: list 
         });
     }
 
     render() {
-        const { list } = this.state;
-        debugger;
         return(
             <section>
             {
-                list.map((person, index) => (
+                this.state.list.map((person) => (
 
-                    <div key={index} className={ 'card card-history'}>
+                    <div key={person.id} onClick={this.showDetails(person)} className={ 'card card-history'}>
         
                         <header className='card-header'>
                             <div className='box-info'>
@@ -68,7 +78,7 @@ class HomeCard extends Component{
                             </div>
                         </header>
     
-                        <section className={'row col-md-12 card-history-detail'}>
+                        <section className={`row col-md-12 card-history-detail ${(person.details) ? 'show': 'hide'}`}>
                             <div className='row'>
                                     <div >
                                         <div className='col-md-4'>

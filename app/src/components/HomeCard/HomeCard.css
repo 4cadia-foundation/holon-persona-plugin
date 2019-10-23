@@ -24,6 +24,13 @@
     padding-top: 10px;
     height: auto;
 }
+.card-history-detail .show {
+    display: inherit;
+}
+
+.card-history-detail .hide {
+    display: none;
+}
 
 .card-history-detail span {
     color: black;
