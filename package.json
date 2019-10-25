@@ -29,7 +29,7 @@
     "react-circular-progressbar": "^2.0.2",
     "react-dom": "^16.8.6",
     "react-gauge-chart": "^0.2.1",
-    "react-gradient-progress": "^1.0.2",
+    "react-html-id": "^0.1.5",
     "react-icons": "^3.7.0",
     "react-native-progress-circle": "^2.0.1",
     "react-redux": "^7.1.0",
