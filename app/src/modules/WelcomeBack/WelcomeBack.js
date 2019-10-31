@@ -66,21 +66,24 @@ class WelcomeBack extends Component {
             <Row className="text-center">
                 <img className="logo" src={logo} alt="Logo" />
             </Row>
-            <Form>
+            <Form onSubmit={ this.handleClick }>
                 <div>
                     <h3 align="center" className="title" >Welcome Back</h3>
                     <p align="center" className="paragraph"> The decentralized web waits for you </p>
                 </div>
-                <label className="paragraph label-welcomeback">Password</label>
-                <FormControl 
-                    className="paragraph"
-                    id="password" 
-                    type="password" 
-                    value={this.state.password}
-                    placeholder="The password must have 8 characters" 
-                    onChange={this.handleChange}
-                />
-                <Button disabled={!this.validateForm()} className="paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
+                <div className="margin-top-20 form">
+                    <input type="password" required 		            
+                        className="paragraph"
+                        id="password" 
+                        type="password" 
+                        value={this.state.password}
+                        onChange={this.handleChange}></input>
+                    <label htmlFor="name" className="label-name">
+                        <span className="content-name">Confirm password</span>
+                    </label>
+                </div>
+                <p className="paragraph confirm-password">The password must have 8 characters</p>
+                <Button disabled={!this.validateForm()} type="submit" className="margin-top-30 button-screen paragraph btn btn-block" bsSize="large" block bsStyle="warning" type="submit" onClick={this.handleClick}>
                     Log in
                 </Button>    
                 <p className="paragraph p-welcomeback" align="center">Forgot your password? <Link to="/importwallet">Import</Link>  using your phrase</p>            

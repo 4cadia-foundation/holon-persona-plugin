@@ -10,7 +10,7 @@ import CloseIconPage from '../../components/CloseIconPage/CloseIconPage';
 import SelectPersonaInfoFields from '../../components/SelectPersonaInfoFields/SelectPersonaInfoFields';
 import SelectValidador from '../../components/SelectValidador/SelectValidador';
 import Loader from '../../components/Loader/Loader';
-import Ipfs from '../../components/Ipfs/Ipfs';
+import Modal from '../../components/Modal/ModalValidate'
 import '../../styles/_utils.css';
 import './ValidateInformation.css'
 
@@ -28,7 +28,6 @@ class ValidateInformation extends Component {
             loadingMsg: 'Loading data from Blockchain',
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
         this.setValidator = this.setValidator.bind(this);
         this.setField = this.setField.bind(this);
         this.setIpfsHash = this.setIpfsHash.bind(this);
@@ -47,8 +46,7 @@ class ValidateInformation extends Component {
             console.error('validateInformation/getDerivedStateFromProps: ', msg);
             return { isLoading: false };
         }
-        //console.log('validateInformation/getDerivedStateFromProps nextProps', nextProps.persona);
-        //console.log('validateInformation/getDerivedStateFromProps prevState', prevState);
+       
         if (nextProps.persona.isRunning !== prevState.isLoading && prevState.saveButtonCalled) {
             return { isLoading: nextProps.persona.isRunning, executed: true };
         }
@@ -77,33 +75,8 @@ class ValidateInformation extends Component {
         this.setState({ ipfsHash: hash });
     }
 
-    validateForm() {
-        return this.state.uriConfirmationData.length > 1;
-    }
-
-    
-
-    handleClick(event) {
-        event.preventDefault();
-        const validator = this.state.validator;
-        const field = this.state.field;
-        var uriConfirmationData = '';
-        if (this.state.ipfsHash.length > 10){
-            uriConfirmationData = this.state.ipfsHash;
-        } else {
-            uriConfirmationData = this.state.uriConfirmationData;
-        }
-        this.setState({
-            isLoading: true,
-            saveButtonCalled: true,
-            loadingMsg: 'Submitting data to validator',
-        });
-        this.props.askToValidate(validator, field, uriConfirmationData);
-    }
-
     render () {
-        //console.log('render props', this.props)
-        // console.log('render state', this.state)
+
         if (this.state.executed) {
             return (
                 <Redirect to='/home' />
@@ -140,13 +113,11 @@ class ValidateInformation extends Component {
                             />
                         </div>
                     </div>
-                    {/* <div>
-                        <Ipfs emitIpfsHash={this.setIpfsHash}/>
-                    </div> */}
+
                 </Form>
-                <Button disabled={!this.validateForm()} id="btn-validate-save" className="paragraph" bsSize="large" block bsStyle="warning" onClick={this.handleClick}>
-                    Save
-                </Button>
+                
+                <Modal />
+
                 <Loader message={this.state.loadingMsg} visible={this.state.isLoading} />
             </Grid>
         );

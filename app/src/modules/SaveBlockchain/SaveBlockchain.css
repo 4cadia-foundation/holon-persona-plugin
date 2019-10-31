@@ -1,0 +1,17 @@
+.content-one {
+    margin-top: 17%;
+    margin-bottom: 10px;
+    height: 157px;
+    width: 101%;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.content-in {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+}

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock } from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, FormControl, ControlLabel, Button, Form, HelpBlock, Glyphicon } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as WalletActions from "../../redux/actions/wallet";
 
-import './ImportWallet'
+import './ImportWallet.css'
 import Loader from '../../components/Loader/Loader';
 
 class ImportWallet extends Component {
@@ -154,33 +154,37 @@ class ImportWallet extends Component {
           </Row>
           <Row>
             <Col xs={12} md={12}>
-              <Form>
+              <Form onSubmit={ this.handleSubmit }>
                 <FormGroup validationState={this.getValidationPhrase()}>
                     <ControlLabel className="paragraph">Wallet Seed</ControlLabel>
                     <FormControl className="paragraph" rows="7" componentClass="textarea" placeholder="Insert your seed phrase" value={ this.state.phrase } onChange={event => this.handleChange(event, 'phrase')}/>
                     <FormControl.Feedback />
-                    <HelpBlock className="paragraph">Seed phrases are 12 words long</HelpBlock>
+                    <HelpBlock className="paragraph text-information">Seed phrases are 12 words long</HelpBlock>
                 </FormGroup>
 
                 <FormGroup validationState={this.getValidationPassword()}>
-                    <ControlLabel className="paragraph">New Password</ControlLabel>
-                    <FormControl componentClass="input" type="password" value={ this.state.password } onChange={event => this.handleChange(event, 'password')}/>
-
-                    <FormControl.Feedback />
-                    <HelpBlock className="paragraph">Minimum validation of 8 characters</HelpBlock>
+                  <div className="form">
+                    <input type="password" required value={ this.state.password } onChange={ event => this.handleChange(event, 'password')}></input>
+                    <label htmlFor="name" className="label-name">
+                        <span className="content-name">New password</span>
+                    </label>
+                  </div>
+                  <HelpBlock className="paragraph text-information">Minimum validation of 8 characters</HelpBlock>
                 </FormGroup>
 
                 <FormGroup validationState={this.getValidationEqualPassword()}>
-                    <ControlLabel className="paragraph">Confirm Password</ControlLabel>
-                    <FormControl componentClass="input" type="password" value={ this.state.confirm } onChange={event => this.handleChange(event, 'confirm')} />
-
-                    <FormControl.Feedback />
-                    <HelpBlock className="paragraph">Password must be the same as field confirm</HelpBlock>
+                  <div className="form">
+                      <input type="password" required value={ this.state.confirm } onChange={ event => this.handleChange(event, 'confirm')}></input>
+                      <label htmlFor="name" className="label-name">
+                          <span className="content-name">Confirm password</span>
+                      </label>
+                  </div>
+                  <HelpBlock className="paragraph text-information">Password must be the same as field confirm</HelpBlock>
                 </FormGroup>
 
-                <Button className="paragraph" bsSize="large" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
+                <Button className="button-screen paragraph margin-top-20" bsSize="large" type="submit" onClick={this.handleSubmit} block bsStyle="warning">Import</Button>
               </Form>
-
+              <Glyphicon glyph="chevron-left" className="margin-top-20" onClick={() => this.props.history.push('/choosecreateorimport')}/>
             </Col>
           </Row>
         </Grid>

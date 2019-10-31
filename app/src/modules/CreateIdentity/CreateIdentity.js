@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, ControlLabel, FormGroup, FormControl, Grid, Row } from 'react-bootstrap';
+import { Button, Glyphicon, FormGroup, Grid, Row, Form } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -28,8 +28,6 @@ class CreateIdentity extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        //console.log('CreateIdentity/getDerivedStateFromProps nextProps', nextProps.persona);
-        //console.log('CreateIdentity/getDerivedStateFromProps prevState', prevState);
         if (nextProps.persona.error.length > 2) {
             const msg = 'Erro: ' + nextProps.persona.error;
             console.error('CreateIdentity/getDerivedStateFromProps: ', msg);
@@ -60,7 +58,6 @@ class CreateIdentity extends Component {
     }
 
     render() {
-        //console.log('CreateIdentity/render state', this.state);
         if (this.state.redirect && !this.state.isLoading) {
             return <Redirect to='/home' />
         }
@@ -78,31 +75,46 @@ class CreateIdentity extends Component {
                         </Row>
                     </div>
                     <div>
+                        <Form onSubmit={ this.handleClick }>
+                            <FormGroup>
+                                <div className="form">
+                                    <input type="password" required                                 
+                                        componentClass="input"
+                                        id="name"
+                                        type="text"
+                                        value={this.state.name}
+                                        onChange={this.handleChange} />
 
-                        <FormGroup>
-                            <ControlLabel className="paragraph">Name</ControlLabel>
-                            <FormControl
-                                componentClass="input"
-                                id="name"
-                                type="text"
-                                value={this.state.name}
-                                placeholder="Name"
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <ControlLabel className="paragraph">Email</ControlLabel>
-                            <FormControl
-                                componentClass="input"
-                                id="email"
-                                type="email"
-                                placeholder="email@example.com"
-                                value={this.state.email}
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
+                                    <label htmlFor="name" className="label-name">
+                                        <span className="content-name">Name</span>
+                                    </label>
+                                </div>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <div className="form">
+                                    <input type="password" required                                 
+                                        componentClass="input"
+                                        id="email"
+                                        type="email"
+                                        value={this.state.email}
+                                        onChange={this.handleChange} />
+
+                                    <label htmlFor="name" className="label-name">
+                                        <span className="content-name">Email</span>
+                                    </label>
+                                </div>
+                            </FormGroup>
+                            
+                            <div className="buttons-identity">
+                                <Button  id="btn-block" type="submit" className="margin-top-5 paragraph buttons-identity-size" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Save in Blockchain</Button>
+                                <Button  id="btn-block" type="submit" className="paragraph buttons-identity-size" block bsSize="large" bsStyle="warning" > Save in browser</Button>
+                            </div>
+                            
+                        </Form>
                     </div>
-                    <Button id="btn-create-save" className="paragraph" disabled={!this.validateForm()} block bsSize="large" bsStyle="warning" onClick={this.handleClick}>Create ID</Button>
+
+                    <Glyphicon glyph="chevron-left" className="margin-top-20" onClick={() => this.props.history.push('/walletpassword')}/>
                 </Grid>
                 <Loader message="Initializing your identity..." visible={this.state.isLoading} />
             </div>
