@@ -3,8 +3,8 @@
 </p>
 
 <p>
-<strong>Holon</strong> is a project to manage your identity in a decentralized way. The protocol was create to save user's data in Blockchain and give the power to the <i>user to control they own data</i>. This is a open source project, so this extension is a example of protocol>  aplication.
-The base of this extension are smart contracts, created to save and manage the user's data and relationship between users, validators and consumers.
+  <strong>Holon</strong> is a project to manage your identity in a decentralized way. The protocol was create to save user's data in Blockchain and give the power to the <i>user to control they own data</i>. This is a open source project, so this extension is a example of protocol>  aplication.
+  The base of this extension are smart contracts, created to save and manage the user's data and relationship between users, validators and consumers.
 </p>
 
 <img src="docs/imgReadme/Persona.png">
@@ -65,6 +65,15 @@ To install in developer mode, follow the step-by-step:
 ```sh
   $ npm install
 ```
+
+## How to set up ethereum node
+
+This example uses a Infura Ethereum node. To set up your own node, follow the step-by-step:
+- Open the **app** folder and access config folder
+  - holon-persona-plugin -> app -> config
+- Access **settings.js**. In this file it is possible change the "host" to a local node, Infura node or any node that you want use to run the extension. If you set up to use a local node, it is necessary change the port to your computer port.
+
+<img src="docs/imgReadme/setup-node.png">
 
 ## How to Run
 
