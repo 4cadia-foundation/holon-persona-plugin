@@ -33,7 +33,12 @@ export  default class SmartContract {
     try {
       if (!options)
         throw  new Error('option is not defined');
-      this._provider = new ethers.providers.JsonRpcProvider(`${options.provider}://${options.host}:${options.port}`);
+      if (Settings.port == '8545') {
+        this._provider = new ethers.providers.JsonRpcProvider(`${options.provider}://${options.host}:${options.port}`);
+      }
+      else {
+        this._provider = new ethers.providers.JsonRpcProvider(`${options.provider}://${options.host}`);
+      }
 
     } catch(exception) {
       console.error('[Inpage-instance] Error: ' + exception.message);

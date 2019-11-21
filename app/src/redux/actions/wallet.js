@@ -9,7 +9,7 @@ export function restoreVault(password, seed) {
   return dispatch => {
     wallet.createNewVaultAndRestore(password, seed)
       .then((wallet) => {
-        console.log('actions/wallet/restoreVault/restored');
+        console.log('actions/wallet/restoreVault/restored', wallet.address);
         dispatch({
           type: ActionTypes.SET_ACCOUNTS,
           address: wallet.address,

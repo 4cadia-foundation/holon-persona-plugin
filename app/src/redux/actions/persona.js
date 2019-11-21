@@ -97,6 +97,7 @@ export function getScore() {
 }
 
 export function getPersonaData() {
+
     if (!checkWallet()) {
         return (dispatch) => {
             dispatch({ type: 'ERROR_PERSONA_DATA', error: 'Wallet was not set' });
